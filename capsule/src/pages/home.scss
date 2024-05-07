@@ -1,13 +1,16 @@
 .general {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
+    flex-wrap: nowrap;
+    height: 100%;
 }
 
 .watch-capsule {
-    max-width: 240px;
+    max-width: 200px;
+    position: relative;
 }
 
 .always-capsule {
