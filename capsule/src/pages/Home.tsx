@@ -1,14 +1,22 @@
 // src/pages/Home.tsx
-
-import React from 'react';
 import './home.scss';
+import React from 'react';
+import { Navigation } from "../components/Navigation/Navigation";
+import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <div className='content'>
+      <div className='general'>
         <div className='watch-capsule'>
-            <img src="https://i.ibb.co/Dbjd1df/Untitled.png" className='always-capsule' />
+          <img src="https://i.ibb.co/wNwqK4Y/Untitled.png" className='always-capsule' />
         </div>
+        <ActiveTime />
+        <div className='active-signal'>
+          Active..
+        </div>
+      </div>
+      <Navigation />
     </div>
   );
 }

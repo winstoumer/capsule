@@ -1,7 +1,44 @@
 .bottom-navigation {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    bottom: 20px;
+    flex-shrink: 0;
+}
 
+.navigation {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
 .nav-b {
-    
+
+}
+
+.nav-b a {
+    font-weight: 300;
+}
+
+.color-nft a {
+    color: #c3008f;
+    animation: activeNft 2.4s ease infinite;
+}
+
+
+@keyframes activeNft {
+
+    0%,
+    100% {
+        opacity: 0.3;
+    }
+
+    50% {
+        opacity: 1;
+    }
 }
