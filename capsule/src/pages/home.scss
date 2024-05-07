@@ -1,0 +1,22 @@
+.home {
+    font-size: 40px;
+}
+
+.watch-capsule {
+    max-width: 240px;
+}
+
+.always-capsule {
+    position: relative;
+    animation: moveUpDownCapsule 1.4s infinite alternate;
+    width: 100%;
+}
+
+@keyframes moveUpDownCapsule {
+    0% {
+      top: -5px; /* Начальная позиция (вверх) */
+    }
+    100% {
+        top: 5px; /* Конечная позиция (вниз) */
+    }
+  }
