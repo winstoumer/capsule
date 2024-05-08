@@ -17,13 +17,14 @@
 }
 
 .watch-capsule {
-    max-width: 180px;
+    display: flex;
     position: relative;
 }
 
 .always-capsule {
     position: relative;
     animation: moveCapsule 1.3s infinite alternate;
+    max-width: 180px;
     width: 100%;
 }
 
