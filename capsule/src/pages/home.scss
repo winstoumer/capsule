@@ -1,15 +1,23 @@
 .general {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     gap: 10px;
     flex-wrap: nowrap;
     height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.balance {
+    margin-top: 20px;
+    font-size: 54px;
+    font-weight: 600;
 }
 
 .watch-capsule {
-    max-width: 200px;
+    max-width: 180px;
     position: relative;
 }
 
