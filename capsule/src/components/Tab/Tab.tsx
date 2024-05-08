@@ -1,3 +1,4 @@
+import './tab.scss';
 import React, { useState } from 'react';
 
 interface TabProps {

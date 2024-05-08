@@ -1,8 +1,10 @@
 // src/pages/Earn.tsx
 import './earn.scss';
 import React from 'react';
-import { Navigation } from "../components/Navigation/Navigation";
 import Tab from '../components/Tab/Tab';
+import { Navigation } from "../components/Navigation/Navigation";
+import { EarnComponent } from "../components/Earn/EarnComponent";
+import { ReferralComponent } from "../components/Referral/ReferralComponent";
 
 const Earn: React.FC = () => {
 
@@ -10,8 +12,8 @@ const Earn: React.FC = () => {
         <div className='content'>
             <Tab
                 tabs={[
-                    { title: 'Earn', content: <div>Содержимое для вкладки 1</div> },
-                    { title: 'Referral', content: <div>Содержимое для вкладки 2</div> },
+                    { title: 'Earn', content: <EarnComponent /> },
+                    { title: 'Referral', content: <ReferralComponent /> },
                 ]}
             />
             <Navigation />
