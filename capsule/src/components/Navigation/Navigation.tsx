@@ -9,7 +9,7 @@ export const Navigation = () => {
                 <Link to="/">Capsule</Link>
             </div>
             <div className="nav-b">
-                <Link to="/">Earn</Link>
+                <Link to="/earn">Earn</Link>
             </div>
             <div className="nav-b color-nft">
                 <Link to="/">Nft</Link>
