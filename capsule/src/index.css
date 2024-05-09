@@ -49,12 +49,12 @@ h1 {
   scrollbar-color: #666 transparent;
 
   &::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
   }
 
   &::-webkit-scrollbar-thumb {
-    background-color: #666;
-    border-radius: 4px;
+    background-color: #15111a;
+    border-radius: 3px;
   }
 
   &::-webkit-scrollbar-track {
