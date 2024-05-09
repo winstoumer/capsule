@@ -22,7 +22,7 @@ const HomePage: React.FC = () => {
       <div className='general'>
         <div className='balance'>120</div>
         <div className='watch-capsule'>
-          <img src="https://i.ibb.co/F0N6Xzt/Untitled.png" className='always-capsule' />
+          <img src="/capsule.png" className='always-capsule' />
         </div>
         <ActiveTime />
         <div className='active-signal'>

@@ -13,7 +13,7 @@ const Tab: React.FC<TabProps> = ({ tabs }) => {
   };
 
   return (
-    <div className='tabs'>
+    <div className='tabs custom-scroll'>
       <div className='tabs-buttons'>
         {tabs.map((tab, index) => (
           <button
