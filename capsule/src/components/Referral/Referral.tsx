@@ -1,6 +1,6 @@
-import './referralComponent.scss';
+import './referral.scss';
 
-export const ReferralComponent = () => {
+export const Referral = () => {
 
     return <div className='referral-container'>
         <div className='referral-watch'>

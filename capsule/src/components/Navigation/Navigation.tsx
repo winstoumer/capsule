@@ -12,7 +12,7 @@ export const Navigation = () => {
                 <Link to="/earn">Earn</Link>
             </div>
             <div className="nav-b color-nft">
-                <Link to="/">Nft</Link>
+                <Link to="/nft">Nft</Link>
             </div>
         </div>
     </div>

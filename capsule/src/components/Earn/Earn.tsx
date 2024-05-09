@@ -1,6 +1,6 @@
-import './earnComponent.scss';
+import './earn.scss';
 
-export const EarnComponent = () => {
+export const Earn = () => {
 
     return <div className='tasks'>
         <div className='task'>

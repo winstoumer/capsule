@@ -1,11 +1,11 @@
-// src/pages/Home.tsx
+// src/pages/HomePage.tsx
 import './home.scss';
 import React, { useState, useEffect } from 'react';
 import { Header } from "../components/Header/Header";
 import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 
-const Home: React.FC = () => {
+const HomePage: React.FC = () => {
   const [activeText, setActiveText] = useState("Active..");
 
   useEffect(() => {
@@ -34,4 +34,4 @@ const Home: React.FC = () => {
   );
 }
 
-export default Home;
+export default HomePage;
