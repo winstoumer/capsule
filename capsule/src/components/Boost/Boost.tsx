@@ -5,6 +5,7 @@ import './boost.scss';
 interface Level {
     id: number;
     name: string;
+    image: string;
     coins: number;
     time: number;
     mines_nft: boolean;
@@ -14,9 +15,9 @@ interface Level {
 export const Boost: React.FC = () => {
     const [balance, setBalance] = useState(1600); // Устанавливаем начальный баланс
     const levels: Level[] = [
-        { id: 1, name: 'LvL 1', coins: 100, time: 1, mines_nft: false, price: 160 },
-        { id: 2, name: 'LvL 2', coins: 200, time: 4, mines_nft: true, price: 340 },
-        { id: 3, name: 'LvL 3', coins: 300, time: 6, mines_nft: true, price: 1020 }
+        { id: 1, name: 'LvL 1', image: 'capsule_v_1.png', coins: 100, time: 1, mines_nft: false, price: 160 },
+        { id: 2, name: 'LvL 2', image: 'capsule_v_2.png', coins: 200, time: 4, mines_nft: true, price: 340 },
+        { id: 3, name: 'LvL 3', image: 'capsule_v_3.png', coins: 300, time: 6, mines_nft: true, price: 1020 }
     ];
 
     const [currentLevel, setCurrentLevel] = useState(levels[0]);
@@ -45,7 +46,7 @@ export const Boost: React.FC = () => {
             </div>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
                 <div className='boost-item'>
-                    <img src="capsule_v_2.png" className='boost-item-image' alt="Boost Item" />
+                    <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
                 </div>
                 <div className='boost-info'>
                     <div className='boost-name'>{currentLevel.name}</div>
