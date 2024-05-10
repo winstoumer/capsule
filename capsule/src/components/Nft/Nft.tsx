@@ -3,7 +3,16 @@ import './nft.scss';
 export const Nft = () => {
 
     return <div className='default-page nft-container'>
-        <img src="/preview_nft.png" className='preview-nft' />
+        <div className='preview-nft'>
+            <div className='card'>
+                <div className='face front'>
+                    <img src="/preview_nft.png" />
+                </div>
+                <div className='face back'>
+                    <img src="/preview_nft.png" />
+                </div>
+            </div>
+        </div>
         <div className='nft-description'>
             <div className='nft-preview-title'>
                 You have mined <span className='color-purple'>1</span> nft

@@ -12,9 +12,9 @@ export const Boost = () => {
             </div>
             <div className='boost-info'>
                 <div className='boost-name'>LvL 2</div>
-                <div className='boost-param'>(200/h)</div>
+                <div className='boost-param'>200/h</div>
                 <div className='boost-param'>
-                    <span className='color-purple'>(mines nft)</span>
+                    <span className='color-purple'>Mines NFT</span>
                 </div>
             </div>
             <button className='default-button'>Upgrade</button>

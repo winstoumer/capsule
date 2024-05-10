@@ -7,7 +7,7 @@ export const ActiveTime = () => {
             1h 12m
         </div>
         <div className='info-for'>
-            (100/h)
+            100/h
         </div>
     </div>
 };
