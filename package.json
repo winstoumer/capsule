@@ -1,8 +1,9 @@
 {
-    "name": "capsule",
-    "version": "1.0.0",
-    "scripts": {
-      "start": "cd capsule && npm run dev"
-    }
+  "name": "capsule",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cd capsule && npm run dev",
+    "build": "cd capsule && tsc && vite build"
   }
+}
   
