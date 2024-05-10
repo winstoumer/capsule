@@ -52,6 +52,7 @@ export const Boost: React.FC = () => {
                 {user.balance}
             </div>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
+<<<<<<< HEAD
                 {nextLevel ? (
                     <div className='boost-item'>
                         <img src={nextLevel.image} className='boost-item-image' alt="Boost Item" />
@@ -61,6 +62,11 @@ export const Boost: React.FC = () => {
                         <img src={userLevel.image} className='boost-item-image' alt="Boost Item" />
                     </div>
                 )}
+=======
+                <div className='boost-item'>
+                    <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
+                </div>
+>>>>>>> eb561c26957a3fc964db490c304cd530d2c77bf8
                 <div className='boost-info'>
                     {nextLevel ? (
                         <div className='boost-name'>{nextLevel.name}</div>
