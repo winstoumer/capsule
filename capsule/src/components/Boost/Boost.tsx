@@ -1,5 +1,5 @@
 import './boost.scss';
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 export const Boost = () => {
     const [animate, setAnimate] = useState(false);
