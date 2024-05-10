@@ -41,7 +41,7 @@ export const Earn = () => {
                 Follow Capsule on TikTok
             </div>
             <div className='task-reward'>
-                60
+                70
             </div>
             <div className='task-start'>
                 <button className='default-button'>Go</button>
