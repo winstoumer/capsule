@@ -18,6 +18,13 @@
 
 .boost-item-image {
     width: 220px;
+    position: relative;
+    animation: bounce 0.5s ease;
+}
+
+@keyframes bounce {
+    0% { transform: translateY(-50px); }
+    100% { transform: translateY(0px); }
 }
 
 .boost-info {
