@@ -14,10 +14,15 @@
 
 .boost-item {
     display: flex;
+    max-width: 220px;
+    max-height: 220px;
+    width: 100%;
 }
 
 .boost-item-image {
-    width: 220px;
+    max-width: 220px;
+    max-height: 220px;
+    width: 100%;
     position: relative;
     animation: bounce 0.5s ease;
 }
