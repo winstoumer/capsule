@@ -8,7 +8,7 @@ export const Earn = () => {
                 Follow Capsule Community on telegram
             </div>
             <div className='task-reward'>
-                50
+                10
             </div>
             <div className='task-start'>
                 <button className='default-button'>Go</button>
@@ -19,7 +19,7 @@ export const Earn = () => {
                 Follow Capsule on X
             </div>
             <div className='task-reward'>
-                50
+                30
             </div>
             <div className='task-start'>
                 <button className='default-button'>Go</button>
@@ -27,10 +27,10 @@ export const Earn = () => {
         </div>
         <div className='task'>
             <div className='task-name'>
-                Follow Capsule on X
+                Follow Capsule on Instagram
             </div>
             <div className='task-reward'>
-                50
+                20
             </div>
             <div className='task-start'>
                 <button className='default-button'>Go</button>
@@ -38,10 +38,10 @@ export const Earn = () => {
         </div>
         <div className='task'>
             <div className='task-name'>
-                Follow Capsule on X
+                Follow Capsule on TikTok
             </div>
             <div className='task-reward'>
-                50
+                60
             </div>
             <div className='task-start'>
                 <button className='default-button'>Go</button>

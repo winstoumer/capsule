@@ -1,0 +1,40 @@
+.evently-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.boost-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.boost-item {
+    display: flex;
+}
+
+.boost-item-image {
+    width: 220px;
+}
+
+.boost-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    align-items: center;
+}
+
+.boost-name {
+    font-size: 24px;
+    font-weight: 500;
+}
+
+.boost-param {
+    color: #4a5054;
+    font-size: 14px;
+    font-weight: 300;
+    text-align: center;
+}
