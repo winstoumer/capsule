@@ -35,6 +35,7 @@ body {
   flex-direction: column;
   place-items: start;
   min-width: 320px;
+  overflow: hidden;
 }
 
 /* scroll */
