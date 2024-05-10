@@ -9,6 +9,9 @@ export const Navigation = () => {
                 <Link to="/">Capsule</Link>
             </div>
             <div className="nav-b">
+                <Link to="/boost">Boost</Link>
+            </div>
+            <div className="nav-b">
                 <Link to="/earn">Earn</Link>
             </div>
             <div className="nav-b color-nft">
