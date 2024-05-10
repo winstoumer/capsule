@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "cd capsule && npm run dev",
-    "build": "cd capsule && tsc && vite build"
+    "build": "cd capsule && mkdir -p dist && npx tsc && vite build"
   }
 }
   
