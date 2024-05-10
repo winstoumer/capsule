@@ -11,12 +11,6 @@
     align-items: center;
     gap: 15px;
     overflow: hidden;
-    position: relative;
-
-    &.boost-last-level {
-        padding-top: 46px;
-        transition: padding-top 1s ease;
-    }
 }
 
 .boost-container-animate {
@@ -31,6 +25,19 @@
     100% {
         transform: translateX(0);
         opacity: 1;
+    }
+}
+
+.boost-last-level {
+    animation: slideLastLevel 0.4s ease forwards;
+}
+
+@keyframes slideLastLevel {
+    0% {
+        padding-top: 36px;
+    }
+    100% {
+        padding-top: 0px;
     }
 }
 
