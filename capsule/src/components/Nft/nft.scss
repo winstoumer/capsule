@@ -38,3 +38,20 @@
         transform: rotate(360deg);
     }
 }
+
+.nft-preview-title {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.nft-description {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.price-mint {
+    font-size: 16px;
+    font-weight: 500;
+}
