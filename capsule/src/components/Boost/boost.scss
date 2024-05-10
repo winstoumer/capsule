@@ -11,6 +11,12 @@
     align-items: center;
     gap: 15px;
     overflow: hidden;
+    position: relative;
+
+    &.boost-last-level {
+        padding-top: 46px;
+        transition: padding-top 1s ease;
+    }
 }
 
 .boost-container-animate {

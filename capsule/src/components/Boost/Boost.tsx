@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './boost.scss';
 
@@ -33,25 +33,38 @@ export const Boost: React.FC = () => {
     const userLevel = levels[currentLevelIndex];
 
     const [animate, setAnimate] = useState(false);
+    const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
 
     const handleUpgrade = () => {
         if (nextLevel && user.balance >= nextLevel.price) {
             setUser({ ...user, level: nextLevel.id });
-            setAnimate(true);
-            setTimeout(() => {
-                setAnimate(false);
-            }, 500);
+            if (nextLevel.id !== levels[levels.length - 1].id) {
+                setAnimate(true);
+                setTimeout(() => {
+                    setAnimate(false);
+                }, 500);
+            }
+        } else if (nextLevel && user.balance < nextLevel.price) {
+            alert('Недостаточно средств для покупки!');
         } else {
-            alert('Недостаточно средств для покупки или вы достигли максимального уровня!');
+            alert('Вы достигли максимального уровня!');
         }
     };
+
+    useEffect(() => {
+        if (!nextLevel) {
+            setLastLevelAnimation(true);
+        } else {
+            setLastLevelAnimation(false);
+        }
+    }, [nextLevel]);
 
     return (
         <div className='default-page evently-container'>
             <div className='balance'>
                 {user.balance}
             </div>
-            <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
+            <div className={`boost-container ${animate ? 'boost-container-animate' : ''} ${lastLevelAnimation ? 'boost-last-level' : ''}`}>
                 {nextLevel ? (
                     <div className='boost-item'>
                         <img src={nextLevel.image} className='boost-item-image' alt="Boost Item" />
