@@ -5,7 +5,7 @@ export const Header = () => {
     return <header>
         <div className='header-width'>
             <div className="header-b">
-                winstoumer
+                Bob
             </div>
             <div className="header-b">
                 <button className='connect-wallet-button'>Connect wallet</button>
