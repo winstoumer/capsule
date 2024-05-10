@@ -49,6 +49,7 @@ h1 {
   scrollbar-color: #666 transparent;
 
   &::-webkit-scrollbar {
+    display: none;
     width: 6px;
   }
 
