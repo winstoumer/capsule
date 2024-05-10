@@ -14,7 +14,7 @@
 }
 
 .boost-container-animate {
-    animation: slideAndAppear 1s ease forwards; // Объединенная анимация
+    animation: slideAndAppear 0.5s ease forwards; // Объединенная анимация
 }
 
 @keyframes slideAndAppear {
@@ -22,13 +22,9 @@
         transform: translateX(500%); // Сдвиг вправо за пределы экрана
         opacity: 0; // Начальная прозрачность
     }
-    50% {
-        transform: translateX(-10%); // Временный сдвиг влево для плавного появления
-        opacity: 0.5; // Половина прозрачности на полпути
-    }
     100% {
-        transform: translateX(0); // Возвращение на место
-        opacity: 1; // Полная прозрачность
+        transform: translateX(0);
+        opacity: 1;
     }
 }
 
@@ -69,4 +65,9 @@
     font-size: 16px;
     font-weight: 300;
     text-align: center;
+}
+
+.price-item {
+    font-size: 18px;
+    font-weight: 500;
 }
