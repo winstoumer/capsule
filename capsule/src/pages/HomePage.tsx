@@ -14,7 +14,6 @@ const HomePage: React.FC = () => {
       <PageComponent>
         <Header />
         <div className='general'>
-          <PlanetAnimation />
           <div className='balance'>120</div>
           <div className='watch-capsule'>
             <img src="/capsule_v_1.png" className='always-capsule' />
@@ -23,6 +22,7 @@ const HomePage: React.FC = () => {
         </div>
         <Navigation />
       </PageComponent>
+      <PlanetAnimation />
     </div>
   );
 }

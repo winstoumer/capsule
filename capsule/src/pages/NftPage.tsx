@@ -4,6 +4,7 @@ import React from 'react';
 import { Navigation } from "../components/Navigation/Navigation";
 import { Nft } from "../components/Nft/Nft";
 import PageComponent from '../components/PageComponent/PageComponent';
+import PlanetAnimation from '../components/Planet/Planet';
 
 const NftPage: React.FC = () => {
 
@@ -13,6 +14,7 @@ const NftPage: React.FC = () => {
                 <Nft />
                 <Navigation />
             </PageComponent>
+            <PlanetAnimation />
         </div>
     );
 }

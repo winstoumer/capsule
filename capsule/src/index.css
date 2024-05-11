@@ -81,6 +81,7 @@ body {
 /* colors */
 
 .content {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -88,6 +89,7 @@ body {
   height: 100%;
   padding-left: 30px;
   padding-right: 30px;
+  z-index: 1;
 }
 
 .default-page {

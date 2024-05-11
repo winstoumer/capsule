@@ -24,7 +24,7 @@ const Planet: React.FC<PlanetProps> = ({ size, color, top, left }) => {
 };
 
 const PlanetAnimation: React.FC = () => {
-  const planetColors = ['#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933'];
+  const planetColors = ['#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933'];
 
   const generateRandomPosition = (): string => {
     return `${Math.floor(Math.random() * 100)}%`;
