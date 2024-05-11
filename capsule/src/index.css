@@ -12,9 +12,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+
   --general-color-blue: #4c2efc;
   --general-color-darkblue: #05002c;
-  
+
   --color-text-info: #4a5054;
 }
 
@@ -63,6 +68,7 @@ body {
     background-color: transparent;
   }
 }
+
 /* end scroll */
 
 /* colors */
