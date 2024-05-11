@@ -20,12 +20,10 @@ export const Header: React.FC = () => {
     return <header>
         <div className='header-width'>
             <div className="header-b">
-                {userData && userData.first_name ? (
-                    <>
-                        {userData.first_name}
-                    </>
+                {userData ? (
+                    <>{userData.first_name}</>
                 ) : (
-                    <></>
+                    <span></span>
                 )}
             </div>
             <div className="header-b">
