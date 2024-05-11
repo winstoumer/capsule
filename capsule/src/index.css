@@ -11,6 +11,11 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  --general-color-blue: #4c2efc;
+  --general-color-darkblue: #010b12;
+  
+  --color-text-info: #4a5054;
 }
 
 a {
@@ -42,7 +47,7 @@ body {
 .custom-scroll {
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #666 transparent;
+  scrollbar-color: #ffffff transparent;
 
   &::-webkit-scrollbar {
     display: none;
@@ -70,7 +75,7 @@ body {
 }
 
 .color-blue {
-  color: #4815ff;
+  color: var(--general-color-blue);
 }
 
 /* colors */
@@ -94,8 +99,8 @@ body {
 .default-button {
   font-size: 16px;
   font-weight: 500;
-  color: #4815ff;
-  background-color: #010b12;
+  color: var(--general-color-blue);
+  background-color: var(--general-color-darkblue);
   height: 36px;
   padding: 0 20px;
   border-radius: 20px;
@@ -118,7 +123,7 @@ button {
   }
 
   a:hover {
-    color: #4815ff;
+    color: var(--general-color-blue);
   }
 
   button {

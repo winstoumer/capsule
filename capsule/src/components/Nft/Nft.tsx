@@ -9,7 +9,7 @@ export const Nft = () => {
                     <img src="/preview_nft.png" />
                 </div>
                 <div className='face back'>
-                    <img src="/nft_card_back.png" />
+                    <img src="/preview_nft_back.jpeg" />
                 </div>
             </div>
         </div>

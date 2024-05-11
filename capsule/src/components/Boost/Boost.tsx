@@ -88,11 +88,11 @@ export const Boost: React.FC = () => {
                     )}
                     {nextLevel && nextLevel.mines_nft ? (
                         <div className='boost-param'>
-                            <span className='color-purple'>Mines NFT</span>
+                            <span className='color-purple'>NFT</span>
                         </div>
                     ) : (
                         <div className='boost-param'>
-                            <span className='color-purple'>Mines NFT</span>
+                            <span className='color-purple'>NFT</span>
                         </div>
                     )}
                 </div>
