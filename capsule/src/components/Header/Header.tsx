@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './header.scss';
 
 type TelegramUserData = {
@@ -8,7 +8,7 @@ type TelegramUserData = {
     username?: string;
 };
 
-export const Header = () => {
+export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
 
     useEffect(() => {
