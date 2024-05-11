@@ -97,7 +97,7 @@ body {
 
 /* buttons */
 .default-button {
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 500;
   color: var(--general-color-blue);
   background-color: var(--general-color-darkblue);
