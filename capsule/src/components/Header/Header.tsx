@@ -15,12 +15,12 @@ export const Header: React.FC = () => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
         }
-    }, []);    
+    }, []);
 
     return <header>
         <div className='header-width'>
             <div className="header-b">
-                {userData ? (
+                {userData && userData.first_name ? (
                     <>
                         {userData.first_name}
                     </>
