@@ -1,6 +1,5 @@
 // components/PageComponent/PageComponent.tsx
 import React, { useEffect, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 interface PageComponentProps {
   children: ReactNode;
