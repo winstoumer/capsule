@@ -19,7 +19,7 @@ interface Level {
 }
 
 export const Boost: React.FC = () => {
-    const [user, setUser] = useState<User>({ user_id: 1, balance: 1600, level: 1 });
+    const [user, setUser] = useState<User>({ user_id: 1, balance: 8600, level: 1 });
 
     const levels: Level[] = [
         { id: 1, name: 'LvL 1', image: 'capsule_v_1.png', coins: 100, time: 1, mines_nft: false, price: 160 },
