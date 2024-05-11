@@ -8,6 +8,7 @@ import EarnPage from './pages/EarnPage';
 import NftPage from './pages/NftPage';
 
 function App() {
+
   return (
     <Router>
       <Routes>

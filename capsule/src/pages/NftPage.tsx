@@ -5,7 +5,7 @@ import { Navigation } from "../components/Navigation/Navigation";
 import { Nft } from "../components/Nft/Nft";
 
 const NftPage: React.FC = () => {
-
+    
     return (
         <div className='content'>
             <Nft />
