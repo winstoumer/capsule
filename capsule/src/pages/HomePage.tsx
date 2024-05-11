@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Header } from "../components/Header/Header";
 import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
+import PageComponent from '../components/PageComponent/PageComponent';
 
 const HomePage: React.FC = () => {
   const [activeText, setActiveText] = useState("Active..");
@@ -18,18 +19,20 @@ const HomePage: React.FC = () => {
 
   return (
     <div className='content'>
-      <Header />
-      <div className='general'>
-        <div className='balance'>120</div>
-        <div className='watch-capsule'>
-          <img src="/capsule_v_1.png" className='always-capsule' />
+      <PageComponent>
+        <Header />
+        <div className='general'>
+          <div className='balance'>120</div>
+          <div className='watch-capsule'>
+            <img src="/capsule_v_1.png" className='always-capsule' />
+          </div>
+          <ActiveTime />
+          <div className='active-signal'>
+            {activeText}
+          </div>
         </div>
-        <ActiveTime />
-        <div className='active-signal'>
-          {activeText}
-        </div>
-      </div>
-      <Navigation />
+        <Navigation />
+      </PageComponent>
     </div>
   );
 }
