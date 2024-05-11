@@ -6,7 +6,6 @@ import { Navigation } from "../components/Navigation/Navigation";
 import { Earn } from "../components/Earn/Earn";
 import { Referral } from "../components/Referral/Referral";
 import PageComponent from '../components/PageComponent/PageComponent';
-import PlanetAnimation from '../components/Planet/Planet';
 
 const EarnPage: React.FC = () => {
 
@@ -21,7 +20,6 @@ const EarnPage: React.FC = () => {
                 />
                 <Navigation />
             </PageComponent>
-            <PlanetAnimation />
         </div>
     );
 }

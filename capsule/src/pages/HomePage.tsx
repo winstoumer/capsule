@@ -5,7 +5,6 @@ import { Header } from "../components/Header/Header";
 import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import PageComponent from '../components/PageComponent/PageComponent';
-import PlanetAnimation from '../components/Planet/Planet';
 
 const HomePage: React.FC = () => {
 
@@ -22,7 +21,6 @@ const HomePage: React.FC = () => {
         </div>
         <Navigation />
       </PageComponent>
-      <PlanetAnimation />
     </div>
   );
 }
