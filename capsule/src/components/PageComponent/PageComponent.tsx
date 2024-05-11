@@ -1,4 +1,3 @@
-// components/PageComponent/PageComponent.tsx
 import React, { useEffect, ReactNode } from 'react';
 
 interface PageComponentProps {
@@ -22,7 +21,7 @@ const PageComponent: React.FC<PageComponentProps> = ({ children }) => {
     };
 
     loadScript();
-  });
+  }, []);
 
   return <>{children}</>;
 };
