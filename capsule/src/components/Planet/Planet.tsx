@@ -40,7 +40,7 @@ const PlanetAnimation: React.FC = () => {
 
   return (
     <div className="planetContainer">
-      {[...Array(5)].map(() => generateRandomPlanet())}
+      {[...Array(30)].map(() => generateRandomPlanet())}
     </div>
   );
 };
