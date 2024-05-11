@@ -28,27 +28,6 @@
     width: 100%;
 }
 
-.active-signal {
-    font-size: 18px;
-    font-weight: 300;
-    opacity: 0;
-    animation: activeSignal 2s ease infinite;
-    background-color: transparent;
-    color: #002ed5;
-}
-
-@keyframes activeSignal {
-
-    0%,
-    100% {
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
-}
-
 @keyframes moveCapsule {
     0% {
         top: -6px;
