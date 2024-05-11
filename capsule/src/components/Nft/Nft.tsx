@@ -12,6 +12,9 @@ export const Nft = () => {
                     <img src="/preview_nft_back.jpeg" />
                 </div>
             </div>
+            <div className='glow-card'>
+                <div className='glow-nft'></div>
+            </div>
         </div>
         <div className='nft-description'>
             <div className='nft-preview-title'>

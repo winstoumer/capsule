@@ -9,13 +9,33 @@
     width: 240px;
     height: 240px;
     perspective: 1000px;
+    position: relative;
+}
+
+.glow-card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    padding: 200px;
+    transform: translate(-50%, -50%);
+    z-index: 90;
+}
+
+.glow-nft {
+    width: 80px;
+    height: 80px;
+    background-color: black;
+    border-radius: 100%;
+    box-shadow: 0 0 10000px #9211d7;
 }
 
 .card {
+    position: relative;
     width: 100%;
     height: 100%;
     transform-style: preserve-3d;
     animation: rotateCard 6s linear infinite;
+    z-index: 100;
 }
 
 .face {
