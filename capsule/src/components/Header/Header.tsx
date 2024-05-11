@@ -22,7 +22,7 @@ export const Header = () => {
             <div className="header-b">
                 {userData ? (
                     <>
-                        {userData.first_name}
+                        {userData.username}
                     </>
                 ) : (
                     <></>
