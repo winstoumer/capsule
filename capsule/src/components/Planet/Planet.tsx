@@ -17,21 +17,21 @@ const Planet: React.FC<PlanetProps> = ({ size, color, top, left }) => {
     position: 'absolute',
     top,
     left,
-    animation: `scaleAnimation 10s infinite alternate`,
+    animation: `scaleAnimation 3s infinite alternate`,
   };
 
   return <div className="planet" style={planetStyle} />;
 };
 
 const PlanetAnimation: React.FC = () => {
-  const planetColors = ['#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933', '#15013E', '#FFF198', '#0D0F12', '#AA0123', '#002933'];
+  const planetColors = ['#15013E', '#FFF198', '#0D0F12', '#873B7C', '#002933', '#15013E', '#FFF198', '#0D0F12', '#873B7C', '#002933', '#15013E', '#FFF198', '#0D0F12', '#873B7C', '#002933', '#15013E', '#FFF198', '#0D0F12', '#873B7C', '#002933', '#15013E', '#FFF198', '#0D0F12', '#873B7C', '#002933', '#15013E', '#FFF198', '#0D0F12', '#873B7C', '#002933'];
 
   const generateRandomPosition = (): string => {
     return `${Math.floor(Math.random() * 100)}%`;
   };
 
   const generateRandomPlanet = (): JSX.Element => {
-    const size = Math.floor(Math.random() * (20 - 20 + 1)) + 6;
+    const size = Math.floor(Math.random() * (20 - 20 + 1)) + 3;
     const color = planetColors[Math.floor(Math.random() * planetColors.length)];
     const top = generateRandomPosition();
     const left = generateRandomPosition();
