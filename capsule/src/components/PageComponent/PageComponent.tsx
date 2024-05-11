@@ -14,7 +14,6 @@ const PageComponent: React.FC<PageComponentProps> = ({ children }) => {
       script.onload = () => {
         if (window.Telegram && window.Telegram.WebApp) {
           window.Telegram.WebApp.setHeaderColor('#000000');
-          window.Telegram.WebApp.headerColor('#4815ff');
           window.Telegram.WebApp.expand();
         }
       };
