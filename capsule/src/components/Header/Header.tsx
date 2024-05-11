@@ -12,10 +12,10 @@ export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
 
     useEffect(() => {
-        if (window.Telegram.WebApp) {
+        if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
         }
-    }, []);
+    }, []);    
 
     return <header>
         <div className='header-width'>
