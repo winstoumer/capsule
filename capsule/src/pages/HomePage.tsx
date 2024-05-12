@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import './home.scss';
 import { Header } from "../components/Header/Header";
 import { Navigation } from "../components/Navigation/Navigation";
@@ -10,7 +10,19 @@ const HomePage: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const fetchBalance = useCallback(async (telegramUserId: string) => {
+  useEffect(() => {
+    if (window.Telegram && window.Telegram.WebApp) {
+      setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (userData && userData.id) {
+      fetchBalance(userData.id.toString());
+    }
+  }, [userData]);
+
+  const fetchBalance = async (telegramUserId: string) => {
     try {
       const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/balance/${telegramUserId}`);
       if (!response.ok) {
@@ -23,19 +35,7 @@ const HomePage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
-
-  useEffect(() => {
-    if (window.Telegram && window.Telegram.WebApp) {
-      setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (userData && userData.id) {
-      fetchBalance(userData.id.toString());
-    }
-  }, [userData, fetchBalance]);
+  };
 
   if (loading) {
     return <div></div>;
