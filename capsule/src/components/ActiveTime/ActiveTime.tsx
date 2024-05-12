@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import './activeTime.scss';
-import { Loading } from '../Loading/Loading';
 
 interface MiningData {
     active: boolean;
