@@ -9,35 +9,46 @@ interface MiningData {
 }
 
 export const ActiveTime = () => {
+    const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchMiningData = async () => {
-            try {
-                const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentMining/ready/987654321');
-                if (!response.ok) {
-                    throw new Error('Ошибка при загрузке данных о текущей активности');
-                }
-                const data: MiningData = await response.json();
-                setMiningInfo(data);
-                setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : "Inactive"));
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
+        if (window.Telegram && window.Telegram.WebApp) {
+            setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (userData && userData.id) {
+            fetchMiningData(userData.id.toString());
+        }
+    }, [userData]);
+
+    const fetchMiningData = async (telegramUserId: string) => {
+        try {
+            const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentMining/ready/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Ошибка при загрузке данных о текущей активности');
             }
-        };
+            const data: MiningData = await response.json();
+            setMiningInfo(data);
+            setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : "Inactive"));
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-        fetchMiningData();
-
+    useEffect(() => {
         const interval = setInterval(() => {
             setActiveText(prevText => prevText === "Active.." ? "Mined nft.." : "Active..");
         }, 2000);
 
         return () => clearInterval(interval);
-    }, []);
+    });
 
     if (loading) {
         return <div></div>;
