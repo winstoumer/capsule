@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './boost.scss';
 
-interface User {
-    user_id: number;
+interface UserData {
     balance: number;
     level: number;
 }
@@ -19,7 +18,28 @@ interface Level {
 }
 
 export const Boost: React.FC = () => {
-    const [user, setUser] = useState<User>({ user_id: 1, balance: 8600, level: 1 });
+
+    const [user, setUser] = useState<UserData | null>(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchUserData = async () => {
+            try {
+                const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/user/info/987654321');
+                if (!response.ok) {
+                    throw new Error('Ошибка при загрузке данных пользователя');
+                }
+                const userData = await response.json();
+                setUser(userData[0]);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchUserData();
+    }, []);
 
     const levels: Level[] = [
         { id: 1, name: 'Level 1', image: 'capsule_v_1.png', coins: 100, time: 1, mines_nft: false, price: 160 },
@@ -28,16 +48,15 @@ export const Boost: React.FC = () => {
         { id: 4, name: 'Level 4', image: 'capsule_v_6.jpeg', coins: 600, time: 12, mines_nft: true, price: 4220 }
     ];
 
-    const currentLevelIndex = levels.findIndex(level => level.id === user.level);
-    const nextLevel = levels[currentLevelIndex + 1];
-
-    const userLevel = levels[currentLevelIndex];
+    const currentLevelIndex = user ? levels.findIndex(level => level.id === user.level) : -1;
+    const nextLevel = currentLevelIndex !== -1 ? levels[currentLevelIndex + 1] : null;
+    const userLevel = currentLevelIndex !== -1 ? levels[currentLevelIndex] : null;
 
     const [animate, setAnimate] = useState(false);
     const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
 
     const handleUpgrade = () => {
-        if (nextLevel && user.balance >= nextLevel.price) {
+        if (nextLevel && user && user.balance >= nextLevel.price) {
             setUser({ ...user, level: nextLevel.id });
             if (nextLevel.id !== levels[levels.length - 1].id) {
                 setAnimate(true);
@@ -45,7 +64,7 @@ export const Boost: React.FC = () => {
                     setAnimate(false);
                 }, 500);
             }
-        } else if (nextLevel && user.balance < nextLevel.price) {
+        } else if (nextLevel && user && user.balance < nextLevel.price) {
             alert('Недостаточно средств для покупки!');
         } else {
             alert('Вы достигли максимального уровня!');
@@ -60,6 +79,14 @@ export const Boost: React.FC = () => {
         }
     }, [nextLevel]);
 
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (!user) {
+        return <div>Данные о пользователе не найдены.</div>;
+    }
+
     return (
         <div className='default-page evently-container'>
             <div className='balance'>
@@ -72,19 +99,19 @@ export const Boost: React.FC = () => {
                     </div>
                 ) : (
                     <div className='boost-item'>
-                        <img src={userLevel.image} className='boost-item-image' alt="Boost Item" />
+                        <img src={userLevel!.image} className='boost-item-image' alt="Boost Item" />
                     </div>
                 )}
                 <div className='boost-info'>
                     {nextLevel ? (
                         <div className='boost-name'>{nextLevel.name}</div>
                     ) : (
-                        <div className='boost-name'>{userLevel.name}</div>
+                        <div className='boost-name'>{userLevel!.name}</div>
                     )}
                     {nextLevel ? (
                         <div className='boost-param'>{nextLevel.coins}/{nextLevel.time}h</div>
                     ) : (
-                        <div className='boost-param'>{userLevel.coins}/{userLevel.time}h</div>
+                        <div className='boost-param'>{userLevel!.coins}/{userLevel!.time}h</div>
                     )}
                     {nextLevel && nextLevel.mines_nft ? (
                         <div className='boost-param'>

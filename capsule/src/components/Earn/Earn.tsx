@@ -1,51 +1,56 @@
+import React, { useState, useEffect } from 'react';
 import './earn.scss';
 
-export const Earn = () => {
+interface Task {
+    id: number;
+    name: string;
+    reward: string;
+    active: boolean;
+    ready: boolean;
+}
 
-    return <div className='tasks'>
-        <div className='task'>
-            <div className='task-name'>
-                Follow Capsule Community on telegram
-            </div>
-            <div className='task-reward'>
-                10
-            </div>
-            <div className='task-start'>
-                <button className='default-button'>Go</button>
-            </div>
+export const Earn = () => {
+    const [tasks, setTasks] = useState<Task[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/task/987654321');
+                if (!response.ok) {
+                    throw new Error('Ошибка при загрузке списка задач');
+                }
+                const data = await response.json();
+                setTasks(data);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchTasks();
+    }, []);
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <div className='tasks'>
+            {tasks.map(task => (
+                <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
+                    <div className='task-name'>
+                        {task.name}
+                    </div>
+                    <div className='task-reward'>
+                        {task.reward}
+                    </div>
+                    <div className='task-start'>
+                        {!task.active || task.ready ? null : <button className='default-button'>Go</button>}
+                    </div>
+                </div>
+            ))}
         </div>
-        <div className='task'>
-            <div className='task-name'>
-                Follow Capsule on X
-            </div>
-            <div className='task-reward'>
-                30
-            </div>
-            <div className='task-start'>
-                <button className='default-button'>Go</button>
-            </div>
-        </div>
-        <div className='task'>
-            <div className='task-name'>
-                Follow Capsule on Instagram
-            </div>
-            <div className='task-reward'>
-                20
-            </div>
-            <div className='task-start'>
-                <button className='default-button'>Go</button>
-            </div>
-        </div>
-        <div className='task'>
-            <div className='task-name'>
-                Follow Capsule on TikTok
-            </div>
-            <div className='task-reward'>
-                70
-            </div>
-            <div className='task-start'>
-                <button className='default-button'>Go</button>
-            </div>
-        </div>
-    </div>
+    );
 };
