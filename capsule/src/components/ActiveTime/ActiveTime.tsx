@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import './activeTime.scss';
 
 interface MiningData {
@@ -12,7 +12,6 @@ export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -37,14 +36,8 @@ export const ActiveTime = () => {
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
         } catch (error) {
             console.error(error);
-        } finally {
-            setLoading(false);
         }
     };
-
-    if (loading) {
-        return <div></div>;
-    }
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -52,12 +45,7 @@ export const ActiveTime = () => {
         }, 2000);
 
         return () => clearInterval(interval);
-    }, []); // Передаем пустой массив зависимостей, чтобы предотвратить множественные создания таймеров.
-
-    // Мемоизируем активность, чтобы предотвратить ненужные рендеры
-    const activeSignal = useMemo(() => {
-        return activeText === "Mined nft.." ? 'color-purple' : '';
-    }, [activeText]);
+    });
 
     return (
         <>
@@ -71,7 +59,7 @@ export const ActiveTime = () => {
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
                 </div>
-                <div className={`active-signal ${activeSignal}`}>
+                <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
                     {activeText}
                 </div>
             </div>
