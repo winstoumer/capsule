@@ -19,27 +19,36 @@ interface Level {
 
 export const Boost: React.FC = () => {
 
+    const [userData, setUserData] = useState<any>(null);
     const [user, setUser] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchUserData = async () => {
-            try {
-                const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/user/info/987654321');
-                if (!response.ok) {
-                    throw new Error('Ошибка при загрузке данных пользователя');
-                }
-                const userData = await response.json();
-                setUser(userData[0]);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchUserData();
+        if (window.Telegram && window.Telegram.WebApp) {
+            setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
+        }
     }, []);
+
+    useEffect(() => {
+        if (userData && userData.id) {
+            fetchUserData(userData.id.toString());
+        }
+    }, [userData]);
+
+    const fetchUserData = async (telegramUserId: string) => {
+        try {
+            const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/user/info/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Ошибка при загрузке данных пользователя');
+            }
+            const userData = await response.json();
+            setUser(userData[0]);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const levels: Level[] = [
         { id: 1, name: 'Level 1', image: 'capsule_v_1.png', coins: 100, time: 1, mines_nft: false, price: 160 },
@@ -80,7 +89,7 @@ export const Boost: React.FC = () => {
     }, [nextLevel]);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div></div>;
     }
 
     if (!user) {
