@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import './activeTime.scss';
 
 interface MiningData {
@@ -45,7 +45,12 @@ export const ActiveTime = () => {
         }, 2000);
 
         return () => clearInterval(interval);
-    });
+    }, []); // Передаем пустой массив зависимостей, чтобы предотвратить множественные создания таймеров.
+
+    // Мемоизируем активность, чтобы предотвратить ненужные рендеры
+    const activeSignal = useMemo(() => {
+        return activeText === "Mined nft.." ? 'color-purple' : '';
+    }, [activeText]);
 
     return (
         <>
@@ -59,7 +64,7 @@ export const ActiveTime = () => {
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
                 </div>
-                <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
+                <div className={`active-signal ${activeSignal}`}>
                     {activeText}
                 </div>
             </div>
