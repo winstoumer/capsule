@@ -34,7 +34,7 @@ export const ActiveTime = () => {
             }
             const data: MiningData = await response.json();
             setMiningInfo(data);
-            setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : "Inactive"));
+            setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
         } catch (error) {
             console.error(error);
         } finally {
