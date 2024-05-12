@@ -6,27 +6,36 @@ import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import PageComponent from '../components/PageComponent/PageComponent';
 
 const HomePage: React.FC = () => {
+  const [userData, setUserData] = useState<any>(null);
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchBalance = async () => {
-      try {
-        const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/balance/987654321');
-        if (!response.ok) {
-          throw new Error('Ошибка при загрузке баланса пользователя');
-        }
-        const data = await response.json();
-        setBalance(parseFloat(data));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchBalance();
+    if (window.Telegram && window.Telegram.WebApp) {
+      setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
+    }
   }, []);
+
+  useEffect(() => {
+    if (userData && userData.id) {
+      fetchBalance(userData.id.toString());
+    }
+  }, [userData]);
+
+  const fetchBalance = async (telegramUserId: string) => {
+    try {
+      const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/balance/${telegramUserId}`);
+      if (!response.ok) {
+        throw new Error('Ошибка при загрузке баланса пользователя');
+      }
+      const data = await response.json();
+      setBalance(parseFloat(data));
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return <div></div>;
