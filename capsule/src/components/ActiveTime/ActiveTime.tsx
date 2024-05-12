@@ -12,7 +12,6 @@ export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
-    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -37,8 +36,6 @@ export const ActiveTime = () => {
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
         } catch (error) {
             console.error(error);
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -49,10 +46,6 @@ export const ActiveTime = () => {
 
         return () => clearInterval(interval);
     });
-
-    if (loading) {
-        return <div></div>;
-    }
 
     return (
         <>
