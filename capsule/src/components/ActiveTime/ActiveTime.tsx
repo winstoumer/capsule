@@ -13,7 +13,6 @@ export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
-    const [timeToNext, setTimeToNext] = useState<{ hours: number, minutes: number, seconds: number }>({ hours: 0, minutes: 0, seconds: 0 });
     const [currentTime, setCurrentTime] = useState<string>("");
 
     useEffect(() => {
@@ -67,28 +66,30 @@ export const ActiveTime = () => {
         }
     };
 
+    const [hours, setHoursLeft] = useState<number>(0);
+    const [minutes, setMinutesLeft] = useState<number>(0);
+    const [seconds, setSecondsLeft] = useState<number>(0);
+
     useEffect(() => {
-        if (miningInfo?.next_time) {
-            const updateCountdown = () => {
-                const currentNowTime = new Date(currentTime);
-                const nextTime = new Date(miningInfo.next_time.replace('T', ' ').replace('Z', ''));
-                const diffTime = Math.max(nextTime.getTime() - currentNowTime.getTime(), 0);
+        const updateCountdown = () => {
+            if (miningInfo) {
+                const currentNowTime = new Date(currentTime).getTime();
+                const nextTime = new Date(miningInfo.next_time.replace('T', ' ').replace('Z', '')).getTime();
+                const diffTime = nextTime - currentNowTime;
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                setTimeToNext({ hours, minutes, seconds });
-            };
+                setHoursLeft(hours);
+                setMinutesLeft(minutes);
+                setSecondsLeft(seconds);
+            }
+        };
 
-            updateCountdown();
+        updateCountdown();
+        const intervalId = setInterval(updateCountdown, 1000);
+        return () => clearInterval(intervalId);
 
-            // Выполняем обновление времени каждую секунду
-            const intervalId = setInterval(updateCountdown, 1000);
-
-            // Убираем интервал при размонтировании компонента
-            return () => clearInterval(intervalId);
-        }
-    }, [miningInfo, currentTime]);
-
+    }, [miningInfo]);
 
     return (
         <>
@@ -97,7 +98,7 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='time-left'>
-                    {timeToNext.hours}h {timeToNext.minutes}m {timeToNext.seconds}s
+                    {hours}h {minutes}m {seconds}s
                 </div>
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
