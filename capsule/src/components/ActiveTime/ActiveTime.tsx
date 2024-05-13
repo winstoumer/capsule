@@ -71,12 +71,15 @@ export const ActiveTime = () => {
         if (miningInfo?.next_time) {
             const currentNowTime = new Date(currentTime);
             const nextTime = new Date(miningInfo.next_time.replace('T', ' ').replace('Z', ''));
-            const diffTime = Math.max(nextTime.getTime() - currentNowTime.getTime(), 0);
+            let diffTime = Math.max(nextTime.getTime() - currentNowTime.getTime(), 0);
+            if (currentNowTime > nextTime) { // Проверяем, больше ли текущее время, чем следующее время
+                diffTime = 0; // Если текущее время больше, устанавливаем разницу в 0
+            }
             const hours = Math.floor(diffTime / (1000 * 60 * 60));
             const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
             setTimeToNext({ hours, minutes });
         }
-    }, [miningInfo, currentTime]);    
+    }, [miningInfo, currentTime]);
 
     return (
         <>
