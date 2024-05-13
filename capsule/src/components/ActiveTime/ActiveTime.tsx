@@ -52,11 +52,8 @@ export const ActiveTime = () => {
             const currentTimeFormatted = data.next_time.replace(' ', 'T');
             const nextTimeUTC = new Date(currentTimeFormatted);
 
-            nextTimeUTC.setHours(nextTimeUTC.getHours());
-            if (data.next_time) {
                 setNextTime(nextTimeUTC.toISOString());
                 localStorage.setItem('nextTime', nextTimeUTC.toISOString());
-            }
 
             setMiningInfo(data);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
