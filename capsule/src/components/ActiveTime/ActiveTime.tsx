@@ -14,6 +14,7 @@ export const ActiveTime = () => {
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
     const [timeToNext, setTimeToNext] = useState<{ hours: number, minutes: number }>({ hours: 0, minutes: 0 });
+    const [currentTime, setCurrentTime] = useState<string>("");
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -50,15 +51,32 @@ export const ActiveTime = () => {
     });
 
     useEffect(() => {
-        if (miningInfo?.next_time) {
-            const currentTime = new Date();
+        fetchCurrentTime();
+    }, []);
+
+    const fetchCurrentTime = async () => {
+        try {
+            const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentTime');
+            if (!response.ok) {
+                throw new Error('Ошибка при получении текущего времени с сервера');
+            }
+            const data = await response.json();
+            setCurrentTime(data.currentTime);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        if (miningInfo?.next_time && currentTime) {
+            const currentTimeUTC = new Date(currentTime + ' UTC');
             const nextTime = new Date(miningInfo.next_time);
-            const diffTime = Math.max(nextTime.getTime() - currentTime.getTime(), 0);
+            const diffTime = Math.max(nextTime.getTime() - currentTimeUTC.getTime(), 0);
             const hours = Math.floor(diffTime / (1000 * 60 * 60));
             const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
             setTimeToNext({ hours, minutes });
         }
-    }, [miningInfo]);
+    }, [miningInfo, currentTime]);
 
     return (
         <>
