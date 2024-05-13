@@ -110,15 +110,18 @@ export const ActiveTime = () => {
     useEffect(() => {
         const updateCoinsMined = () => {
             if (miningInfo && nextTime && currentTime) {
-                const currentNowTime = new Date(currentTime);
-                const currentNextTime = new Date(nextTime);
-                const diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
+                const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                if (diffTimeInSeconds < 0) {
+                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
+                }
                 const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
                 const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
                 setCurrentCoinsMined(coinsMinedSoFar);
             }
         };
-
+    
         updateCoinsMined();
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
