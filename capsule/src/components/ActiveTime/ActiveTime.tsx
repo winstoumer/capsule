@@ -40,8 +40,8 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const updatedTime = new Date(currentTime || 0);
-            const nextTime = new Date(miningInfo?.next_time || 0);
+            const updatedTime = new Date(currentTime.replace('T', ' ').replace('Z', '') || 0);
+            const nextTime = new Date(miningInfo?.next_time.replace('T', ' ').replace('Z', '') || 0);
             const diff = nextTime.getTime() - updatedTime.getTime();
             setCountdown(Math.max(0, Math.floor(diff / 1000)));
         }, 1000);
