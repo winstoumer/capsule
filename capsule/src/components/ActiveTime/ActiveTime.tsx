@@ -22,36 +22,6 @@ export const ActiveTime = () => {
     const [seconds, setSecondsLeft] = useState<number>(0);
 
     useEffect(() => {
-        const updateTime = (time: string) => {
-            const [datePart, timePart] = time.split(' ');
-            const [year, month, day] = datePart.split('-').map(Number);
-            const [hours, minutes, seconds] = timePart.split(':').map(Number);
-    
-            const currentDate = new Date(year, month - 1, day, hours, minutes, seconds);
-            currentDate.setSeconds(currentDate.getSeconds() + 1); // добавляем одну секунду
-    
-            const newYear = currentDate.getFullYear();
-            const newMonth = currentDate.getMonth() + 1; // добавляем 1, чтобы вернуться к нормальным месяцам
-            const newDay = currentDate.getDate();
-    
-            const newHours = currentDate.getHours();
-            const newMinutes = currentDate.getMinutes();
-            const newSeconds = currentDate.getSeconds();
-    
-            const updatedDate = `${newYear}-${String(newMonth).padStart(2, '0')}-${String(newDay).padStart(2, '0')}`;
-            const updatedTime = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')}`;
-    
-            const updatedDateTime = `${updatedDate} ${updatedTime}`;
-    
-            setCurrentTime(updatedDateTime);
-    
-            setTimeout(() => updateTime(updatedDateTime), 1000);
-        };
-    
-        updateTime(currentTime);
-    }, [currentTime]);
-
-    useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
         }
@@ -116,6 +86,36 @@ export const ActiveTime = () => {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        const updateTime = (time: string) => {
+            const [datePart, timePart] = time.split(' ');
+            const [year, month, day] = datePart.split('-').map(Number);
+            const [hours, minutes, seconds] = timePart.split(':').map(Number);
+
+            const currentDate = new Date(year, month - 1, day, hours, minutes, seconds);
+            currentDate.setSeconds(currentDate.getSeconds() + 1); // добавляем одну секунду
+
+            const newYear = currentDate.getFullYear();
+            const newMonth = currentDate.getMonth() + 1; // добавляем 1, чтобы вернуться к нормальным месяцам
+            const newDay = currentDate.getDate();
+
+            const newHours = currentDate.getHours();
+            const newMinutes = currentDate.getMinutes();
+            const newSeconds = currentDate.getSeconds();
+
+            const updatedDate = `${newYear}-${String(newMonth).padStart(2, '0')}-${String(newDay).padStart(2, '0')}`;
+            const updatedTime = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')}`;
+
+            const updatedDateTime = `${updatedDate} ${updatedTime}`;
+
+            setCurrentTime(updatedDateTime);
+
+            setTimeout(() => updateTime(updatedDateTime), 1000);
+        };
+
+        updateTime(currentTime);
+    }, []);
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
