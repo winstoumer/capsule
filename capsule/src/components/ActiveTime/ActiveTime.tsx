@@ -15,6 +15,8 @@ export const ActiveTime = () => {
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
+    const [currentCoinsMined, setCurrentCoinsMined] = useState<number>(0);
+
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
@@ -104,6 +106,23 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCountdown, 1000);
         return () => clearInterval(intervalId);
     }, [nextTime, currentTime]);
+
+    useEffect(() => {
+        const updateCoinsMined = () => {
+            if (miningInfo && nextTime && currentTime) {
+                const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
+                const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                const diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
+                const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
+                setCurrentCoinsMined(coinsMinedSoFar);
+            }
+        };
+
+        updateCoinsMined();
+        const intervalId = setInterval(updateCoinsMined, 1000);
+        return () => clearInterval(intervalId);
+    }, [nextTime, currentTime, miningInfo]);
     
     return (
         <>
@@ -112,7 +131,10 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='time-left'>
-                    {nextTime} {currentTime}
+                     {currentTime}
+                </div>
+                <div className='time-left'>
+                     {currentCoinsMined.toFixed(3)}
                 </div>
                 <div className='time-left'>
                 {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
