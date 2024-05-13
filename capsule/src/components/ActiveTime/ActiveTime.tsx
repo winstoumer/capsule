@@ -13,7 +13,7 @@ export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
-    const [currentTime, setCurrentTime] = useState<string>("");
+    const [currentTime, setCurrentTime] = useState<string | null>(null);
     const [nextTime, setNextTime] = useState<string | null>(null);
 
     useEffect(() => {
