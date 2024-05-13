@@ -57,6 +57,10 @@ export const ActiveTime = () => {
         return () => clearInterval(interval);
     }, []);
 
+    useEffect(() => {
+        fetchCurrentTime();
+    }, [])
+
     const fetchCurrentTime = async () => {
         try {
             const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentTime');
