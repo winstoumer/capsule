@@ -96,7 +96,7 @@ export const ActiveTime = () => {
         updateCountdown();
 
         return () => updateCountdown();
-    }, []);
+    }, [nextTime, currentTime]);
 
     useEffect(() => {
         const updateCoinsMined = () => {
