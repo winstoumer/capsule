@@ -127,7 +127,7 @@ export const ActiveTime = () => {
                     {nextTime} {currentTime}
                 </div>
                 <div className='time-left'>
-                    {hours > 0 || minutes > 0 ? `${hours}:${minutes}:${seconds}` : '00:00:00'}
+                {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
                 </div>
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
