@@ -13,7 +13,7 @@ export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
-    const [timeToNext, setTimeToNext] = useState<{ hours: number, minutes: number }>({ hours: 0, minutes: 0 });
+    const [timeToNext, setTimeToNext] = useState<{ hours: number, minutes: number, seconds: number }>({ hours: 0, minutes: 0, seconds: 0 });
     const [currentTime, setCurrentTime] = useState<string>("");
 
     useEffect(() => {
@@ -69,17 +69,27 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         if (miningInfo?.next_time) {
-            const currentNowTime = new Date(currentTime);
-            const nextTime = new Date(miningInfo.next_time.replace('T', ' ').replace('Z', ''));
-            let diffTime = Math.max(nextTime.getTime() - currentNowTime.getTime(), 0);
-            if (currentNowTime > nextTime) { // Проверяем, больше ли текущее время, чем следующее время
-                diffTime = 0; // Если текущее время больше, устанавливаем разницу в 0
-            }
-            const hours = Math.floor(diffTime / (1000 * 60 * 60));
-            const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-            setTimeToNext({ hours, minutes });
+            const updateCountdown = () => {
+                const currentNowTime = new Date();
+                const nextTime = new Date(miningInfo.next_time.replace('T', ' ').replace('Z', ''));
+                let diffTime = Math.max(nextTime.getTime() - currentNowTime.getTime(), 0);
+                if (currentNowTime > nextTime) { // Проверяем, больше ли текущее время, чем следующее время
+                    diffTime = 0; // Если текущее время больше, устанавливаем разницу в 0
+                }
+                const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                setTimeToNext({ hours, minutes, seconds });
+            };
+
+            // Выполняем обновление времени каждую секунду
+            const intervalId = setInterval(updateCountdown, 1000);
+
+            // Убираем интервал при размонтировании компонента
+            return () => clearInterval(intervalId);
         }
-    }, [miningInfo, currentTime]);
+    }, [miningInfo]);
+
 
     return (
         <>
@@ -88,7 +98,7 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='time-left'>
-                    {timeToNext.hours}h {timeToNext.minutes}m
+                    {timeToNext.hours}h {timeToNext.minutes}m {timeToNext.seconds}s
                 </div>
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
