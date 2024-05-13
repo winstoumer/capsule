@@ -77,8 +77,7 @@ export const ActiveTime = () => {
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
 
-        const updateCountdown = async () => {
-            await fetchCurrentTime();
+        const updateCountdown = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
@@ -124,6 +123,37 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
     }, [nextTime, miningInfo]);
+
+    useEffect(() => {
+    const countdownInterval = setInterval(() => {
+        if (hours === 0 && minutes === 0 && seconds === 0) {
+            clearInterval(countdownInterval);
+            return;
+        }
+
+        let updatedHours = hours;
+        let updatedMinutes = minutes;
+        let updatedSeconds = seconds;
+
+        if (updatedSeconds === 0) {
+            if (updatedMinutes === 0) {
+                updatedHours = Math.max(0, updatedHours - 1);
+                updatedMinutes = 59;
+            } else {
+                updatedMinutes--;
+            }
+            updatedSeconds = 59;
+        } else {
+            updatedSeconds--;
+        }
+
+        setHoursLeft(updatedHours);
+        setMinutesLeft(updatedMinutes);
+        setSecondsLeft(updatedSeconds);
+    }, 1000);
+
+    return () => clearInterval(countdownInterval);
+}, [hours, minutes, seconds]);
 
     return (
         <>
