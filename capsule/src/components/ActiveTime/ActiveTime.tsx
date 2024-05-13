@@ -16,8 +16,6 @@ export const ActiveTime = () => {
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [currentCoinsMined, setCurrentCoinsMined] = useState<number>(0);
-    const [coins, setCoinsMined] = useState<number>(0);
-    const [nowDate, setNowDate] = useState<string>("");
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
