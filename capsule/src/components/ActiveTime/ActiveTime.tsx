@@ -79,13 +79,7 @@ export const ActiveTime = () => {
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
 
             setCurrentTime(currentTimeFormatted);
-            
-            localStorage.setItem('currentTime', currentTimeFormatted);
 
-            const storedNowTime = localStorage.getItem('currentTime');
-            if (storedNowTime) {
-                setCurrentTime(storedNowTime);
-            }
         } catch (error) {
             console.error(error);
         }
