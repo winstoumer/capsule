@@ -84,13 +84,6 @@ export const ActiveTime = () => {
                 <img src="/capsule_v_1.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
-                <div>
-                    {currentTime ? (
-                        <div>Текущее время: {currentTime}</div>
-                    ) : (
-                        <div>Загрузка времени...</div>
-                    )}
-                </div>
                 <div className='time-left'>
                     {timeToNext.hours}h {timeToNext.minutes}m
                 </div>
