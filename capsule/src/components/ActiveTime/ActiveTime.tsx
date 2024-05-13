@@ -70,7 +70,7 @@ export const ActiveTime = () => {
     useEffect(() => {
         if (miningInfo?.next_time) {
             const updateCountdown = () => {
-                const currentNowTime = new Date();
+                const currentNowTime = new Date(currentTime);
                 const nextTime = new Date(miningInfo.next_time.replace('T', ' ').replace('Z', ''));
                 let diffTime = Math.max(nextTime.getTime() - currentNowTime.getTime(), 0);
                 if (currentNowTime > nextTime) { // Проверяем, больше ли текущее время, чем следующее время
