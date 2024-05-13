@@ -84,9 +84,10 @@ export const ActiveTime = () => {
             const data = await response.json();
 
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
-            const nowTimeUTC = new Date(currentTimeFormatted);
-            setCurrentTime(nowTimeUTC.toISOString());
-            localStorage.setItem('currentTime', nowTimeUTC.toISOString());
+            
+            setCurrentTime(currentTimeFormatted);
+            // Сохраняем текущее время в локальное хранилище
+            localStorage.setItem('currentTime', currentTimeFormatted);
         } catch (error) {
             console.error(error);
         }
