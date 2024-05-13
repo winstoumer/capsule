@@ -57,10 +57,6 @@ export const ActiveTime = () => {
         return () => clearInterval(interval);
     }, []);
 
-    useEffect(() => {
-        fetchCurrentTime();
-    }, []);
-
     const fetchCurrentTime = async () => {
         try {
             const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentTime');
@@ -81,7 +77,8 @@ export const ActiveTime = () => {
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
 
-        const updateCountdown = () => {
+        const updateCountdown = async () => {
+            await fetchCurrentTime();
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
@@ -111,7 +108,7 @@ export const ActiveTime = () => {
     useEffect(() => {
         const updateCoinsMined = () => {
             if (nextTime && miningInfo) {
-                const currentNowTime = new Date();
+                const currentNowTime = new Date(currentTime);
                 const currentNextTime = new Date(nextTime);
                 let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
                 if (diffTimeInSeconds < 0) {
