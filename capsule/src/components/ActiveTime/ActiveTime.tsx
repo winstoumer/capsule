@@ -119,7 +119,7 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const updateCoinsMined = () => {
-            if (miningInfo && nextTime && currentTime) {
+            if (nextTime && miningInfo) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
@@ -135,7 +135,7 @@ export const ActiveTime = () => {
         updateCoinsMined();
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
-    }, [nextTime, currentTime, miningInfo]);
+    }, [nextTime, miningInfo]);
 
     return (
         <>
