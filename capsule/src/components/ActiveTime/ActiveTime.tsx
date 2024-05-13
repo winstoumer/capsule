@@ -79,34 +79,24 @@ export const ActiveTime = () => {
     };   
 
     useEffect(() => {
-        let timeoutId: NodeJS.Timeout;
-
         const updateCountdown = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-
-                if (diffTime > 0) {
-                    const hours = Math.floor(diffTime / (1000 * 60 * 60));
-                    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                    setHoursLeft(hours);
-                    setMinutesLeft(minutes);
-                    setSecondsLeft(seconds);
-                } else {
-                    clearTimeout(timeoutId); // Останавливаем таймер, если время истекло
-                    return;
-                }
+                const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                setHoursLeft(hours);
+                setMinutesLeft(minutes);
+                setSecondsLeft(seconds);
             }
-
-            timeoutId = setTimeout(updateCountdown, 1000); // Вызываем функцию каждую секунду
         };
 
         updateCountdown();
 
-        return () => clearTimeout(timeoutId);
-    }, [nextTime, currentTime]);
+        return () => updateCountdown();
+    }, []);
 
     useEffect(() => {
         const updateCoinsMined = () => {
