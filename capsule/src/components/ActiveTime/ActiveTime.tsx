@@ -14,6 +14,7 @@ export const ActiveTime = () => {
     const [activeText, setActiveText] = useState("Active..");
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
     const [currentTime, setCurrentTime] = useState<string>("");
+    const [nextTime, setNextTime] = useState<string | null>(null);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -27,6 +28,13 @@ export const ActiveTime = () => {
         }
     }, [userData]);
 
+    useEffect(() => {
+        const storedNextTime = localStorage.getItem('nextCollectionTime');
+        if (storedNextTime) {
+            setNextTime(storedNextTime);
+        }
+    }, []);
+
     const fetchMiningData = async (telegramUserId: string) => {
         try {
             const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentMining/ready/${telegramUserId}`);
@@ -34,6 +42,13 @@ export const ActiveTime = () => {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
             }
             const data: MiningData = await response.json();
+            const nextTimeUTC = new Date(data.next_time);
+            nextTimeUTC.setHours(nextTimeUTC.getHours());
+            if (data.next_time) {
+                setNextTime(nextTimeUTC.toISOString());
+                localStorage.setItem('nextCollectionTime', nextTimeUTC.toISOString());
+            }
+
             setMiningInfo(data);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
         } catch (error) {
@@ -72,10 +87,10 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const updateCountdown = () => {
-            if (miningInfo) {
+            if (nextTime) {
                 const currentNowTime = new Date(currentTime).getTime();
-                const nextTime = new Date(miningInfo.next_time.replace('T', ' ').replace('Z', '')).getTime();
-                const diffTime = nextTime - currentNowTime;
+                const currentNextTime = new Date(nextTime).getTime();
+                const diffTime = currentNextTime - currentNowTime;
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
@@ -89,7 +104,7 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCountdown, 1000);
         return () => clearInterval(intervalId);
 
-    }, [miningInfo]);
+    }, [nextTime]);
 
     return (
         <>
