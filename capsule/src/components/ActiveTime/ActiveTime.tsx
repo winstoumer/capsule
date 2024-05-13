@@ -88,7 +88,7 @@ export const ActiveTime = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             const updateCountdown = () => {
-                if (nextTime) {
+                if (nextTime && currentTime) {
                     const now = new Date(currentTime.replace('T', ' ').replace('Z', '')); // Получаем текущее время
                     const next = new Date(nextTime.replace('T', ' ').replace('Z', '')); // Получаем время окончания отсчета
                     now.setSeconds(now.getSeconds() + 1); // Прибавляем одну секунду к текущему времени
@@ -122,7 +122,7 @@ export const ActiveTime = () => {
         }, 1000);
     
         return () => clearInterval(intervalId);
-    }, [nextTime]);
+    }, [nextTime, currentTime]);
        
 
     return (
