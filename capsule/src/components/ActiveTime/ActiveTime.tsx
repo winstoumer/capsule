@@ -31,20 +31,6 @@ export const ActiveTime = () => {
         }
     }, [userData]);
 
-    useEffect(() => {
-        const storedNextTime = localStorage.getItem('nextTime');
-        if (storedNextTime) {
-            setNextTime(storedNextTime);
-        }
-    }, []);
-
-    useEffect(() => {
-        const storedNowTime = localStorage.getItem('currentTime');
-        if (storedNowTime) {
-            setCurrentTime(storedNowTime);
-        }
-    }, []);
-
     const fetchMiningData = async (telegramUserId: string) => {
         try {
             const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentMining/ready/${telegramUserId}`);
@@ -57,6 +43,11 @@ export const ActiveTime = () => {
 
             setNextTime(nextTimeUTC.toISOString());
             localStorage.setItem('nextTime', nextTimeUTC.toISOString());
+
+            const storedNextTime = localStorage.getItem('nextTime');
+            if (storedNextTime) {
+                setNextTime(storedNextTime);
+            }
 
             setMiningInfo(data);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
@@ -88,8 +79,13 @@ export const ActiveTime = () => {
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
 
             setCurrentTime(currentTimeFormatted);
-            // Сохраняем текущее время в локальное хранилище
+            
             localStorage.setItem('currentTime', currentTimeFormatted);
+
+            const storedNowTime = localStorage.getItem('currentTime');
+            if (storedNowTime) {
+                setCurrentTime(storedNowTime);
+            }
         } catch (error) {
             console.error(error);
         }
