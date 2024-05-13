@@ -135,7 +135,7 @@ export const ActiveTime = () => {
         updateCoinsMined();
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
-    }, [nextTime, miningInfo]);
+    }, [nextTime, miningInfo, currentTime]);
 
     return (
         <>
