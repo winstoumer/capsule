@@ -68,10 +68,15 @@ export const ActiveTime = () => {
     };
 
     useEffect(() => {
+        console.log('miningInfo:', miningInfo);
+        console.log('currentTime:', currentTime);
         if (miningInfo?.next_time && currentTime) {
             const currentTimeUTC = new Date(currentTime + ' UTC');
             const nextTime = new Date(miningInfo.next_time);
+            console.log('nextTime:', nextTime);
+            console.log('currentTimeUTC:', currentTimeUTC);
             const diffTime = Math.max(nextTime.getTime() - currentTimeUTC.getTime(), 0);
+            console.log('diffTime:', diffTime);
             const hours = Math.floor(diffTime / (1000 * 60 * 60));
             const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
             setTimeToNext({ hours, minutes });
@@ -85,7 +90,11 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div>
-                    
+                    {currentTime ? (
+                        <div>Текущее время: {currentTime}</div>
+                    ) : (
+                        <div>Загрузка времени...</div>
+                    )}
                 </div>
                 <div className='time-left'>
                     {timeToNext.hours}h {timeToNext.minutes}m
