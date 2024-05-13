@@ -88,7 +88,7 @@ export const ActiveTime = () => {
     useEffect(() => {
         const intervalId = setInterval(() => {
             const updateCountdown = () => {
-                if (nextTime && currentTime) {
+                if (nextTime) {
                     const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                     const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                     const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
@@ -105,7 +105,7 @@ export const ActiveTime = () => {
         }, 1000);
     
         return () => clearInterval(intervalId);
-    }, [nextTime, currentTime]);
+    }, [nextTime]);
 
     return (
         <>
