@@ -16,6 +16,8 @@ export const ActiveTime = () => {
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [currentCoinsMined, setCurrentCoinsMined] = useState<number>(0);
+    const [coins, setCoinsMined] = useState<number>(0);
+    const [nowDate, setNowDate] = useState<string>("");
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -126,6 +128,28 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
     }, [nextTime, currentTime, miningInfo]);
+
+    useEffect(() => {
+        const coinsMined = async () => {
+            await setNowDate(currentTime);
+            if (miningInfo && nextTime && nowDate) {
+                const currentNowTime = new Date(nowDate);
+                const currentNextTime = new Date(nextTime);
+                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                if (diffTimeInSeconds < 0) {
+                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
+                }
+                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
+                const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
+                setCurrentCoinsMined(coinsMinedSoFar);
+            }
+    };
+
+        coinsMined();
+        const intervalId = setInterval(coinsMined, 1000);
+        return () => clearInterval(intervalId);
+    }, [nextTime, nowDate, miningInfo]);
+
     
     return (
         <>
@@ -137,7 +161,7 @@ export const ActiveTime = () => {
                      {currentTime}
                 </div>
                 <div className='time-left'>
-                     {currentCoinsMined.toFixed(3)}
+                     {currentCoinsMined.toFixed(3)} {currentCoinsMined.toFixed(3)}
                 </div>
                 <div className='time-left'>
                 {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
