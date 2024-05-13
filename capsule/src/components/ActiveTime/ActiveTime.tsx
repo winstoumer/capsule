@@ -79,6 +79,8 @@ export const ActiveTime = () => {
                 setTimeToNext({ hours, minutes, seconds });
             };
 
+            updateCountdown();
+
             // Выполняем обновление времени каждую секунду
             const intervalId = setInterval(updateCountdown, 1000);
 
