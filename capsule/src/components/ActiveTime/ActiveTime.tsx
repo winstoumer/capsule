@@ -35,6 +35,13 @@ export const ActiveTime = () => {
         }
     }, []);
 
+    useEffect(() => {
+        const storedNowTime = localStorage.getItem('currentTime');
+        if (storedNowTime) {
+            setCurrentTime(storedNowTime);
+        }
+    }, []);
+
     const fetchMiningData = async (telegramUserId: string) => {
         try {
             const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentMining/ready/${telegramUserId}`);
@@ -79,8 +86,10 @@ export const ActiveTime = () => {
             const data = await response.json();
 
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
-
+            
             setCurrentTime(currentTimeFormatted);
+            // Сохраняем текущее время в локальное хранилище
+            localStorage.setItem('currentTime', currentTimeFormatted);
         } catch (error) {
             console.error(error);
         }
