@@ -96,22 +96,24 @@ export const ActiveTime = () => {
     };
 
     useEffect(() => {
-        const updateCountdown = () => {
-            if (nextTime && currentTime) {
-                const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
-                const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
-                const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-                const hours = Math.floor(diffTime / (1000 * 60 * 60));
-                const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                setHoursLeft(hours);
-                setMinutesLeft(minutes);
-                setSecondsLeft(seconds);
-            }
-        };
-
-        updateCountdown();
-        const intervalId = setInterval(updateCountdown, 1000);
+        const intervalId = setInterval(() => {
+            const updateCountdown = () => {
+                if (nextTime && currentTime) {
+                    const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
+                    const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                    const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
+                    const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                    setHoursLeft(hours);
+                    setMinutesLeft(minutes);
+                    setSecondsLeft(seconds);
+                }
+            };
+    
+            updateCountdown();
+        }, 1000);
+    
         return () => clearInterval(intervalId);
     }, [nextTime, currentTime]);
 
