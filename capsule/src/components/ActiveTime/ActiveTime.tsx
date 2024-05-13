@@ -85,39 +85,7 @@ export const ActiveTime = () => {
         } catch (error) {
             console.error(error);
         }
-    };
-
-    useEffect(() => {
-        if (nextTime) {
-            const updateTime = (time: string) => {
-                const [datePart, timePart] = time.split(' ');
-                const [year, month, day] = datePart.split('-').map(Number);
-                const [hours, minutes, seconds] = timePart.split(':').map(Number);
-    
-                const currentDate = new Date(year, month - 1, day, hours, minutes, seconds);
-                currentDate.setSeconds(currentDate.getSeconds() + 1); // добавляем одну секунду
-    
-                const newYear = currentDate.getFullYear();
-                const newMonth = currentDate.getMonth() + 1; // добавляем 1, чтобы вернуться к нормальным месяцам
-                const newDay = currentDate.getDate();
-    
-                const newHours = currentDate.getHours();
-                const newMinutes = currentDate.getMinutes();
-                const newSeconds = currentDate.getSeconds();
-    
-                const updatedDate = `${newYear}-${String(newMonth).padStart(2, '0')}-${String(newDay).padStart(2, '0')}`;
-                const updatedTime = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')}`;
-    
-                const updatedDateTime = `${updatedDate} ${updatedTime}`;
-    
-                setCurrentTime(updatedDateTime);
-    
-                setTimeout(() => updateTime(updatedDateTime), 1000);
-            };
-    
-            updateTime(nextTime);
-        }
-    }, [nextTime]);    
+    };   
 
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
@@ -168,7 +136,6 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
     }, [nextTime, currentTime, miningInfo]);
-
 
     return (
         <>
