@@ -33,6 +33,11 @@ export const ActiveTime = () => {
         if (storedNextTime) {
             setNextTime(storedNextTime);
         }
+
+        const storedNowTime = localStorage.getItem('currentTime');
+        if (storedNowTime) {
+            setCurrentTime(storedNowTime);
+        }
     }, []);
 
     const fetchMiningData = async (telegramUserId: string) => {
@@ -75,7 +80,12 @@ export const ActiveTime = () => {
                 throw new Error('Ошибка при получении текущего времени с сервера');
             }
             const data = await response.json();
-            setCurrentTime(data.currentTime);
+            const nowTimeUTC = new Date(data.currentTime);
+            nowTimeUTC.setHours(nowTimeUTC.getHours());
+            if (data.next_time) {
+                setCurrentTime(nowTimeUTC.toISOString());
+                localStorage.setItem('currentTime', nowTimeUTC.toISOString());
+            }
         } catch (error) {
             console.error(error);
         }
@@ -113,7 +123,7 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='time-left'>
-                    {hours}h {minutes}m {seconds}s
+                    {hours > 0 || minutes > 0 ? `${hours}:${minutes}:${seconds}` : '00:00:00'}
                 </div>
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
