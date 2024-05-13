@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import ntpClient from 'ntp-client';
 import './activeTime.scss';
 
 interface MiningData {
