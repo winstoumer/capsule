@@ -87,15 +87,46 @@ export const ActiveTime = () => {
         }
     };
 
+useEffect(() => {
+    const updateTime = (time: string) => {
+        const [datePart, timePart] = time.split(' ');
+        const [year, month, day] = datePart.split('-').map(Number);
+        const [hours, minutes, seconds] = timePart.split(':').map(Number);
+
+        const currentDate = new Date(year, month - 1, day, hours, minutes, seconds);
+        currentDate.setSeconds(currentDate.getSeconds() + 1); // добавляем одну секунду
+
+        const newYear = currentDate.getFullYear();
+        const newMonth = currentDate.getMonth() + 1; // добавляем 1, чтобы вернуться к нормальным месяцам
+        const newDay = currentDate.getDate();
+
+        const newHours = currentDate.getHours();
+        const newMinutes = currentDate.getMinutes();
+        const newSeconds = currentDate.getSeconds();
+
+        const updatedDate = `${newYear}-${String(newMonth).padStart(2, '0')}-${String(newDay).padStart(2, '0')}`;
+        const updatedTime = `${String(newHours).padStart(2, '0')}:${String(newMinutes).padStart(2, '0')}:${String(newSeconds).padStart(2, '0')}`;
+
+        const updatedDateTime = `${updatedDate} ${updatedTime}`;
+
+        setCurrentTime(updatedDateTime);
+
+        setTimeout(() => updateTime(updatedDateTime), 1000);
+    };
+
+    updateTime(currentTime);
+}, [currentTime]);
+
+
     useEffect(() => {
         let timeoutId: NodeJS.Timeout;
-    
+
         const updateCountdown = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-    
+
                 if (diffTime > 0) {
                     const hours = Math.floor(diffTime / (1000 * 60 * 60));
                     const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
@@ -108,14 +139,14 @@ export const ActiveTime = () => {
                     return;
                 }
             }
-    
+
             timeoutId = setTimeout(updateCountdown, 1000); // Вызываем функцию каждую секунду
         };
-    
+
         updateCountdown();
-    
+
         return () => clearTimeout(timeoutId);
-    }, [nextTime, currentTime]);            
+    }, [nextTime, currentTime]);
 
     useEffect(() => {
         const updateCoinsMined = () => {
@@ -131,13 +162,13 @@ export const ActiveTime = () => {
                 setCurrentCoinsMined(coinsMinedSoFar);
             }
         };
-    
+
         updateCoinsMined();
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
     }, [nextTime, currentTime, miningInfo]);
 
-    
+
     return (
         <>
             <div className='watch-capsule'>
@@ -145,13 +176,13 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='time-left'>
-                     {currentTime}
+                    {currentTime}
                 </div>
                 <div className='time-left'>
-                     {currentCoinsMined.toFixed(3)}
+                    {currentCoinsMined.toFixed(3)}
                 </div>
                 <div className='time-left'>
-                {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
+                    {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
                 </div>
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
