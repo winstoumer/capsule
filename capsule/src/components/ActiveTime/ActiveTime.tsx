@@ -70,10 +70,6 @@ export const ActiveTime = () => {
         return () => clearInterval(interval);
     });
 
-    useEffect(() => {
-        fetchCurrentTime();
-    }, []);
-
     const fetchCurrentTime = async () => {
         try {
             const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentTime');
@@ -97,8 +93,12 @@ export const ActiveTime = () => {
     const [seconds, setSecondsLeft] = useState<number>(0);
 
     useEffect(() => {
-        const updateCountdown = () => {
-            if (nextTime) {
+
+        const updateCountdown = async () => {
+
+            await fetchCurrentTime();
+            
+            if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
@@ -115,7 +115,7 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCountdown, 1000);
         return () => clearInterval(intervalId);
 
-    }, [nextTime]);
+    }, [nextTime, currentTime]);
 
     return (
         <>
