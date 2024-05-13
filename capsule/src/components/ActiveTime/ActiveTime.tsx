@@ -15,7 +15,6 @@ export const ActiveTime = () => {
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
-    const [currentCoinsMined, setCurrentCoinsMined] = useState<number>(0);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -76,7 +75,7 @@ export const ActiveTime = () => {
         } catch (error) {
             console.error(error);
         }
-    };   
+    };
 
     useEffect(() => {
         const updateCountdown = () => {
@@ -99,55 +98,35 @@ export const ActiveTime = () => {
     }, [nextTime, currentTime]);
 
     useEffect(() => {
-        const updateCoinsMined = () => {
-            if (nextTime && miningInfo) {
-                const currentNowTime = new Date(currentTime);
-                const currentNextTime = new Date(nextTime);
-                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
-                if (diffTimeInSeconds < 0) {
-                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
+        const countdownInterval = setInterval(() => {
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+                clearInterval(countdownInterval);
+                return;
+            }
+
+            let updatedHours = hours;
+            let updatedMinutes = minutes;
+            let updatedSeconds = seconds;
+
+            if (updatedSeconds === 0) {
+                if (updatedMinutes === 0) {
+                    updatedHours = Math.max(0, updatedHours - 1);
+                    updatedMinutes = 59;
+                } else {
+                    updatedMinutes--;
                 }
-                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
-                const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
-                setCurrentCoinsMined(coinsMinedSoFar);
-            }
-        };
-
-        updateCoinsMined();
-        const intervalId = setInterval(updateCoinsMined, 1000);
-        return () => clearInterval(intervalId);
-    }, [nextTime, miningInfo]);
-
-    useEffect(() => {
-    const countdownInterval = setInterval(() => {
-        if (hours === 0 && minutes === 0 && seconds === 0) {
-            clearInterval(countdownInterval);
-            return;
-        }
-
-        let updatedHours = hours;
-        let updatedMinutes = minutes;
-        let updatedSeconds = seconds;
-
-        if (updatedSeconds === 0) {
-            if (updatedMinutes === 0) {
-                updatedHours = Math.max(0, updatedHours - 1);
-                updatedMinutes = 59;
+                updatedSeconds = 59;
             } else {
-                updatedMinutes--;
+                updatedSeconds--;
             }
-            updatedSeconds = 59;
-        } else {
-            updatedSeconds--;
-        }
 
-        setHoursLeft(updatedHours);
-        setMinutesLeft(updatedMinutes);
-        setSecondsLeft(updatedSeconds);
-    }, 1000);
+            setHoursLeft(updatedHours);
+            setMinutesLeft(updatedMinutes);
+            setSecondsLeft(updatedSeconds);
+        }, 1000);
 
-    return () => clearInterval(countdownInterval);
-}, [hours, minutes, seconds]);
+        return () => clearInterval(countdownInterval);
+    }, [hours, minutes, seconds]);
 
     return (
         <>
@@ -157,9 +136,6 @@ export const ActiveTime = () => {
             <div className='active-time'>
                 <div className='time-left'>
                     {currentTime}
-                </div>
-                <div className='time-left'>
-                    {currentCoinsMined.toFixed(3)}
                 </div>
                 <div className='time-left'>
                     {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
