@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './activeTime.scss';
 
 interface MiningData {
@@ -11,14 +11,10 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
-
     const [activeText, setActiveText] = useState("Active..");
-
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
-
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
-
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
@@ -59,8 +55,8 @@ export const ActiveTime = () => {
             const currentTimeFormatted = data.next_time.replace(' ', 'T');
             const nextTimeUTC = new Date(currentTimeFormatted);
 
-                setNextTime(nextTimeUTC.toISOString());
-                localStorage.setItem('nextTime', nextTimeUTC.toISOString());
+            setNextTime(nextTimeUTC.toISOString());
+            localStorage.setItem('nextTime', nextTimeUTC.toISOString());
 
             setMiningInfo(data);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
@@ -75,7 +71,7 @@ export const ActiveTime = () => {
         }, 2000);
 
         return () => clearInterval(interval);
-    });
+    }, []);
 
     useEffect(() => {
         fetchCurrentTime();
@@ -90,7 +86,7 @@ export const ActiveTime = () => {
             const data = await response.json();
 
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
-            
+
             setCurrentTime(currentTimeFormatted);
             // Сохраняем текущее время в локальное хранилище
             localStorage.setItem('currentTime', currentTimeFormatted);
@@ -100,9 +96,7 @@ export const ActiveTime = () => {
     };
 
     useEffect(() => {
-
-        const updateCountdown = async () => {
-            
+        const updateCountdown = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
@@ -114,12 +108,11 @@ export const ActiveTime = () => {
                 setMinutesLeft(minutes);
                 setSecondsLeft(seconds);
             }
-        };        
+        };
 
         updateCountdown();
         const intervalId = setInterval(updateCountdown, 1000);
         return () => clearInterval(intervalId);
-
     }, [nextTime, currentTime]);
 
     return (
