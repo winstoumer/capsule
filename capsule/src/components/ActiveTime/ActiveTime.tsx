@@ -87,7 +87,8 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            const updateCountdown = () => {
+            const updateCountdown = async () => {
+                await fetchCurrentTime();
                 if (nextTime) {
                     const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                     const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
