@@ -85,11 +85,8 @@ export const ActiveTime = () => {
 
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
             const nowTimeUTC = new Date(currentTimeFormatted);
-            nowTimeUTC.setHours(nowTimeUTC.getHours());
-            if (data.currentTime) {
-                setCurrentTime(nowTimeUTC.toISOString());
-                localStorage.setItem('currentTime', nowTimeUTC.toISOString());
-            }
+            setCurrentTime(nowTimeUTC.toISOString());
+            localStorage.setItem('currentTime', nowTimeUTC.toISOString());
         } catch (error) {
             console.error(error);
         }
@@ -102,9 +99,9 @@ export const ActiveTime = () => {
     useEffect(() => {
         const updateCountdown = () => {
             if (nextTime) {
-                const currentNowTime = new Date(currentTime).getTime();
-                const currentNextTime = new Date(nextTime).getTime();
-                const diffTime = currentNextTime - currentNowTime;
+                const currentNowTime = new Date(currentTime);
+                const currentNextTime = new Date(nextTime);
+                const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
@@ -112,7 +109,7 @@ export const ActiveTime = () => {
                 setMinutesLeft(minutes);
                 setSecondsLeft(seconds);
             }
-        };
+        };        
 
         updateCountdown();
         const intervalId = setInterval(updateCountdown, 1000);
