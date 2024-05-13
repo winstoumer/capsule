@@ -87,12 +87,15 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            const updateCountdown = async () => {
-                await fetchCurrentTime();
-                if (nextTime && currentTime) {
-                    const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
-                    const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
-                    const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
+            const updateCountdown = () => {
+                if (nextTime) {
+                    const now = new Date(currentTime.replace('T', ' ').replace('Z', '')); // Получаем текущее время
+                    const next = new Date(nextTime.replace('T', ' ').replace('Z', '')); // Получаем время окончания отсчета
+                    now.setSeconds(now.getSeconds() + 1); // Прибавляем одну секунду к текущему времени
+                    setCurrentTime(now.toISOString()); // Обновляем текущее время
+        
+                    // Вычисляем разницу между текущим временем и временем окончания отсчета
+                    const diffTime = next.getTime() - now.getTime();
                     const hours = Math.floor(diffTime / (1000 * 60 * 60));
                     const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                     const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
@@ -106,7 +109,7 @@ export const ActiveTime = () => {
         }, 1000);
     
         return () => clearInterval(intervalId);
-    }, [nextTime, currentTime]);
+    }, [nextTime, currentTime]);    
 
     return (
         <>
