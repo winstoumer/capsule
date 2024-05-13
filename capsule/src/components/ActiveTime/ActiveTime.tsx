@@ -120,7 +120,7 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCountdown, 1000);
         return () => clearInterval(intervalId);
 
-    }, [nextTime]);
+    }, [nextTime, currentTime]);
 
     return (
         <>
