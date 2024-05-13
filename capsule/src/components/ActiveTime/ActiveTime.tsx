@@ -103,18 +103,19 @@ export const ActiveTime = () => {
                     setHoursLeft(hours);
                     setMinutesLeft(minutes);
                     setSecondsLeft(seconds);
-    
-                    timeoutId = setTimeout(updateCountdown, 1000);
                 } else {
-                    // Время истекло, можем выполнить необходимые действия
+                    clearTimeout(timeoutId); // Останавливаем таймер, если время истекло
+                    return;
                 }
             }
+    
+            timeoutId = setTimeout(updateCountdown, 1000); // Вызываем функцию каждую секунду
         };
     
         updateCountdown();
     
         return () => clearTimeout(timeoutId);
-    }, [nextTime, currentTime]);          
+    }, [nextTime, currentTime]);            
 
     useEffect(() => {
         const updateCoinsMined = () => {
