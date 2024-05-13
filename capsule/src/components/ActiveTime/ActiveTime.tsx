@@ -11,7 +11,7 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
-    
+
     const [activeText, setActiveText] = useState("Active..");
 
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
@@ -120,7 +120,7 @@ export const ActiveTime = () => {
         const intervalId = setInterval(updateCountdown, 1000);
         return () => clearInterval(intervalId);
 
-    }, [nextTime, currentTime]);
+    }, [nextTime]);
 
     return (
         <>
