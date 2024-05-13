@@ -88,7 +88,7 @@ export const ActiveTime = () => {
             // Убираем интервал при размонтировании компонента
             return () => clearInterval(intervalId);
         }
-    }, [miningInfo]);
+    }, [miningInfo, currentTime]);
 
 
     return (
