@@ -40,16 +40,7 @@ export const ActiveTime = () => {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
             }
             const data: MiningData = await response.json();
-            const currentTimeFormatted = data.next_time.replace(' ', 'T');
-            const nextTimeUTC = new Date(currentTimeFormatted);
-
-            setNextTime(nextTimeUTC.toISOString());
-            localStorage.setItem('nextTime', nextTimeUTC.toISOString());
-
-            const storedNextTime = localStorage.getItem('nextTime');
-            if (storedNextTime) {
-                setNextTime(storedNextTime);
-            }
+            setNextTime(data.next_time);
 
             setMiningInfo(data);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
@@ -121,7 +112,7 @@ export const ActiveTime = () => {
         const updateCoinsMined = () => {
             if (nextTime && miningInfo) {
                 const currentNowTime = new Date();
-                const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                const currentNextTime = new Date(nextTime);
                 let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
                 if (diffTimeInSeconds < 0) {
                     diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
