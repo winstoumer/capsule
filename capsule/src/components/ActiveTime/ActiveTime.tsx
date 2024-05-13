@@ -92,6 +92,19 @@ export const ActiveTime = () => {
                     const now = new Date(currentTime.replace('T', ' ').replace('Z', '')); // Получаем текущее время
                     const next = new Date(nextTime.replace('T', ' ').replace('Z', '')); // Получаем время окончания отсчета
                     now.setSeconds(now.getSeconds() + 1); // Прибавляем одну секунду к текущему времени
+        
+                    // Если секунды стали больше или равны 60, обнуляем секунды и прибавляем минуту
+                    if (now.getSeconds() >= 60) {
+                        now.setSeconds(0);
+                        now.setMinutes(now.getMinutes() + 1);
+                    }
+        
+                    // Если минуты стали больше или равны 60, обнуляем минуты и прибавляем час
+                    if (now.getMinutes() >= 60) {
+                        now.setMinutes(0);
+                        now.setHours(now.getHours() + 1);
+                    }
+        
                     setCurrentTime(now.toISOString()); // Обновляем текущее время
         
                     // Вычисляем разницу между текущим временем и временем окончания отсчета
@@ -109,7 +122,8 @@ export const ActiveTime = () => {
         }, 1000);
     
         return () => clearInterval(intervalId);
-    }, [nextTime, currentTime]);    
+    }, [nextTime]);
+       
 
     return (
         <>
