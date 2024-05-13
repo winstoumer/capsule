@@ -47,7 +47,9 @@ export const ActiveTime = () => {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
             }
             const data: MiningData = await response.json();
-            const nextTimeUTC = new Date(data.next_time);
+            const currentTimeFormatted = data.next_time.replace(' ', 'T');
+            const nextTimeUTC = new Date(currentTimeFormatted);
+
             nextTimeUTC.setHours(nextTimeUTC.getHours());
             if (data.next_time) {
                 setNextTime(nextTimeUTC.toISOString());
@@ -80,9 +82,11 @@ export const ActiveTime = () => {
                 throw new Error('Ошибка при получении текущего времени с сервера');
             }
             const data = await response.json();
-            const nowTimeUTC = new Date(data.currentTime);
+
+            const currentTimeFormatted = data.currentTime.replace(' ', 'T');
+            const nowTimeUTC = new Date(currentTimeFormatted);
             nowTimeUTC.setHours(nowTimeUTC.getHours());
-            if (data.next_time) {
+            if (data.currentTime) {
                 setCurrentTime(nowTimeUTC.toISOString());
                 localStorage.setItem('currentTime', nowTimeUTC.toISOString());
             }
