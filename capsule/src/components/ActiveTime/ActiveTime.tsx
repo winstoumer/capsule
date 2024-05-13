@@ -29,7 +29,7 @@ export const ActiveTime = () => {
     }, [userData]);
 
     useEffect(() => {
-        const storedNextTime = localStorage.getItem('nextCollectionTime');
+        const storedNextTime = localStorage.getItem('nextTime');
         if (storedNextTime) {
             setNextTime(storedNextTime);
         }
@@ -46,7 +46,7 @@ export const ActiveTime = () => {
             nextTimeUTC.setHours(nextTimeUTC.getHours());
             if (data.next_time) {
                 setNextTime(nextTimeUTC.toISOString());
-                localStorage.setItem('nextCollectionTime', nextTimeUTC.toISOString());
+                localStorage.setItem('nextTime', nextTimeUTC.toISOString());
             }
 
             setMiningInfo(data);
