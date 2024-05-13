@@ -90,24 +90,33 @@ export const ActiveTime = () => {
     };
 
     useEffect(() => {
+        let timeoutId: NodeJS.Timeout;
+    
         const updateCountdown = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-                const hours = Math.floor(diffTime / (1000 * 60 * 60));
-                const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                setHoursLeft(hours);
-                setMinutesLeft(minutes);
-                setSecondsLeft(seconds);
+    
+                if (diffTime > 0) {
+                    const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                    setHoursLeft(hours);
+                    setMinutesLeft(minutes);
+                    setSecondsLeft(seconds);
+    
+                    timeoutId = setTimeout(updateCountdown, 1000);
+                } else {
+                    // Время истекло, можем выполнить необходимые действия
+                }
             }
         };
-
+    
         updateCountdown();
-        const intervalId = setInterval(updateCountdown, 1000);
-        return () => clearInterval(intervalId);
-    }, [nextTime, currentTime]);
+    
+        return () => clearTimeout(timeoutId);
+    }, [nextTime, currentTime]);          
 
     useEffect(() => {
         const updateCoinsMined = () => {
@@ -129,27 +138,6 @@ export const ActiveTime = () => {
         return () => clearInterval(intervalId);
     }, [nextTime, currentTime, miningInfo]);
 
-    useEffect(() => {
-        const coinsMined = async () => {
-            await setNowDate(currentTime);
-            if (miningInfo && nextTime && nowDate) {
-                const currentNowTime = new Date(nowDate);
-                const currentNextTime = new Date(nextTime);
-                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
-                if (diffTimeInSeconds < 0) {
-                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
-                }
-                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
-                const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
-                setCoinsMined(coinsMinedSoFar);
-            }
-    };
-
-        coinsMined();
-        const intervalId = setInterval(coinsMined, 1000);
-        return () => clearInterval(intervalId);
-    }, [nextTime, nowDate, miningInfo]);
-
     
     return (
         <>
@@ -161,7 +149,7 @@ export const ActiveTime = () => {
                      {currentTime}
                 </div>
                 <div className='time-left'>
-                     {currentCoinsMined.toFixed(3)} {coins.toFixed(3)}
+                     {currentCoinsMined.toFixed(3)}
                 </div>
                 <div className='time-left'>
                 {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
