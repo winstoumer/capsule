@@ -141,7 +141,7 @@ export const ActiveTime = () => {
                 }
                 const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
                 const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
-                setCurrentCoinsMined(coinsMinedSoFar);
+                setCoinsMined(coinsMinedSoFar);
             }
     };
 
@@ -161,7 +161,7 @@ export const ActiveTime = () => {
                      {currentTime}
                 </div>
                 <div className='time-left'>
-                     {currentCoinsMined.toFixed(3)} {currentCoinsMined.toFixed(3)}
+                     {currentCoinsMined.toFixed(3)} {coins.toFixed(3)}
                 </div>
                 <div className='time-left'>
                 {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
