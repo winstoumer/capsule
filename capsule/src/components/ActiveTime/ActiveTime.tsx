@@ -89,7 +89,7 @@ export const ActiveTime = () => {
         const intervalId = setInterval(() => {
             const updateCountdown = async () => {
                 await fetchCurrentTime();
-                if (nextTime) {
+                if (nextTime && currentTime) {
                     const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                     const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                     const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
@@ -106,7 +106,7 @@ export const ActiveTime = () => {
         }, 1000);
     
         return () => clearInterval(intervalId);
-    }, [nextTime]);
+    }, [nextTime, currentTime]);
 
     return (
         <>
