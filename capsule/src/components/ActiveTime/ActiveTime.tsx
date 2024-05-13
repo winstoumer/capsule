@@ -123,6 +123,9 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='time-left'>
+                    {nextTime} {currentTime}
+                </div>
+                <div className='time-left'>
                     {hours > 0 || minutes > 0 ? `${hours}:${minutes}:${seconds}` : '00:00:00'}
                 </div>
                 <div className='info-for'>
