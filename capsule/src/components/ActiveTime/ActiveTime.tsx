@@ -11,10 +11,17 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
+    
     const [activeText, setActiveText] = useState("Active..");
+
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
+
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
+
+    const [hours, setHoursLeft] = useState<number>(0);
+    const [minutes, setMinutesLeft] = useState<number>(0);
+    const [seconds, setSecondsLeft] = useState<number>(0);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -70,6 +77,10 @@ export const ActiveTime = () => {
         return () => clearInterval(interval);
     });
 
+    useEffect(() => {
+        fetchCurrentTime();
+    }, []);
+
     const fetchCurrentTime = async () => {
         try {
             const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentTime');
@@ -88,15 +99,9 @@ export const ActiveTime = () => {
         }
     };
 
-    const [hours, setHoursLeft] = useState<number>(0);
-    const [minutes, setMinutesLeft] = useState<number>(0);
-    const [seconds, setSecondsLeft] = useState<number>(0);
-
     useEffect(() => {
 
         const updateCountdown = async () => {
-
-            await fetchCurrentTime();
             
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
