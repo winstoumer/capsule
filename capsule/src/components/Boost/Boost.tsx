@@ -38,8 +38,12 @@ export const Boost: React.FC = () => {
 
     const fetchUserData = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/user/info/${telegramUserId}`);
-            setUser(response.data[0]);
+            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/user/info/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Ошибка при загрузке данных пользователя');
+            }
+            const userData = await response.json();
+            setUser(userData[0]);
         } catch (error) {
             console.error(error);
         } finally {
