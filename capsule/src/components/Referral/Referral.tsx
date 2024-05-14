@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './referral.scss';
 
 export const Referral = () => {
@@ -37,13 +38,21 @@ export const Referral = () => {
         return <div></div>;
     }
 
+    const handleReferralLinkClick = async () => {
+        try {
+            await axios.post('https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/bot/sendReferralMessage', { telegramUserId: userData.id });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
     return (
         <div className='referral-container'>
             <div className='invited-count'>Invited {invitedCount || 0}</div>
             <div className='referral-watch'>
                 <img src="/invite.jpg" className='referral-image' alt="Invite Image" />
             </div>
-            <button className='default-button'>Referral link</button>
+            <button className='default-button' onClick={handleReferralLinkClick}>Referral link</button>
         </div>
     );
 };
