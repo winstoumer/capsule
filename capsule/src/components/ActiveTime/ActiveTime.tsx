@@ -20,6 +20,8 @@ export const ActiveTime = () => {
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
 
+    const [timerFinished, setTimerFinished] = useState(false);
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -96,36 +98,35 @@ export const ActiveTime = () => {
         const countdownInterval = setInterval(() => {
             if (hours === 0 && minutes === 0 && seconds === 0) {
                 clearInterval(countdownInterval);
-                // Если время истекло, установите значения в "00"
-                setHoursLeft(0);
-                setMinutesLeft(0);
-                setSecondsLeft(0);
+                setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
                 return;
             }
-    
-            let updatedHours = hours;
-            let updatedMinutes = minutes;
-            let updatedSeconds = seconds;
-    
-            if (updatedSeconds === 0) {
-                if (updatedMinutes === 0) {
-                    updatedHours = Math.max(0, updatedHours - 1);
-                    updatedMinutes = 59;
+
+            if (!timerFinished) {
+                let updatedHours = hours;
+                let updatedMinutes = minutes;
+                let updatedSeconds = seconds;
+
+                if (updatedSeconds === 0) {
+                    if (updatedMinutes === 0) {
+                        updatedHours = Math.max(0, updatedHours - 1);
+                        updatedMinutes = 59;
+                    } else {
+                        updatedMinutes--;
+                    }
+                    updatedSeconds = 59;
                 } else {
-                    updatedMinutes--;
+                    updatedSeconds--;
                 }
-                updatedSeconds = 59;
-            } else {
-                updatedSeconds--;
+
+                setHoursLeft(updatedHours);
+                setMinutesLeft(updatedMinutes);
+                setSecondsLeft(updatedSeconds);
             }
-    
-            setHoursLeft(updatedHours < 10 ? 0 + updatedHours : updatedHours);
-            setMinutesLeft(updatedMinutes < 10 ? 0 + updatedMinutes : updatedMinutes);
-            setSecondsLeft(updatedSeconds < 10 ? 0 + updatedSeconds : updatedSeconds);
         }, 1000);
-    
+
         return () => clearInterval(countdownInterval);
-    }, [hours, minutes, seconds]);    
+    }, [hours, minutes, seconds, timerFinished]);
 
     return (
         <>
@@ -135,6 +136,9 @@ export const ActiveTime = () => {
             <div className='active-time'>
                 <div className='time-left'>
                     {`${hours < 10 ? '0' + hours : hours}:${minutes < 10 ? '0' + minutes : minutes}:${seconds < 10 ? '0' + seconds : seconds}`}
+                </div>
+                <div className='time-left'>
+                    {timerFinished && <button>Ваш текст кнопки</button>}
                 </div>
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
