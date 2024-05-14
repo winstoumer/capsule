@@ -137,7 +137,7 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='time-left'>
-                    {`${hours < 10 ? '0' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
+                    {timerFinished ? <span>0h 0m</span> : `${hours < 10 ? '0' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
                 </div>
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
@@ -146,9 +146,7 @@ export const ActiveTime = () => {
                     {timerFinished && <button className='default-button'>Claim</button>}
                 </div>
                 <div className='info-for'>
-                    {timerFinished ? <div></div> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
-                        {activeText}
-                    </div>}
+                    {timerFinished ? <span></span> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>{activeText}</div>}
                 </div>
             </div>
         </>
