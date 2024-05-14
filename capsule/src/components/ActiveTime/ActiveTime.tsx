@@ -80,12 +80,12 @@ export const ActiveTime = () => {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-                
+
                 if (diffTime < 0) {
                     diffTime = 0;
                     setTimerFinished(true); // Установим флаг, что таймер закончился
                 }
-    
+
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
@@ -94,9 +94,9 @@ export const ActiveTime = () => {
                 setSecondsLeft(seconds);
             }
         };
-    
+
         updateCountdown();
-    
+
         return () => updateCountdown();
     }, [nextTime, currentTime]);
 
@@ -142,12 +142,14 @@ export const ActiveTime = () => {
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
                 </div>
-                <div className='time-left'>
-                    {timerFinished && <button className='default-button'>Claim</button> }
+                <div className='info-for'>
+                    {timerFinished && <button className='default-button'>Claim</button>}
                 </div>
-                {timerFinished ? <div></div> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
-                    {activeText}
-                </div>}
+                <div className='info-for'>
+                    {timerFinished ? <div></div> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
+                        {activeText}
+                    </div>}
+                </div>
             </div>
         </>
     );
