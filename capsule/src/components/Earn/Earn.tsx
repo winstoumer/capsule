@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './earn.scss';
 
 interface Task {
@@ -6,6 +7,7 @@ interface Task {
     name: string;
     reward: string;
     active: boolean;
+    link: string;
     ready: boolean;
 }
 
@@ -28,16 +30,22 @@ export const Earn = () => {
 
     const fetchTasks = async (telegramUserId: string) => {
         try {
-            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/task/${telegramUserId}`);
-            if (!response.ok) {
-                throw new Error('Ошибка при загрузке списка задач');
-            }
-            const data = await response.json();
-            setTasks(data);
+            const response = await axios.get(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/task/${telegramUserId}`);
+            setTasks(response.data);
         } catch (error) {
-            console.error(error);
+            console.error('Ошибка при загрузке списка задач:', error);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleGoButtonClick = async (taskId: number, taskLink: string) => {
+        window.location.href = taskLink;
+        try {
+            await axios.post(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/task/${userData.id}/${taskId}/complete`);
+            fetchTasks(userData.id.toString());
+        } catch (error) {
+            console.error('Ошибка при отправке запроса:', error);
         }
     };
 
@@ -56,7 +64,7 @@ export const Earn = () => {
                         {task.reward}
                     </div>
                     <div className='task-start'>
-                        {!task.active || task.ready ? null : <button className='default-button'>Go</button>}
+                        {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleGoButtonClick(task.id, task.link)}>Go</button>}
                     </div>
                 </div>
             ))}
