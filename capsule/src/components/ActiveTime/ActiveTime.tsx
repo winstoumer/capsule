@@ -103,25 +103,21 @@ export const ActiveTime = () => {
             }
 
             if (!timerFinished) {
-                let updatedHours = hours;
-                let updatedMinutes = minutes;
-                let updatedSeconds = seconds;
-
-                if (updatedSeconds === 0) {
-                    if (updatedMinutes === 0) {
-                        updatedHours = Math.max(0, updatedHours - 1);
-                        updatedMinutes = 59;
+                setSecondsLeft(prevSeconds => {
+                    if (prevSeconds === 0) {
+                        setMinutesLeft(prevMinutes => {
+                            if (prevMinutes === 0) {
+                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
+                                return 59;
+                            } else {
+                                return prevMinutes - 1;
+                            }
+                        });
+                        return 59;
                     } else {
-                        updatedMinutes--;
+                        return prevSeconds - 1;
                     }
-                    updatedSeconds = 59;
-                } else {
-                    updatedSeconds--;
-                }
-
-                setHoursLeft(updatedHours);
-                setMinutesLeft(updatedMinutes);
-                setSecondsLeft(updatedSeconds);
+                });
             }
         }, 1000);
 
