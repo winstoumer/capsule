@@ -88,7 +88,7 @@ export const Boost: React.FC = () => {
 
     const updateLevel = async (telegramUserId: number, nextLevelId: number) => {
         try {
-            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/upgrade/${telegramUserId}`, {
+            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/matter/upgrade/${telegramUserId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
