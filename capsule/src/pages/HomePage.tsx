@@ -43,7 +43,7 @@ const HomePage: React.FC = () => {
       <PageComponent>
         <Header />
         <div className='general'>
-          <div className='balance'>{balance}</div>
+          <div className='balance'>{balance?.toFixed(2)}</div>
           <ActiveTime />
         </div>
         <Navigation />
