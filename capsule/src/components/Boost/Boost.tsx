@@ -62,6 +62,7 @@ export const Boost: React.FC = () => {
     const handleUpgrade = async () => {
         if (nextLevel && user && user.balance >= nextLevel.price) {
             try {
+                await updateBalance(nextLevel.price);
                 await updateLevel(nextLevel.id);
                 setUser({ ...user, level: nextLevel.id });
                 if (nextLevel.id !== levels[levels.length - 1].id) {
@@ -85,6 +86,17 @@ export const Boost: React.FC = () => {
         try {
             await axios.put(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
         } catch (error) {
+            throw error;
+        }
+    };
+
+    const updateBalance = async (price: number): Promise<void> => {
+        try {
+            // Отправка PUT запроса на сервер с указанием telegram_id в URL и передачей суммы в теле запроса
+            await axios.put(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/balance/${userData.id}`, { amount: price });
+            console.log('Баланс успешно обновлен');
+        } catch (error) {
+            console.error('Ошибка при обновлении баланса:', error);
             throw error;
         }
     };
