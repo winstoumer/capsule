@@ -30,7 +30,7 @@ export const Earn = () => {
 
     const fetchTasks = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/task/${telegramUserId}`);
+            const response = await axios.get(`https://nutty-dominique-webapp-6a709ce4.koyeb.app/api/task/${telegramUserId}`);
             setTasks(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке списка задач:', error);
@@ -42,7 +42,7 @@ export const Earn = () => {
     const handleGoButtonClick = async (taskId: number, taskLink: string) => {
         window.location.href = taskLink;
         try {
-            await axios.post(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/task/${userData.id}/${taskId}/complete`);
+            await axios.post(`https://nutty-dominique-webapp-6a709ce4.koyeb.app/api/task/${userData.id}/${taskId}/complete`);
             fetchTasks(userData.id.toString());
         } catch (error) {
             console.error('Ошибка при отправке запроса:', error);

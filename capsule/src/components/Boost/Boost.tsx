@@ -38,7 +38,7 @@ export const Boost: React.FC = () => {
 
     const fetchUserData = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/user/info/${telegramUserId}`);
+            const response = await axios.get(`https://nutty-dominique-webapp-6a709ce4.koyeb.app/api/user/info/${telegramUserId}`);
             setUser(response.data[0]);
         } catch (error) {
             console.error(error);
@@ -85,7 +85,7 @@ export const Boost: React.FC = () => {
 
     const updateLevel = async (nextLevelId: number) => {
         try {
-            await axios.put(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
+            await axios.put(`https://nutty-dominique-webapp-6a709ce4.koyeb.app/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
         } catch (error) {
             throw error;
         }
@@ -94,7 +94,7 @@ export const Boost: React.FC = () => {
     const updateBalance = async (price: number): Promise<void> => {
         try {
             // Отправка PUT запроса на сервер с указанием telegram_id в URL и передачей суммы в теле запроса
-            await axios.put(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/balance/${userData.id}`, { amount: price });
+            await axios.put(`https://nutty-dominique-webapp-6a709ce4.koyeb.app/api/balance/${userData.id}`, { amount: price });
             console.log('Баланс успешно обновлен');
         } catch (error) {
             console.error('Ошибка при обновлении баланса:', error);
