@@ -12,6 +12,9 @@
     font-size: 18px;
     font-weight: 300;
     text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .active-signal {
@@ -23,6 +26,10 @@
     background-color: transparent;
     color: #002ed5;
     margin-top: 5px;
+}
+
+.position-top {
+    margin-top: 10px;
 }
 
 @keyframes activeSignal {

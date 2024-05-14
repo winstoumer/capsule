@@ -142,13 +142,13 @@ export const ActiveTime = () => {
                 <div className='info-for'>
                     {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
                 </div>
-                <div className='info-for'>
+                <div className='info-for position-top '>
                     {timerFinished && <button className='default-button'>Claim</button>}
                 </div>
                 <div className='info-for'>
-                    {timerFinished ? <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
+                    {timerFinished ? <div></div> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
                         {activeText}
-                    </div> : <div></div>}
+                    </div>}
                 </div>
             </div>
         </>
