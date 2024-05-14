@@ -79,7 +79,13 @@ export const ActiveTime = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
-                const diffTime = currentNextTime.getTime() - currentNowTime.getTime();
+                let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
+                
+                if (diffTime < 0) {
+                    diffTime = 0;
+                    setTimerFinished(true); // Установим флаг, что таймер закончился
+                }
+    
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
@@ -88,9 +94,9 @@ export const ActiveTime = () => {
                 setSecondsLeft(seconds);
             }
         };
-
+    
         updateCountdown();
-
+    
         return () => updateCountdown();
     }, [nextTime, currentTime]);
 
