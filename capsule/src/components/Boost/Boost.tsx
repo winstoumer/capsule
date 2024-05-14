@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import './boost.scss';
 
 interface UserData {
@@ -88,17 +89,7 @@ export const Boost: React.FC = () => {
 
     const updateLevel = async (nextLevelId: number) => {
         try {
-            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/matter/upgrade/${userData.id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ matter_id: nextLevelId }),
-            });
-            if (!response.ok) {
-                console.log(response)
-                throw new Error('Ошибка при обновлении уровня пользователя');
-            }
+            await axios.put(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
         } catch (error) {
             throw error;
         }
