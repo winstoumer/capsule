@@ -25,7 +25,7 @@ const HomePage: React.FC = () => {
 
   const fetchBalance = async (telegramUserId: string) => {
     try {
-      const response = await axios.get(`https://nutty-dominique-webapp-6a709ce4.koyeb.app/api/balance/${telegramUserId}`);
+      const response = await axios.get(`https://capsule-server.onrender.com/api/balance/${telegramUserId}`);
       const responseData = response.data;
       if (responseData.hasOwnProperty('balance')) {
         const balanceValue = parseFloat(responseData.balance);
