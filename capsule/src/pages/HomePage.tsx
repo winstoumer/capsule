@@ -4,6 +4,7 @@ import { Header } from "../components/Header/Header";
 import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import PageComponent from '../components/PageComponent/PageComponent';
+import axios from 'axios';
 
 const HomePage: React.FC = () => {
   const [userData, setUserData] = useState<any>(null);
@@ -24,14 +25,10 @@ const HomePage: React.FC = () => {
 
   const fetchBalance = async (telegramUserId: string) => {
     try {
-      const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/balance/${telegramUserId}`);
-      if (!response.ok) {
-        throw new Error('Ошибка при загрузке баланса пользователя');
-      }
-      const data = await response.json();
-      setBalance(parseFloat(data));
+      const response = await axios.get(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/balance/${telegramUserId}`);
+      setBalance(parseFloat(response.data));
     } catch (error) {
-      console.error(error);
+      console.error('Ошибка при загрузке баланса пользователя:', error);
     } finally {
       setLoading(false);
     }
