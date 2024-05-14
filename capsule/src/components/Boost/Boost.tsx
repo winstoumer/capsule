@@ -64,19 +64,45 @@ export const Boost: React.FC = () => {
     const [animate, setAnimate] = useState(false);
     const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
 
-    const handleUpgrade = () => {
+    const handleUpgrade = async () => {
         if (nextLevel && user && user.balance >= nextLevel.price) {
-            setUser({ ...user, level: nextLevel.id });
-            if (nextLevel.id !== levels[levels.length - 1].id) {
-                setAnimate(true);
-                setTimeout(() => {
-                    setAnimate(false);
-                }, 500);
+            try {
+                await updateLevel(nextLevel.id);
+                setUser({ ...user, level: nextLevel.id });
+                if (nextLevel.id !== levels[levels.length - 1].id) {
+                    setAnimate(true);
+                    setTimeout(() => {
+                        setAnimate(false);
+                    }, 500);
+                }
+            } catch (error) {
+                console.error('Ошибка при обновлении уровня пользователя:', error);
+                alert('Произошла ошибка при обновлении уровня пользователя');
             }
         } else if (nextLevel && user && user.balance < nextLevel.price) {
             alert('Недостаточно средств для покупки!');
         } else {
             alert('Вы достигли максимального уровня!');
+        }
+    };
+
+    const updateLevel = async (nextLevelId: number) => {
+        try {
+            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/upgrade/${telegramUserId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    telegram_id: userData.id,
+                    matter_id: nextLevelId
+                })
+            });
+            if (!response.ok) {
+                throw new Error('Ошибка при обновлении уровня пользователя');
+            }
+        } catch (error) {
+            throw error;
         }
     };
 
