@@ -98,6 +98,7 @@ export const Boost: React.FC = () => {
                 })
             });
             if (!response.ok) {
+                console.log(response)
                 throw new Error('Ошибка при обновлении уровня пользователя');
             }
         } catch (error) {
