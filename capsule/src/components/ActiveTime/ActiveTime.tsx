@@ -96,13 +96,17 @@ export const ActiveTime = () => {
         const countdownInterval = setInterval(() => {
             if (hours === 0 && minutes === 0 && seconds === 0) {
                 clearInterval(countdownInterval);
+                // Если время истекло, установите значения в "00"
+                setHoursLeft(0);
+                setMinutesLeft(0);
+                setSecondsLeft(0);
                 return;
             }
-
+    
             let updatedHours = hours;
             let updatedMinutes = minutes;
             let updatedSeconds = seconds;
-
+    
             if (updatedSeconds === 0) {
                 if (updatedMinutes === 0) {
                     updatedHours = Math.max(0, updatedHours - 1);
@@ -114,14 +118,14 @@ export const ActiveTime = () => {
             } else {
                 updatedSeconds--;
             }
-
-            setHoursLeft(updatedHours);
-            setMinutesLeft(updatedMinutes);
-            setSecondsLeft(updatedSeconds);
+    
+            setHoursLeft(updatedHours < 10 ? 0 + updatedHours : updatedHours);
+            setMinutesLeft(updatedMinutes < 10 ? 0 + updatedMinutes : updatedMinutes);
+            setSecondsLeft(updatedSeconds < 10 ? 0 + updatedSeconds : updatedSeconds);
         }, 1000);
-
+    
         return () => clearInterval(countdownInterval);
-    }, [hours, minutes, seconds]);
+    }, [hours, minutes, seconds]);    
 
     return (
         <>
