@@ -39,8 +39,8 @@ export const Earn = () => {
         }
     };
 
-    const handleGoButtonClick = async (taskId: number, taskLink: string) => {
-        window.location.href = taskLink;
+    const handleGoButtonClick = async (taskId: number) => {
+        // window.location.href = taskLink;
         try {
             await axios.post(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/task/${userData.id}/${taskId}/complete`);
             fetchTasks(userData.id.toString());
@@ -64,7 +64,7 @@ export const Earn = () => {
                         {task.reward}
                     </div>
                     <div className='task-start'>
-                        {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleGoButtonClick(task.id, task.link)}>Go</button>}
+                        {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleGoButtonClick(task.id)}>Go</button>}
                     </div>
                 </div>
             ))}
