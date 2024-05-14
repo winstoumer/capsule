@@ -26,14 +26,24 @@ const HomePage: React.FC = () => {
   const fetchBalance = async (telegramUserId: string) => {
     try {
       const response = await axios.get(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/balance/${telegramUserId}`);
-      setBalance(parseFloat(response.data));
+      const responseData = response.data;
+      if (responseData.hasOwnProperty('balance')) {
+        const balanceValue = parseFloat(responseData.balance);
+        if (!isNaN(balanceValue)) {
+          setBalance(balanceValue);
+        } else {
+          throw new Error('Неверный формат баланса');
+        }
+      } else {
+        throw new Error('Отсутствует поле "balance" в ответе сервера');
+      }
     } catch (error) {
       console.error('Ошибка при загрузке баланса пользователя:', error);
       // Добавьте обработку ошибки, например, уведомление пользователю
     } finally {
       setLoading(false);
     }
-  };
+  };  
 
   if (loading) {
     return <div>Loading...</div>;
