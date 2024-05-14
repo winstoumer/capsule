@@ -64,6 +64,7 @@ export const Boost: React.FC = () => {
             try {
                 await updateBalance(nextLevel.price);
                 await updateLevel(nextLevel.id);
+                await fetchUserData(userData.id);
                 setUser({ ...user, level: nextLevel.id });
                 if (nextLevel.id !== levels[levels.length - 1].id) {
                     setAnimate(true);
