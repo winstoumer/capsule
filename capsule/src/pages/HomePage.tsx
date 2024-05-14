@@ -29,13 +29,14 @@ const HomePage: React.FC = () => {
       setBalance(parseFloat(response.data));
     } catch (error) {
       console.error('Ошибка при загрузке баланса пользователя:', error);
+      // Добавьте обработку ошибки, например, уведомление пользователю
     } finally {
       setLoading(false);
     }
   };
 
   if (loading) {
-    return <div></div>;
+    return <div>Loading...</div>;
   }
 
   return (
@@ -43,7 +44,7 @@ const HomePage: React.FC = () => {
       <PageComponent>
         <Header />
         <div className='general'>
-          <div className='balance'>{balance?.toFixed(2)}</div>
+          <div className='balance'>{balance !== null ? parseFloat(balance.toFixed(2)) : 'N/A'}</div>
           <ActiveTime />
         </div>
         <Navigation />
