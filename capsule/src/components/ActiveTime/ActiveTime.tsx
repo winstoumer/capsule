@@ -146,9 +146,9 @@ export const ActiveTime = () => {
                     {timerFinished && <button className='default-button'>Claim</button>}
                 </div>
                 <div className='info-for'>
-                    {timerFinished ? <div></div> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
+                    {timerFinished ? <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>
                         {activeText}
-                    </div>}
+                    </div> : <div></div>}
                 </div>
             </div>
         </>
