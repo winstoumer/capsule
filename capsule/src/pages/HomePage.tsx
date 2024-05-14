@@ -24,7 +24,7 @@ const HomePage: React.FC = () => {
 
   const fetchBalance = async (telegramUserId: string) => {
     try {
-      const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/balance/${telegramUserId}`);
+      const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/balance/${telegramUserId}`);
       if (!response.ok) {
         throw new Error('Ошибка при загрузке баланса пользователя');
       }

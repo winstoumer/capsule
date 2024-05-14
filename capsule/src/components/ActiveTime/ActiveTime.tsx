@@ -34,7 +34,7 @@ export const ActiveTime = () => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentMining/ready/${telegramUserId}`);
+            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/currentMining/ready/${telegramUserId}`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
             }
@@ -60,7 +60,7 @@ export const ActiveTime = () => {
 
     const fetchCurrentTime = async () => {
         try {
-            const response = await fetch('https://elaborate-gabriel-webapp-091be922.koyeb.app/api/currentTime');
+            const response = await fetch('https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/currentTime');
             if (!response.ok) {
                 throw new Error('Ошибка при получении текущего времени с сервера');
             }

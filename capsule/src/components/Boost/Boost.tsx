@@ -37,7 +37,7 @@ export const Boost: React.FC = () => {
 
     const fetchUserData = async (telegramUserId: string) => {
         try {
-            const response = await fetch(`https://elaborate-gabriel-webapp-091be922.koyeb.app/api/user/info/${telegramUserId}`);
+            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/user/info/${telegramUserId}`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных пользователя');
             }
