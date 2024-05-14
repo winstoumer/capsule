@@ -67,7 +67,7 @@ export const Boost: React.FC = () => {
     const handleUpgrade = async () => {
         if (nextLevel && user && user.balance >= nextLevel.price) {
             try {
-                await updateLevel(userData.id, nextLevel.id);
+                await updateLevel(nextLevel.id);
                 setUser({ ...user, level: nextLevel.id });
                 if (nextLevel.id !== levels[levels.length - 1].id) {
                     setAnimate(true);
@@ -86,16 +86,14 @@ export const Boost: React.FC = () => {
         }
     };
 
-    const updateLevel = async (telegramUserId: number, nextLevelId: number) => {
+    const updateLevel = async (nextLevelId: number) => {
         try {
-            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/matter/upgrade/${telegramUserId}`, {
+            const response = await fetch(`https://delicate-almira-webapp-b5aad7ad.koyeb.app/api/matter/upgrade/${userData.id}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    matter_id: nextLevelId
-                })
+                body: JSON.stringify({ matter_id: nextLevelId }),
             });
             if (!response.ok) {
                 console.log(response)
