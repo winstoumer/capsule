@@ -133,7 +133,7 @@ export const ActiveTime = () => {
     return (
         <>
             <div className='watch-capsule'>
-                <img src="/capsule_v_1.png" className='always-capsule' alt="Capsule" />
+                <img src="/capsule_v_2.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
                 <div className='time-left'>
