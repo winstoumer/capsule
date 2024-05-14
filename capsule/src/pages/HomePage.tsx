@@ -54,7 +54,7 @@ const HomePage: React.FC = () => {
       <PageComponent>
         <Header />
         <div className='general'>
-          <div className='balance'>{balance !== null ? parseFloat(balance.toFixed(1)) : 'N/A'}</div>
+          <div className='balance'>{balance !== null ? parseFloat(balance.toFixed(2)) : 'N/A'}</div>
           <ActiveTime />
         </div>
         <Navigation />
