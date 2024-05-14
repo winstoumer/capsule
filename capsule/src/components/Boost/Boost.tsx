@@ -60,12 +60,12 @@ export const Boost: React.FC = () => {
     const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
 
     const handleUpgrade = async () => {
+
         if (nextLevel && user && user.balance >= nextLevel.price) {
             try {
                 await updateBalance(nextLevel.price);
                 await updateLevel(nextLevel.id);
-                await fetchUserData(userData.id);
-                setUser({ ...user, level: nextLevel.id });
+                setUser({ ...user, level: nextLevel.id, balance: user.balance - nextLevel.price });
                 if (nextLevel.id !== levels[levels.length - 1].id) {
                     setAnimate(true);
                     setTimeout(() => {
