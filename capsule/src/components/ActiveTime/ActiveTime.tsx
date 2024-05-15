@@ -137,14 +137,14 @@ export const ActiveTime = () => {
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
-                const mineSeconds = timeMine * 3600;
-                const remainingTimeSeconds = ((hours * 3600) + (minutes * 60) + seconds);
+                const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
+                const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
+                const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
 
-                const coinsMinedSoFar = (coinsMine * remainingTimeSeconds) / mineSeconds;
+                const coinsMinedSoFar = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
                 setValue((prevValue) => parseFloat((prevValue + coinsMinedSoFar).toFixed(3)));
             }, 1000);
-    
-            // Очистка интервала при размонтировании компонента
+
             return () => clearInterval(interval);
         }
     }, [coinsMine, timeMine]);
