@@ -152,8 +152,11 @@ export const ActiveTime = () => {
                 const coinsPerSecond = coinsMine / (timeMine * 3600);
                 coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
                 setValue(coinsMinedSoFarRef.current); // обновляем значение
+                if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
+                    clearInterval(interval); // Останавливаем интервал
+                }
             }, 1000);
-
+    
             return () => clearInterval(interval);
         }
     }, [coinsMine, timeMine]);
