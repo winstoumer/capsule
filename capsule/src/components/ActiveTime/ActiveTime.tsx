@@ -164,7 +164,7 @@ export const ActiveTime = () => {
                     {value.toFixed(3)}&nbsp;
                 </div>
                 <div className='time-left'>
-                    {timerFinished ? <span>0h 0m</span> : `${hours < 10 ? '' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
+                    {timerFinished ? <span>0h 0m</span> : `${hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
                 </div>
                 <div className='info-for'>
                     {coinsMine}/{timeMine}h
