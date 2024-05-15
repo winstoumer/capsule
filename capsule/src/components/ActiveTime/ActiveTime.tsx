@@ -143,8 +143,9 @@ export const ActiveTime = () => {
 
             let coinsMinedSoFar = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
 
-            let coinsPerSecond = coinsMinedSoFar + (coinsMine / (timeMine * 3600));
             const interval = setInterval(() => {
+                const coinsPerSecond = coinsMine / (timeMine * 3600);
+                coinsMinedSoFar += coinsPerSecond;
                 setValue((prevValue) => parseFloat((prevValue + coinsPerSecond).toFixed(3)));
             }, 1000);
 
