@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import './activeTime.scss';
 
 interface MiningData {
@@ -24,6 +24,7 @@ export const ActiveTime = () => {
     const [timerFinished, setTimerFinished] = useState(false);
 
     const [value, setValue] = useState(0.000);
+    const coinsMinedSoFarRef = useRef<number>(0);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -136,16 +137,15 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
-
             let totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
             let passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
             let remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
 
-            let coinsMinedSoFar = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
+            coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
 
             const interval = setInterval(() => {
                 const coinsPerSecond = coinsMine / (timeMine * 3600);
-                coinsMinedSoFar += coinsPerSecond;
+                coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
                 setValue((prevValue) => parseFloat((prevValue + coinsPerSecond).toFixed(3)));
             }, 1000);
 
