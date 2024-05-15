@@ -18,11 +18,11 @@ export const ActiveTime = () => {
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
-    //const [seconds, setSecondsLeft] = useState<number>(0);
+    const [seconds, setSecondsLeft] = useState<number>(0);
 
     const [timerFinished, setTimerFinished] = useState(false);
 
-    const [remainingCoins, setRemainingCoins] = useState(0);
+    const [currentCoinsMined, setCurrentCoinsMined] = useState(0);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -90,10 +90,10 @@ export const ActiveTime = () => {
 
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                //const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
                 setHoursLeft(hours);
                 setMinutesLeft(minutes);
-                //setSecondsLeft(seconds);
+                setSecondsLeft(seconds);
             }
         };
 
@@ -103,23 +103,49 @@ export const ActiveTime = () => {
     }, [nextTime, currentTime]);
 
     useEffect(() => {
-        const calculateTotalCoinsMined = () => {
-            if (nextTime && miningInfo) {
-                const currentNowTime = new Date(currentTime);
-                const currentNextTime = new Date(nextTime);
-                const elapsedTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+        if (!miningInfo) return; // Если miningInfo === null, не выполняем никаких операций
 
-                // Вычисляем долю времени от часа
-                const timeFraction = elapsedTimeInSeconds / (miningInfo.time_mine * 3600);
+        setHoursLeft(miningInfo.time_mine);
+    }, [miningInfo]);
 
-                // Вычисляем количество монет, которые должны быть добыты за эту долю времени
-                const coinsToMine = Math.floor(miningInfo.coins_mine * timeFraction);
-
-                setRemainingCoins(coinsToMine);
+    useEffect(() => {
+        const countdownInterval = setInterval(() => {
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+                clearInterval(countdownInterval);
+                setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
+                return;
             }
-        };
-        calculateTotalCoinsMined();
-    }, [nextTime, miningInfo, currentTime]);
+
+            if (!timerFinished) {
+                setSecondsLeft(prevSeconds => {
+                    if (prevSeconds === 0) {
+                        setMinutesLeft(prevMinutes => {
+                            if (prevMinutes === 0) {
+                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
+                                return 59;
+                            } else {
+                                return prevMinutes - 1;
+                            }
+                        });
+                        return 59;
+                    } else {
+                        return prevSeconds - 1;
+                    }
+                });
+            }
+        }, 1000);
+
+        return () => clearInterval(countdownInterval);
+    }, [hours, minutes, seconds, timerFinished]);
+
+    useEffect(() => {
+        if (!miningInfo || timerFinished) return; // Если miningInfo === null или таймер завершен, не выполняем никаких операций
+
+        const totalSeconds = hours * 3600 + minutes * 60 + seconds;
+        const coinsPerSecond = miningInfo.coins_mine / totalSeconds;
+        const coinsMined = Math.ceil(totalSeconds * coinsPerSecond);
+        setCurrentCoinsMined(Math.min(currentCoinsMined + coinsMined, miningInfo.coins_mine));
+    }, [hours, minutes, seconds, timerFinished, currentCoinsMined, miningInfo]);
 
     return (
         <>
@@ -127,7 +153,7 @@ export const ActiveTime = () => {
                 <img src="/capsule_v_2.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
-                <div className='time-left'> {remainingCoins} Coins
+                <div className='time-left'> mined: {currentCoinsMined}
                     {timerFinished ? <span>0h 0m</span> : `${hours < 10 ? '' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
                 </div>
                 <div className='info-for'>
