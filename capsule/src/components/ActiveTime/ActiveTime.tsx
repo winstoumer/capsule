@@ -180,10 +180,10 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='current-coins'>
-                    {value.toFixed(3)}&nbsp;
+                    {value.toFixed(3)}
                 </div>
                 <div className='time-left'>
-                    {timerFinished ? <span>0h 0m</span> : `${hours}h ${minutes}m`}
+                    {timerFinished ? <span></span> : (hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`)}
                 </div>
                 <div className='info-for'>
                     {coinsMine}/{timeMine}h
