@@ -232,10 +232,10 @@ export const Boost: React.FC = () => {
         const countdownInterval = setInterval(() => {
             if (hours === 0 && minutes === 0 && seconds === 0) {
                 clearInterval(countdownInterval);
-                setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
+                setTimerFinished(true);
                 return;
             }
-
+    
             if (!timerFinished) {
                 setSecondsLeft(prevSeconds => {
                     if (prevSeconds === 0) {
@@ -254,17 +254,17 @@ export const Boost: React.FC = () => {
                 });
             }
         }, 1000);
-
+    
         return () => clearInterval(countdownInterval);
-    }, [hours, minutes, seconds, timerFinished]);
+    }, [hours, minutes, seconds, timerFinished]);    
 
-    const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
+    const coinsMinedSoFarRef = useRef<number>(0);
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
-            const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
-            const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
-            const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
+            const totalSecondsInTimeMine = timeMine * 3600;
+            const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
+            const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
         }
@@ -272,11 +272,11 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
-    
+
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
                 const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
-                
+
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
                     setValue(coinsMinedSoFarRef.current);
@@ -286,13 +286,13 @@ export const Boost: React.FC = () => {
                     coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
                     setValue(coinsMinedSoFarRef.current); // обновляем значение
                 }
-    
+
                 if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
                     setValue(coinsMine);
                     clearInterval(interval); // Останавливаем интервал
                 }
             }, 500);
-    
+
             return () => clearInterval(interval);
         }
     }, [coinsMine, timeMine]);
