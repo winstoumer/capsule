@@ -110,39 +110,46 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const countdownInterval = setInterval(() => {
-          if (hours === 0 && minutes === 0 && seconds === 0) {
-            clearInterval(countdownInterval);
-            setTimerFinished(true);
-            return;
-          }
-          
-          if (miningInfo) {
-          if (!timerFinished) {
-            setSecondsLeft(prevSeconds => {
-              if (prevSeconds === 0) {
-                setMinutesLeft(prevMinutes => {
-                  if (prevMinutes === 0) {
-                    setHoursLeft(prevHours => Math.max(0, prevHours - 1));
-                    return 59;
-                  } else {
-                    return prevMinutes - 1;
-                  }
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+                clearInterval(countdownInterval);
+                setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
+                return;
+            }
+
+            if (!timerFinished) {
+                setSecondsLeft(prevSeconds => {
+                    if (prevSeconds === 0) {
+                        setMinutesLeft(prevMinutes => {
+                            if (prevMinutes === 0) {
+                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
+                                return 59;
+                            } else {
+                                return prevMinutes - 1;
+                            }
+                        });
+                        return 59;
+                    } else {
+                        return prevSeconds - 1;
+                    }
                 });
-                return 59;
-              } else {
-                return prevSeconds - 1;
-              }
-            });
-        }
-            // Вычисляем количество монет, которые добыто за одну секунду
-            const coinsPerSecond = miningInfo?.coins_mine / (miningInfo?.coins_mine * 3600);
-            // Увеличиваем текущее количество добытых монет
-            setCurrentCoinsMined(prevCoins => prevCoins + coinsPerSecond);
-          }
+            }
         }, 1000);
-    
+
         return () => clearInterval(countdownInterval);
-      }, [miningInfo, hours, minutes, seconds, timerFinished]);
+    }, [hours, minutes, seconds, timerFinished]);
+
+    useEffect(() => {
+        const countdownInterval = setInterval(() => {
+            if (miningInfo)
+            {
+                const coinsPerSecond = miningInfo?.coins_mine / (miningInfo?.time_mine * 3600);
+                // Увеличиваем текущее количество добытых монет
+                setCurrentCoinsMined(prevCoins => prevCoins + coinsPerSecond);
+            }
+        }, 1000);
+
+        return () => clearInterval(countdownInterval);
+    }, []);
 
     return (
         <>
