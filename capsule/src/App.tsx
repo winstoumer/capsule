@@ -6,9 +6,6 @@ import HomePage from './pages/HomePage';
 import BoostPage from './pages/BoostPage';
 import EarnPage from './pages/EarnPage';
 import NftPage from './pages/NftPage';
-import dotenv from 'dotenv';
-
-dotenv.config();
 
 function App() {
 
