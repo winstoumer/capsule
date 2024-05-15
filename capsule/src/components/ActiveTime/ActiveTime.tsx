@@ -151,7 +151,7 @@ export const ActiveTime = () => {
     
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
-                const coinsPerSecond = coinsMine / (timeMine * 3600);
+                const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
                 
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
@@ -167,7 +167,7 @@ export const ActiveTime = () => {
                     setValue(coinsMine);
                     clearInterval(interval); // Останавливаем интервал
                 }
-            }, 1000);
+            }, 500);
     
             return () => clearInterval(interval);
         }
