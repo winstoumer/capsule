@@ -109,8 +109,8 @@ export const ActiveTime = () => {
             console.log('currentTime:', currentTime);
 
             if (nextTime && miningInfo) {
-                const now = new Date(currentTime);
-                const end = new Date(nextTime);
+                const now = new Date(currentTime.replace('T', ' ').replace('Z', ''));
+                const end = new Date(nextTime.replace('T', ' ').replace('Z', ''));
 
                 // Ensure that the dates are valid
                 if (isNaN(now.getTime()) || isNaN(end.getTime())) {
