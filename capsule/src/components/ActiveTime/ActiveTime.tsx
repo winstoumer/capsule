@@ -39,7 +39,7 @@ export const ActiveTime = () => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/ready/${telegramUserId}`);
+            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/ready/${telegramUserId}/current`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
             }
