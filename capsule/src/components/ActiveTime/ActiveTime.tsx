@@ -147,7 +147,7 @@ export const ActiveTime = () => {
 
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine]);
+    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     return (
         <>
