@@ -136,14 +136,11 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
-            const totalSeconds = (timeMine * 3600) - ((hours * 3600) + (minutes * 60) + seconds);
-            const coinsPerSecond = coinsMine / (timeMine * 3600);
-            const coinsMined = totalSeconds * coinsPerSecond;
-            
             const interval = setInterval(() => {
-                setValue((prevValue) => parseFloat((prevValue + coinsMined).toFixed(3)));
+                const coinsPerSecond = coinsMine / (timeMine * 3600);
+                setValue((prevValue) => parseFloat((prevValue + coinsPerSecond).toFixed(3)));
             }, 1000);
-        
+    
             // Очистка интервала при размонтировании компонента
             return () => clearInterval(interval);
         }
