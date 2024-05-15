@@ -174,7 +174,7 @@ export const Boost: React.FC = () => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/ready/${telegramUserId}`);
+            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/ready/${telegramUserId}/current`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
             }
@@ -227,7 +227,7 @@ export const Boost: React.FC = () => {
 
     const updateNextMining = async (matterId: number): Promise<void> => {
         try {
-            await axios.put(`https://capsule-server.onrender.com/api/currentMining/ready/${userData.id}`, { matter_id: matterId });
+            await axios.put(`https://capsule-server.onrender.com/api/currentMining/ready/${userData.id}/update`, { matter_id: matterId });
         } catch (error) {
             throw error;
         }
