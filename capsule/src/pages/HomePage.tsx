@@ -7,6 +7,8 @@ import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 
 const HomePage: React.FC = () => {
+  const apiUrl = process.env.REACT_APP_API_URL;
+
   const [userData, setUserData] = useState<any>(null);
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
@@ -25,7 +27,7 @@ const HomePage: React.FC = () => {
 
   const fetchBalance = async (telegramUserId: string) => {
     try {
-      const response = await axios.get(`https://capsule-server.onrender.com/api/balance/${telegramUserId}`);
+      const response = await axios.get(`${apiUrl}/api/balance/${telegramUserId}`);
       const responseData = response.data;
       if (responseData.hasOwnProperty('balance')) {
         const balanceValue = parseFloat(responseData.balance);
