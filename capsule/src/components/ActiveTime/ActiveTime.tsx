@@ -12,7 +12,6 @@ interface MiningData {
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
-    const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
@@ -48,7 +47,6 @@ export const ActiveTime = () => {
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
-            setMiningInfo(data);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
         } catch (error) {
             console.error(error);
