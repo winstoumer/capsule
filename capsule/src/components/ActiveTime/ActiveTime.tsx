@@ -157,12 +157,12 @@ export const ActiveTime = () => {
                 
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
-                    setCoinsMine(coinsMinedSoFarRef.current);
+                    setValue(coinsMinedSoFarRef.current);
                     isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
                 }
     
                 if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
-                    setCoinsMine(coinsMine);
+                    setValue(coinsMine);
                     clearInterval(interval); // Останавливаем интервал
                 }
             }, 1000);
