@@ -147,12 +147,22 @@ export const ActiveTime = () => {
     }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
+        let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
+    
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
                 const coinsPerSecond = coinsMine / (timeMine * 3600);
                 coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
                 setValue(coinsMinedSoFarRef.current); // обновляем значение
+                
+                if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
+                    // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
+                    setCoinsMine(coinsMinedSoFarRef.current);
+                    isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
+                }
+    
                 if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
+                    setCoinsMine(coinsMine);
                     clearInterval(interval); // Останавливаем интервал
                 }
             }, 1000);
