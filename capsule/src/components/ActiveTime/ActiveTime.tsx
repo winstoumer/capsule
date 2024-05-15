@@ -108,43 +108,51 @@ export const ActiveTime = () => {
             console.log('miningInfo:', miningInfo);
             console.log('currentTime:', currentTime);
 
-            if (nextTime && miningInfo) {
-                const now = new Date(currentTime.replace('T', ' ').replace('Z', ''));
-                const end = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+            if (nextTime && miningInfo && currentTime) {
+                const now = new Date(currentTime);
+                
+   
+const end = new Date(nextTime);
 
                 // Ensure that the dates are valid
-                if (isNaN(now.getTime()) || isNaN(end.getTime())) {
-                    console.error('Invalid date provided.');
+                if (isNaN(now.getTime())) {
+                    console.error('Invalid currentTime provided:', currentTime);
+                    return;
+                }
+
+                if (isNaN(end.getTime())) {
+                    console.error('Invalid nextTime provided:', nextTime);
                     return;
                 }
 
                 // Ensure miningInfo values are numbers
                 const timeMineInHours = Number(miningInfo.time_mine);
                 
-  
+             
 const coinsMine = Number(miningInfo.coins_mine);
 
                 if (isNaN(timeMineInHours) || isNaN(coinsMine)) {
-                    console.error('Invalid mining information provided.');
+                    console.error('Invalid mining information provided:', miningInfo);
                     return;
                 }
 
-                console.log('timeMineInHours:', timeMineInHours);
+          
+console.log('timeMineInHours:', timeMineInHours);
                 console.log('coinsMine:', coinsMine);
 
                 const totalMiningDurationInSeconds = timeMineInHours * 3600;
                 const timeUntilEndInSeconds = (end.getTime() - now.getTime()) / 1000;
 
+                console.log('totalMiningDurationInSeconds:', totalMiningDurationInSeconds);
+                console.log('timeUntilEndInSeconds:', timeUntilEndInSeconds);
+
                 let elapsedTimeInSeconds = totalMiningDurationInSeconds - timeUntilEndInSeconds;
                 if (elapsedTimeInSeconds < 0) {
                     elapsedTimeInSeconds = 0; // If currentTime is before the start of mining
                 } else if (elapsedTimeInSeconds > totalMiningDurationInSeconds) {
-                    elapsedTimeInSeconds = totalMiningDurationInSeconds;
-// If currentTime is after the end of mining
+                    elapsedTimeInSeconds = totalMiningDurationInSeconds; // If currentTime is after the end of mining
                 }
 
-                console.log('totalMiningDurationInSeconds:', totalMiningDurationInSeconds);
-                console.log('timeUntilEndInSeconds:', timeUntilEndInSeconds);
                 console.log('elapsedTimeInSeconds:', elapsedTimeInSeconds);
 
                 const coinsPerSecond = coinsMine / totalMiningDurationInSeconds;
@@ -153,7 +161,7 @@ const coinsMine = Number(miningInfo.coins_mine);
                 console.log('coinsPerSecond:', coinsPerSecond);
                 console.log('coinsMinedSoFar:', coinsMinedSoFar);
 
-                setCurrentCoinsMined(coinsMinedSoFar);
+setCurrentCoinsMined(coinsMinedSoFar);
             }
         };
 
