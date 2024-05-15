@@ -149,7 +149,7 @@ export const ActiveTime = () => {
         }, 1000);
 
         return () => clearInterval(countdownInterval);
-    }, []);
+    }, [currentCoinsMined]);
 
     return (
         <>
