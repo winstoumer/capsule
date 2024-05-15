@@ -103,25 +103,24 @@ export const ActiveTime = () => {
     }, [nextTime, currentTime]);
 
     useEffect(() => {
-        const calculateTotalCoinsToMine = () => {
+        const calculateTotalCoinsMined = () => {
             if (nextTime && miningInfo) {
                 const currentNowTime = new Date(currentTime);
                 const currentNextTime = new Date(nextTime);
                 const timeToMineInSeconds = miningInfo.time_mine * 3600;
-                const diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                const elapsedTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
 
-                // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
-                const elapsedTimeInSeconds = Math.max(0, timeToMineInSeconds - diffTimeInSeconds);
+                // Вычисляем долю времени от time_mine
+                const timeFraction = Math.min(1, elapsedTimeInSeconds / timeToMineInSeconds);
 
-                // Вычисляем сколько монет нужно добыть за оставшееся время
-                const coinsPerSecond = miningInfo.coins_mine / timeToMineInSeconds;
-                const coinsToMine = Math.floor(coinsPerSecond * elapsedTimeInSeconds);
+                // Вычисляем сколько монет должно быть добыто за эту долю времени
+                const coinsToMine = Math.floor(miningInfo.coins_mine * timeFraction);
 
                 setRemainingCoins(coinsToMine);
             }
         };
 
-        calculateTotalCoinsToMine();
+        calculateTotalCoinsMined();
     }, [nextTime, miningInfo, currentTime]);
 
     return (
