@@ -103,27 +103,26 @@ export const ActiveTime = () => {
     }, [nextTime, currentTime]);
 
     useEffect(() => {
-        const updateCoinsMined = () => {
+        const calculateTotalCoinsToMine = () => {
             if (nextTime && miningInfo) {
                 const currentNowTime = new Date(currentTime);
                 const currentNextTime = new Date(nextTime);
-                let diffTimeInSeconds = (currentNowTime.getTime() - currentNextTime.getTime()) / 1000;
-                if (diffTimeInSeconds < 0) {
-                    diffTimeInSeconds = 0;
-                }
-                const maxCoinsToMine = miningInfo.coins_mine;
-                const elapsedTimeInSeconds = miningInfo.time_mine * 3600 - diffTimeInSeconds;
-                const coinsPerSecond = maxCoinsToMine / (miningInfo.time_mine * 3600);
-                let coinsRemaining = Math.max(0, maxCoinsToMine - Math.floor(coinsPerSecond * elapsedTimeInSeconds));
+                const timeToMineInSeconds = miningInfo.time_mine * 3600;
+                const diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
 
-                setRemainingCoins(coinsRemaining);
+                // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
+                const elapsedTimeInSeconds = Math.max(0, timeToMineInSeconds - diffTimeInSeconds);
+
+                // Вычисляем сколько монет нужно добыть за оставшееся время
+                const coinsPerSecond = miningInfo.coins_mine / timeToMineInSeconds;
+                const coinsToMine = Math.floor(coinsPerSecond * elapsedTimeInSeconds);
+
+                setRemainingCoins(coinsToMine);
             }
         };
 
-        updateCoinsMined();
-        const intervalId = setInterval(updateCoinsMined, 1000);
-        return () => clearInterval(intervalId);
-    }, [nextTime, miningInfo]);
+        calculateTotalCoinsToMine();
+    }, [nextTime, miningInfo, currentTime]);
 
     return (
         <>
