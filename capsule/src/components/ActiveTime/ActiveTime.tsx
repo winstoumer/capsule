@@ -135,14 +135,37 @@ export const ActiveTime = () => {
     useEffect(() => {
         const updateCoinsMined = () => {
             if (nextTime && miningInfo) {
-                const currentNowTime = new Date(currentTime);
-                const currentNextTime = new Date(nextTime);
-                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
-                if (diffTimeInSeconds < 0) {
-                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
+                const now = new Date(currentTime);
+                const end = new Date(nextTime);
+
+                // Ensure that the dates are valid
+                if (isNaN(now.getTime()) || isNaN(end.getTime())) {
+                    console.error('Invalid date provided.');
+                    return;
                 }
-                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
-                const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
+
+                // Ensure miningInfo values are numbers
+                const timeMineInHours = Number(miningInfo.time_mine);
+                const coinsMine = Number(miningInfo.coins_mine);
+
+                if (isNaN(timeMineInHours) || isNaN(coinsMine)) {
+                    console.error('Invalid mining information provided.');
+                    return;
+                }
+
+                const totalMiningDurationInSeconds = timeMineInHours * 3600;
+                const timeUntilEndInSeconds = (end.getTime() - now.getTime()) / 1000;
+
+                let elapsedTimeInSeconds = totalMiningDurationInSeconds - timeUntilEndInSeconds;
+                if (elapsedTimeInSeconds < 0) {
+                    elapsedTimeInSeconds = 0; // If currentTime is before the start of mining
+                } else if (elapsedTimeInSeconds > totalMiningDurationInSeconds) {
+                    elapsedTimeInSeconds = totalMiningDurationInSeconds; // If currentTime is after the end of mining
+                }
+
+                const coinsPerSecond = coinsMine / totalMiningDurationInSeconds;
+                const coinsMinedSoFar = Math.floor(coinsPerSecond * elapsedTimeInSeconds);
+
                 setCurrentCoinsMined(coinsMinedSoFar);
             }
         };
