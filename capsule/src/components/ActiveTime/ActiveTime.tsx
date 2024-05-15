@@ -110,33 +110,39 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const countdownInterval = setInterval(() => {
-            if (hours === 0 && minutes === 0 && seconds === 0) {
-                clearInterval(countdownInterval);
-                setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
-                return;
-            }
-
-            if (!timerFinished) {
-                setSecondsLeft(prevSeconds => {
-                    if (prevSeconds === 0) {
-                        setMinutesLeft(prevMinutes => {
-                            if (prevMinutes === 0) {
-                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
-                                return 59;
-                            } else {
-                                return prevMinutes - 1;
-                            }
-                        });
-                        return 59;
-                    } else {
-                        return prevSeconds - 1;
-                    }
+          if (hours === 0 && minutes === 0 && seconds === 0) {
+            clearInterval(countdownInterval);
+            setTimerFinished(true);
+            return;
+          }
+          
+          if (miningInfo) {
+          if (!timerFinished) {
+            setSecondsLeft(prevSeconds => {
+              if (prevSeconds === 0) {
+                setMinutesLeft(prevMinutes => {
+                  if (prevMinutes === 0) {
+                    setHoursLeft(prevHours => Math.max(0, prevHours - 1));
+                    return 59;
+                  } else {
+                    return prevMinutes - 1;
+                  }
                 });
-            }
+                return 59;
+              } else {
+                return prevSeconds - 1;
+              }
+            });
+        }
+            // Вычисляем количество монет, которые добыто за одну секунду
+            const coinsPerSecond = miningInfo?.coins_mine / (miningInfo?.coins_mine * 3600);
+            // Увеличиваем текущее количество добытых монет
+            setCurrentCoinsMined(prevCoins => prevCoins + coinsPerSecond);
+          }
         }, 1000);
-
+    
         return () => clearInterval(countdownInterval);
-    }, [hours, minutes, seconds, timerFinished]);
+      }, [miningInfo, hours, minutes, seconds, timerFinished]);
 
     return (
         <>
@@ -144,7 +150,7 @@ export const ActiveTime = () => {
                 <img src="/capsule_v_2.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
-                <div className='time-left'> mined: {currentCoinsMined}
+                <div className='time-left'> mined: {currentCoinsMined.toFixed(2)}
                     {timerFinished ? <span>0h 0m</span> : `${hours < 10 ? '' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
                 </div>
                 <div className='info-for'>
