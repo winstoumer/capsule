@@ -22,7 +22,7 @@ export const ActiveTime = () => {
 
     const [timerFinished, setTimerFinished] = useState(false);
 
-    const [currentCoinsMined, setCurrentCoinsMined] = useState(0);
+    const [remainingCoins, setRemainingCoins] = useState(0);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -114,9 +114,9 @@ export const ActiveTime = () => {
                 const maxCoinsToMine = miningInfo.coins_mine;
                 const elapsedTimeInSeconds = miningInfo.time_mine * 3600 - diffTimeInSeconds;
                 const coinsPerSecond = maxCoinsToMine / (miningInfo.time_mine * 3600);
-                let coinsMinedSoFar = Math.min(maxCoinsToMine, Math.floor(coinsPerSecond * elapsedTimeInSeconds));
+                let coinsRemaining = Math.max(0, maxCoinsToMine - Math.floor(coinsPerSecond * elapsedTimeInSeconds));
 
-                setCurrentCoinsMined(coinsMinedSoFar);
+                setRemainingCoins(coinsRemaining);
             }
         };
 
@@ -131,7 +131,7 @@ export const ActiveTime = () => {
                 <img src="/capsule_v_2.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
-                <div className='time-left'> {currentCoinsMined} Coins
+                <div className='time-left'> {remainingCoins} Coins
                     {timerFinished ? <span>0h 0m</span> : `${hours < 10 ? '' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
                 </div>
                 <div className='info-for'>
