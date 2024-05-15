@@ -22,6 +22,8 @@ export const ActiveTime = () => {
 
     const [timerFinished, setTimerFinished] = useState(false);
 
+    const [currentCoinsMined, setCurrentCoinsMined] = useState(0);
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -130,13 +132,31 @@ export const ActiveTime = () => {
         return () => clearInterval(countdownInterval);
     }, [hours, minutes, seconds, timerFinished]);
 
+    useEffect(() => {
+        const updateCoinsMined = () => {
+            if (nextTime && miningInfo) {
+                const currentNowTime = new Date(currentTime);
+                const currentNextTime = new Date(nextTime);
+                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                if (diffTimeInSeconds < 0) {
+                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
+                }
+                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
+                const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
+                setCurrentCoinsMined(coinsMinedSoFar);
+            }
+        };
+
+        updateCoinsMined();
+    }, [nextTime, miningInfo, currentTime]);
+
     return (
         <>
             <div className='watch-capsule'>
                 <img src="/capsule_v_2.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
-                <div className='time-left'>
+                <div className='time-left'> {currentCoinsMined} Coins
                     {timerFinished ? <span>0h 0m</span> : `${hours < 10 ? '' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
                 </div>
                 <div className='info-for'>
