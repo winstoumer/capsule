@@ -104,16 +104,17 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const updateCoinsMined = () => {
-            if (nextTime && miningInfo && currentTime) {
+            if (nextTime && miningInfo) {
                 const currentNowTime = new Date(currentTime);
                 const currentNextTime = new Date(nextTime);
-                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                let diffTimeInSeconds = (currentNowTime.getTime() - currentNextTime.getTime()) / 1000;
                 if (diffTimeInSeconds < 0) {
-                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
+                    diffTimeInSeconds = 0;
                 }
                 const maxCoinsToMine = miningInfo.coins_mine;
-                const coinsPerSecond = maxCoinsToMine / (miningInfo.time_mine * 3600); // монет в секунду
-                let coinsMinedSoFar = Math.min(maxCoinsToMine, Math.floor(coinsPerSecond * diffTimeInSeconds));
+                const elapsedTimeInSeconds = miningInfo.time_mine * 3600 - diffTimeInSeconds;
+                const coinsPerSecond = maxCoinsToMine / (miningInfo.time_mine * 3600);
+                let coinsMinedSoFar = Math.min(maxCoinsToMine, Math.floor(coinsPerSecond * elapsedTimeInSeconds));
 
                 setCurrentCoinsMined(coinsMinedSoFar);
             }
@@ -122,7 +123,7 @@ export const ActiveTime = () => {
         updateCoinsMined();
         const intervalId = setInterval(updateCoinsMined, 1000);
         return () => clearInterval(intervalId);
-    }, [nextTime, miningInfo, currentTime]);
+    }, [nextTime, miningInfo]);
 
     return (
         <>
