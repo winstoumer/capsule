@@ -118,7 +118,6 @@ export const ActiveTime = () => {
                 setRemainingCoins(coinsToMine);
             }
         };
-
         calculateTotalCoinsMined();
     }, [nextTime, miningInfo, currentTime]);
 
