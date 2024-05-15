@@ -18,7 +18,7 @@ export const ActiveTime = () => {
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
-    const [seconds, setSecondsLeft] = useState<number>(0);
+    //const [seconds, setSecondsLeft] = useState<number>(0);
 
     const [timerFinished, setTimerFinished] = useState(false);
 
@@ -90,10 +90,10 @@ export const ActiveTime = () => {
 
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                //const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
                 setHoursLeft(hours);
                 setMinutesLeft(minutes);
-                setSecondsLeft(seconds);
+                //setSecondsLeft(seconds);
             }
         };
 
