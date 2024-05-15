@@ -15,6 +15,8 @@ export const ActiveTime = () => {
     const [miningInfo, setMiningInfo] = useState<MiningData | null>(null);
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
+    const [coinsMine, setCoinsMine] = useState<number | null>(null);
+    const [timeMine, setTimeMine] = useState<number | null>(null);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -44,6 +46,8 @@ export const ActiveTime = () => {
             }
             const data: MiningData = await response.json();
             setNextTime(data.next_time);
+            setCoinsMine(data.coins_mine);
+            setTimeMine(data.time_mine);
             setMiningInfo(data);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
         } catch (error) {
@@ -139,16 +143,16 @@ export const ActiveTime = () => {
     }, [hours, minutes, seconds, timerFinished]);
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            if (miningInfo) {
-                const coinsPerSecond = miningInfo?.coins_mine / (miningInfo?.time_mine * 3600);
+        if (coinsMine !== null && timeMine !== null) {
+            const interval = setInterval(() => {
+                const coinsPerSecond = coinsMine / (timeMine * 3600);
                 setValue((prevValue) => parseFloat((prevValue + coinsPerSecond).toFixed(3)));
-            }
-        }, 1000);
+            }, 1000);
     
-        // Очистка интервала при размонтировании компонента
-        return () => clearInterval(interval);
-      }, []);
+            // Очистка интервала при размонтировании компонента
+            return () => clearInterval(interval);
+        }
+    }, [coinsMine, timeMine]);
 
     return (
         <>
@@ -161,7 +165,7 @@ export const ActiveTime = () => {
                     {timerFinished ? <span>0h 0m</span> : `${hours < 10 ? '' + hours : hours}h ${minutes < 10 ? '0' + minutes : minutes}m`}
                 </div>
                 <div className='info-for'>
-                    {miningInfo?.coins_mine}/{miningInfo?.time_mine}h
+                    {coinsMine}/{timeMine}h
                 </div>
                 <div className='info-for position-top '>
                     {timerFinished && <button className='default-button'>Claim</button>}
