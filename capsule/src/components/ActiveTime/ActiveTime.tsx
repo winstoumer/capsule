@@ -107,12 +107,6 @@ export const ActiveTime = () => {
     }, [nextTime, currentTime]);
 
     useEffect(() => {
-        if (!miningInfo) return; // Если miningInfo === null, не выполняем никаких операций
-
-        setHoursLeft(miningInfo.time_mine);
-    }, [miningInfo]);
-
-    useEffect(() => {
         const countdownInterval = setInterval(() => {
             if (hours === 0 && minutes === 0 && seconds === 0) {
                 clearInterval(countdownInterval);
