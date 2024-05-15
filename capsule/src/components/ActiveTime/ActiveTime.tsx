@@ -179,7 +179,7 @@ export const ActiveTime = () => {
                 <img src="/capsule_v_2.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
-                <div className='current-coins`'>
+                <div className='current-coins'>
                     {value.toFixed(3)}&nbsp;
                 </div>
                 <div className='time-left'>
