@@ -111,10 +111,9 @@ export const ActiveTime = () => {
                 if (diffTimeInSeconds < 0) {
                     diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
                 }
-
-                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
                 const maxCoinsToMine = miningInfo.coins_mine;
-                let coinsMinedSoFar = Math.min(maxCoinsToMine, Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds))); // округляем вниз
+                const coinsPerSecond = maxCoinsToMine / (miningInfo.time_mine * 3600); // монет в секунду
+                let coinsMinedSoFar = Math.min(maxCoinsToMine, Math.floor(coinsPerSecond * diffTimeInSeconds));
 
                 setCurrentCoinsMined(coinsMinedSoFar);
             }
