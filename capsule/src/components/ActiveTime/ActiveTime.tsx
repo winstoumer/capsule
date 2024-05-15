@@ -138,15 +138,6 @@ export const ActiveTime = () => {
         return () => clearInterval(countdownInterval);
     }, [hours, minutes, seconds, timerFinished]);
 
-    useEffect(() => {
-        if (!miningInfo || timerFinished) return; // Если miningInfo === null или таймер завершен, не выполняем никаких операций
-
-        const totalSeconds = hours * 3600 + minutes * 60 + seconds;
-        const coinsPerSecond = miningInfo.coins_mine / totalSeconds;
-        const coinsMined = Math.ceil(totalSeconds * coinsPerSecond);
-        setCurrentCoinsMined(Math.min(currentCoinsMined + coinsMined, miningInfo.coins_mine));
-    }, [hours, minutes, seconds, timerFinished, currentCoinsMined, miningInfo]);
-
     return (
         <>
             <div className='watch-capsule'>
