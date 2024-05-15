@@ -24,7 +24,6 @@ export const ActiveTime = () => {
     const [timerFinished, setTimerFinished] = useState(false);
 
     const [value, setValue] = useState(0.000);
-    const coinsMinedSoFarRef = useRef<number>(0);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -135,23 +134,29 @@ export const ActiveTime = () => {
         return () => clearInterval(countdownInterval);
     }, [hours, minutes, seconds, timerFinished]);
 
+    const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
+
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
-            let totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
-            let passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
-            let remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
+            const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
+            const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
+            const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
+        }
+    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
+    useEffect(() => {
+        if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
                 const coinsPerSecond = coinsMine / (timeMine * 3600);
                 coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
-                setValue((prevValue) => parseFloat((prevValue + coinsPerSecond).toFixed(3)));
+                setValue(coinsMinedSoFarRef.current); // обновляем значение
             }, 1000);
 
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine, hours, minutes, seconds]);
+    }, [coinsMine, timeMine]);
 
     return (
         <>
