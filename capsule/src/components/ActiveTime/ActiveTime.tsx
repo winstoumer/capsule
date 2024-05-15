@@ -138,7 +138,7 @@ export const ActiveTime = () => {
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
                 const mineSeconds = timeMine * 3600;
-                const remainingTimeSeconds = (timeMine * 3600) - ((hours * 3600) + (minutes * 60) + seconds);
+                const remainingTimeSeconds = ((hours * 3600) + (minutes * 60) + seconds);
 
                 const coinsMinedSoFar = (coinsMine * remainingTimeSeconds) / mineSeconds;
                 setValue((prevValue) => parseFloat((prevValue + coinsMinedSoFar).toFixed(3)));
