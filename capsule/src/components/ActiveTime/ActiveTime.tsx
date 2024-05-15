@@ -104,69 +104,23 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const updateCoinsMined = () => {
-            console.log('nextTime:', nextTime);
-            console.log('miningInfo:', miningInfo);
-            console.log('currentTime:', currentTime);
-
-            if (nextTime && miningInfo && currentTime) {
-                const now = new Date(currentTime);
-                
-   
-const end = new Date(nextTime);
-
-                // Ensure that the dates are valid
-                if (isNaN(now.getTime())) {
-                    console.error('Invalid currentTime provided:', currentTime);
-                    return;
+            if (nextTime && miningInfo) {
+                const currentNowTime = new Date(currentTime);
+                const currentNextTime = new Date(nextTime);
+                let diffTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
+                if (diffTimeInSeconds < 0) {
+                    diffTimeInSeconds = 0; // Если currentTime позже, чем nextTime, считаем, что разница времени равна 0
                 }
-
-                if (isNaN(end.getTime())) {
-                    console.error('Invalid nextTime provided:', nextTime);
-                    return;
-                }
-
-                // Ensure miningInfo values are numbers
-                const timeMineInHours = Number(miningInfo.time_mine);
-                
-             
-const coinsMine = Number(miningInfo.coins_mine);
-
-                if (isNaN(timeMineInHours) || isNaN(coinsMine)) {
-                    console.error('Invalid mining information provided:', miningInfo);
-                    return;
-                }
-
-          
-console.log('timeMineInHours:', timeMineInHours);
-                console.log('coinsMine:', coinsMine);
-
-                const totalMiningDurationInSeconds = timeMineInHours * 3600;
-                const timeUntilEndInSeconds = (end.getTime() - now.getTime()) / 1000;
-
-                console.log('totalMiningDurationInSeconds:', totalMiningDurationInSeconds);
-                console.log('timeUntilEndInSeconds:', timeUntilEndInSeconds);
-
-                let elapsedTimeInSeconds = totalMiningDurationInSeconds - timeUntilEndInSeconds;
-                if (elapsedTimeInSeconds < 0) {
-                    elapsedTimeInSeconds = 0; // If currentTime is before the start of mining
-                } else if (elapsedTimeInSeconds > totalMiningDurationInSeconds) {
-                    elapsedTimeInSeconds = totalMiningDurationInSeconds; // If currentTime is after the end of mining
-                }
-
-                console.log('elapsedTimeInSeconds:', elapsedTimeInSeconds);
-
-                const coinsPerSecond = coinsMine / totalMiningDurationInSeconds;
-                const coinsMinedSoFar = Math.floor(coinsPerSecond * elapsedTimeInSeconds);
-
-                console.log('coinsPerSecond:', coinsPerSecond);
-                console.log('coinsMinedSoFar:', coinsMinedSoFar);
-
-setCurrentCoinsMined(coinsMinedSoFar);
+                const coinsPerSecond = miningInfo.coins_mine / (miningInfo.time_mine * 3600); // монет в секунду
+                const coinsMinedSoFar = Math.floor(coinsPerSecond * (miningInfo.time_mine * 3600 - diffTimeInSeconds)); // округляем вниз
+                setCurrentCoinsMined(coinsMinedSoFar);
             }
         };
 
         updateCoinsMined();
-    }, [nextTime, miningInfo, currentTime]);
+        const intervalId = setInterval(updateCoinsMined, 1000);
+        return () => clearInterval(intervalId);
+    }, [nextTime, miningInfo]);
 
     return (
         <>
