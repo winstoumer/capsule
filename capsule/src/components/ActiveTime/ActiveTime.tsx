@@ -107,18 +107,15 @@ export const ActiveTime = () => {
             if (nextTime && miningInfo) {
                 const currentNowTime = new Date(currentTime);
                 const currentNextTime = new Date(nextTime);
-                const timeToMineInSeconds = miningInfo.time_mine * 3600;
                 const elapsedTimeInSeconds = (currentNextTime.getTime() - currentNowTime.getTime()) / 1000;
 
-                // Если прошло меньше времени, чем time_mine, вычисляем сколько монет уже добыто
-                if (elapsedTimeInSeconds <= timeToMineInSeconds) {
-                    const timeFraction = elapsedTimeInSeconds / timeToMineInSeconds;
-                    const coinsToMine = Math.floor(miningInfo.coins_mine * timeFraction);
-                    setRemainingCoins(coinsToMine);
-                } else {
-                    // Если прошло больше времени, чем time_mine, то все монеты уже добыты
-                    setRemainingCoins(miningInfo.coins_mine);
-                }
+                // Вычисляем долю времени от часа
+                const timeFraction = elapsedTimeInSeconds / (miningInfo.time_mine * 3600);
+
+                // Вычисляем количество монет, которые должны быть добыты за эту долю времени
+                const coinsToMine = Math.floor(miningInfo.coins_mine * timeFraction);
+
+                setRemainingCoins(coinsToMine);
             }
         };
 
