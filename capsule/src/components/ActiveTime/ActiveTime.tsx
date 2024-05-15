@@ -152,13 +152,15 @@ export const ActiveTime = () => {
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
                 const coinsPerSecond = coinsMine / (timeMine * 3600);
-                coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
-                setValue(coinsMinedSoFarRef.current); // обновляем значение
                 
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
                     setValue(coinsMinedSoFarRef.current);
                     isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
+                }
+                else {
+                    coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
+                    setValue(coinsMinedSoFarRef.current); // обновляем значение
                 }
     
                 if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
