@@ -12,13 +12,6 @@ type TelegramUserData = {
 export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
 
-    const handleConnectWalletClick = () => {
-        const tonConnectButton = document.querySelector('.header-b .connect-wallet-button:first-child');
-        if (tonConnectButton) {
-            tonConnectButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-        }
-    };
-
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -35,9 +28,8 @@ export const Header: React.FC = () => {
                 )}
             </div>
             <div className="header-b">
-            <TonConnectButton className='connect-wallet-button' />
-            <button className='connect-wallet-button' onClick={handleConnectWalletClick}>Connect wallet</button>
-        </div>
+                <TonConnectButton className="connect-wallet-button" style={{ background: "#ff0000" }} />
+            </div>
         </div>
     </header>
 };
