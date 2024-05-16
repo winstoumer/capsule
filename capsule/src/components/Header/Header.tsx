@@ -13,7 +13,7 @@ export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
 
     const tonConnectUI = new TonConnectUI({
-        manifestUrl: 'https://<YOUR_APP_URL>/tonconnect-manifest.json',
+        manifestUrl: 'https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json',
         uiPreferences: {
             colorsSet: {
                 [THEME.DARK]: {
