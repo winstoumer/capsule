@@ -83,8 +83,7 @@ body {
 .color-blue {
   color: var(--general-color-blue);
 }
-
-/* colors */
+/* end colors */
 
 .content {
   position: relative;
@@ -104,6 +103,11 @@ body {
 }
 
 /* buttons */
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
 .default-button {
   font-size: 18px;
   font-weight: 500;
@@ -116,13 +120,7 @@ body {
   display: flex;
   align-items: center;
 }
-
 /* end buttons */
-
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
 
 @media (prefers-color-scheme: light) {
   :root {

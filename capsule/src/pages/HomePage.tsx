@@ -12,11 +12,38 @@ const HomePage: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
+  const [userExists, setUserExists] = useState(false);
+
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
     }
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        await axios.get(`/api/user/${userData.id}`);
+        setUserExists(true);
+      } catch (error) {
+        console.error('Пользователь не найден:', error);
+        await axios.post('/api/user', { id: userData.id });
+        await fetchData();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
+
+  if (!userExists) {
+    return <div>create account...</div>;
+  }
 
   useEffect(() => {
     if (userData && userData.id) {
