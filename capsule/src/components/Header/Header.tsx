@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TonConnectButton, TonConnectUI, THEME } from "@tonconnect/ui-react";
+import { TonConnectButton } from "@tonconnect/ui-react";
 import './header.scss';
 
 type TelegramUserData = {
@@ -12,18 +12,12 @@ type TelegramUserData = {
 export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
 
-    const tonConnectUI = new TonConnectUI({
-        manifestUrl: 'https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json',
-        uiPreferences: {
-            colorsSet: {
-                [THEME.DARK]: {
-                    connectButton: {
-                        background: '#ffffff'
-                    }
-                }
-            }
+    const handleConnectWalletClick = () => {
+        const tonConnectButton = document.querySelector('.header-b .connect-wallet-button:first-child');
+        if (tonConnectButton) {
+            tonConnectButton.dispatchEvent(new MouseEvent('click', { bubbles: true }));
         }
-    });
+    };
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -41,8 +35,9 @@ export const Header: React.FC = () => {
                 )}
             </div>
             <div className="header-b">
-                {tonConnectUI && <TonConnectButton className='connect-wallet-button' />}
-            </div>
+            <TonConnectButton className='connect-wallet-button' />
+            <button className='connect-wallet-button' onClick={handleConnectWalletClick}>Connect wallet</button>
+        </div>
         </div>
     </header>
 };
