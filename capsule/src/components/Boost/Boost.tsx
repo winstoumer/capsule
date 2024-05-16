@@ -283,11 +283,11 @@ export const Boost: React.FC = () => {
     };
 
     if (loading) {
-        return <div>Загрузка...</div>;
+        return <div></div>;
     }
 
     if (!user) {
-        return <div>Данные о пользователе не найдены.</div>;
+        return <div></div>;
     }
 
     return (
