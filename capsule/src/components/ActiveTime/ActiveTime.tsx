@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import './activeTime.scss';
-import axios from 'axios';
 import ClaimButton from '../Buttons/ClaimButton';
 
 interface MiningData {
