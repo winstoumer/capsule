@@ -20,6 +20,7 @@ export const Header: React.FC = () => {
 
     // Customize TonConnect UI options
     const tonConnectUI = new TonConnectUI({
+        manifestUrl:'https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json',
         uiPreferences: {
             borderRadius: 's',
             theme: THEME.DARK,
