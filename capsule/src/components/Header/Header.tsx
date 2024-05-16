@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { TonConnectButton } from "@tonconnect/ui-react";
 import './header.scss';
 
 type TelegramUserData = {
@@ -27,7 +28,7 @@ export const Header: React.FC = () => {
                 )}
             </div>
             <div className="header-b">
-                <button className='connect-wallet-button'>Connect wallet</button>
+                <TonConnectButton className='connect-wallet-button' />
             </div>
         </div>
     </header>
