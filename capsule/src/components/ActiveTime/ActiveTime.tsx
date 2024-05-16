@@ -194,7 +194,7 @@ export const ActiveTime = () => {
                 </div>
                 <div className='info-for position-top '>
                     {timerFinished && matterId !== null && value !== null && (
-                        <ClaimButton userData={userData.id} matterId={matterId} coins={value} />
+                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} />
                     )}
                 </div>
                 <div className='info-for'>
