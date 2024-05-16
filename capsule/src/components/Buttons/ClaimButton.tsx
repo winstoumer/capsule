@@ -23,7 +23,7 @@ const ClaimButton: React.FC<Props> = ({ userData, matterId, coins }) => {
 
     const updateBalance = async (coins: number): Promise<void> => {
         try {
-            await axios.put(`https://capsule-server.onrender.com/api/balance/mined/${userData.id}`, { amount: coins });
+            await axios.put(`https://capsule-server.onrender.com/api/balance/plus/${userData.id}`, { amount: coins });
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating balance:', error);

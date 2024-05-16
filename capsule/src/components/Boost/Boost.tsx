@@ -203,7 +203,7 @@ export const Boost: React.FC = () => {
 
     const updateBalanceCoins = async (coins: number) => {
         try {
-            await axios.put(`https://capsule-server.onrender.com/api/balance/mined/${userData.id}`, { amount: coins });
+            await axios.put(`https://capsule-server.onrender.com/api/balance/plus/${userData.id}`, { amount: coins });
         } catch (error) {
             throw error;
         }
@@ -219,7 +219,7 @@ export const Boost: React.FC = () => {
 
     const updateBalance = async (price: number): Promise<void> => {
         try {
-            await axios.put(`https://capsule-server.onrender.com/api/balance/${userData.id}`, { amount: price });
+            await axios.put(`https://capsule-server.onrender.com/api/balance/minus/${userData.id}`, { amount: price });
         } catch (error) {
             throw error;
         }
