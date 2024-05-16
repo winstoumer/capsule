@@ -1,7 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 import './activeTime.scss';
+import axios from 'axios';
+import ClaimButton from '../Buttons/ClaimButton';
 
 interface MiningData {
+    matter_id: number;
     active: boolean;
     nft_active: boolean;
     coins_mine: number;
@@ -16,6 +19,7 @@ export const ActiveTime = () => {
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
+    const [matterId, setMatterId] = useState<number | null>(null);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -47,6 +51,7 @@ export const ActiveTime = () => {
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
+            setMatterId(data.matter_id);
             setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
         } catch (error) {
             console.error(error);
@@ -186,10 +191,12 @@ export const ActiveTime = () => {
                     {timerFinished ? <span></span> : (hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`)}
                 </div>
                 <div className='info-for'>
-                    {coinsMine}/{timeMine}h
+                    {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top '>
-                    {timerFinished && <button className='default-button'>Claim</button>}
+                    {timerFinished && matterId !== null && value !== null && (
+                        <ClaimButton userData={userData.id} matterId={matterId} coins={value} />
+                    )}
                 </div>
                 <div className='info-for'>
                     {timerFinished ? <span></span> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>{activeText}</div>}
