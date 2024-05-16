@@ -28,24 +28,6 @@ export const Header: React.FC = () => {
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
-            tonConnectUI.uiOptions = {
-                uiPreferences: {
-                    theme: THEME.DARK,
-                    borderRadius: 's',
-                    colorsSet: {
-                        [THEME.DARK]: {
-                            connectButton: {
-                                background: '#ffffff'
-                            }
-                        },
-                        [THEME.LIGHT]: {
-                            text: {
-                                primary: '#FF0000'
-                            }
-                        }
-                    }
-                }
-            };
         }
     }, []);
 
@@ -59,7 +41,7 @@ export const Header: React.FC = () => {
                 )}
             </div>
             <div className="header-b">
-                <TonConnectButton className='connect-wallet-button' />
+                {tonConnectUI && <TonConnectButton className='connect-wallet-button' />}
             </div>
         </div>
     </header>
