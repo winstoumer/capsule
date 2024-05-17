@@ -23,7 +23,7 @@ const ProcessNft: React.FC = () => {
 
     const currentDate = new Date();
     const endDate = new Date();
-    endDate.setMonth(currentDate.getMonth() + 1);
+    endDate.setDate(currentDate.getDate() + 3);
 
     const randomDate = new Date(currentDate.getTime() + Math.random() * (endDate.getTime() - currentDate.getTime()));
     
