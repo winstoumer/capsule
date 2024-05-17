@@ -13,7 +13,6 @@ interface MiningData {
 }
 
 export const ActiveTime = () => {
-    const [loading, setLoading] = useState<boolean>(true);
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [currentTime, setCurrentTime] = useState<string>("");
@@ -42,6 +41,12 @@ export const ActiveTime = () => {
         }
     }, []);
 
+    useEffect(() => {
+        if (userData && userData.id) {
+            fetchMiningData(userData.id.toString());
+        }
+    }, [userData]);
+
     function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
         if (nftEndDate) {
             const nowDate = new Date(currentTime);
@@ -65,17 +70,8 @@ export const ActiveTime = () => {
         return "";
     }
 
-    useEffect(() => {
-        fetchCurrentTime();
-    }, [])
-
-    if (loading) {
-        return <div></div>;
-    }
-
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            setLoading(true);
             const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
@@ -90,11 +86,21 @@ export const ActiveTime = () => {
             setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
-        } finally {
-            setLoading(false);
         }
     };
-    
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
+            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [currentTime, nftEndDate]);
+
+    useEffect(() => {
+        fetchCurrentTime();
+    }, [])
+
     const fetchCurrentTime = async () => {
         try {
             const response = await fetch('https://capsule-server.onrender.com/api/currentTime');
@@ -108,20 +114,6 @@ export const ActiveTime = () => {
             console.error(error);
         }
     };
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
-            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
-        }, 2000);
-        return () => clearInterval(interval);
-    }, [currentTime, nftEndDate]);
-
-    useEffect(() => {
-        if (userData && userData.id) {
-            fetchMiningData(userData.id.toString());
-        }
-    }, [userData]);
 
     useEffect(() => {
         const updateCountdown = () => {
@@ -260,7 +252,7 @@ export const ActiveTime = () => {
                     {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
-                    {currentTime !== null && matterId !== null && timerFinished && value !== null && (
+                    {currentTime !== null && timerFinished && matterId !== null && value !== null && (
                         <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} />
                     )}
                 </div>
