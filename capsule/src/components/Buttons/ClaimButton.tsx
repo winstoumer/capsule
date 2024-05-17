@@ -8,11 +8,10 @@ interface Props {
     coins: number;
     // Generate Nft
     nftDate: Date | null;
-    fetchCurrentTime: () => Promise<void>;
-    fetchMiningData: (telegramUserId: string) => Promise<void>;
+    onClaim: () => void;
 }
 
-const ClaimButton: React.FC<Props> = ({ telegramId, matterId, coins, nftDate, fetchCurrentTime, fetchMiningData }) => {
+const ClaimButton: React.FC<Props> = ({ telegramId, matterId, coins, nftDate, onClaim }) => {
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
         try {
             await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
@@ -40,8 +39,7 @@ const ClaimButton: React.FC<Props> = ({ telegramId, matterId, coins, nftDate, fe
                 await updateMining(matterId, false, null);
             }
             await updateBalance(coins);
-            await fetchCurrentTime();
-            await fetchMiningData(telegramId.toString());
+            onClaim();
         } catch (error) {
             console.error('Error updating', error);
         }
