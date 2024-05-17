@@ -15,11 +15,9 @@ type TelegramUserData = {
 };
 
 const HomePage: React.FC = () => {
-
   const [userData, setUserData] = useState<TelegramUserData | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
-
   const [userExists, setUserExists] = useState(false);
 
   useEffect(() => {
@@ -31,7 +29,7 @@ const HomePage: React.FC = () => {
 
   useEffect(() => {
     if (userData && userData.id) {
-      fetchBalance(userData.id.toString());
+      fetchUserData(userData.id.toString(), userData.first_name);
     }
   }, [userData]);
 
@@ -51,29 +49,28 @@ const HomePage: React.FC = () => {
       }
     } catch (error) {
       console.error('Ошибка при загрузке баланса пользователя:', error);
-      // Добавьте обработку ошибки, например, уведомление пользователю
     } finally {
       setLoading(false);
     }
   };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userData)
+  const fetchUserData = async (telegramUserId: string, firstName: string) => {
+    try {
+      await axios.get(`https://capsule-server.onrender.com/api/user/${telegramUserId}`);
+      setUserExists(true);
+      fetchBalance(telegramUserId); // Загрузка баланса пользователя после проверки наличия пользователя
+    } catch (error) {
+      console.error('Пользователь не найден:', error);
       try {
-        await axios.get(`https://capsule-server.onrender.com/api/user/${userData.id}`);
-        setUserExists(true);
-      } catch (error) {
-        console.error('Пользователь не найден:', error);
-        await axios.post(`https://capsule-server.onrender.com/api/user/new/${userData.id}`, { first_name: userData.first_name });
-        await fetchData();
-      } finally {
-        setLoading(false);
+        await axios.post(`https://capsule-server.onrender.com/api/user/new/${telegramUserId}`, { first_name: firstName });
+        fetchUserData(telegramUserId, firstName); // Повторный вызов для загрузки данных после создания пользователя
+      } catch (createError) {
+        console.error('Ошибка при создании пользователя:', createError);
       }
-    };
-
-    fetchData();
-  }, []);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return <div>loading...</div>;
