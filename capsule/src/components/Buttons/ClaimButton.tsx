@@ -14,7 +14,7 @@ const ClaimButton: React.FC<Props> = ({ telegramId, matterId, coins, nftDate }) 
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
         try {
             await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
-            { matter_id: matterId, nft_mined: nftMined, time_mined_nft: nftDate });
+            { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate });
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating mining:', error);
