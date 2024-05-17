@@ -13,6 +13,7 @@ interface MiningData {
 }
 
 export const ActiveTime = () => {
+    const [loading, setLoading] = useState<boolean>(true);
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [currentTime, setCurrentTime] = useState<string>("");
@@ -41,12 +42,6 @@ export const ActiveTime = () => {
         }
     }, []);
 
-    useEffect(() => {
-        if (userData && userData.id) {
-            fetchMiningData(userData.id.toString());
-        }
-    }, [userData]);
-
     function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
         if (nftEndDate) {
             const nowDate = new Date(currentTime);
@@ -70,8 +65,13 @@ export const ActiveTime = () => {
         return "";
     }
 
+    if (loading) {
+        return <div></div>;
+    }
+
     const fetchMiningData = async (telegramUserId: string) => {
         try {
+            setLoading(true);
             const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
@@ -86,8 +86,16 @@ export const ActiveTime = () => {
             setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
+
+    useEffect(() => {
+        if (userData && userData.id) {
+            fetchMiningData(userData.id.toString());
+        }
+    }, [userData]);
 
     useEffect(() => {
         fetchCurrentTime();
