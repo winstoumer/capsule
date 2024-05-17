@@ -184,7 +184,7 @@ export const ActiveTime = () => {
     }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
-        let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
+        let isCoinsMineSet = false;
 
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
