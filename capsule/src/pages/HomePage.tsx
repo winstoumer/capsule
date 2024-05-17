@@ -27,31 +27,6 @@ const HomePage: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        await axios.get(`/api/user/${userData.id}`);
-        setUserExists(true);
-      } catch (error) {
-        console.error('Пользователь не найден:', error);
-        await axios.post('/api/user', { id: userData.id });
-        await fetchData();
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return <div>loading...</div>;
-  }
-
-  if (!userExists) {
-    return <div>{photoUrl && <span>photoUrl</span>}</div>;
-  }
-
-  useEffect(() => {
     if (userData && userData.id) {
       fetchBalance(userData.id.toString());
     }
@@ -88,6 +63,7 @@ const HomePage: React.FC = () => {
       <PageComponent>
         <Header />
         <div className='general'>
+          <div>{photoUrl && <img src={photoUrl} alt={`${userData.first_name}'s profile`} />}</div>
           <div className='balance'>{balance !== null ? parseFloat(balance.toFixed(2)) : 'N/A'}</div>
           <ActiveTime />
         </div>
