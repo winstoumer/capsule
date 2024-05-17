@@ -181,31 +181,30 @@ export const ActiveTime = () => {
     }, [coinsMine, timeMine]);
 
     useEffect(() => {
+        const generateNftDate = async () => {
+            if (matterId && matterId < 2) {
+                return;
+            }
+
+            if (nftDate) {
+                return;
+            }
+
+            if (!currentTime) {
+                return;
+            }
+
+            const endDate = new Date(currentTime);
+            const startDate = new Date(currentTime);
+            endDate.setDate(startDate.getDate() + 3);
+
+            const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+
+            setNftDate(randomDate);
+        };
+
         generateNftDate();
-    }, []);
-
-    const generateNftDate = async () => {
-        if (matterId && matterId < 2) {
-            return;
-        }
-
-        if (nftDate) {
-            return;
-        }
-
-        if (!currentTime)
-        {
-            return;
-        }
-
-        const endDate = new Date(currentTime);
-        const startDate = new Date(currentTime);
-        endDate.setDate(startDate.getDate() + 3);
-
-        const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
-
-        setNftDate(randomDate);
-    };
+    }, [matterId, nftDate, currentTime]);
 
     return (
         <>
