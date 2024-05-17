@@ -65,6 +65,10 @@ export const ActiveTime = () => {
         return "";
     }
 
+    useEffect(() => {
+        fetchCurrentTime();
+    }, [])
+
     if (loading) {
         return <div></div>;
     }
@@ -90,17 +94,7 @@ export const ActiveTime = () => {
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        if (userData && userData.id) {
-            fetchMiningData(userData.id.toString());
-        }
-    }, [userData]);
-
-    useEffect(() => {
-        fetchCurrentTime();
-    }, [])
-
+    
     const fetchCurrentTime = async () => {
         try {
             const response = await fetch('https://capsule-server.onrender.com/api/currentTime');
@@ -122,6 +116,12 @@ export const ActiveTime = () => {
         }, 2000);
         return () => clearInterval(interval);
     }, [currentTime, nftEndDate]);
+
+    useEffect(() => {
+        if (userData && userData.id) {
+            fetchMiningData(userData.id.toString());
+        }
+    }, [userData]);
 
     useEffect(() => {
         const updateCountdown = () => {
