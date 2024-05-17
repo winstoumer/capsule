@@ -82,8 +82,6 @@ export const ActiveTime = () => {
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
-            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
-            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
         }
@@ -252,7 +250,7 @@ export const ActiveTime = () => {
                     {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
-                    {timerFinished && matterId !== null && value !== null && currentTime !== null && (
+                    {currentTime !== null && matterId !== null && timerFinished && value !== null && (
                         <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} />
                     )}
                 </div>
