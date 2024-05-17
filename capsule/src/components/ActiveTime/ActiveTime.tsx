@@ -253,7 +253,7 @@ export const ActiveTime = () => {
                 </div>
                 <div className='info-for position-top'>
                     {currentTime !== null && timerFinished && matterId !== null && value !== null && (
-                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} />
+                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} fetchCurrentTime={fetchCurrentTime} fetchMiningData={fetchMiningData} />
                     )}
                 </div>
                 <div className='info-for'>
