@@ -28,6 +28,9 @@ export const ActiveTime = () => {
 
     const [value, setValue] = useState(0.000);
 
+    // Generate Nft
+    const [nftDate, setNftDate] = useState<Date | null>(null);
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -152,11 +155,11 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
-    
+
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
                 const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
-                
+
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
                     setValue(coinsMinedSoFarRef.current);
@@ -166,16 +169,43 @@ export const ActiveTime = () => {
                     coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
                     setValue(coinsMinedSoFarRef.current); // обновляем значение
                 }
-    
+
                 if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
                     setValue(coinsMine);
                     clearInterval(interval); // Останавливаем интервал
                 }
             }, 500);
-    
+
             return () => clearInterval(interval);
         }
     }, [coinsMine, timeMine]);
+
+    useEffect(() => {
+        generateNftDate();
+    }, []);
+
+    const generateNftDate = async () => {
+        if (matterId && matterId < 2) {
+            return;
+        }
+
+        if (nftDate) {
+            return;
+        }
+
+        if (!currentTime)
+        {
+            return;
+        }
+
+        const endDate = new Date(currentTime);
+        const startDate = new Date(currentTime);
+        endDate.setDate(startDate.getDate() + 3);
+
+        const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+
+        setNftDate(randomDate);
+    };
 
     return (
         <>
@@ -192,9 +222,9 @@ export const ActiveTime = () => {
                 <div className='info-for'>
                     {coinsMine}c/{timeMine}h
                 </div>
-                <div className='info-for position-top '>
-                    {timerFinished && matterId !== null && value !== null && (
-                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} />
+                <div className='info-for position-top'>
+                    {timerFinished && matterId !== null && value !== null && currentTime !== null && (
+                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} />
                     )}
                 </div>
                 <div className='info-for'>

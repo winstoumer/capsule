@@ -3,14 +3,18 @@ import axios from 'axios';
 
 interface Props {
     telegramId: number;
+    // Generate Coins
     matterId: number;
     coins: number;
+    // Generate Nft
+    nftDate: Date | null;
 }
 
-const ClaimButton: React.FC<Props> = ({ telegramId, matterId, coins }) => {
-    const updateMining = async (matterId: number): Promise<void> => {
+const ClaimButton: React.FC<Props> = ({ telegramId, matterId, coins, nftDate }) => {
+    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
         try {
-            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`, { matter_id: matterId });
+            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
+            { matter_id: matterId, nft_mined: nftMined, time_mined_nft: nftDate });
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating mining:', error);
@@ -26,9 +30,17 @@ const ClaimButton: React.FC<Props> = ({ telegramId, matterId, coins }) => {
         }
     };
 
-    const handleClick = () => {
-        updateMining(matterId);
-        updateBalance(coins);
+    const handleClick = async () => {
+        try {
+            if (nftDate) {
+                await updateMining(matterId, true, nftDate);
+            } else {
+                await updateMining(matterId, false, null);
+            }
+            await updateBalance(coins);
+        } catch (error) {
+            console.error('Error updating', error);
+        }
     };
 
     return (
