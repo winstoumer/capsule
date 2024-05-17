@@ -82,18 +82,12 @@ export const ActiveTime = () => {
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
+            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
         }
     };
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
-            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
-        }, 2000);
-        return () => clearInterval(interval);
-    }, [currentTime, nftEndDate]);
 
     useEffect(() => {
         fetchCurrentTime();
