@@ -6,7 +6,11 @@ interface User {
   nftDate?: Date;
 }
 
-const ProcessNft: React.FC = () => {
+interface ProcessNftProps {
+  startDate: Date;
+}
+
+const ProcessNft: React.FC<ProcessNftProps> = ({ startDate }) => {
   const [user, setUser] = useState<User>({ id: 1, level: 2 });
   const [nftDate, setNftDate] = useState<Date | null>(null);
 
@@ -21,11 +25,10 @@ const ProcessNft: React.FC = () => {
       return;
     }
 
-    const currentDate = new Date();
-    const endDate = new Date();
-    endDate.setDate(currentDate.getDate() + 3);
+    const endDate = new Date(startDate);
+    endDate.setDate(startDate.getDate() + 3);
 
-    const randomDate = new Date(currentDate.getTime() + Math.random() * (endDate.getTime() - currentDate.getTime()));
+    const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
     
     setNftDate(randomDate);
     setUser(prevUser => ({ ...prevUser, nftDate: randomDate }));
