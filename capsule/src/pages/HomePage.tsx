@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './home.scss';
+import axios from 'axios';
 import { Header } from "../components/Header/Header";
 import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import PageComponent from '../components/PageComponent/PageComponent';
-import axios from 'axios';
+import './home.scss';
 
 type TelegramUserData = {
   id: number;
   first_name: string;
-  last_name?: string;
-  username?: string;
-  photo_url?: string;
 };
 
 const HomePage: React.FC = () => {
@@ -73,11 +70,11 @@ const HomePage: React.FC = () => {
   };
 
   if (loading) {
-    return <div>loading...</div>;
+    return <div></div>;
   }
 
   if (!userExists) {
-    return <div>create account...</div>;
+    return <div></div>;
   }
 
   return (
