@@ -11,6 +11,7 @@ import ProcessNft from '../components/ProcessNft/ProcessNft';
 const EarnPage: React.FC = () => {
 
     const date = new Date("2024-05-17 10:00:00");
+    const level = 2;
 
     return (
         <div className='content'>
@@ -19,7 +20,7 @@ const EarnPage: React.FC = () => {
                     tabs={[
                         { title: 'Earn', content: <Earn /> },
                         { title: 'Referral', content: <Referral /> },
-                        { title: 'Nft', content: <ProcessNft startDate={date} /> }
+                        { title: 'Nft', content: <ProcessNft startDate={date} matterLevel={level} /> }
                     ]}
                 />
                 <Navigation />
