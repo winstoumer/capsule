@@ -6,23 +6,26 @@ import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 
+type TelegramUserData = {
+  id: number;
+  first_name: string;
+  last_name?: string;
+  username?: string;
+  photo_url?: string;
+};
+
 const HomePage: React.FC = () => {
 
-  const [userData, setUserData] = useState<any>(null);
+  const [userData, setUserData] = useState<TelegramUserData | null>(null);
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
-  //const [userExists, setUserExists] = useState(false);
-
-  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  const [userExists, setUserExists] = useState(false);
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
       const user = window.Telegram.WebApp.initDataUnsafe?.user;
       setUserData(user);
-      if (user && user.photo_url) {
-        setPhotoUrl(user.photo_url);
-      }
     }
   }, []);
 
@@ -52,10 +55,32 @@ const HomePage: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };  
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (userData)
+      try {
+        await axios.get(`https://capsule-server.onrender.com/api/user/${userData.id}`);
+        setUserExists(true);
+      } catch (error) {
+        console.error('Пользователь не найден:', error);
+        await axios.post(`https://capsule-server.onrender.com/api/user/new/${userData.id}`, { first_name: userData.first_name });
+        await fetchData();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   if (loading) {
-    return <div></div>;
+    return <div>loading...</div>;
+  }
+
+  if (!userExists) {
+    return <div>create account...</div>;
   }
 
   return (
@@ -63,7 +88,6 @@ const HomePage: React.FC = () => {
       <PageComponent>
         <Header />
         <div className='general'>
-          <div>{photoUrl && <img src={photoUrl} alt={`${userData.first_name}'s profile`} />}</div>
           <div className='balance'>{balance !== null ? parseFloat(balance.toFixed(2)) : 'N/A'}</div>
           <ActiveTime />
         </div>
