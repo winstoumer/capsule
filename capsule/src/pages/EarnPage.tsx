@@ -6,6 +6,7 @@ import { Navigation } from "../components/Navigation/Navigation";
 import { Earn } from "../components/Earn/Earn";
 import { Referral } from "../components/Referral/Referral";
 import PageComponent from '../components/PageComponent/PageComponent';
+import ProcessNft from '../components/ProcessNft/ProcessNft';
 
 const EarnPage: React.FC = () => {
 
@@ -16,6 +17,7 @@ const EarnPage: React.FC = () => {
                     tabs={[
                         { title: 'Earn', content: <Earn /> },
                         { title: 'Referral', content: <Referral /> },
+                        { title: 'Nft', content: <ProcessNft /> }
                     ]}
                 />
                 <Navigation />
