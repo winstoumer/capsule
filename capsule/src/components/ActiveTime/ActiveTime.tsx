@@ -9,6 +9,7 @@ interface MiningData {
     coins_mine: number;
     time_mine: number;
     next_time: string;
+    time_end_mined_nft: string;
 }
 
 export const ActiveTime = () => {
@@ -31,6 +32,9 @@ export const ActiveTime = () => {
     // Generate Nft
     const [nftDate, setNftDate] = useState<Date | null>(null);
 
+    // Time Nft End
+    const [nftEndDate, setNftEndDate] = useState<string | null>(null);
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -43,6 +47,29 @@ export const ActiveTime = () => {
         }
     }, [userData]);
 
+    function calculateTimeRemaining() {
+        if (nftEndDate) {
+            const nowDate = new Date(currentTime);
+            const endDate = new Date(nftEndDate);
+            const timeDiff = endDate.getTime() - nowDate.getTime();
+            const oneDay = 24 * 60 * 60 * 1000;
+            const oneHour = 60 * 60 * 1000;
+        
+            if (timeDiff > oneDay) {
+                const days = Math.floor(timeDiff / oneDay);
+                return `~ ${days} days`;
+            } else if (timeDiff > oneHour) {
+                const hours = Math.floor(timeDiff / oneHour);
+                return `~ ${hours} hours`;
+            } else if (timeDiff > 0) {
+                return `(~ soon)`;
+            } else {
+                return "";
+            }
+        }
+    }
+    
+
     const fetchMiningData = async (telegramUserId: string) => {
         try {
             const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
@@ -54,7 +81,9 @@ export const ActiveTime = () => {
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
-            setActiveText(data.active ? "Active.." : (data.nft_active ? "Mined nft.." : ""));
+            setNftEndDate(data.time_end_mined_nft);
+            const remainingTime = calculateTimeRemaining();
+            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
         }
@@ -62,7 +91,8 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setActiveText(prevText => prevText === "Active.." ? "Mined nft.." : "Active..");
+            const remainingTime = calculateTimeRemaining();
+            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
         }, 2000);
         return () => clearInterval(interval);
     }, []);
