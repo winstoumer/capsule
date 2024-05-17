@@ -12,7 +12,7 @@ const HomePage: React.FC = () => {
   const [balance, setBalance] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const [userExists, setUserExists] = useState(false);
+  //const [userExists, setUserExists] = useState(false);
 
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
 
