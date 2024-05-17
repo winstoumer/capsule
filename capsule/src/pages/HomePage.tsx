@@ -42,7 +42,7 @@ const HomePage: React.FC = () => {
   }
 
   if (!userExists) {
-    return <div>{userData.photo_url.toString()}</div>;
+    return <div>{userData.photo_url}</div>;
   }
 
   useEffect(() => {
