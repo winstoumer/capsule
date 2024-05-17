@@ -14,7 +14,7 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
-    const [activeText, setActiveText] = useState("Active..");
+    const [activeText, setActiveText] = useState("");
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
@@ -77,17 +77,25 @@ export const ActiveTime = () => {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
             }
             const data: MiningData = await response.json();
+            setNftEndDate(data.time_end_mined_nft);
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
+            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
-            setNftEndDate(data.time_end_mined_nft);
-            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
-            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
         }
     };
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
+            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [currentTime, nftEndDate]);
 
     useEffect(() => {
         fetchCurrentTime();
