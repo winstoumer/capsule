@@ -47,14 +47,14 @@ export const ActiveTime = () => {
         }
     }, [userData]);
 
-    function calculateTimeRemaining() {
+    function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
         if (nftEndDate) {
             const nowDate = new Date(currentTime);
             const endDate = new Date(nftEndDate);
             const timeDiff = endDate.getTime() - nowDate.getTime();
             const oneDay = 24 * 60 * 60 * 1000;
             const oneHour = 60 * 60 * 1000;
-        
+    
             if (timeDiff > oneDay) {
                 const days = Math.floor(timeDiff / oneDay);
                 return `~ ${days} days`;
@@ -67,8 +67,8 @@ export const ActiveTime = () => {
                 return "";
             }
         }
+        return "";
     }
-    
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
@@ -82,7 +82,7 @@ export const ActiveTime = () => {
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
-            const remainingTime = calculateTimeRemaining();
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
             setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
@@ -91,11 +91,11 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            const remainingTime = calculateTimeRemaining();
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
             setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
         }, 2000);
         return () => clearInterval(interval);
-    }, []);
+    }, [currentTime, nftEndDate]);
 
     useEffect(() => {
         fetchCurrentTime();
