@@ -14,9 +14,15 @@ const HomePage: React.FC = () => {
 
   const [userExists, setUserExists] = useState(false);
 
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
-      setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
+      const user = window.Telegram.WebApp.initDataUnsafe?.user;
+      setUserData(user);
+      if (user && user.photo_url) {
+        setPhotoUrl(user.photo_url);
+      }
     }
   }, []);
 
@@ -42,7 +48,7 @@ const HomePage: React.FC = () => {
   }
 
   if (!userExists) {
-    return <div>{userData.photo_url}</div>;
+    return <div>{photoUrl && <span>photoUrl</span>}</div>;
   }
 
   useEffect(() => {
