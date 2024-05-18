@@ -283,7 +283,7 @@ export const ActiveTime = () => {
                     {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
-                    {currentTime !== null && timerFinished && matterId !== null && value !== null && (
+                    {timerFinished && currentTime !== null && matterId !== null && (
                         <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} onClaim={() => setReloadData(true)} />
                     )}
                 </div>
