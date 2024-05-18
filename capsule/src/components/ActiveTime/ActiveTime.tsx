@@ -59,7 +59,7 @@ export const ActiveTime = () => {
             const interval = setInterval(() => {
                 const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
                 setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
-            }, 2000);
+            }, 1000);
             setReloadData(false);
             return () => clearInterval(interval);
         } catch (error) {
