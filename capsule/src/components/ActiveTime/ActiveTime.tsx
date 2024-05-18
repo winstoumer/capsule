@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import ClaimButton from '../Buttons/ClaimButton';
 import './activeTime.scss';
 
 interface MiningData {
@@ -60,12 +59,11 @@ export const ActiveTime = () => {
                 const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
                 setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
             }, 1000);
-            setReloadData(false);
             return () => clearInterval(interval);
         } catch (error) {
             console.error('Error updating', error);
         }
-    }, [currentTime, nftEndDate, reloadData]);
+    }, [currentTime, nftEndDate]);
 
     function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
         if (nftEndDate) {
@@ -140,13 +138,12 @@ export const ActiveTime = () => {
                 }
             };
             updateCountdown();
-            setReloadData(false);
 
             return () => updateCountdown();
         } catch (error) {
             console.error('Error updating', error);
         }
-    }, [nextTime, currentTime, reloadData]);
+    }, [nextTime, currentTime]);
 
     useEffect(() => {
         try {
@@ -176,13 +173,11 @@ export const ActiveTime = () => {
                 }
             }, 1000);
 
-            setReloadData(false);
-
             return () => clearInterval(countdownInterval);
         } catch (error) {
             console.error('Error updating', error);
         }
-    }, [hours, minutes, seconds, timerFinished, reloadData]);
+    }, [hours, minutes, seconds, timerFinished]);
 
     const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
 
@@ -195,12 +190,10 @@ export const ActiveTime = () => {
 
                 coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
             }
-
-            setReloadData(false);
         } catch (error) {
             console.error('Error updating', error);
         }
-    }, [coinsMine, timeMine, hours, minutes, seconds, reloadData]);
+    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
         try {
@@ -226,14 +219,12 @@ export const ActiveTime = () => {
                     }
                 }, 500);
 
-                setReloadData(false);
-
                 return () => clearInterval(interval);
             }
         } catch (error) {
             console.error('Error updating', error);
         }
-    }, [coinsMine, timeMine, reloadData]);
+    }, [coinsMine, timeMine]);
 
     useEffect(() => {
         try {
@@ -259,12 +250,11 @@ export const ActiveTime = () => {
                 setNftDate(randomDate);
             };
 
-            setReloadData(false);
             generateNftDate();
         } catch (error) {
             console.error('Error updating', error);
         }
-    }, [matterId, nftDate, currentTime, reloadData]);
+    }, [matterId, nftDate, currentTime]);
 
     return (
         <>
@@ -285,7 +275,7 @@ export const ActiveTime = () => {
                     {timerFinished && hours <= 0 && minutes <= 0 && seconds <=0 ? 
                     <div>
                         {timerFinished && matterId !== null && value !== null && (
-                            <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} onClaim={() => setReloadData(true)} />
+                            <div></div>
                         )}
                     </div> : <div className='active-signal color-purple'>{activeText}</div>}
                 </div>
