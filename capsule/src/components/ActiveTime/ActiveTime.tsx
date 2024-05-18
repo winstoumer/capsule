@@ -90,7 +90,7 @@ export const ActiveTime = () => {
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
             const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
-            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
+            setActiveText(data.active ? `Active..` : (data.nft_active ? `Mined nft.. ${remainingTime}` : "Active.."));
         } catch (error) {
             console.error(error);
         }
@@ -284,12 +284,12 @@ export const ActiveTime = () => {
                     {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
-                    {currentTime !== null && timerFinished && matterId !== null && value !== null && (
-                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} onClaim={() => setReloadData(true)} />
-                    )}
-                </div>
-                <div className='info-for'>
-                    {timerFinished ? <span></span> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>{activeText}</div>}
+                    {timerFinished && hours <= 0 && minutes <= 0 && seconds <=0 ? 
+                    <div>
+                        {timerFinished && matterId !== null && value !== null && (
+                            <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} onClaim={() => setReloadData(true)} />
+                        )}
+                    </div> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>{activeText}</div>}
                 </div>
             </div>
         </>
