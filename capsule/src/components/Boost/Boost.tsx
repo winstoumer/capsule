@@ -25,6 +25,8 @@ interface MiningData {
     time_mine: number;
     next_time: string;
     matter_id: number;
+    time_end_mined_nft: string;
+    nft_mined: boolean;
 }
 
 export const Boost: React.FC = () => {
@@ -38,6 +40,8 @@ export const Boost: React.FC = () => {
     const [timeMine, setTimeMine] = useState<number | null>(null);
     const [matterId, setMatterId] = useState<number | null>(null);
     const [nftDate, setNftDate] = useState<Date | null>(null);
+    const [nftEndDate, setNftEndDate] = useState<string | null>(null);
+    const [nftMined, setNftMined] = useState(false);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -188,6 +192,8 @@ export const Boost: React.FC = () => {
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
+            setNftEndDate(data.time_end_mined_nft);
+            setNftMined(data.nft_mined);
         } catch (error) {
             console.error(error);
         }
@@ -291,7 +297,13 @@ export const Boost: React.FC = () => {
                     await updateBalance(nextLevel.price);
                     await updateBalanceCoins(coinsMine);
                     if (nftDate && nextLevel !== null) {
-                        await updateMining(nextLevel.id, true, nftDate);
+                        if (nftMined && nftEndDate !== null) {
+                            const date = new Date(nftEndDate);
+                            await updateMining(nextLevel.id, true, date);
+                        }
+                        else {
+                            await updateMining(nextLevel.id, true, nftDate);
+                        }
                     } else {
                         if (nextLevel !== null)
                             await updateMining(nextLevel.id, false, null);

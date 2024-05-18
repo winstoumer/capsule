@@ -11,6 +11,7 @@ interface MiningData {
     time_mine: number;
     next_time: string;
     time_end_mined_nft: string;
+    nft_mined: boolean;
 }
 
 export const ActiveTime = () => {
@@ -21,6 +22,7 @@ export const ActiveTime = () => {
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
     const [matterId, setMatterId] = useState<number | null>(null);
+    const [nftMined, setNftMined] = useState(false);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -51,6 +53,7 @@ export const ActiveTime = () => {
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
             setNftActive(data.nft_active);
+            setNftMined(data.nft_mined);
         } catch (error) {
             console.error(error);
         }
@@ -220,7 +223,13 @@ export const ActiveTime = () => {
         setButton(true);
         try {
             if (nftDate && matterId !== null) {
-                await updateMining(matterId, true, nftDate);
+                if (nftMined && nftEndDate !== null) {
+                    const date = new Date(nftEndDate);
+                    await updateMining(matterId, true, date);
+                }
+                else {
+                    await updateMining(matterId, true, nftDate);
+                }
             } else {
                 if (matterId !== null)
                     await updateMining(matterId, false, null);
