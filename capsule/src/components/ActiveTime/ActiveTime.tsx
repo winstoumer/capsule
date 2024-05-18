@@ -256,14 +256,13 @@ export const ActiveTime = () => {
                     {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
-                    {currentTime !== null && timerFinished && matterId !== null && value !== null && (
-                        <button className='default-button' onClick={handleClick}>
-                            Claim
-                        </button>
-                    )}
-                </div>
-                <div className='info-for'>
-                    <ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />
+                    {currentTime !== null && timerFinished && matterId !== null && value !== null ? (
+                        <div>
+                            <button className='default-button' onClick={handleClick}>
+                                Claim
+                            </button>
+                        </div>
+                    ) : (<ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />)}
                 </div>
             </div>
         </>
