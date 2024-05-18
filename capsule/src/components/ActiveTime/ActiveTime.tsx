@@ -49,8 +49,8 @@ export const ActiveTime = () => {
 
     function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
         if (nftEndDate) {
-            const nowDate = new Date(currentTime);
-            const endDate = new Date(nftEndDate);
+            const nowDate = new Date(currentTime.replace('T', ' ').replace('Z', ''));
+            const endDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
             const timeDiff = endDate.getTime() - nowDate.getTime();
             const oneDay = 24 * 60 * 60 * 1000;
             const oneHour = 60 * 60 * 1000;
