@@ -36,6 +36,9 @@ export const ActiveTime = () => {
     // Time Nft End
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
 
+    // State for forcing re-fetch of data
+    const [updateCount, setUpdateCount] = useState(0);
+
     const fetchAllData = async (telegramUserId: string) => {
         await fetchMiningData(telegramUserId);
         await fetchCurrentTime();
@@ -51,7 +54,7 @@ export const ActiveTime = () => {
         if (userData && userData.id) {
             fetchAllData(userData.id.toString());
         }
-    }, [userData]);
+    }, [userData, updateCount]);
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
@@ -236,7 +239,7 @@ export const ActiveTime = () => {
                 await updateMining(matterId, false, null);
             }
             await updateBalance(value);
-            await fetchAllData(userData.id.toString()); // Refresh all data after claiming
+            setUpdateCount(prevCount => prevCount + 1); // Increment update count to trigger re-fetching data
         } catch (error) {
             console.error('Error updating', error);
         }
@@ -270,4 +273,3 @@ export const ActiveTime = () => {
         </>
     );
 };
-
