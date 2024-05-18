@@ -61,11 +61,6 @@ export const ActiveTime = () => {
             const oneDay = 24 * 60 * 60 * 1000;
             const oneHour = 60 * 60 * 1000;
 
-            if (isNaN(nowDate.getTime()) || isNaN(endDate.getTime())) {
-                console.error('Invalid date');
-                return '';
-            }
-
             if (timeDiff > oneDay) {
                 const days = Math.floor(timeDiff / oneDay);
                 return `~ ${days} days`;
@@ -83,19 +78,20 @@ export const ActiveTime = () => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
-            const data: MiningData = response.data;
-            
+            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Ошибка при загрузке данных о текущей активности');
+            }
+            const data: MiningData = await response.json();
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
-            
             const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
             setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
-            console.error('Ошибка при загрузке данных о текущей активности', error);
+            console.error(error);
         }
     };
 
@@ -127,13 +123,13 @@ export const ActiveTime = () => {
         try {
             const updateCountdown = () => {
                 if (nextTime && currentTime) {
-                    const currentNowTime = new Date(currentTime);
-                    const currentNextTime = new Date(nextTime);
+                    const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
+                    const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                     let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
                     if (diffTime < 0) {
                         diffTime = 0;
-                        setTimerFinished(true);
+                        setTimerFinished(true); // Установим флаг, что таймер закончился
                     }
 
                     const hours = Math.floor(diffTime / (1000 * 60 * 60));
@@ -158,7 +154,7 @@ export const ActiveTime = () => {
             const countdownInterval = setInterval(() => {
                 if (hours === 0 && minutes === 0 && seconds === 0) {
                     clearInterval(countdownInterval);
-                    setTimerFinished(true);
+                    setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
                     return;
                 }
 
@@ -189,14 +185,14 @@ export const ActiveTime = () => {
         }
     }, [hours, minutes, seconds, timerFinished, reloadData]);
 
-    const coinsMinedSoFarRef = useRef<number>(0);
+    const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
 
     useEffect(() => {
         try {
             if (coinsMine !== null && timeMine !== null) {
-                const totalSecondsInTimeMine = timeMine * 3600;
-                const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
-                const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
+                const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
+                const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
+                const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
 
                 coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
             }
@@ -216,17 +212,18 @@ export const ActiveTime = () => {
                     const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
 
                     if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
+                        // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
                         setValue(coinsMinedSoFarRef.current);
-                        isCoinsMineSet = true;
+                        isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
                     }
                     else {
-                        coinsMinedSoFarRef.current += coinsPerSecond;
-                        setValue(coinsMinedSoFarRef.current);
+                        coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
+                        setValue(coinsMinedSoFarRef.current); // обновляем значение
                     }
 
-                    if (coinsMine === coinsMinedSoFarRef.current) {
+                    if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
                         setValue(coinsMine);
-                        clearInterval(interval);
+                        clearInterval(interval); // Останавливаем интервал
                     }
                 }, 500);
 
@@ -286,7 +283,7 @@ export const ActiveTime = () => {
                     {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
-                    {timerFinished && currentTime !== null && matterId !== null && (
+                    {currentTime !== null && timerFinished && matterId !== null && value !== null && (
                         <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} onClaim={() => setReloadData(true)} />
                     )}
                 </div>
