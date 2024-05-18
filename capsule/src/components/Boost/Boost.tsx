@@ -24,6 +24,7 @@ interface MiningData {
     coins_mine: number;
     time_mine: number;
     next_time: string;
+    matter_id: number;
 }
 
 export const Boost: React.FC = () => {
@@ -35,6 +36,8 @@ export const Boost: React.FC = () => {
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
+    const [matterId, setMatterId] = useState<number | null>(null);
+    const [nftDate, setNftDate] = useState<Date | null>(null);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -47,6 +50,8 @@ export const Boost: React.FC = () => {
     const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
 
     const coinsMinedSoFarRef = useRef<number>(0);
+
+    const [button, setButton] = useState(false);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -182,6 +187,7 @@ export const Boost: React.FC = () => {
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
+            setMatterId(data.matter_id);
         } catch (error) {
             console.error(error);
         }
@@ -225,9 +231,10 @@ export const Boost: React.FC = () => {
         }
     };
 
-    const updateNextMining = async (matterId: number): Promise<void> => {
+    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
         try {
-            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${userData.id}`, { matter_id: matterId });
+            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${userData.id}`,
+                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate });
         } catch (error) {
             throw error;
         }
@@ -242,7 +249,6 @@ export const Boost: React.FC = () => {
     const nextLevel: Level | null = currentLevelIndex !== -1 ? levels[currentLevelIndex + 1] : null;
     const userLevel: Level | null = currentLevelIndex !== -1 ? levels[currentLevelIndex] : null;
 
-
     useEffect(() => {
         if (!nextLevel) {
             setLastLevelAnimation(true);
@@ -251,17 +257,54 @@ export const Boost: React.FC = () => {
         }
     }, [nextLevel]);
 
+    useEffect(() => {
+        const generateNftDate = async () => {
+            if (nextLevel && matterId && matterId < 2 && nextLevel.id < 2) {
+                return;
+            }
+
+            if (nftDate) {
+                return;
+            }
+
+            if (!currentTime) {
+                return;
+            }
+
+            const endDate = new Date(currentTime);
+            const startDate = new Date(currentTime);
+            endDate.setDate(startDate.getDate() + 3);
+
+            const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+
+            setNftDate(randomDate);
+        };
+
+        generateNftDate();
+    }, [nftDate, currentTime]);
+
     const handleUpgrade = async () => {
+        setButton(true);
         if (nextLevel && user && user.balance >= nextLevel.price) {
             try {
                 if (coinsMine !== null && hours <= 0 && minutes <= 0 && seconds <= 0) {
                     await updateBalance(nextLevel.price);
                     await updateBalanceCoins(coinsMine);
-                    await updateNextMining(nextLevel.id);
+                    if (nftDate && nextLevel !== null) {
+                        await updateMining(nextLevel.id, true, nftDate);
+                    } else {
+                        if (nextLevel !== null)
+                            await updateMining(nextLevel.id, false, null);
+                    }
                 } else {
                     await updateBalance(nextLevel.price);
                     await updateBalanceCoins(value);
-                    await updateNextMining(nextLevel.id);
+                    if (nftDate && nextLevel !== null) {
+                        await updateMining(nextLevel.id, true, nftDate);
+                    } else {
+                        if (nextLevel !== null)
+                            await updateMining(nextLevel.id, false, null);
+                    }
                 }
                 await updateLevel(nextLevel.id);
                 setUser({ ...user, level: nextLevel.id, balance: user.balance - nextLevel.price });
@@ -334,7 +377,15 @@ export const Boost: React.FC = () => {
                 {nextLevel ? (
                     user.level < levels.length ? (
                         user.balance >= nextLevel.price ? (
-                            <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
+                            <div>
+                                {
+                                    !button && (
+                                        <button className='default-button' onClick={handleUpgrade}>
+                                            Upgrade
+                                        </button>
+                                    )
+                                }
+                            </div>
                         ) : (
                             <Link to="/" className='default-button'>Mine</Link>
                         )
