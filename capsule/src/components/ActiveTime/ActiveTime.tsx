@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import './activeTime.scss';
-import ClaimButton from '../Buttons/ClaimButton';
+import axios from 'axios';
 
 interface MiningData {
     matter_id: number;
@@ -236,6 +236,41 @@ export const ActiveTime = () => {
         generateNftDate();
     }, [matterId, nftDate, currentTime]);
 
+    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
+        try {
+            const telegramId = userData.id;
+            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
+            { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate });
+            console.log('Update successful');
+        } catch (error) {
+            console.error('Error updating mining:', error);
+        }
+    };
+
+    const updateBalance = async (coins: number): Promise<void> => {
+        try {
+            const telegramId = userData.id;
+            await axios.put(`https://capsule-server.onrender.com/api/balance/plus/${telegramId}`, { amount: coins });
+            console.log('Update successful');
+        } catch (error) {
+            console.error('Error updating balance:', error);
+        }
+    };
+
+    const handleClick = async () => {
+        try {
+            if (nftDate && matterId !== null) {
+                await updateMining(matterId, true, nftDate);
+            } else {
+                if (matterId !== null)
+                await updateMining(matterId, false, null);
+            }
+            await updateBalance(value);
+        } catch (error) {
+            console.error('Error updating', error);
+        }
+    };
+
     return (
         <>
             <div className='watch-capsule'>
@@ -253,7 +288,9 @@ export const ActiveTime = () => {
                 </div>
                 <div className='info-for position-top'>
                     {currentTime !== null && timerFinished && matterId !== null && value !== null && (
-                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} />
+                        <button className='default-button' onClick={handleClick}>
+                            Claim
+                        </button>
                     )}
                 </div>
                 <div className='info-for'>
