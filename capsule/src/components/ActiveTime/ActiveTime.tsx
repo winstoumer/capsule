@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
-import './activeTime.scss';
+import axios from 'axios';
 import ClaimButton from '../Buttons/ClaimButton';
+import './activeTime.scss';
 
 interface MiningData {
     matter_id: number;
@@ -21,19 +22,12 @@ export const ActiveTime = () => {
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
     const [matterId, setMatterId] = useState<number | null>(null);
-
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
-
     const [timerFinished, setTimerFinished] = useState(false);
-
     const [value, setValue] = useState(0.000);
-
-    // Generate Nft
     const [nftDate, setNftDate] = useState<Date | null>(null);
-
-    // Time Nft End
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
 
     useEffect(() => {
@@ -116,15 +110,12 @@ export const ActiveTime = () => {
 
     const fetchCurrentTime = async () => {
         try {
-            const response = await fetch('https://capsule-server.onrender.com/api/currentTime');
-            if (!response.ok) {
-                throw new Error('Ошибка при получении текущего времени с сервера');
-            }
-            const data = await response.json();
+            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
+            const data = response.data;
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
             setCurrentTime(currentTimeFormatted);
         } catch (error) {
-            console.error(error);
+            console.error('Ошибка при получении текущего времени с сервера', error);
         }
     };
 
@@ -251,21 +242,21 @@ export const ActiveTime = () => {
                 if (matterId && matterId < 2) {
                     return;
                 }
-    
+
                 if (nftDate) {
                     return;
                 }
-    
+
                 if (!currentTime) {
                     return;
                 }
-    
+
                 const endDate = new Date(currentTime);
                 const startDate = new Date(currentTime);
                 endDate.setDate(startDate.getDate() + 3);
-    
+
                 const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
-    
+
                 setNftDate(randomDate);
             };
 
