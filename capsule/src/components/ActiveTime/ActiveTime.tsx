@@ -36,13 +36,8 @@ export const ActiveTime = () => {
     // Time Nft End
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
 
-    // State for forcing re-fetch of data
-    const [updateCount, setUpdateCount] = useState(0);
-
-    const fetchAllData = async (telegramUserId: string) => {
-        await fetchMiningData(telegramUserId);
-        await fetchCurrentTime();
-    };
+    // Force update state
+    const [forceUpdate, setForceUpdate] = useState(0);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -54,7 +49,12 @@ export const ActiveTime = () => {
         if (userData && userData.id) {
             fetchAllData(userData.id.toString());
         }
-    }, [userData, updateCount]);
+    }, [userData, forceUpdate]);
+
+    const fetchAllData = async (telegramUserId: string) => {
+        await fetchMiningData(telegramUserId);
+        await fetchCurrentTime();
+    };
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
@@ -111,38 +111,12 @@ export const ActiveTime = () => {
 
         updateCountdown();
 
-        return () => updateCountdown();
-    }, [nextTime, currentTime]);
-
-    useEffect(() => {
         const countdownInterval = setInterval(() => {
-            if (hours === 0 && minutes === 0 && seconds === 0) {
-                clearInterval(countdownInterval);
-                setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
-                return;
-            }
-
-            if (!timerFinished) {
-                setSecondsLeft(prevSeconds => {
-                    if (prevSeconds === 0) {
-                        setMinutesLeft(prevMinutes => {
-                            if (prevMinutes === 0) {
-                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
-                                return 59;
-                            } else {
-                                return prevMinutes - 1;
-                            }
-                        });
-                        return 59;
-                    } else {
-                        return prevSeconds - 1;
-                    }
-                });
-            }
+            updateCountdown();
         }, 1000);
 
         return () => clearInterval(countdownInterval);
-    }, [hours, minutes, seconds, timerFinished]);
+    }, [nextTime, currentTime, forceUpdate]);
 
     const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
 
@@ -154,7 +128,7 @@ export const ActiveTime = () => {
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
         }
-    }, [coinsMine, timeMine, hours, minutes, seconds]);
+    }, [coinsMine, timeMine, hours, minutes, seconds, forceUpdate]);
 
     useEffect(() => {
         let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
@@ -181,7 +155,7 @@ export const ActiveTime = () => {
 
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine]);
+    }, [coinsMine, timeMine, forceUpdate]);
 
     useEffect(() => {
         const generateNftDate = async () => {
@@ -207,7 +181,7 @@ export const ActiveTime = () => {
         };
 
         generateNftDate();
-    }, [matterId, nftDate, currentTime]);
+    }, [matterId, nftDate, currentTime, forceUpdate]);
 
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
         try {
@@ -239,7 +213,7 @@ export const ActiveTime = () => {
                 await updateMining(matterId, false, null);
             }
             await updateBalance(value);
-            setUpdateCount(prevCount => prevCount + 1); // Increment update count to trigger re-fetching data
+            setForceUpdate(prev => prev + 1); // Increment force update state
         } catch (error) {
             console.error('Error updating', error);
         }
