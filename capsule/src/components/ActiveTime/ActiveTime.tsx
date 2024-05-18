@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import './activeTime.scss';
 import axios from 'axios';
+import ActiveMine from '../ActiveMine/ActiveMine';
 
 interface MiningData {
     matter_id: number;
@@ -14,7 +15,7 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
-    const [activeText, setActiveText] = useState("Active..");
+    const [nftActive, setNftActive] = useState(false);
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
@@ -47,29 +48,6 @@ export const ActiveTime = () => {
         }
     }, [userData]);
 
-    function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
-        if (nftEndDate) {
-            const nowDate = new Date(currentTime);
-            const endDate = new Date(nftEndDate);
-            const timeDiff = endDate.getTime() - nowDate.getTime();
-            const oneDay = 24 * 60 * 60 * 1000;
-            const oneHour = 60 * 60 * 1000;
-    
-            if (timeDiff > oneDay) {
-                const days = Math.floor(timeDiff / oneDay);
-                return `~ ${days} days`;
-            } else if (timeDiff > oneHour) {
-                const hours = Math.floor(timeDiff / oneHour);
-                return `~ ${hours} hours`;
-            } else if (timeDiff > 0) {
-                return `(~ soon)`;
-            } else {
-                return "";
-            }
-        }
-        return "";
-    }
-
     const fetchMiningData = async (telegramUserId: string) => {
         try {
             const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
@@ -82,20 +60,11 @@ export const ActiveTime = () => {
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
-            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
-            setActiveText(data.nft_active ? `Mined nft.. ${remainingTime}` : "");
+            setNftActive(data.nft_active);
         } catch (error) {
             console.error(error);
         }
     };
-
-    useEffect(() => {
-        const interval = setInterval(() => {
-            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
-            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
-        }, 2000);
-        return () => clearInterval(interval);
-    }, [currentTime, nftEndDate]);
 
     useEffect(() => {
         fetchCurrentTime();
@@ -294,7 +263,7 @@ export const ActiveTime = () => {
                     )}
                 </div>
                 <div className='info-for'>
-                    {timerFinished ? <span></span> : <div className='active-signal'>{activeText}</div>}
+                    <ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />
                 </div>
             </div>
         </>
