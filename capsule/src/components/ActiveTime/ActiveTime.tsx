@@ -83,20 +83,19 @@ export const ActiveTime = () => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
-            if (!response.ok) {
-                throw new Error('Ошибка при загрузке данных о текущей активности');
-            }
-            const data: MiningData = await response.json();
+            const response = await axios.get(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            const data: MiningData = response.data;
+            
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
+            
             const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
             setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
-            console.error(error);
+            console.error('Ошибка при загрузке данных о текущей активности', error);
         }
     };
 
@@ -117,7 +116,8 @@ export const ActiveTime = () => {
         try {
             const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
             const data = response.data;
-            setCurrentTime(data.currentTime); // Directly use the ISO formatted string
+            const currentTimeFormatted = data.currentTime.replace(' ', 'T');
+            setCurrentTime(currentTimeFormatted);
         } catch (error) {
             console.error('Ошибка при получении текущего времени с сервера', error);
         }
@@ -196,14 +196,30 @@ export const ActiveTime = () => {
             if (coinsMine !== null && timeMine !== null) {
                 const totalSecondsInTimeMine = timeMine * 3600;
                 const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
-                const coinsPerSecond = coinsMine / totalSecondsInTimeMine;
-                let isCoinsMineSet = false;
+                const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
 
+                coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
+            }
+
+            setReloadData(false);
+        } catch (error) {
+            console.error('Error updating', error);
+        }
+    }, [coinsMine, timeMine, hours, minutes, seconds, reloadData]);
+
+    useEffect(() => {
+        try {
+            let isCoinsMineSet = false;
+
+            if (coinsMine !== null && timeMine !== null) {
                 const interval = setInterval(() => {
-                    if (coinsMinedSoFarRef.current === coinsMine) {
+                    const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
+
+                    if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                         setValue(coinsMinedSoFarRef.current);
                         isCoinsMineSet = true;
-                    } else {
+                    }
+                    else {
                         coinsMinedSoFarRef.current += coinsPerSecond;
                         setValue(coinsMinedSoFarRef.current);
                     }
