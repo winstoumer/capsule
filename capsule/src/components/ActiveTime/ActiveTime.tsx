@@ -54,6 +54,19 @@ export const ActiveTime = () => {
         }
     }, [userData, reloadData]);
 
+    useEffect(() => {
+        try {
+            const interval = setInterval(() => {
+                const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
+                setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
+            }, 2000);
+            setReloadData(false);
+            return () => clearInterval(interval);
+        } catch (error) {
+            console.error('Error updating', error);
+        }
+    }, [currentTime, nftEndDate, reloadData]);
+
     function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
         if (nftEndDate) {
             const nowDate = new Date(currentTime);
@@ -95,19 +108,6 @@ export const ActiveTime = () => {
             console.error(error);
         }
     };
-
-    useEffect(() => {
-        try {
-            const interval = setInterval(() => {
-                const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
-                setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
-            }, 2000);
-            setReloadData(false);
-            return () => clearInterval(interval);
-        } catch (error) {
-            console.error('Error updating', error);
-        }
-    }, [currentTime, nftEndDate, reloadData]);
 
     const fetchCurrentTime = async () => {
         try {
