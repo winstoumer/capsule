@@ -31,14 +31,14 @@ function calculateTimeRemaining(currentTime: string, nftEndDate: string | null):
 
 const ActiveMine: React.FC<TimeDisplayProps> = ({ currentTime, nftEndDate, nftActive }) => {
     const [remainingTime, setRemainingTime] = useState<string>('');
-    const [visible, setVisible] = useState<boolean>(true);
+    const [showRemainingTime, setShowRemainingTime] = useState<boolean>(true);
 
     useEffect(() => {
         if (nftActive) {
             const interval = setInterval(() => {
                 const newRemainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
                 setRemainingTime(newRemainingTime);
-                setVisible(prevVisible => !prevVisible);
+                setShowRemainingTime(prev => !prev);
             }, 2000);
 
             return () => clearInterval(interval);
@@ -47,7 +47,7 @@ const ActiveMine: React.FC<TimeDisplayProps> = ({ currentTime, nftEndDate, nftAc
 
     return (
         <div>
-            {nftActive && visible && <span className='active-signal'>{remainingTime}</span>}
+            {nftActive && (showRemainingTime ? <span>{remainingTime}</span> : <span>Active..</span>)}
         </div>
     );
 };
