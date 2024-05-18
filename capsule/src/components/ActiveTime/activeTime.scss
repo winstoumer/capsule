@@ -30,29 +30,6 @@
     align-items: center;
 }
 
-.active-signal {
-    text-align: center;
-    font-size: 18px;
-    font-weight: 300;
-    opacity: 0;
-    animation: activeSignal 2s ease infinite;
-    background-color: transparent;
-    color: #002ed5;
-    margin-top: 5px;
-}
-
 .position-top {
     margin-top: 10px;
-}
-
-@keyframes activeSignal {
-
-    0%,
-    100% {
-        opacity: 0;
-    }
-
-    50% {
-        opacity: 1;
-    }
 }
