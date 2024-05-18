@@ -61,6 +61,11 @@ export const ActiveTime = () => {
             const oneDay = 24 * 60 * 60 * 1000;
             const oneHour = 60 * 60 * 1000;
 
+            if (isNaN(nowDate.getTime()) || isNaN(endDate.getTime())) {
+                console.error('Invalid date');
+                return '';
+            }
+
             if (timeDiff > oneDay) {
                 const days = Math.floor(timeDiff / oneDay);
                 return `~ ${days} days`;
@@ -112,8 +117,7 @@ export const ActiveTime = () => {
         try {
             const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
             const data = response.data;
-            const currentTimeFormatted = data.currentTime.replace(' ', 'T');
-            setCurrentTime(currentTimeFormatted);
+            setCurrentTime(data.currentTime); // Directly use the ISO formatted string
         } catch (error) {
             console.error('Ошибка при получении текущего времени с сервера', error);
         }
@@ -123,13 +127,13 @@ export const ActiveTime = () => {
         try {
             const updateCountdown = () => {
                 if (nextTime && currentTime) {
-                    const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
-                    const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                    const currentNowTime = new Date(currentTime);
+                    const currentNextTime = new Date(nextTime);
                     let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
                     if (diffTime < 0) {
                         diffTime = 0;
-                        setTimerFinished(true); // Установим флаг, что таймер закончился
+                        setTimerFinished(true);
                     }
 
                     const hours = Math.floor(diffTime / (1000 * 60 * 60));
@@ -154,7 +158,7 @@ export const ActiveTime = () => {
             const countdownInterval = setInterval(() => {
                 if (hours === 0 && minutes === 0 && seconds === 0) {
                     clearInterval(countdownInterval);
-                    setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
+                    setTimerFinished(true);
                     return;
                 }
 
@@ -185,45 +189,28 @@ export const ActiveTime = () => {
         }
     }, [hours, minutes, seconds, timerFinished, reloadData]);
 
-    const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
+    const coinsMinedSoFarRef = useRef<number>(0);
 
     useEffect(() => {
         try {
             if (coinsMine !== null && timeMine !== null) {
-                const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
-                const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
-                const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
+                const totalSecondsInTimeMine = timeMine * 3600;
+                const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
+                const coinsPerSecond = coinsMine / totalSecondsInTimeMine;
+                let isCoinsMineSet = false;
 
-                coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
-            }
-
-            setReloadData(false);
-        } catch (error) {
-            console.error('Error updating', error);
-        }
-    }, [coinsMine, timeMine, hours, minutes, seconds, reloadData]);
-
-    useEffect(() => {
-        try {
-            let isCoinsMineSet = false;
-
-            if (coinsMine !== null && timeMine !== null) {
                 const interval = setInterval(() => {
-                    const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
-
-                    if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
-                        // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
+                    if (coinsMinedSoFarRef.current === coinsMine) {
                         setValue(coinsMinedSoFarRef.current);
-                        isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
-                    }
-                    else {
-                        coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
-                        setValue(coinsMinedSoFarRef.current); // обновляем значение
+                        isCoinsMineSet = true;
+                    } else {
+                        coinsMinedSoFarRef.current += coinsPerSecond;
+                        setValue(coinsMinedSoFarRef.current);
                     }
 
-                    if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
+                    if (coinsMine === coinsMinedSoFarRef.current) {
                         setValue(coinsMine);
-                        clearInterval(interval); // Останавливаем интервал
+                        clearInterval(interval);
                     }
                 }, 500);
 
