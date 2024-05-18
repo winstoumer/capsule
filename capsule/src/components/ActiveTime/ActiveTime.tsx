@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import './activeTime.scss';
 import axios from 'axios';
 import ActiveMine from '../ActiveMine/ActiveMine';
@@ -36,27 +36,9 @@ export const ActiveTime = () => {
     // Time Nft End
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
 
-    // Force update state
-    const [updateKey, setUpdateKey] = useState(0);
+    const coinsMinedSoFarRef = useRef<number>(0);
 
-    useEffect(() => {
-        if (window.Telegram && window.Telegram.WebApp) {
-            setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (userData && userData.id) {
-            fetchAllData(userData.id.toString());
-        }
-    }, [userData, updateKey]);
-
-    const fetchAllData = async (telegramUserId: string) => {
-        await fetchMiningData(telegramUserId);
-        await fetchCurrentTime();
-    };
-
-    const fetchMiningData = async (telegramUserId: string) => {
+    const fetchMiningData = useCallback(async (telegramUserId: string) => {
         try {
             const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
             if (!response.ok) {
@@ -72,9 +54,9 @@ export const ActiveTime = () => {
         } catch (error) {
             console.error(error);
         }
-    };
+    }, []);
 
-    const fetchCurrentTime = async () => {
+    const fetchCurrentTime = useCallback(async () => {
         try {
             const response = await fetch('https://capsule-server.onrender.com/api/currentTime');
             if (!response.ok) {
@@ -86,7 +68,23 @@ export const ActiveTime = () => {
         } catch (error) {
             console.error(error);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        if (window.Telegram && window.Telegram.WebApp) {
+            setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (userData && userData.id) {
+            fetchMiningData(userData.id.toString());
+        }
+    }, [userData, fetchMiningData]);
+
+    useEffect(() => {
+        fetchCurrentTime();
+    }, [fetchCurrentTime]);
 
     useEffect(() => {
         const updateCountdown = () => {
@@ -116,9 +114,7 @@ export const ActiveTime = () => {
         }, 1000);
 
         return () => clearInterval(countdownInterval);
-    }, [nextTime, currentTime, updateKey]);
-
-    const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
+    }, [nextTime, currentTime]);
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
@@ -128,7 +124,7 @@ export const ActiveTime = () => {
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
         }
-    }, [coinsMine, timeMine, hours, minutes, seconds, updateKey]);
+    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
         let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
@@ -155,7 +151,7 @@ export const ActiveTime = () => {
 
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine, updateKey]);
+    }, [coinsMine, timeMine]);
 
     useEffect(() => {
         const generateNftDate = async () => {
@@ -181,7 +177,7 @@ export const ActiveTime = () => {
         };
 
         generateNftDate();
-    }, [matterId, nftDate, currentTime, updateKey]);
+    }, [matterId, nftDate, currentTime]);
 
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
         try {
@@ -204,23 +200,40 @@ export const ActiveTime = () => {
         }
     };
 
+    const resetStates = () => {
+        setCurrentTime("");
+        setNextTime(null);
+        setCoinsMine(null);
+        setTimeMine(null);
+        setMatterId(null);
+        setHoursLeft(0);
+        setMinutesLeft(0);
+        setSecondsLeft(0);
+        setTimerFinished(false);
+        setValue(0.000);
+        setNftDate(null);
+        setNftEndDate(null);
+    };
+
     const handleClick = async () => {
         try {
             if (nftDate && matterId !== null) {
                 await updateMining(matterId, true, nftDate);
             } else {
                 if (matterId !== null)
-                await updateMining(matterId, false, null);
+                    await updateMining(matterId, false, null);
             }
             await updateBalance(value);
-            setUpdateKey(prev => prev + 1); // Increment updateKey to force component re-render
+            resetStates();
+            fetchMiningData(userData.id.toString());
+            fetchCurrentTime();
         } catch (error) {
             console.error('Error updating', error);
         }
     };
 
     return (
-        <div key={updateKey}> {/* Добавлен key для перезагрузки компонента */}
+        <>
             <div className='watch-capsule'>
                 <img src="/capsule_v_2.png" className='always-capsule' alt="Capsule" />
             </div>
@@ -244,6 +257,6 @@ export const ActiveTime = () => {
                     ) : (<ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />)}
                 </div>
             </div>
-        </div>
+        </>
     );
 };
