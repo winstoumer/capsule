@@ -14,7 +14,7 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
-    const [activeText, setActiveText] = useState("Active..");
+    const [activeText, setActiveText] = useState<string>("");
     const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
@@ -83,7 +83,7 @@ export const ActiveTime = () => {
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
             const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
-            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
+            setActiveText(data.active ? `Active..` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
         }
@@ -92,7 +92,7 @@ export const ActiveTime = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
-            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
+            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "");
         }, 2000);
         return () => clearInterval(interval);
     }, [currentTime, nftEndDate]);
@@ -257,7 +257,7 @@ export const ActiveTime = () => {
                     )}
                 </div>
                 <div className='info-for'>
-                    {timerFinished ? <span></span> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>{activeText}</div>}
+                    {timerFinished ? <span></span> : <div className='active-signal'>{activeText}</div>}
                 </div>
             </div>
         </>
