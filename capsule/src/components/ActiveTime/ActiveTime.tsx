@@ -36,6 +36,11 @@ export const ActiveTime = () => {
     // Time Nft End
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
 
+    const fetchAllData = async (telegramUserId: string) => {
+        await fetchMiningData(telegramUserId);
+        await fetchCurrentTime();
+    };
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -44,7 +49,7 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         if (userData && userData.id) {
-            fetchMiningData(userData.id.toString());
+            fetchAllData(userData.id.toString());
         }
     }, [userData]);
 
@@ -65,10 +70,6 @@ export const ActiveTime = () => {
             console.error(error);
         }
     };
-
-    useEffect(() => {
-        fetchCurrentTime();
-    }, [])
 
     const fetchCurrentTime = async () => {
         try {
@@ -235,6 +236,7 @@ export const ActiveTime = () => {
                 await updateMining(matterId, false, null);
             }
             await updateBalance(value);
+            await fetchAllData(userData.id.toString()); // Refresh all data after claiming
         } catch (error) {
             console.error('Error updating', error);
         }
@@ -268,3 +270,4 @@ export const ActiveTime = () => {
         </>
     );
 };
+
