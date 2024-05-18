@@ -30,13 +30,13 @@ export const ActiveTime = () => {
 
     const [value, setValue] = useState(0.000);
 
-    // Generate Nft
     const [nftDate, setNftDate] = useState<Date | null>(null);
 
-    // Time Nft End
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
 
     const coinsMinedSoFarRef = useRef<number>(0);
+
+    const [button, setButton] = useState(false);
 
     const fetchMiningData = useCallback(async (telegramUserId: string) => {
         try {
@@ -183,7 +183,7 @@ export const ActiveTime = () => {
         try {
             const telegramId = userData.id;
             await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
-            { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate });
+                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate });
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating mining:', error);
@@ -213,9 +213,11 @@ export const ActiveTime = () => {
         setValue(0.000);
         setNftDate(null);
         setNftEndDate(null);
+        setButton(false);
     };
 
     const handleClick = async () => {
+        setButton(true);
         try {
             if (nftDate && matterId !== null) {
                 await updateMining(matterId, true, nftDate);
@@ -250,9 +252,13 @@ export const ActiveTime = () => {
                 <div className='info-for position-top'>
                     {currentTime !== null && timerFinished && matterId !== null && value !== null ? (
                         <div>
-                            <button className='default-button' onClick={handleClick}>
-                                Claim
-                            </button>
+                            {
+                                !button && (
+                                    <button className='default-button' onClick={handleClick}>
+                                        Claim
+                                    </button>
+                                )
+                            }
                         </div>
                     ) : (<ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />)}
                 </div>
