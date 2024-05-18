@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import axios from 'axios';
 import './activeTime.scss';
+import ClaimButton from '../Buttons/ClaimButton';
 
 interface MiningData {
     matter_id: number;
@@ -13,7 +13,6 @@ interface MiningData {
 }
 
 export const ActiveTime = () => {
-    const [reloadData, setReloadData] = useState(false);
     const [userData, setUserData] = useState<any>(null);
     const [activeText, setActiveText] = useState("Active..");
     const [currentTime, setCurrentTime] = useState<string>("");
@@ -21,49 +20,32 @@ export const ActiveTime = () => {
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
     const [matterId, setMatterId] = useState<number | null>(null);
+
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
+
     const [timerFinished, setTimerFinished] = useState(false);
+
     const [value, setValue] = useState(0.000);
+
+    // Generate Nft
     const [nftDate, setNftDate] = useState<Date | null>(null);
+
+    // Time Nft End
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
 
     useEffect(() => {
-        try {
-            if (window.Telegram && window.Telegram.WebApp) {
-                setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
-            }
-            setReloadData(false);
-        } catch (error) {
-            console.error('Error updating', error);
+        if (window.Telegram && window.Telegram.WebApp) {
+            setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
         }
-    }, [reloadData]);
+    }, []);
 
     useEffect(() => {
-        try {
-            if (userData && userData.id) {
-                fetchCurrentTime().then(() => {
-                    fetchMiningData(userData.id.toString());
-                });
-            }
-            setReloadData(false);
-        } catch (error) {
-            console.error('Error updating', error);
+        if (userData && userData.id) {
+            fetchMiningData(userData.id.toString());
         }
-    }, [userData, reloadData]);
-
-    useEffect(() => {
-        try {
-            const interval = setInterval(() => {
-                const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
-                setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
-            }, 1000);
-            return () => clearInterval(interval);
-        } catch (error) {
-            console.error('Error updating', error);
-        }
-    }, [currentTime, nftEndDate]);
+    }, [userData]);
 
     function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
         if (nftEndDate) {
@@ -72,7 +54,7 @@ export const ActiveTime = () => {
             const timeDiff = endDate.getTime() - nowDate.getTime();
             const oneDay = 24 * 60 * 60 * 1000;
             const oneHour = 60 * 60 * 1000;
-
+    
             if (timeDiff > oneDay) {
                 const days = Math.floor(timeDiff / oneDay);
                 return `~ ${days} days`;
@@ -100,160 +82,158 @@ export const ActiveTime = () => {
             setTimeMine(data.time_mine);
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), data.time_end_mined_nft);
+            setActiveText(data.active ? `Active.. ` : (data.nft_active ? `Mined nft.. ${remainingTime}` : ""));
         } catch (error) {
             console.error(error);
         }
     };
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const remainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
+            setActiveText(prevText => prevText === "Active.." ? `Mined nft.. ${remainingTime}` : "Active..");
+        }, 2000);
+        return () => clearInterval(interval);
+    }, [currentTime, nftEndDate]);
+
+    useEffect(() => {
+        fetchCurrentTime();
+    }, [])
+
     const fetchCurrentTime = async () => {
         try {
-            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
-            const data = response.data;
+            const response = await fetch('https://capsule-server.onrender.com/api/currentTime');
+            if (!response.ok) {
+                throw new Error('Ошибка при получении текущего времени с сервера');
+            }
+            const data = await response.json();
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
             setCurrentTime(currentTimeFormatted);
         } catch (error) {
-            console.error('Ошибка при получении текущего времени с сервера', error);
+            console.error(error);
         }
     };
 
     useEffect(() => {
-        try {
-            const updateCountdown = () => {
-                if (nextTime && currentTime) {
-                    const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
-                    const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
-                    let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
+        const updateCountdown = () => {
+            if (nextTime && currentTime) {
+                const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
+                const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
-                    if (diffTime < 0) {
-                        diffTime = 0;
-                        setTimerFinished(true); // Установим флаг, что таймер закончился
-                    }
-
-                    const hours = Math.floor(diffTime / (1000 * 60 * 60));
-                    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                    setHoursLeft(hours);
-                    setMinutesLeft(minutes);
-                    setSecondsLeft(seconds);
+                if (diffTime < 0) {
+                    diffTime = 0;
+                    setTimerFinished(true); // Установим флаг, что таймер закончился
                 }
-            };
-            updateCountdown();
 
-            return () => updateCountdown();
-        } catch (error) {
-            console.error('Error updating', error);
-        }
+                const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                setHoursLeft(hours);
+                setMinutesLeft(minutes);
+                setSecondsLeft(seconds);
+            }
+        };
+
+        updateCountdown();
+
+        return () => updateCountdown();
     }, [nextTime, currentTime]);
 
     useEffect(() => {
-        try {
-            const countdownInterval = setInterval(() => {
-                if (hours === 0 && minutes === 0 && seconds === 0) {
-                    clearInterval(countdownInterval);
-                    setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
-                    return;
-                }
+        const countdownInterval = setInterval(() => {
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+                clearInterval(countdownInterval);
+                setTimerFinished(true); // установка состояния timerFinished в true, когда таймер закончился
+                return;
+            }
 
-                if (!timerFinished) {
-                    setSecondsLeft(prevSeconds => {
-                        if (prevSeconds === 0) {
-                            setMinutesLeft(prevMinutes => {
-                                if (prevMinutes === 0) {
-                                    setHoursLeft(prevHours => Math.max(0, prevHours - 1));
-                                    return 59;
-                                } else {
-                                    return prevMinutes - 1;
-                                }
-                            });
-                            return 59;
-                        } else {
-                            return prevSeconds - 1;
-                        }
-                    });
-                }
-            }, 1000);
+            if (!timerFinished) {
+                setSecondsLeft(prevSeconds => {
+                    if (prevSeconds === 0) {
+                        setMinutesLeft(prevMinutes => {
+                            if (prevMinutes === 0) {
+                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
+                                return 59;
+                            } else {
+                                return prevMinutes - 1;
+                            }
+                        });
+                        return 59;
+                    } else {
+                        return prevSeconds - 1;
+                    }
+                });
+            }
+        }, 1000);
 
-            return () => clearInterval(countdownInterval);
-        } catch (error) {
-            console.error('Error updating', error);
-        }
+        return () => clearInterval(countdownInterval);
     }, [hours, minutes, seconds, timerFinished]);
 
     const coinsMinedSoFarRef = useRef<number>(0); // используем useRef для сохранения значения между вызовами useEffect
 
     useEffect(() => {
-        try {
-            if (coinsMine !== null && timeMine !== null) {
-                const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
-                const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
-                const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
+        if (coinsMine !== null && timeMine !== null) {
+            const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
+            const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
+            const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
 
-                coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
-            }
-        } catch (error) {
-            console.error('Error updating', error);
+            coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
         }
     }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
-        try {
-            let isCoinsMineSet = false;
+        let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
 
-            if (coinsMine !== null && timeMine !== null) {
-                const interval = setInterval(() => {
-                    const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
+        if (coinsMine !== null && timeMine !== null) {
+            const interval = setInterval(() => {
+                const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
 
-                    if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
-                        // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
-                        setValue(coinsMinedSoFarRef.current);
-                        isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
-                    }
-                    else {
-                        coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
-                        setValue(coinsMinedSoFarRef.current); // обновляем значение
-                    }
+                if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
+                    // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
+                    setValue(coinsMinedSoFarRef.current);
+                    isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
+                }
+                else {
+                    coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
+                    setValue(coinsMinedSoFarRef.current); // обновляем значение
+                }
 
-                    if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
-                        setValue(coinsMine);
-                        clearInterval(interval); // Останавливаем интервал
-                    }
-                }, 500);
+                if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
+                    setValue(coinsMine);
+                    clearInterval(interval); // Останавливаем интервал
+                }
+            }, 500);
 
-                return () => clearInterval(interval);
-            }
-        } catch (error) {
-            console.error('Error updating', error);
+            return () => clearInterval(interval);
         }
     }, [coinsMine, timeMine]);
 
     useEffect(() => {
-        try {
-            const generateNftDate = async () => {
-                if (matterId && matterId < 2) {
-                    return;
-                }
+        const generateNftDate = async () => {
+            if (matterId && matterId < 2) {
+                return;
+            }
 
-                if (nftDate) {
-                    return;
-                }
+            if (nftDate) {
+                return;
+            }
 
-                if (!currentTime) {
-                    return;
-                }
+            if (!currentTime) {
+                return;
+            }
 
-                const endDate = new Date(currentTime);
-                const startDate = new Date(currentTime);
-                endDate.setDate(startDate.getDate() + 3);
+            const endDate = new Date(currentTime);
+            const startDate = new Date(currentTime);
+            endDate.setDate(startDate.getDate() + 3);
 
-                const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
+            const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
 
-                setNftDate(randomDate);
-            };
+            setNftDate(randomDate);
+        };
 
-            generateNftDate();
-        } catch (error) {
-            console.error('Error updating', error);
-        }
+        generateNftDate();
     }, [matterId, nftDate, currentTime]);
 
     return (
@@ -272,12 +252,12 @@ export const ActiveTime = () => {
                     {coinsMine}c/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
-                    {timerFinished && hours <= 0 && minutes <= 0 && seconds <=0 ? 
-                    <div>
-                        {timerFinished && matterId !== null && value !== null && (
-                            <div></div>
-                        )}
-                    </div> : <div className='active-signal color-purple'>{activeText}</div>}
+                    {currentTime !== null && timerFinished && matterId !== null && value !== null && (
+                        <ClaimButton telegramId={userData.id} matterId={matterId} coins={value} nftDate={nftDate} />
+                    )}
+                </div>
+                <div className='info-for'>
+                    {timerFinished ? <span></span> : <div className={`active-signal ${activeText === "Mined nft.." ? 'color-purple' : ''}`}>{activeText}</div>}
                 </div>
             </div>
         </>
