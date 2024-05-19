@@ -52,24 +52,6 @@ const CollectionList: React.FC = () => {
                 </div>
                 <div className='collection-name'>{collection.name}</div>
               </Link>
-              <a className='collection-link'>
-                <div className='collection-watch-banner'>
-                  <img src="https://i.ibb.co/N93Vh81/Untitled.png" className='collection-banner' />
-                </div>
-                <div className='collection-name'>Pepecoin</div>
-              </a>
-              <a className='collection-link'>
-                <div className='collection-watch-banner'>
-                  <img src="https://i.ibb.co/N93Vh81/Untitled.png" className='collection-banner' />
-                </div>
-                <div className='collection-name'>Pepecoin</div>
-              </a>
-              <a className='collection-link'>
-                <div className='collection-watch-banner'>
-                  <img src="https://i.ibb.co/N93Vh81/Untitled.png" className='collection-banner' />
-                </div>
-                <div className='collection-name'>Pepecoin</div>
-              </a>
             </div>
           ))}
         </div>
