@@ -13,6 +13,7 @@
     "@ton/ton": "^13.11.1",
     "@tonconnect/ui-react": "^2.0.2",
     "axios": "^1.6.8",
+    "buffer": "^6.0.3",
     "dotenv": "^16.4.5",
     "eruda": "^3.0.1",
     "ntp-client": "^0.5.3",

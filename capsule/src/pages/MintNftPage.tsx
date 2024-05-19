@@ -148,15 +148,15 @@ const MintNftPage: React.FC = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>; // Добавьте индикатор загрузки
+        return <div>Loading...</div>;
     }
 
     if (error) {
-        return <div>{error}</div>; // Покажите сообщение об ошибке
+        return <div>{error}</div>;
     }
 
     if (!collection) {
-        return <div>No collection data</div>; // Обработайте отсутствие данных о коллекции
+        return <div>No collection data</div>;
     }
 
     return (
