@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TonConnectButton } from "@tonconnect/ui-react";
+import { TonConnectButton, useTonWallet, useTonConnectUI } from "@tonconnect/ui-react";
 import './header.scss';
 
 type TelegramUserData = {
@@ -11,6 +11,10 @@ type TelegramUserData = {
 
 export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
+
+    const wallet = useTonWallet();
+
+    const [tonConnectUi] = useTonConnectUI();
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -29,7 +33,15 @@ export const Header: React.FC = () => {
                     )}
                 </div>
                 <div className="header-b">
-                    <TonConnectButton />
+                    <React.Fragment>
+                        {wallet ? (
+                            <TonConnectButton />
+                        ) : (
+                            <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                Connect wallet
+                            </button>
+                        )}
+                    </React.Fragment>
                 </div>
             </div>
         </header>
