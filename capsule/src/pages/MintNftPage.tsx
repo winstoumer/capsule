@@ -110,7 +110,7 @@ const MintNftPage: React.FC = () => {
         messages: [
             {
                 address: 'UQDRd8OMx2SdI6KgjG_KnLnuk9BYkdsfyOlO9jKxmdQAE00c',
-                amount: '1000000000',
+                amount: '1000000',
             },
         ],
     };
