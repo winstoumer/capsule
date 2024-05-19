@@ -189,8 +189,12 @@ export const ActiveTime = () => {
             endDate.setDate(startDate.getDate() + 3);
 
             const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
-
-            setNftDate(randomDate);
+            if (mintActive === true) {
+                setNftDate(nftDate);
+            }
+            else {
+                setNftDate(randomDate);
+            }
         };
 
         generateNftDate();
@@ -282,7 +286,7 @@ export const ActiveTime = () => {
                         <div>
                             {
                                 !button && (
-                                    <button className={!buttonMintActive ? 'take-mint' : 'default-button' } onClick={handleClick}>
+                                    <button className={buttonMintActive ? 'take-mint' : 'default-button' } onClick={handleClick}>
                                         Claim
                                     </button>
                                 )
