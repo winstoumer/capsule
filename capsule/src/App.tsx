@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import BoostPage from './pages/BoostPage';
 import EarnPage from './pages/EarnPage';
 import NftPage from './pages/NftPage';
+import MintNftPage from './pages/MintNftPage';
 
 function App() {
 
@@ -20,7 +21,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/boost" element={<BoostPage />} />
           <Route path="/earn" element={<EarnPage />} />
-          <Route path="/nft" element={<NftPage />} />
+          <Route path="/collections" element={<NftPage />} />
+          <Route path="/mint/:id" element={<MintNftPage />} />
         </Routes>
       </Router>
     </TonConnectUIProvider>
