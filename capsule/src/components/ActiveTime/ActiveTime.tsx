@@ -288,7 +288,7 @@ export const ActiveTime = () => {
                             }
                         </div>
                     ) : (
-                        <ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} mintActive={mintActive} />
+                        <ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />
                     )}
                 </div>
             </div>
