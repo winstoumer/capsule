@@ -31,7 +31,9 @@ const MintNftPage: React.FC = () => {
     const userFriendlyAddress = useTonAddress();
 
     useEffect(() => {
-        setUserTonAddress(userFriendlyAddress.toString());
+        if (userFriendlyAddress) {
+            setUserTonAddress(userFriendlyAddress.toString());
+        }
     }, [userFriendlyAddress]);
 
     useEffect(() => {
@@ -76,20 +78,8 @@ const MintNftPage: React.FC = () => {
         }
     };
 
-    if (loading) {
-        return <div></div>;
-    }
-
-    if (error) {
-        return <div>{error}</div>;
-    }
-
-    if (!collection) {
-        return <div></div>;
-    }
-
     const handleMint = async () => {
-        if (!userData || !userTonAddress || !nftUuid) {
+        if (!userData || !userTonAddress || !nftUuid || !collection) {
             console.error('Missing required data');
             return;
         }
@@ -157,46 +147,60 @@ const MintNftPage: React.FC = () => {
             });
     };
 
-    return <div className='content'>
-        <PageComponent>
-            <div className='default-page nft-container'>
-                <div className='total-nft'>
-                    {collection.total_nft}
-                </div>
-                <div className='preview-nft'>
-                    <div className='card'>
-                        <div className='face front'>
-                            <img src="/nft_front.jpg" />
-                        </div>
-                        <div className='face back'>
-                            <img src="/nft_back.jpg" />
+    if (loading) {
+        return <div>Loading...</div>; // Добавьте индикатор загрузки
+    }
+
+    if (error) {
+        return <div>{error}</div>; // Покажите сообщение об ошибке
+    }
+
+    if (!collection) {
+        return <div>No collection data</div>; // Обработайте отсутствие данных о коллекции
+    }
+
+    return (
+        <div className='content'>
+            <PageComponent>
+                <div className='default-page nft-container'>
+                    <div className='total-nft'>
+                        {collection.total_nft}
+                    </div>
+                    <div className='preview-nft'>
+                        <div className='card'>
+                            <div className='face front'>
+                                <img src="/nft_front.jpg" alt="NFT front" />
+                            </div>
+                            <div className='face back'>
+                                <img src="/nft_back.jpg" alt="NFT back" />
+                            </div>
                         </div>
                     </div>
+                    {mintActive ? (
+                        <div className='nft-description'>
+                            <div className='nft-preview-title'>
+                                You have mined <span className='color-purple'>1</span> nft
+                            </div>
+                            <div className='price-mint'>
+                                <span className='color-blue'>0.5</span> TON
+                            </div>
+                            <React.Fragment>
+                                {wallet ? (
+                                    <button className="default-button" onClick={createTransaction}>Mint</button>
+                                ) : (
+                                    <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                        Connect wallet
+                                    </button>
+                                )}
+                            </React.Fragment>
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
                 </div>
-                {mintActive ? (
-                    <div className='nft-description'>
-                        <div className='nft-preview-title'>
-                            You have mined <span className='color-purple'>1</span> nft
-                        </div>
-                        <div className='price-mint'>
-                            <span className='color-blue'>0.5</span> TON
-                        </div>
-                        <React.Fragment>
-                            {wallet ? (
-                                <button className="default-button" onClick={createTransaction}>Mint</button>
-                            ) : (
-                                <button className="default-button" onClick={() => tonConnectUi.openModal()}>
-                                    Connect wallet
-                                </button>
-                            )}
-                        </React.Fragment>
-                    </div>
-                ) : (
-                    <div></div>
-                )}
-            </div>
-        </PageComponent>
-    </div>
+            </PageComponent>
+        </div>
+    );
 };
 
 export default MintNftPage;
