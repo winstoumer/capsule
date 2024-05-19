@@ -3,6 +3,9 @@ import './nft.scss';
 export const Nft = () => {
 
     return <div className='default-page nft-container'>
+        <div className='total-nft'>
+            50000
+        </div>
         <div className='preview-nft'>
             <div className='card'>
                 <div className='face front'>
