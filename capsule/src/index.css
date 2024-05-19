@@ -122,8 +122,16 @@ button {
 }
 
 .take-mint {
+  font-size: 18px;
+  font-weight: 500;
   color: purple;
-  background-color: var(--general-color-darkblue);
+  background-color: lightslategray;
+  height: 36px;
+  padding: 0 20px;
+  border-radius: 20px;
+  border: none;
+  display: flex;
+  align-items: center;
 }
 /* end buttons */
 
