@@ -27,6 +27,7 @@ interface MiningData {
     matter_id: number;
     time_end_mined_nft: string;
     nft_mined: boolean;
+    mint_active: boolean;
 }
 
 export const Boost: React.FC = () => {
@@ -42,6 +43,7 @@ export const Boost: React.FC = () => {
     const [nftDate, setNftDate] = useState<Date | null>(null);
     const [nftEndDate, setNftEndDate] = useState<string | null>(null);
     const [nftMined, setNftMined] = useState(false);
+    const [mintActive, setMintActive] = useState(false);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -85,6 +87,17 @@ export const Boost: React.FC = () => {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
+
+                if (nftEndDate !== null)
+                {
+                    const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
+                    let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
+                    if (mintActive === false && diffTimeNft < 0)
+                    {
+                        setTimerFinished(true);
+                        setMintActive(true);
+                    }
+                }
 
                 if (diffTime < 0) {
                     diffTime = 0;
@@ -194,6 +207,7 @@ export const Boost: React.FC = () => {
             setMatterId(data.matter_id);
             setNftEndDate(data.time_end_mined_nft);
             setNftMined(data.nft_mined);
+            setMintActive(data.mint_active);
         } catch (error) {
             console.error(error);
         }
@@ -237,10 +251,10 @@ export const Boost: React.FC = () => {
         }
     };
 
-    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
+    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
             await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${userData.id}`,
-                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate });
+                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
         } catch (error) {
             throw error;
         }
@@ -293,29 +307,24 @@ export const Boost: React.FC = () => {
         setButton(true);
         if (nextLevel && user && user.balance >= nextLevel.price) {
             try {
-                if (coinsMine !== null && hours <= 0 && minutes <= 0 && seconds <= 0) {
-                    await updateBalance(nextLevel.price);
-                    await updateBalanceCoins(coinsMine);
-                    if (nftDate && nextLevel !== null) {
-                        if (nftMined && nftEndDate !== null) {
-                            const date = new Date(nftEndDate);
-                            await updateMining(nextLevel.id, true, date);
-                        }
-                        else {
-                            await updateMining(nextLevel.id, true, nftDate);
-                        }
-                    } else {
-                        if (nextLevel !== null)
-                            await updateMining(nextLevel.id, false, null);
-                    }
-                } else {
+                if (value !== null) {
                     await updateBalance(nextLevel.price);
                     await updateBalanceCoins(value);
                     if (nftDate && nextLevel !== null) {
-                        await updateMining(nextLevel.id, true, nftDate);
+                        if (nftMined && nftEndDate !== null && mintActive === false) {
+                            const date = new Date(nftEndDate);
+                            await updateMining(nextLevel.id, true, date, false);
+                        }
+                        else if (mintActive && nftEndDate !== null) {
+                            const date = new Date(nftEndDate);
+                            await updateMining(nextLevel.id, true, date, mintActive);
+                        }
+                        else {
+                            await updateMining(nextLevel.id, true, nftDate, false);
+                        }
                     } else {
-                        if (nextLevel !== null)
-                            await updateMining(nextLevel.id, false, null);
+                        if (nextLevel !== null && mintActive === false)
+                            await updateMining(nextLevel.id, false, null, false);
                     }
                 }
                 await updateLevel(nextLevel.id);
