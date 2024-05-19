@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
-import './nft.scss';
+import './mintNft.scss';
 
 interface CollectionData {
     id: number;
