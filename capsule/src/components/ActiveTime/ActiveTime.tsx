@@ -284,7 +284,7 @@ export const ActiveTime = () => {
                         <div>
                             {
                                 !button && (
-                                    <button className={buttonMintActive ? 'take-mint' : 'default-button' } onClick={handleClick}>
+                                    <button className={buttonMintActive ? 'default-button' : 'default-button' } onClick={handleClick}>
                                         Claim
                                     </button>
                                 )

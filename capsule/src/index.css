@@ -120,19 +120,6 @@ button {
   display: flex;
   align-items: center;
 }
-
-.take-mint {
-  font-size: 18px;
-  font-weight: 500;
-  color: purple;
-  background-color: lightslategray;
-  height: 36px;
-  padding: 0 20px;
-  border-radius: 20px;
-  border: none;
-  display: flex;
-  align-items: center;
-}
 /* end buttons */
 
 @media (prefers-color-scheme: light) {
