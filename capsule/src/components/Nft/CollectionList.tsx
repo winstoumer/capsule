@@ -42,15 +42,19 @@ const CollectionList: React.FC = () => {
     }
   
     return (
-      <div>
-        <h1>Список коллекций</h1>
-        <ul>
+      <div className='collections-container custom-scroll'>
+        <div className='collection-list'>
           {collections.map((collection) => (
-            <li key={collection.id}>
-              <Link to={`/mint/${collection.id}`}>{collection.name}</Link>
-            </li>
+            <div key={collection.id} className='collection'>
+              <Link to={`/mint/${collection.id}`} className='collection-link'>
+                <div className='collection-watch-banner'>
+                  <img src={collection.banner_url} className='collection-banner' />
+                </div>
+                <div className='collection-name'>{collection.name}</div>
+              </Link>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     );
   };
