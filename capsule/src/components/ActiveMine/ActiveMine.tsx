@@ -4,6 +4,7 @@ interface TimeDisplayProps {
     currentTime: string;
     nftEndDate: string | null;
     nftActive: boolean;
+    mintActive: boolean;
 }
 
 function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
@@ -29,7 +30,7 @@ function calculateTimeRemaining(currentTime: string, nftEndDate: string | null):
     return "";
 }
 
-const ActiveMine: React.FC<TimeDisplayProps> = ({ currentTime, nftEndDate, nftActive }) => {
+const ActiveMine: React.FC<TimeDisplayProps> = ({ currentTime, nftEndDate, nftActive, mintActive }) => {
     const [remainingTime, setRemainingTime] = useState<string>('');
     const [showRemainingTime, setShowRemainingTime] = useState<boolean>(true);
 
@@ -47,7 +48,7 @@ const ActiveMine: React.FC<TimeDisplayProps> = ({ currentTime, nftEndDate, nftAc
 
     return (
         <div>
-            {nftActive && (showRemainingTime ? <span className='color-purple'>{remainingTime}</span> : <span className='color-blue'>Active..</span>)}
+            {nftActive && (showRemainingTime ? (!mintActive ? <span className='color-blue'>Active..</span> : <span className='color-purple'>{remainingTime}</span>) : <span className='color-blue'>Active..</span>)}
         </div>
     );
 };

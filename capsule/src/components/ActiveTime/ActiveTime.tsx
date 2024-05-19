@@ -12,6 +12,7 @@ interface MiningData {
     next_time: string;
     time_end_mined_nft: string;
     nft_mined: boolean;
+    mint_active: boolean;
 }
 
 export const ActiveTime = () => {
@@ -23,6 +24,7 @@ export const ActiveTime = () => {
     const [timeMine, setTimeMine] = useState<number | null>(null);
     const [matterId, setMatterId] = useState<number | null>(null);
     const [nftMined, setNftMined] = useState(false);
+    const [mintActive, setMintActive] = useState(false);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -39,6 +41,7 @@ export const ActiveTime = () => {
     const coinsMinedSoFarRef = useRef<number>(0);
 
     const [button, setButton] = useState(false);
+    const [buttonMintActive, setButtonMintActive] = useState(false);
 
     const fetchMiningData = useCallback(async (telegramUserId: string) => {
         try {
@@ -54,6 +57,7 @@ export const ActiveTime = () => {
             setNftEndDate(data.time_end_mined_nft);
             setNftActive(data.nft_active);
             setNftMined(data.nft_mined);
+            setMintActive(data.mint_active);
         } catch (error) {
             console.error(error);
         }
@@ -94,11 +98,21 @@ export const ActiveTime = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                const nftEndDate = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
+                let diffTimeNft = nftEndDate.getTime() - currentNowTime.getTime();
 
                 if (diffTime < 0) {
                     diffTime = 0;
-                    setTimerFinished(true); // Установим флаг, что таймер закончился
+                    setTimerFinished(true);
+                }
+                
+                if (mintActive === false && diffTimeNft < 0)
+                {
+                    diffTimeNft = 0;
+                    setMintActive(true);
+                    setButtonMintActive(true);
+                    setTimerFinished(true);
                 }
 
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
@@ -182,11 +196,11 @@ export const ActiveTime = () => {
         generateNftDate();
     }, [matterId, nftDate, currentTime]);
 
-    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null): Promise<void> => {
+    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
             const telegramId = userData.id;
             await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
-                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate });
+                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating mining:', error);
@@ -217,22 +231,26 @@ export const ActiveTime = () => {
         setNftDate(null);
         setNftEndDate(null);
         setButton(false);
+        setMintActive(false);
     };
 
     const handleClick = async () => {
         setButton(true);
         try {
             if (nftDate && matterId !== null) {
-                if (nftMined && nftEndDate !== null) {
+                if (nftMined && nftEndDate !== null && mintActive === false) {
                     const date = new Date(nftEndDate);
-                    await updateMining(matterId, true, date);
+                    await updateMining(matterId, true, date, false);
+                }
+                else if (mintActive) {
+                    await updateMining(matterId, true, nftDate, mintActive);
                 }
                 else {
-                    await updateMining(matterId, true, nftDate);
+                    await updateMining(matterId, true, nftDate, false);
                 }
             } else {
-                if (matterId !== null)
-                    await updateMining(matterId, false, null);
+                if (matterId !== null && mintActive === false)
+                    await updateMining(matterId, false, null, false);
             }
             await updateBalance(value);
             resetStates();
@@ -263,13 +281,15 @@ export const ActiveTime = () => {
                         <div>
                             {
                                 !button && (
-                                    <button className='default-button' onClick={handleClick}>
+                                    <button className={!buttonMintActive ? 'default-button take-mint' : 'default-button' } onClick={handleClick}>
                                         Claim
                                     </button>
                                 )
                             }
                         </div>
-                    ) : (<ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />)}
+                    ) : (
+                        <ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} mintActive={mintActive} />
+                    )}
                 </div>
             </div>
         </>

@@ -120,6 +120,11 @@ button {
   display: flex;
   align-items: center;
 }
+
+.take-mint {
+  color: purple;
+  background-color: var(--general-color-darkblue);
+}
 /* end buttons */
 
 @media (prefers-color-scheme: light) {
