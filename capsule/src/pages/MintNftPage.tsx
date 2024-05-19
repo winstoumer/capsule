@@ -36,7 +36,7 @@ const MintNftPage: React.FC = () => {
     }, [id]);
 
     if (loading) {
-        return <div>Загрузка...</div>;
+        return <div></div>;
     }
 
     if (error) {
@@ -44,7 +44,7 @@ const MintNftPage: React.FC = () => {
     }
 
     if (!collection) {
-        return <div>Коллекция не найдена</div>;
+        return <div></div>;
     }
 
     return <div className='content'>

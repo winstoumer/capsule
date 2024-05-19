@@ -34,7 +34,7 @@ const CollectionList: React.FC = () => {
     }, []);
   
     if (loading) {
-      return <div>Загрузка...</div>;
+      return <div></div>;
     }
   
     if (error) {
