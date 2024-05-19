@@ -23,7 +23,7 @@ function calculateTimeRemaining(currentTime: string, nftEndDate: string | null):
         } else if (timeDiff > 0) {
             return `(Nft ~ soon)`;
         } else {
-            return "...";
+            return "∞";
         }
     }
     return "";
