@@ -99,7 +99,7 @@ export const ActiveTime = () => {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-                
+
                 if (nftEndDate !== null)
                 {
                     const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
@@ -191,12 +191,7 @@ export const ActiveTime = () => {
             endDate.setDate(startDate.getDate() + 3);
 
             const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
-            if (mintActive === true) {
-                setNftDate(nftDate);
-            }
-            else {
-                setNftDate(randomDate);
-            }
+            setNftDate(randomDate);
         };
 
         generateNftDate();
@@ -249,8 +244,9 @@ export const ActiveTime = () => {
                     const date = new Date(nftEndDate);
                     await updateMining(matterId, true, date, false);
                 }
-                else if (mintActive) {
-                    await updateMining(matterId, true, nftDate, mintActive);
+                else if (mintActive && nftEndDate !== null) {
+                    const date = new Date(nftEndDate);
+                    await updateMining(matterId, true, date, mintActive);
                 }
                 else {
                     await updateMining(matterId, true, nftDate, false);
