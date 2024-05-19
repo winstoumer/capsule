@@ -98,20 +98,22 @@ export const ActiveTime = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
-                const nftEndDate = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-                let diffTimeNft = nftEndDate.getTime() - currentNowTime.getTime();
+                
+                if (nftEndDate !== null)
+                {
+                    const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
+                    let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
+                    if (mintActive === false && diffTimeNft < 0)
+                    {
+                        setTimerFinished(true);
+                        setMintActive(true);
+                        setButtonMintActive(true);
+                    }
+                }
 
                 if (diffTime < 0) {
                     diffTime = 0;
-                    setTimerFinished(true);
-                }
-                
-                if (mintActive === false && diffTimeNft < 0)
-                {
-                    diffTimeNft = 0;
-                    setMintActive(true);
-                    setButtonMintActive(true);
                     setTimerFinished(true);
                 }
 
