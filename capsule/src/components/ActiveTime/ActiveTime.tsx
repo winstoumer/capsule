@@ -232,6 +232,7 @@ export const ActiveTime = () => {
         setNftEndDate(null);
         setButton(false);
         setMintActive(false);
+        setButtonMintActive(false);
     };
 
     const handleClick = async () => {
