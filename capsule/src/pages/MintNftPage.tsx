@@ -1,4 +1,7 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { SendTransactionRequest, useTonConnectUI, useTonWallet, useTonAddress } from "@tonconnect/ui-react";
+import { beginCell } from '@ton/ton';
 import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
@@ -15,13 +18,21 @@ interface CollectionData {
 }
 
 const MintNftPage: React.FC = () => {
-    const [userData, setUserData] = useState<any>(null);
     const { id } = useParams<{ id: string }>();
+    const [userData, setUserData] = useState<any>(null);
+    const [userTonAddress, setUserTonAddress] = useState<string>('');
     const [collection, setCollection] = useState<CollectionData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
+    const [nftUuid] = useState<string>(uuidv4());
 
     const [mintActive, setMintActive] = useState(false);
+
+    const userFriendlyAddress = useTonAddress();
+
+    useEffect(() => {
+        setUserTonAddress(userFriendlyAddress.toString());
+    }, [userFriendlyAddress]);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -77,6 +88,75 @@ const MintNftPage: React.FC = () => {
         return <div></div>;
     }
 
+    const handleMint = async () => {
+        if (!userData || !userTonAddress || !nftUuid) {
+            console.error('Missing required data');
+            return;
+        }
+
+        try {
+            const response = await axios.post('https://advisory-brandi-webapp.koyeb.app/orders_nft', {
+                telegram_id: userData.id,
+                address: userTonAddress,
+                send_ton: 0.5,
+                collection_id: collection.id,
+                nft_uuid: nftUuid,
+                date: new Date().toISOString(),
+                active: true,
+            });
+
+            if (response.status === 200) {
+                console.log('Successfully');
+            } else {
+                console.error('Failed');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
+    const defaultTx: SendTransactionRequest = {
+        validUntil: Math.floor(Date.now() / 1000) + 600,
+        messages: [
+            {
+                address: 'UQDRd8OMx2SdI6KgjG_KnLnuk9BYkdsfyOlO9jKxmdQAE00c',
+                amount: '1000000000',
+            },
+        ],
+    };
+
+    const [tx] = useState(defaultTx);
+    const wallet = useTonWallet();
+    const [tonConnectUi] = useTonConnectUI();
+
+    const createTransaction = () => {
+        const body = beginCell()
+            .storeUint(0, 32)
+            .storeStringTail(nftUuid.toString())
+            .endCell();
+
+        const payload = body.toBoc().toString("base64");
+
+        const updatedTx: SendTransactionRequest = {
+            ...tx,
+            messages: [
+                {
+                    ...tx.messages[0],
+                    payload: payload,
+                },
+            ],
+        };
+
+        tonConnectUi.sendTransaction(updatedTx)
+            .then(() => {
+                console.log('Transaction sent successfully');
+                handleMint();
+            })
+            .catch((error) => {
+                console.error('Error sending transaction:', error);
+            });
+    };
+
     return <div className='content'>
         <PageComponent>
             <div className='default-page nft-container'>
@@ -101,7 +181,15 @@ const MintNftPage: React.FC = () => {
                         <div className='price-mint'>
                             <span className='color-blue'>0.5</span> TON
                         </div>
-                        <button className='default-button'>Mint</button>
+                        <React.Fragment>
+                            {wallet ? (
+                                <button className="default-button" onClick={createTransaction}>Mint</button>
+                            ) : (
+                                <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                    Connect wallet
+                                </button>
+                            )}
+                        </React.Fragment>
                     </div>
                 ) : (
                     <div></div>
