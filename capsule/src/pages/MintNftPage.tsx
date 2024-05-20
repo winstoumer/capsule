@@ -89,7 +89,7 @@ const MintNftPage: React.FC = () => {
             const response = await axios.post('https://capsule-server.onrender.com/api/mint/add', {
                 telegram_id: userData.id,
                 address: userTonAddress,
-                send_ton: 0.5,
+                send_ton: true,
                 collection_id: collection.id,
                 nft_id: nftUuid,
             });
