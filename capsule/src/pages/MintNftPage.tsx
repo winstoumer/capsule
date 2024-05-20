@@ -94,7 +94,7 @@ const MintNftPage: React.FC = () => {
                 nft_id: nftUuid,
             });
     
-            if (response.status === 200) {
+            if (response.status === 200 || response.status === 201) {
                 console.log('Successfully');
                 setCollection(prevCollection => 
                     prevCollection ? { ...prevCollection, nft_left: prevCollection.nft_left - 1 } : null
