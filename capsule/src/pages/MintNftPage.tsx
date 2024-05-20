@@ -84,7 +84,7 @@ const MintNftPage: React.FC = () => {
             console.error('Missing required data');
             return;
         }
-    
+
         try {
             const response = await axios.post('https://capsule-server.onrender.com/api/mint/add', {
                 telegram_id: userData.id,
@@ -93,10 +93,10 @@ const MintNftPage: React.FC = () => {
                 collection_id: collection.id,
                 nft_id: nftUuid,
             });
-    
+
             if (response.status === 200 || response.status === 201) {
                 console.log('Successfully');
-                setCollection(prevCollection => 
+                setCollection(prevCollection =>
                     prevCollection ? { ...prevCollection, nft_left: prevCollection.nft_left - 1 } : null
                 );
             } else {
@@ -149,6 +149,15 @@ const MintNftPage: React.FC = () => {
             });
     };
 
+    const handleSubmit = async () => {
+        try {
+            const address = 'EQAkdOYcyM7gGi91u2MNRpm-t90v29PTxImlv6IvJZBwV1P7';
+            await axios.post('https://xenial-doralyn-webapp-733e3ad1.koyeb.app/api/address', { address: address });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     if (loading) {
         return <div>Loading...</div>;
     }
@@ -188,7 +197,10 @@ const MintNftPage: React.FC = () => {
                             </div>
                             <React.Fragment>
                                 {wallet ? (
-                                    <button className="default-button" onClick={createTransaction}>Mint</button>
+                                    <div>
+                                        <button className="default-button" onClick={() => handleSubmit()}>Send</button>
+                                        <button className="default-button" onClick={createTransaction}>Mint</button>
+                                    </div>
                                 ) : (
                                     <button className="default-button" onClick={() => tonConnectUi.openModal()}>
                                         Connect wallet
