@@ -85,14 +85,12 @@ const MintNftPage: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('https://advisory-brandi-webapp.koyeb.app/orders_nft', {
+            const response = await axios.post('https://capsule-server.onrender.com/api/mint/add', {
                 telegram_id: userData.id,
                 address: userTonAddress,
                 send_ton: 0.5,
                 collection_id: collection.id,
-                nft_uuid: nftUuid,
-                date: new Date().toISOString(),
-                active: true,
+                nft_id: nftUuid,
             });
 
             if (response.status === 200) {
@@ -164,7 +162,7 @@ const MintNftPage: React.FC = () => {
             <PageComponent>
                 <div className='default-page nft-container'>
                     <div className='total-nft'>
-                        {collection.total_nft}
+                        16000/{collection.total_nft}
                     </div>
                     <div className='preview-nft'>
                         <div className='card'>
