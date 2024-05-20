@@ -15,6 +15,7 @@ interface CollectionData {
     banner_url?: string;
     date: string;
     active: boolean;
+    nft_left;
 }
 
 const MintNftPage: React.FC = () => {
@@ -162,7 +163,7 @@ const MintNftPage: React.FC = () => {
             <PageComponent>
                 <div className='default-page nft-container'>
                     <div className='total-nft'>
-                        16000/{collection.total_nft}
+                        {collection.nft_left}/{collection.total_nft}
                     </div>
                     <div className='preview-nft'>
                         <div className='card'>
