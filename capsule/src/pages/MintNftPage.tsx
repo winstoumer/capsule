@@ -15,7 +15,7 @@ interface CollectionData {
     banner_url?: string;
     date: string;
     active: boolean;
-    nft_left;
+    nft_left: number;
 }
 
 const MintNftPage: React.FC = () => {
@@ -84,7 +84,7 @@ const MintNftPage: React.FC = () => {
             console.error('Missing required data');
             return;
         }
-
+    
         try {
             const response = await axios.post('https://capsule-server.onrender.com/api/mint/add', {
                 telegram_id: userData.id,
@@ -93,9 +93,12 @@ const MintNftPage: React.FC = () => {
                 collection_id: collection.id,
                 nft_id: nftUuid,
             });
-
+    
             if (response.status === 200) {
                 console.log('Successfully');
+                setCollection(prevCollection => 
+                    prevCollection ? { ...prevCollection, nft_left: prevCollection.nft_left - 1 } : null
+                );
             } else {
                 console.error('Failed');
             }
