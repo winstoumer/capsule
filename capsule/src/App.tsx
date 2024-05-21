@@ -1,7 +1,5 @@
-// src/App.tsx
-
+import React, { useEffect } from 'react';
 import './App.css';
-import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import HomePage from './pages/HomePage';
@@ -10,8 +8,7 @@ import EarnPage from './pages/EarnPage';
 import NftPage from './pages/NftPage';
 import MintNftPage from './pages/MintNftPage';
 
-function App() {
-
+const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -27,7 +24,7 @@ function App() {
 
           const backButton = window.Telegram.WebApp.BackButton;
           backButton.onClick(() => {
-            navigate(-1);
+            navigate(-1); // Use navigate with a negative number to go back
           });
 
           if (location.pathname.startsWith('/mint/')) {
@@ -50,21 +47,29 @@ function App() {
   }, [navigate, location.pathname]);
 
   return (
-    <TonConnectUIProvider manifestUrl="https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json"
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/boost" element={<BoostPage />} />
+      <Route path="/earn" element={<EarnPage />} />
+      <Route path="/collections" element={<NftPage />} />
+      <Route path="/mint/:id" element={<MintNftPage />} />
+    </Routes>
+  );
+};
+
+function App() {
+  return (
+    <TonConnectUIProvider
+      manifestUrl="https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json"
       actionsConfiguration={{
-        twaReturnUrl: 'https://t.me/gbaswebtest_bot/app'
-      }}>
+        twaReturnUrl: 'https://t.me/gbaswebtest_bot/app',
+      }}
+    >
       <Router>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/boost" element={<BoostPage />} />
-          <Route path="/earn" element={<EarnPage />} />
-          <Route path="/collections" element={<NftPage />} />
-          <Route path="/mint/:id" element={<MintNftPage />} />
-        </Routes>
+        <AppWrapper />
       </Router>
     </TonConnectUIProvider>
   );
 }
 
-export default App
+export default App;
