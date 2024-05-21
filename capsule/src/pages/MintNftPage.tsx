@@ -6,6 +6,7 @@ import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 import './mintNft.scss';
+import { Loading } from '../components/Loading/Loading';
 
 interface CollectionData {
     id: number;
@@ -159,7 +160,7 @@ const MintNftPage: React.FC = () => {
     };
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <Loading />;
     }
 
     if (error) {
