@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './referral.scss';
+import { Loading } from '../Loading/Loading';
 
 export const Referral = () => {
     const [userData, setUserData] = useState<any>(null);
@@ -35,7 +36,7 @@ export const Referral = () => {
         };
 
     if (loading) {
-        return <div></div>;
+        return <Loading />;
     }
 
     const handleReferralLinkClick = async () => {

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
+import { Loading } from '../Loading/Loading';
 
 interface Task {
     id: number;
@@ -50,7 +51,7 @@ export const Earn = () => {
     };
 
     if (loading) {
-        return <div></div>;
+        return <Loading />;
     }
 
     return (
