@@ -13,8 +13,12 @@ const AppWrapper: React.FC = () => {
   const location = useLocation();
 
   useEffect(() => {
-    const loadScript = () => {
+    const scriptId = 'telegram-web-app-script';
+    const existingScript = document.getElementById(scriptId);
+
+    if (!existingScript) {
       const script = document.createElement('script');
+      script.id = scriptId;
       script.src = 'https://telegram.org/js/telegram-web-app.js';
       script.async = true;
       script.onload = () => {
@@ -35,9 +39,15 @@ const AppWrapper: React.FC = () => {
         }
       };
       document.body.appendChild(script);
-    };
-
-    loadScript();
+    } else {
+      if (window.Telegram && window.Telegram.WebApp) {
+        if (location.pathname.startsWith('/mint/')) {
+          window.Telegram.WebApp.BackButton.show();
+        } else {
+          window.Telegram.WebApp.BackButton.hide();
+        }
+      }
+    }
 
     return () => {
       if (window.Telegram && window.Telegram.WebApp) {
