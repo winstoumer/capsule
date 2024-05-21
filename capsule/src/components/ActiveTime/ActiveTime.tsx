@@ -32,7 +32,7 @@ export const ActiveTime = () => {
 
     const [timerFinished, setTimerFinished] = useState(false);
 
-    const [value, setValue] = useState(0.000);
+    const [value, setValue] = useState(0.00);
 
     const [nftDate, setNftDate] = useState<Date | null>(null);
 
@@ -271,7 +271,7 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='current-coins'>
-                    {value.toFixed(3)}
+                    {value.toFixed(2)}
                 </div>
                 <div className='time-left'>
                     {timerFinished ? <span></span> : (hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`)}
