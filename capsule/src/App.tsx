@@ -2,7 +2,7 @@
 
 import './App.css';
 import { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import HomePage from './pages/HomePage';
 import BoostPage from './pages/BoostPage';
@@ -11,6 +11,9 @@ import NftPage from './pages/NftPage';
 import MintNftPage from './pages/MintNftPage';
 
 function App() {
+
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const loadScript = () => {
@@ -21,13 +24,30 @@ function App() {
         if (window.Telegram && window.Telegram.WebApp) {
           window.Telegram.WebApp.setHeaderColor('#000000');
           window.Telegram.WebApp.expand();
+
+          const backButton = window.Telegram.WebApp.BackButton;
+          backButton.onClick(() => {
+            navigate(-1);
+          });
+
+          if (location.pathname.startsWith('/mint/')) {
+            backButton.show();
+          } else {
+            backButton.hide();
+          }
         }
       };
       document.body.appendChild(script);
     };
 
     loadScript();
-  }, []);
+
+    return () => {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.BackButton.hide();
+      }
+    };
+  }, [navigate, location.pathname]);
 
   return (
     <TonConnectUIProvider manifestUrl="https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json"
