@@ -5,6 +5,7 @@ import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import PageComponent from '../components/PageComponent/PageComponent';
 import './home.scss';
+import { Loading } from '../components/Loading/Loading';
 
 type TelegramUserData = {
   id: number;
@@ -70,7 +71,7 @@ const HomePage: React.FC = () => {
   };
 
   if (loading) {
-    return <div></div>;
+    return <Loading />;
   }
 
   if (!userExists) {

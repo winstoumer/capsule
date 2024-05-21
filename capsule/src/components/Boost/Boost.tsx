@@ -2,10 +2,15 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import './boost.scss';
+import { Loading } from '../Loading/Loading';
 
 interface UserData {
     balance: number;
     level: number;
+}
+
+interface CurrentTimeData {
+    currentTime: string;
 }
 
 interface Level {
@@ -67,13 +72,9 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         if (userData && userData.id) {
-            fetchUserData(userData.id.toString());
-        }
-    }, [userData]);
-
-    useEffect(() => {
-        if (userData && userData.id) {
-            fetchMiningData(userData.id.toString());
+            const telegramId = userData.id.toString();
+            fetchUserData(telegramId);
+            fetchMiningData(telegramId);
         }
     }, [userData]);
 
@@ -88,12 +89,10 @@ export const Boost: React.FC = () => {
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
-                if (nftEndDate !== null)
-                {
+                if (nftEndDate !== null) {
                     const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
                     let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
-                    if (mintActive === false && diffTimeNft < 0)
-                    {
+                    if (mintActive === false && diffTimeNft < 0) {
                         setTimerFinished(true);
                         setMintActive(true);
                     }
@@ -196,11 +195,9 @@ export const Boost: React.FC = () => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
-            if (!response.ok) {
-                throw new Error('Ошибка при загрузке данных о текущей активности');
-            }
-            const data: MiningData = await response.json();
+            const response = await axios.get<MiningData>(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            const data = response.data;
+
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
@@ -209,21 +206,18 @@ export const Boost: React.FC = () => {
             setNftMined(data.nft_mined);
             setMintActive(data.mint_active);
         } catch (error) {
-            console.error(error);
+            console.error('Ошибка при загрузке данных о текущей активности', error);
         }
     };
 
     const fetchCurrentTime = async () => {
         try {
-            const response = await fetch('https://capsule-server.onrender.com/api/currentTime');
-            if (!response.ok) {
-                throw new Error('Ошибка при получении текущего времени с сервера');
-            }
-            const data = await response.json();
+            const response = await axios.get<CurrentTimeData>('https://capsule-server.onrender.com/api/currentTime');
+            const data = response.data;
             const currentTimeFormatted = data.currentTime.replace(' ', 'T');
             setCurrentTime(currentTimeFormatted);
         } catch (error) {
-            console.error(error);
+            console.error('Ошибка при получении текущего времени с сервера', error);
         }
     };
 
@@ -347,7 +341,7 @@ export const Boost: React.FC = () => {
     };
 
     if (loading) {
-        return <div></div>;
+        return <Loading />;
     }
 
     if (!user) {
