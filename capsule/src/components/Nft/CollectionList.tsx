@@ -12,6 +12,7 @@ interface CollectionData {
   banner_url?: string;
   date: string;
   active: boolean;
+  nft_left: number;
 }
 
 const CollectionList: React.FC = () => {
@@ -52,6 +53,7 @@ const CollectionList: React.FC = () => {
                   <img src={collection.banner_url} className='collection-banner' />
                 </div>
                 <div className='collection-name'>{collection.name}</div>
+                <div className='collection-info'>{collection.nft_left} <span>left out of</span> {collection.total_nft}</div>
               </Link>
             </div>
           ))}

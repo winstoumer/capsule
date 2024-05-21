@@ -34,9 +34,18 @@
 }
 
 .collection-name {
-    text-align: center;
     font-size: 26px;
     font-weight: 500;
     margin-left: 10px;
     margin-right: 10px;
+}
+
+.collection-info {
+    color: var(--color-text-info);
+    font-size: 18px;
+    font-weight: 300;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
