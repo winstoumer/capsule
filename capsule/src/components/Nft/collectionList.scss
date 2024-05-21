@@ -19,7 +19,6 @@
 .collection-link {
     display: flex;
     flex-direction: column;
-    gap: 3px;
 }
 
 .collection-watch-banner {
@@ -44,5 +43,7 @@
     color: var(--color-text-info);
     font-size: 18px;
     font-weight: 300;
+    margin-left: 10px;
+    margin-right: 10px;
     display: flex;
 }
