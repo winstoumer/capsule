@@ -29,7 +29,7 @@
     z-index: 2;
     max-width: 210px;
     width: 100%;
-    animation: appearAndMoveCapsule 0.8s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
+    animation: appearAndMoveCapsule 3s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
     /* `3s` delay to start the second animation after the first one completes */
 }
 
