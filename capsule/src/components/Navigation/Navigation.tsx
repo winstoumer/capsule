@@ -1,16 +1,7 @@
-import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './navigation.scss';
 
 export const Navigation = () => {
-  useEffect(() => {
-    const nftLink = document.querySelector('.color-nft');
-    if (nftLink instanceof HTMLElement) {
-      setTimeout(() => {
-        nftLink.style.animation = 'activeNft 2.4s ease infinite';
-      }, 500); // Задержка в 500 миллисекунд (0.5 секунды)
-    }
-  }, []);
 
   return (
     <div className='bottom-navigation'>
