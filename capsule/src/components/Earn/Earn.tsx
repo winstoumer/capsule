@@ -68,9 +68,11 @@ export const Earn = () => {
                         <div className='task-reward'>
                             {task.reward}
                         </div>
-                        <div className='task-start'>
-                            {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleClick(task.id, task.link)}>Go</button>}
-                        </div>
+                        {!task.active || task.ready ? null :
+                            <div className='task-start'>
+                                <button className='default-button' onClick={() => handleClick(task.id, task.link)}>Go</button>
+                            </div>
+                        }
                     </div>
                 </div>
             ))}
