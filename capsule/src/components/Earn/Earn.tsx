@@ -58,14 +58,19 @@ export const Earn = () => {
         <div className='tasks'>
             {tasks.map(task => (
                 <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
-                    <div className='task-name'>
-                        {task.name}
+                    <div className='task-watch'>
+                        <img src="/av.jpeg" className='task-image' />
                     </div>
-                    <div className='task-reward'>
-                        {task.reward}
-                    </div>
-                    <div className='task-start'>
-                        {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleClick(task.id, task.link)}>Go</button>}
+                    <div className='task-info'>
+                        <div className='task-name'>
+                            {task.name}
+                        </div>
+                        <div className='task-reward'>
+                            {task.reward}
+                        </div>
+                        <div className='task-start'>
+                            {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleClick(task.id, task.link)}>Go</button>}
+                        </div>
                     </div>
                 </div>
             ))}

@@ -13,6 +13,21 @@
     padding-right: 22px;
     padding-bottom: 20px;
     display: flex;
+    flex-direction: row;
+    gap: 16px;
+}
+
+.task-watch {
+    display: flex;
+}
+
+.task-image {
+    width: 70px;
+    height: 70px;
+}
+
+.task-info {
+    display: flex;
     flex-direction: column;
     gap: 6px;
 }
