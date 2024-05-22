@@ -26,6 +26,8 @@
 
 .always-capsule {
     position: relative;
+    z-index: 2;
+    /* ensure it's above the wavy circle */
     animation: moveCapsule 1.3s infinite alternate;
     max-width: 210px;
     width: 100%;
