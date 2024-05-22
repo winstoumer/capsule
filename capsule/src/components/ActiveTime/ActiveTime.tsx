@@ -2,7 +2,6 @@ import './activeTime.scss';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import ActiveMine from '../ActiveMine/ActiveMine';
 import axios from 'axios';
-import WavyCircle from '../WavyCircle/WavyCircle';
 
 interface MiningData {
     matter_id: number;
