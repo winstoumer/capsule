@@ -40,7 +40,7 @@ export const Earn = () => {
         }
     };
 
-    const handleGoButtonClick = async (taskId: number, taskLink: string) => {
+    const handleClick = async (taskId: number, taskLink: string) => {
         window.location.href = taskLink;
         try {
             await axios.post(`https://capsule-server.onrender.com/api/task/${userData.id}/${taskId}/complete`);
@@ -65,7 +65,7 @@ export const Earn = () => {
                         {task.reward}
                     </div>
                     <div className='task-start'>
-                        {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleGoButtonClick(task.id, task.link)}>Go</button>}
+                        {!task.active || task.ready ? null : <button className='default-button' onClick={() => handleClick(task.id, task.link)}>Go</button>}
                     </div>
                 </div>
             ))}

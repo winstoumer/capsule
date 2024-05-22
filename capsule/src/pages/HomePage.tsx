@@ -1,13 +1,18 @@
+import './home.scss';
 import React from 'react';
+import PageComponent from '../components/PageComponent/PageComponent';
 import { Header } from "../components/Header/Header";
 import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
-import PageComponent from '../components/PageComponent/PageComponent';
-import './home.scss';
-import { DataProvider, useData } from '../components/DataProvider/DataContext';
+import { useData } from '../components/DataProvider/DataContext';
+import { Loading } from '../components/Loading/Loading';
 
 const HomePage: React.FC = () => {
-  const { balanceData } = useData();
+  const { balanceData, loading } = useData();
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className='content'>
@@ -23,12 +28,4 @@ const HomePage: React.FC = () => {
   );
 }
 
-const HomePageWrapper: React.FC = () => {
-  return (
-    <DataProvider>
-      <HomePage />
-    </DataProvider>
-  );
-};
-
-export default HomePageWrapper;
+export default HomePage;

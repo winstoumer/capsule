@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import { Loading } from '../Loading/Loading';
+import { useUser } from '../UserProvider/UserContext';
 
 interface DataContextType {
     loading: boolean;
@@ -20,17 +21,10 @@ interface DataProviderProps {
 }
 
 export const DataProvider = ({ children }: DataProviderProps) => {
-    const [balanceData, setBalance] = useState<any>(null);
-    const [userData, setUserData] = useState<TelegramUserData | null>(null);
-    const [loading, setLoading] = useState(true);
-    const [userExists, setUserExists] = useState(false);
+    const { userData } = useUser();
 
-    useEffect(() => {
-        if (window.Telegram && window.Telegram.WebApp) {
-            const user = window.Telegram.WebApp.initDataUnsafe?.user;
-            setUserData(user);
-        }
-    }, []);
+    const [balanceData, setBalance] = useState<any>(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         if (userData && userData.id) {
@@ -62,13 +56,12 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const fetchUserData = async (telegramUserId: string, firstName: string) => {
         try {
             await axios.get(`https://capsule-server.onrender.com/api/user/${telegramUserId}`);
-            setUserExists(true);
-            fetchBalance(telegramUserId); // Загрузка баланса пользователя после проверки наличия пользователя
+            fetchBalance(telegramUserId);
         } catch (error) {
             console.error('Пользователь не найден:', error);
             try {
                 await axios.post(`https://capsule-server.onrender.com/api/user/new/${telegramUserId}`, { first_name: firstName });
-                fetchUserData(telegramUserId, firstName); // Повторный вызов для загрузки данных после создания пользователя
+                fetchUserData(telegramUserId, firstName);
             } catch (createError) {
                 console.error('Ошибка при создании пользователя:', createError);
             }
@@ -79,11 +72,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
     if (loading) {
         return <Loading />;
-      }
-    
-      if (!userExists) {
-        return <div></div>;
-      }
+    }
 
     return (
         <DataContext.Provider value={{ balanceData, loading, userData }}>

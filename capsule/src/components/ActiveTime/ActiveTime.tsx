@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
 import './activeTime.scss';
-import axios from 'axios';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import ActiveMine from '../ActiveMine/ActiveMine';
+import axios from 'axios';
 
 interface MiningData {
     matter_id: number;
@@ -137,34 +137,33 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
-            const totalSecondsInTimeMine = timeMine * 3600; // общее количество секунд в timeMine
-            const passedSeconds = (hours * 3600) + (minutes * 60) + seconds; // количество прошедших секунд
-            const remainingSeconds = totalSecondsInTimeMine - passedSeconds; // общее количество секунд - количество прошедших секунд
+            const totalSecondsInTimeMine = timeMine * 3600;
+            const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
+            const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
         }
     }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
-        let isCoinsMineSet = false; // Флаг для отслеживания установки coinsMine
+        let isCoinsMineSet = false;
 
         if (coinsMine !== null && timeMine !== null) {
             const interval = setInterval(() => {
                 const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
 
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
-                    // Установка coinsMine, если coinsMinedSoFarRef.current равен coinsMine
                     setValue(coinsMinedSoFarRef.current);
-                    isCoinsMineSet = true; // Устанавливаем флаг в true, чтобы предотвратить повторную установку coinsMine
+                    isCoinsMineSet = true;
                 }
                 else {
-                    coinsMinedSoFarRef.current += coinsPerSecond; // добавляем coinsPerSecond к coinsMinedSoFar
-                    setValue(coinsMinedSoFarRef.current); // обновляем значение
+                    coinsMinedSoFarRef.current += coinsPerSecond;
+                    setValue(coinsMinedSoFarRef.current);
                 }
 
-                if (coinsMine === coinsMinedSoFarRef.current) { // Проверяем, равны ли значения
+                if (coinsMine === coinsMinedSoFarRef.current) {
                     setValue(coinsMine);
-                    clearInterval(interval); // Останавливаем интервал
+                    clearInterval(interval);
                 }
             }, 500);
 

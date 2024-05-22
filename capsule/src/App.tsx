@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
-import HomePage from './pages/HomePage';
+import HomePageWithProviders from './pages/HomePageWidthProviders';
 import BoostPage from './pages/BoostPage';
 import EarnPage from './pages/EarnPage';
 import NftPage from './pages/NftPage';
@@ -58,7 +58,7 @@ const AppWrapper: React.FC = () => {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<HomePageWithProviders />} />
       <Route path="/boost" element={<BoostPage />} />
       <Route path="/earn" element={<EarnPage />} />
       <Route path="/collections" element={<NftPage />} />
