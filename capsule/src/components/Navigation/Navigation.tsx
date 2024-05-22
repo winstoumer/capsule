@@ -7,7 +7,7 @@ export const Navigation = () => {
     <div className='bottom-navigation'>
       <div className='navigation'>
         <div className="nav-b">
-          <Link to="/">Capsule</Link>
+          <Link to="/">Matter</Link>
         </div>
         <div className="nav-b">
           <Link to="/boost">Boost</Link>
