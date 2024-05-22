@@ -29,14 +29,14 @@
     z-index: 2;
     max-width: 210px;
     width: 100%;
-    animation: appearAndMoveCapsule 0.5s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
+    animation: appearAndMoveCapsule 0.7s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
     /* `3s` delay to start the second animation after the first one completes */
 }
 
 @keyframes appearAndMoveCapsule {
     0% {
         opacity: 0;
-        transform: translateY(-500px) scale(0.5);
+        transform: translateY(-500px) scale(0);
     }
 
     100% {
