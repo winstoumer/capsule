@@ -255,8 +255,11 @@ export const Boost: React.FC = () => {
     };
 
     const levels: Level[] = [
-        { id: 1, name: 'Level 1', image: 'capsule_1.png', coins: 100, time: 1, mines_nft: false, price: 160 },
-        { id: 2, name: 'Level 2', image: 'capsule_2.png', coins: 200, time: 4, mines_nft: true, price: 340 }
+        { id: 1, name: 'Level 1', image: 'capsule_1.png', coins: 100, time: 1, mines_nft: false, price: 100 },
+        { id: 2, name: 'Level 2', image: 'capsule_2.png', coins: 200, time: 4, mines_nft: true, price: 200 },
+        { id: 3, name: 'Level 3', image: 'capsule_3.png', coins: 500, time: 6, mines_nft: false, price: 800 },
+        { id: 4, name: 'Level 4', image: 'capsule_4.png', coins: 1200, time: 8, mines_nft: true, price: 2300 },
+        { id: 5, name: 'Level 5', image: 'capsule_5.png', coins: 3600, time: 12, mines_nft: true, price: 8000 }
     ];
 
     const currentLevelIndex: number = user ? levels.findIndex(level => level.id === user.level) : -1;
