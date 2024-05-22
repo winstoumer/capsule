@@ -25,7 +25,10 @@
 }
 
 .always-capsule {
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     animation: moveCapsule 1.3s infinite alternate;
     max-width: 210px;
     width: 100%;
