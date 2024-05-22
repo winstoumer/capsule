@@ -1,0 +1,28 @@
+.background-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: black;
+  }
+  
+  .background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .bubble {
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5); /* полупрозрачный цвет */
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+  }
+  
+  .bubble:active {
+    transform: scale(1.5); /* масштабирование при клике */
+    opacity: 0; /* исчезновение */
+  }
+  
