@@ -12,17 +12,23 @@ const HomePage: React.FC = () => {
   return (
     <div className='content'>
       <PageComponent>
-        <DataProvider>
-          <Header />
-            <div className='general'>
-              <div className='balance'>{balanceData !== null ? parseFloat(balanceData.toFixed(2)) : 'N/A'}</div>
-              <ActiveTime />
-            </div>
-          <Navigation />
-        </DataProvider>
+        <Header />
+        <div className='general'>
+          <div className='balance'>{balanceData !== null ? parseFloat(balanceData.toFixed(2)) : 'N/A'}</div>
+          <ActiveTime />
+        </div>
+        <Navigation />
       </PageComponent>
     </div>
   );
 }
 
-export default HomePage;
+const HomePageWrapper: React.FC = () => {
+  return (
+    <DataProvider>
+      <HomePage />
+    </DataProvider>
+  );
+};
+
+export default HomePageWrapper;
