@@ -24,8 +24,8 @@ export const Navigation = () => {
         <div className="nav-b">
           <Link to="/earn">Earn</Link>
         </div>
-        <div className="nav-b color-nft">
-          <Link to="/collections">Nft</Link>
+        <div className="nav-b">
+          <Link className='color-nft' to="/collections">Nft</Link>
         </div>
       </div>
     </div>
