@@ -6,7 +6,6 @@ import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import { useData } from '../components/DataProvider/DataContext';
 import { Loading } from '../components/Loading/Loading';
-import BackgroundComponent from '../components/BackgroundComponent/BackgroundComponent';
 
 const HomePage: React.FC = () => {
   const { balanceData, loading } = useData();
@@ -23,7 +22,6 @@ const HomePage: React.FC = () => {
           <div className='balance'>{balanceData !== null ? parseFloat(balanceData.toFixed(2)) : 'N/A'}</div>
           <ActiveTime />
         </div>
-        <BackgroundComponent />
         <Navigation />
       </PageComponent>
     </div>
