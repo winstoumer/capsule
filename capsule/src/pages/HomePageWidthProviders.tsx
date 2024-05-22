@@ -4,13 +4,13 @@ import { UserProvider } from '../components/UserProvider/UserContext';
 import HomePage from './HomePage';
 
 const HomePageWithProviders: React.FC = () => {
-  return (
-    <DataProvider>
-      <UserProvider>
-        <HomePage />
-      </UserProvider>
-    </DataProvider>
-  );
+    return (
+        <UserProvider>
+            <DataProvider>
+                <HomePage />
+            </DataProvider>
+        </UserProvider>
+    );
 };
 
 export default HomePageWithProviders;
