@@ -267,7 +267,6 @@ export const ActiveTime = () => {
     return (
         <>
             <div className='watch-capsule'>
-                <WavyCircle />
                 <img src="/capsule_1.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
