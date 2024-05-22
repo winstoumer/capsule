@@ -1,0 +1,43 @@
+.circle-container {
+    position: absolute;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fff;
+  }
+  
+  .wavy-circle {
+    width: 100px;
+    height: 100px;
+    border: 5px solid orange;
+    border-radius: 50%;
+    animation: spin 4s linear infinite, wave 2s ease-in-out infinite alternate;
+    position: relative;
+  }
+  
+  @keyframes spin {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @keyframes wave {
+    0%, 100% {
+      box-shadow:
+        0 0 0 0 rgba(255, 165, 0, 0.7),
+        0 0 0 10px rgba(255, 165, 0, 0.5),
+        0 0 0 20px rgba(255, 165, 0, 0.3);
+    }
+    50% {
+      box-shadow:
+        0 0 0 10px rgba(255, 165, 0, 0.5),
+        0 0 0 20px rgba(255, 165, 0, 0.3),
+        0 0 0 30px rgba(255, 165, 0, 0.1);
+    }
+  }
+  
