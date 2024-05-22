@@ -10,19 +10,24 @@
     position: absolute;
     width: 100%;
     height: 100%;
+    background-color: black;
+    overflow: hidden;
+    animation: stretchAndSqueeze 4s infinite alternate ease-in-out;
+  }
+  
+  @keyframes stretchAndSqueeze {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.2);
+    }
   }
   
   .bubble {
     position: absolute;
-    width: 300px;
-    height: 300px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    background-color: rgba(255, 255, 255, 0.5); /* полупрозрачный цвет */
-    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+    background-color: rgba(255, 255, 255, 0.5);
   }
-  
-  .bubble:active {
-    transform: scale(1.5); /* масштабирование при клике */
-    opacity: 0; /* исчезновение */
-  }
-  
