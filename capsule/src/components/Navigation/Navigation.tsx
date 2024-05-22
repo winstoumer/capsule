@@ -4,7 +4,7 @@ import './navigation.scss';
 
 export const Navigation = () => {
   useEffect(() => {
-    const nftLink = document.querySelector('.color-nft a');
+    const nftLink = document.querySelector('.color-nft');
     if (nftLink instanceof HTMLElement) {
       setTimeout(() => {
         nftLink.style.animation = 'activeNft 2.4s ease infinite';
