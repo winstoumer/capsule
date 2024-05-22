@@ -80,6 +80,17 @@ const MintNftPage: React.FC = () => {
         }
     };
 
+    const updateMining = async (nftDate: Date | null, mintActive: boolean): Promise<void> => {
+        try {
+            const telegramId = userData.id;
+            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
+                { time_end_mined_nft: nftDate, mint_active: mintActive });
+            console.log('Update successful');
+        } catch (error) {
+            console.error('Error updating mining:', error);
+        }
+    };
+
     const handleMint = async () => {
         if (!userData || !userTonAddress || !nftUuid || !collection) {
             console.error('Missing required data');
@@ -97,6 +108,7 @@ const MintNftPage: React.FC = () => {
 
             if (response.status === 200 || response.status === 201) {
                 console.log('Successfully');
+                await updateMining(null, false);
                 setCollection(prevCollection =>
                     prevCollection ? { ...prevCollection, nft_left: prevCollection.nft_left - 1 } : null
                 );
@@ -159,6 +171,14 @@ const MintNftPage: React.FC = () => {
         }
     };
 
+    const handleSubmitTest = async () => {
+        try {
+            await updateMining(null, false);
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    };
+
     if (loading) {
         return <Loading />;
     }
@@ -200,6 +220,7 @@ const MintNftPage: React.FC = () => {
                                 {wallet ? (
                                     <div>
                                         <button className="default-button" onClick={() => handleSubmit()}>Send</button>
+                                        <button className="default-button" onClick={() => handleSubmitTest()}>Send test</button>
                                         <button className="default-button" onClick={createTransaction}>Mint</button>
                                     </div>
                                 ) : (

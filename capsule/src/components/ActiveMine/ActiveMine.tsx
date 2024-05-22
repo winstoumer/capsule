@@ -26,7 +26,7 @@ function calculateTimeRemaining(currentTime: string, nftEndDate: string | null):
             return "∞";
         }
     }
-    return "";
+    return "∞";
 }
 
 const ActiveMine: React.FC<TimeDisplayProps> = ({ currentTime, nftEndDate, nftActive }) => {
