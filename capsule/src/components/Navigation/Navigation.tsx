@@ -1,12 +1,14 @@
 import { useEffect } from 'react';
-import './navigation.scss';
 import { Link } from 'react-router-dom';
+import './navigation.scss';
 
 export const Navigation = () => {
   useEffect(() => {
     const nftLink = document.querySelector('.color-nft a');
     if (nftLink instanceof HTMLElement) {
-      nftLink.style.animation = 'activeNft 2.4s ease infinite';
+      setTimeout(() => {
+        nftLink.style.animation = 'activeNft 2.4s ease infinite';
+      }, 500); // Задержка в 500 миллисекунд (0.5 секунды)
     }
   }, []);
 
