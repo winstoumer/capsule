@@ -28,7 +28,6 @@ const MintNftPage: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
     const [nftUuid] = useState<string>(uuidv4());
 
-    const [matterId, setMatterId] = useState<number | null>(null);
     const [mintActive, setMintActive] = useState(false);
 
     const userFriendlyAddress = useTonAddress();
@@ -75,18 +74,16 @@ const MintNftPage: React.FC = () => {
             }
 
             const data = response.data;
-            setMatterId(data.matter_id);
             setMintActive(data.mint_active);
         } catch (error) {
             console.error(error);
         }
     };
 
-    const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
+    const updateMining = async (): Promise<void> => {
         try {
             const telegramId = userData.id;
-            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${telegramId}`,
-                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
+            await axios.put(`https://capsule-server.onrender.com/api/currentMining/minted/${telegramId}`);
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating mining:', error);
@@ -110,8 +107,7 @@ const MintNftPage: React.FC = () => {
 
             if (response.status === 200 || response.status === 201) {
                 console.log('Successfully');
-                if (matterId !== null)
-                await updateMining(matterId, true, null, false);
+                await updateMining();
                 setCollection(prevCollection =>
                     prevCollection ? { ...prevCollection, nft_left: prevCollection.nft_left - 1 } : null
                 );
@@ -176,8 +172,8 @@ const MintNftPage: React.FC = () => {
 
     const handleSubmitTest = async () => {
         try {
-            if (matterId !== null && userData !== null)
-            await updateMining(matterId, true, null, false);
+            if (userData !== null)
+            await updateMining();
         } catch (error) {
             console.error('Error:', error);
         }
