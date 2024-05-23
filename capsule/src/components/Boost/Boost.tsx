@@ -3,16 +3,7 @@ import { Link } from 'react-router-dom';
 import { useData } from '../DataProvider/DataContext';
 import axios from 'axios';
 import './boost.scss';
-import { Loading } from '../Loading/Loading';
-
-interface UserData {
-    balance: number;
-    level: number;
-}
-
-interface CurrentTimeData {
-    currentTime: string;
-}
+import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 
 interface Level {
     id: number;
@@ -33,15 +24,15 @@ interface MiningData {
     matter_id: number;
     time_end_mined_nft: string;
     nft_mined: boolean;
+    level: number;
     mint_active: boolean;
 }
 
 export const Boost: React.FC = () => {
     const { balanceData, userData } = useData();
-    const [user, setUser] = useState<UserData | null>(null);
-    const [loading, setLoading] = useState(true);
+    const { currentTime, fetchCurrentTime, resetStates } = useCurrentTime();
+    const [level, setLevel] = useState<number | undefined>(undefined);
 
-    const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
@@ -68,14 +59,9 @@ export const Boost: React.FC = () => {
     useEffect(() => {
         if (userData !== null && userData.id) {
             const telegramId = userData.id.toString();
-            fetchUserData(telegramId);
             fetchMiningData(telegramId);
         }
     }, [userData]);
-
-    useEffect(() => {
-        fetchCurrentTime();
-    }, []);
 
     useEffect(() => {
         const updateCountdown = () => {
@@ -177,22 +163,12 @@ export const Boost: React.FC = () => {
         }
     }, [coinsMine, timeMine]);
 
-    const fetchUserData = async (telegramUserId: string) => {
-        try {
-            const response = await axios.get(`https://capsule-server.onrender.com/api/user/info/${telegramUserId}`);
-            setUser(response.data[0]);
-        } catch (error) {
-            console.error('Ошибка при загрузке данных пользователя:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const fetchMiningData = async (telegramUserId: string) => {
         try {
             const response = await axios.get<MiningData>(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
             const data = response.data;
-
+            
+            setLevel(data.level);
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
@@ -202,17 +178,6 @@ export const Boost: React.FC = () => {
             setMintActive(data.mint_active);
         } catch (error) {
             console.error('Ошибка при загрузке данных о текущей активности', error);
-        }
-    };
-
-    const fetchCurrentTime = async () => {
-        try {
-            const response = await axios.get<CurrentTimeData>('https://capsule-server.onrender.com/api/currentTime');
-            const data = response.data;
-            const currentTimeFormatted = data.currentTime.replace(' ', 'T');
-            setCurrentTime(currentTimeFormatted);
-        } catch (error) {
-            console.error('Ошибка при получении текущего времени с сервера', error);
         }
     };
 
@@ -261,7 +226,7 @@ export const Boost: React.FC = () => {
         { id: 5, name: 'Level 5', image: 'capsule_5.png', coins: 3600, time: 12, mines_nft: true, price: 8000 }
     ];
 
-    const currentLevelIndex: number = user ? levels.findIndex(level => level.id === user.level) : -1;
+    const currentLevelIndex: number = level !== undefined ? levels.findIndex(l => l.id === level) : -1;
     const nextLevel: Level | null = currentLevelIndex !== -1 ? levels[currentLevelIndex + 1] : null;
     const userLevel: Level | null = currentLevelIndex !== -1 ? levels[currentLevelIndex] : null;
 
@@ -301,7 +266,7 @@ export const Boost: React.FC = () => {
 
     const handleUpgrade = async () => {
         setButton(true);
-        if (nextLevel && user && user.balance >= nextLevel.price) {
+        if (nextLevel && balanceData >= nextLevel.price) {
             try {
                 if (value !== null) {
                     await updateBalance(nextLevel.price);
@@ -323,33 +288,26 @@ export const Boost: React.FC = () => {
                             await updateMining(nextLevel.id, false, null, false);
                     }
                 }
+                await resetStates();
                 await updateLevel(nextLevel.id);
-                setUser({ ...user, level: nextLevel.id, balance: user.balance - nextLevel.price });
                 if (nextLevel.id !== levels[levels.length - 1].id) {
                     setAnimate(true);
                     setTimeout(() => {
                         setAnimate(false);
                     }, 1000);
                 }
+                await fetchCurrentTime();
                 setButton(false);
             } catch (error) {
                 console.error('Ошибка при обновлении уровня пользователя:', error);
                 alert('Произошла ошибка при обновлении уровня пользователя');
             }
-        } else if (nextLevel && user && user.balance < nextLevel.price) {
+        } else if (nextLevel && balanceData < nextLevel.price) {
             alert('Недостаточно средств для покупки!');
         } else {
             alert('Вы достигли максимального уровня!');
         }
     };
-
-    if (loading) {
-        return <Loading />;
-    }
-
-    if (!user) {
-        return <div></div>;
-    }
 
     return (
         <div className='default-page evently-container'>
@@ -392,9 +350,9 @@ export const Boost: React.FC = () => {
                         <span className='color-blue'>{nextLevel.price}</span>
                     ) : null}
                 </div>
-                {nextLevel ? (
-                    user.level < levels.length ? (
-                        user.balance >= nextLevel.price ? (
+                {nextLevel && level !== undefined ? (
+                    level < levels.length ? (
+                        balanceData >= nextLevel.price ? (
                             <div>
                                 {
                                     !button && (
