@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 
 interface TimeDisplayProps {
-    currentTime: string;
     nftEndDate: string | null;
     nftActive: boolean;
 }
@@ -29,12 +29,13 @@ function calculateTimeRemaining(currentTime: string, nftEndDate: string | null):
     return "∞";
 }
 
-const ActiveMine: React.FC<TimeDisplayProps> = ({ currentTime, nftEndDate, nftActive }) => {
+const ActiveMine: React.FC<TimeDisplayProps> = ({ nftEndDate, nftActive }) => {
+    const { currentTime } = useCurrentTime();
     const [remainingTime, setRemainingTime] = useState<string>('');
     const [showRemainingTime, setShowRemainingTime] = useState<boolean>(true);
 
     useEffect(() => {
-        if (nftActive) {
+        if (nftActive && currentTime !== null) {
             const interval = setInterval(() => {
                 const newRemainingTime = calculateTimeRemaining(new Date(currentTime).toISOString(), nftEndDate);
                 setRemainingTime(newRemainingTime);

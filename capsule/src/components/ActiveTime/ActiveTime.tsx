@@ -1,5 +1,6 @@
 import './activeTime.scss';
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 import ActiveMine from '../ActiveMine/ActiveMine';
 import axios from 'axios';
 
@@ -17,8 +18,8 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
+    const { currentTime, fetchCurrentTime, resetStates } = useCurrentTime();
     const [nftActive, setNftActive] = useState(false);
-    const [currentTime, setCurrentTime] = useState<string>("");
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
@@ -64,29 +65,6 @@ export const ActiveTime = () => {
     }, []);
 
     useEffect(() => {
-        // При монтировании компонента проверяем, есть ли данные в кэше
-        const cachedTime = localStorage.getItem('currentTime');
-        if (cachedTime) {
-            setCurrentTime(cachedTime);
-        } else {
-            // Если данных нет в кэше, делаем запрос на сервер для получения текущего времени
-            fetchCurrentTime();
-        }
-    }, []);
-
-    const fetchCurrentTime = useCallback(async () => {
-        try {
-            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
-            const currentTimeFormatted = response.data.currentTime.replace(' ', 'T');
-            setCurrentTime(currentTimeFormatted);
-            // Сохраняем полученное время в кэше
-            localStorage.setItem('currentTime', currentTimeFormatted);
-        } catch (error) {
-            console.error('Ошибка при получении текущего времени с сервера:', error);
-        }
-    }, []);
-
-    useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
         }
@@ -97,10 +75,6 @@ export const ActiveTime = () => {
             fetchMiningData(userData.id.toString());
         }
     }, [userData, fetchMiningData]);
-
-    useEffect(() => {
-        fetchCurrentTime();
-    }, [fetchCurrentTime]);
 
     useEffect(() => {
         const updateCountdown = () => {
@@ -226,8 +200,7 @@ export const ActiveTime = () => {
         }
     };
 
-    const resetStates = () => {
-        setCurrentTime("");
+    const resetStatesHome = () => {
         setNextTime(null);
         setCoinsMine(null);
         setTimeMine(null);
@@ -265,6 +238,7 @@ export const ActiveTime = () => {
             }
             await updateBalance(value);
             resetStates();
+            resetStatesHome();
             fetchMiningData(userData.id.toString());
             fetchCurrentTime();
         } catch (error) {
@@ -299,7 +273,7 @@ export const ActiveTime = () => {
                             }
                         </div>
                     ) : (
-                        <ActiveMine currentTime={currentTime} nftEndDate={nftEndDate} nftActive={nftActive} />
+                        <ActiveMine nftEndDate={nftEndDate} nftActive={nftActive} />
                     )}
                 </div>
             </div>

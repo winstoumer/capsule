@@ -7,6 +7,7 @@ import BoostPage from './pages/BoostPage';
 import EarnPage from './pages/EarnPage';
 import NftPage from './pages/NftPage';
 import MintNftPage from './pages/MintNftPage';
+import { CurrentTimeProvider } from './components/CurrentTimeProvider/CurrentTimeContext';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -75,9 +76,11 @@ function App() {
         twaReturnUrl: 'https://t.me/gbaswebtest_bot/app',
       }}
     >
-      <Router>
-        <AppWrapper />
-      </Router>
+      <CurrentTimeProvider>
+        <Router>
+          <AppWrapper />
+        </Router>
+      </CurrentTimeProvider>
     </TonConnectUIProvider>
   );
 }
