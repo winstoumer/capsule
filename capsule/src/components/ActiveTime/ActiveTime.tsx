@@ -63,17 +63,26 @@ export const ActiveTime = () => {
         }
     }, []);
 
+    useEffect(() => {
+        // При монтировании компонента проверяем, есть ли данные в кэше
+        const cachedTime = localStorage.getItem('currentTime');
+        if (cachedTime) {
+            setCurrentTime(cachedTime);
+        } else {
+            // Если данных нет в кэше, делаем запрос на сервер для получения текущего времени
+            fetchCurrentTime();
+        }
+    }, []);
+
     const fetchCurrentTime = useCallback(async () => {
         try {
-            const response = await fetch('https://capsule-server.onrender.com/api/currentTime');
-            if (!response.ok) {
-                throw new Error('Ошибка при получении текущего времени с сервера');
-            }
-            const data = await response.json();
-            const currentTimeFormatted = data.currentTime.replace(' ', 'T');
+            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
+            const currentTimeFormatted = response.data.currentTime.replace(' ', 'T');
             setCurrentTime(currentTimeFormatted);
+            // Сохраняем полученное время в кэше
+            localStorage.setItem('currentTime', currentTimeFormatted);
         } catch (error) {
-            console.error(error);
+            console.error('Ошибка при получении текущего времени с сервера:', error);
         }
     }, []);
 
