@@ -332,6 +332,7 @@ export const Boost: React.FC = () => {
                         setAnimate(false);
                     }, 1000);
                 }
+                setButton(false);
             } catch (error) {
                 console.error('Ошибка при обновлении уровня пользователя:', error);
                 alert('Произошла ошибка при обновлении уровня пользователя');
