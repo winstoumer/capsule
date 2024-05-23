@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { useData } from '../DataProvider/DataContext';
 import axios from 'axios';
 import './boost.scss';
 import { Loading } from '../Loading/Loading';
@@ -36,7 +37,7 @@ interface MiningData {
 }
 
 export const Boost: React.FC = () => {
-    const [userData, setUserData] = useState<any>(null);
+    const { balanceData, userData } = useData();
     const [user, setUser] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
 
@@ -65,13 +66,7 @@ export const Boost: React.FC = () => {
     const [button, setButton] = useState(false);
 
     useEffect(() => {
-        if (window.Telegram && window.Telegram.WebApp) {
-            setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (userData && userData.id) {
+        if (userData !== null && userData.id) {
             const telegramId = userData.id.toString();
             fetchUserData(telegramId);
             fetchMiningData(telegramId);
@@ -223,6 +218,7 @@ export const Boost: React.FC = () => {
 
     const updateBalanceCoins = async (coins: number) => {
         try {
+            if (userData !== null)
             await axios.put(`https://capsule-server.onrender.com/api/balance/plus/${userData.id}`, { amount: coins });
         } catch (error) {
             throw error;
@@ -231,6 +227,7 @@ export const Boost: React.FC = () => {
 
     const updateLevel = async (nextLevelId: number) => {
         try {
+            if (userData !== null)
             await axios.put(`https://capsule-server.onrender.com/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
         } catch (error) {
             throw error;
@@ -239,6 +236,7 @@ export const Boost: React.FC = () => {
 
     const updateBalance = async (price: number): Promise<void> => {
         try {
+            if (userData !== null)
             await axios.put(`https://capsule-server.onrender.com/api/balance/minus/${userData.id}`, { amount: price });
         } catch (error) {
             throw error;
@@ -247,6 +245,7 @@ export const Boost: React.FC = () => {
 
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
+            if (userData !== null)
             await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${userData.id}`,
                 { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
         } catch (error) {
@@ -355,7 +354,7 @@ export const Boost: React.FC = () => {
     return (
         <div className='default-page evently-container'>
             <div className='balance'>
-                {Number(user.balance).toFixed(2)}
+                {Number(balanceData).toFixed(2)}
             </div>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
                 {nextLevel ? (
