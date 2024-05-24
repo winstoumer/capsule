@@ -313,6 +313,9 @@ export const Boost: React.FC = () => {
             <div className='balance'>
                 {Number(balanceData).toFixed(2)}
             </div>
+            <div className='balance'>
+            {timerFinished ? <span></span> : (hours > 0 ? `${hours}h ${minutes}m ${seconds}s` : `${minutes}m`)}
+            </div>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
                 {nextLevel ? (
                     <div className='boost-item'>
@@ -324,7 +327,7 @@ export const Boost: React.FC = () => {
                     </div>
                 ) : (
                     <div className='boost-item'>
-                        <span>No level data</span>
+                        <span></span>
                     </div>
                 )}
                 <div className='boost-info'>
@@ -333,14 +336,14 @@ export const Boost: React.FC = () => {
                     ) : userLevel ? (
                         <div className='boost-name'>{userLevel.name}</div>
                     ) : (
-                        <div className='boost-name'>No level data</div>
+                        <div className='boost-name'></div>
                     )}
                     {nextLevel ? (
                         <div className='boost-param'>{nextLevel.coins}/{nextLevel.time}h</div>
                     ) : userLevel ? (
                         <div className='boost-param'>{userLevel.coins}/{userLevel.time}h</div>
                     ) : (
-                        <div className='boost-param'>No level data</div>
+                        <div className='boost-param'></div>
                     )}
                     {nextLevel && nextLevel.mines_nft ? (
                         <div className='boost-param'>
