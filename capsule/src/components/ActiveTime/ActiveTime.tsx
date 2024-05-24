@@ -191,6 +191,14 @@ export const ActiveTime = () => {
     };
 
     const resetStatesHome = () => {
+        setNextTime(null);
+        setCoinsMine(null);
+        setTimeMine(null);
+        setMatterId(null);
+        setNftEndDate(null);
+        setNftMined(false);
+        setMintActive(false);
+        setNftActive(null);
         setHoursLeft(0);
         setMinutesLeft(0);
         setSecondsLeft(0);
