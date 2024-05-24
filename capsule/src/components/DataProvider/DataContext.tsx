@@ -86,6 +86,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     useEffect(() => {
         if (userData && userData.id) {
             fetchUserData(userData.id.toString(), userData.first_name);
+            fetchMiningData(userData.id.toString());
         }
     }, [userData]);
 
@@ -122,7 +123,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         try {
             await axios.get(`https://capsule-server.onrender.com/api/user/${telegramUserId}`);
             fetchBalance(telegramUserId);
-            fetchMiningData(telegramUserId);
         } catch (error) {
             console.error('Пользователь не найден:', error);
             try {
