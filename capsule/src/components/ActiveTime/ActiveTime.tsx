@@ -1,6 +1,5 @@
 import './activeTime.scss';
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 import ActiveMine from '../ActiveMine/ActiveMine';
 import axios from 'axios';
 
@@ -18,7 +17,6 @@ interface MiningData {
 
 export const ActiveTime = () => {
     const [userData, setUserData] = useState<any>(null);
-    const { currentTime, resetTimeStates } = useCurrentTime();
     const [nftActive, setNftActive] = useState(false);
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
@@ -43,6 +41,22 @@ export const ActiveTime = () => {
 
     const [button, setButton] = useState(false);
     const [buttonMintActive, setButtonMintActive] = useState(false);
+
+    const [currentTime, setCurrentTime] = useState<string | null>(null);
+
+    const fetchCurrentTime = useCallback(async () => {
+        try {
+            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
+            const currentTimeFormatted = response.data.currentTime.replace(' ', 'T');
+            setCurrentTime(currentTimeFormatted);
+        } catch (error) {
+            console.error('Ошибка при получении текущего времени с сервера:', error);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchCurrentTime();
+    }, [fetchCurrentTime]);
 
     const fetchMiningData = useCallback(async (telegramUserId: string) => {
         try {
@@ -237,7 +251,7 @@ export const ActiveTime = () => {
                     await updateMining(matterId, false, null, false);
             }
             await updateBalance(value);
-            resetTimeStates();
+            fetchCurrentTime();
             resetStatesHome();
             fetchMiningData(userData.id.toString());
         } catch (error) {
