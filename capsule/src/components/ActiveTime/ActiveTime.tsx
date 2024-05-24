@@ -7,7 +7,7 @@ import { useData } from '../DataProvider/DataContext';
 
 export const ActiveTime = () => {
     const { currentTime, resetTimeStates } = useCurrentTime();
-    const { userData, resetMineStates,
+    const { balanceData, userData, resetMineStates,
         nextTime,
         coinsMine,
         timeMine,
@@ -198,6 +198,9 @@ export const ActiveTime = () => {
                 <img src="/capsule_1.png" className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
+                <div className='current-coins'>
+                    {Number(balanceData.toFixed(2))}
+                </div>
                 <div className='current-coins'>
                     {value.toFixed(2)}
                 </div>
