@@ -123,7 +123,10 @@ export const ActiveTime = () => {
                 const countdownInterval = setInterval(() => {
                     const updatedDiffTime = diffTime - 1000; // Вычитаем одну секунду
                     if (updatedDiffTime < 0) {
-                        clearInterval(countdownInterval); // Останавливаем интервал, когда время истекло
+                        clearInterval(countdownInterval);
+                        setTimerFinished(true);
+                        setMintActive(true);
+                        setButtonMintActive(true);
                     } else {
                         diffTime = updatedDiffTime;
                         const updatedHours = Math.floor(diffTime / (1000 * 60 * 60));
