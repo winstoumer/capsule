@@ -21,24 +21,17 @@ export const CurrentTimeProvider: React.FC<CurrentTimeProviderProps> = ({ childr
             const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
             const currentTimeFormatted = response.data.currentTime.replace(' ', 'T');
             setCurrentTime(currentTimeFormatted);
-            localStorage.setItem('currentTime', currentTimeFormatted);
         } catch (error) {
             console.error('Ошибка при получении текущего времени с сервера:', error);
         }
     }, []);
 
     useEffect(() => {
-        const cachedTime = localStorage.getItem('currentTime');
-        if (cachedTime) {
-            setCurrentTime(cachedTime);
-        } else {
-            fetchCurrentTime();
-        }
+        fetchCurrentTime();
     }, [fetchCurrentTime]);
 
     const resetStates = () => {
         setCurrentTime(null);
-        localStorage.removeItem('currentTime');
         fetchCurrentTime();
     };
 
