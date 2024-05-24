@@ -7,6 +7,7 @@ interface DataContextType {
     loading: boolean;
     userData: TelegramUserData | null;
     balanceData: any;
+    resetStates: () => void;
 }
 
 type TelegramUserData = {
@@ -23,7 +24,10 @@ interface DataProviderProps {
 export const DataProvider = ({ children }: DataProviderProps) => {
     const { userData } = useUser();
 
-    const [balanceData, setBalance] = useState<any>(null);
+    const [balanceData, setBalance] = useState<any>(() => {
+        const savedBalance = localStorage.getItem('balance');
+        return savedBalance !== null ? parseFloat(savedBalance) : null;
+    });
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -31,6 +35,14 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             fetchUserData(userData.id.toString(), userData.first_name);
         }
     }, [userData]);
+
+    useEffect(() => {
+        if (balanceData !== null) {
+            localStorage.setItem('balance', balanceData.toString());
+        } else {
+            localStorage.removeItem('balance');
+        }
+    }, [balanceData]);
 
     const fetchBalance = async (telegramUserId: string) => {
         try {
@@ -70,12 +82,20 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         }
     };
 
+    const resetStates = async () => {
+        setBalance(null);
+        localStorage.removeItem('balance');
+        if (userData && userData.id) {
+            await fetchBalance(userData.id.toString());
+        }
+    };
+
     if (loading) {
         return <Loading />;
     }
 
     return (
-        <DataContext.Provider value={{ balanceData, loading, userData }}>
+        <DataContext.Provider value={{ balanceData, loading, userData, resetStates }}>
             {children}
         </DataContext.Provider>
     );
