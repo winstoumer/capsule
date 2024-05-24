@@ -125,6 +125,11 @@ export const ActiveTime = () => {
 
                 const countdownInterval = setInterval(() => {
                     const updatedDiffTime = diffTime - 1000;
+                    if (hours === 0 && minutes === 0 && seconds === 0) {
+                        clearInterval(countdownInterval);
+                        setTimerFinished(true);
+                        return;
+                    }
                     if (updatedDiffTime < 0) {
                         clearInterval(countdownInterval);
                     } else {
@@ -144,37 +149,6 @@ export const ActiveTime = () => {
 
         return () => {};
     }, [nextTime, currentTime]);
-
-    useEffect(() => {
-        const countdownInterval = setInterval(() => {
-            if (hours === 0 && minutes === 0 && seconds === 0) {
-                clearInterval(countdownInterval);
-                setTimerFinished(true);
-                return;
-            }
-
-            if (!timerFinished) {
-                setSecondsLeft(prevSeconds => {
-                    if (prevSeconds === 0) {
-                        setMinutesLeft(prevMinutes => {
-                            if (prevMinutes === 0) {
-                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
-                                return 59;
-                            } else {
-                                return prevMinutes - 1;
-                            }
-                        });
-                        return 59;
-                    } else {
-                        return prevSeconds - 1;
-                    }
-                });
-            }
-        }, 1000);
-
-        return () => clearInterval(countdownInterval);
-    }, [hours, minutes, seconds, timerFinished]);
-
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
@@ -295,9 +269,9 @@ export const ActiveTime = () => {
                     await updateMining(matterId, false, null, false);
             }
             await updateBalance(value);
-            fetchCurrentTime();
-            resetStatesHome();
             fetchMiningData(userData.id.toString());
+            resetStatesHome();
+            fetchCurrentTime();
             resetBalanceStates();
         } catch (error) {
             console.error('Error updating', error);
