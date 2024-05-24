@@ -52,36 +52,15 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     });
     const [loading, setLoading] = useState(true);
 
-    const [level, setLevel] = useState<number | null>(() => {
-        const savedLevel = sessionStorage.getItem('level');
-        return savedLevel !== null ? parseInt(savedLevel, 10) : null;
-    });
+    const [level, setLevel] = useState<number | null>(null);
     const [nextTime, setNextTime] = useState<string | null>(null);
-    const [coinsMine, setCoinsMine] = useState<number | null>(() => {
-        const savedCoinsMine = sessionStorage.getItem('coinsMine');
-        return savedCoinsMine !== null ? parseFloat(savedCoinsMine) : null;
-    });
-    const [timeMine, setTimeMine] = useState<number | null>(() => {
-        const savedTimeMine = sessionStorage.getItem('timeMine');
-        return savedTimeMine !== null ? parseFloat(savedTimeMine) : null;
-    });
-    const [matterId, setMatterId] = useState<number | null>(() => {
-        const savedMatterId = sessionStorage.getItem('matterId');
-        return savedMatterId !== null ? parseInt(savedMatterId, 10) : null;
-    });
-    const [nftEndDate, setNftEndDate] = useState<string | null>(() => sessionStorage.getItem('nftEndDate'));
-    const [nftMined, setNftMined] = useState<boolean | null>(() => {
-        const savedNftMined = sessionStorage.getItem('nftMined');
-        return savedNftMined !== null ? savedNftMined === 'true' : null;
-    });
-    const [mintActive, setMintActive] = useState<boolean | null>(() => {
-        const savedMintActive = sessionStorage.getItem('mintActive');
-        return savedMintActive !== null ? savedMintActive === 'true' : null;
-    });
-    const [nftActive, setNftActive] = useState<boolean | null>(() => {
-        const savedNftActive = sessionStorage.getItem('nftActive');
-        return savedNftActive !== null ? savedNftActive === 'true' : null;
-    });
+    const [coinsMine, setCoinsMine] = useState<number | null>(null);
+    const [timeMine, setTimeMine] = useState<number | null>(null);
+    const [matterId, setMatterId] = useState<number | null>(null);
+    const [nftEndDate, setNftEndDate] = useState<string | null>(null);
+    const [nftMined, setNftMined] = useState<boolean | null>(false);
+    const [mintActive, setMintActive] = useState<boolean | null>(false);
+    const [nftActive, setNftActive] = useState<boolean | null>(false);
 
     useEffect(() => {
         if (userData && userData.id) {
@@ -97,18 +76,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             sessionStorage.removeItem('balance');
         }
     }, [balanceData]);
-
-    useEffect(() => {
-        if (level !== null) sessionStorage.setItem('level', level.toString());
-        if (nextTime !== null) sessionStorage.setItem('nextTime', nextTime);
-        if (coinsMine !== null) sessionStorage.setItem('coinsMine', coinsMine.toString());
-        if (timeMine !== null) sessionStorage.setItem('timeMine', timeMine.toString());
-        if (matterId !== null) sessionStorage.setItem('matterId', matterId.toString());
-        if (nftEndDate !== null) sessionStorage.setItem('nftEndDate', nftEndDate);
-        if (nftMined !== null) sessionStorage.setItem('nftMined', nftMined.toString());
-        if (mintActive !== null) sessionStorage.setItem('mintActive', mintActive.toString());
-        if (nftActive !== null) sessionStorage.setItem('nftActive', nftActive.toString());
-    }, [level, nextTime, coinsMine, timeMine, matterId, nftEndDate, nftMined, mintActive, nftActive]);
 
     const fetchBalance = async (telegramUserId: string) => {
         try {
@@ -180,14 +147,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setNftMined(null);
         setMintActive(null);
         setNftActive(null);
-        sessionStorage.removeItem('level');
-        sessionStorage.removeItem('coinsMine');
-        sessionStorage.removeItem('timeMine');
-        sessionStorage.removeItem('matterId');
-        sessionStorage.removeItem('nftEndDate');
-        sessionStorage.removeItem('nftMined');
-        sessionStorage.removeItem('mintActive');
-        sessionStorage.removeItem('nftActive');
 
         if (userData && userData.id) {
             await fetchBalance(userData.id.toString());
