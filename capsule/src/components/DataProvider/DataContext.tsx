@@ -56,7 +56,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         const savedLevel = sessionStorage.getItem('level');
         return savedLevel !== null ? parseInt(savedLevel, 10) : null;
     });
-    const [nextTime, setNextTime] = useState<string | null>(() => sessionStorage.getItem('nextTime'));
+    const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(() => {
         const savedCoinsMine = sessionStorage.getItem('coinsMine');
         return savedCoinsMine !== null ? parseFloat(savedCoinsMine) : null;
@@ -153,7 +153,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
             // Store mining data in session storage
             sessionStorage.setItem('level', data.level.toString());
-            sessionStorage.setItem('nextTime', data.next_time);
             sessionStorage.setItem('coinsMine', data.coins_mine.toString());
             sessionStorage.setItem('timeMine', data.time_mine.toString());
             sessionStorage.setItem('matterId', data.matter_id.toString());
@@ -179,7 +178,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         setMintActive(null);
         setNftActive(null);
         sessionStorage.removeItem('level');
-        sessionStorage.removeItem('nextTime');
         sessionStorage.removeItem('coinsMine');
         sessionStorage.removeItem('timeMine');
         sessionStorage.removeItem('matterId');
