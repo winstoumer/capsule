@@ -89,6 +89,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
         if (userData && userData.id) {
             await fetchBalance(userData.id.toString());
+            sessionStorage.setItem('balance', balanceData.toString());
         }
     };
 
