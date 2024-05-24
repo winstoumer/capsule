@@ -122,6 +122,21 @@ export const ActiveTime = () => {
                 setHoursLeft(hours);
                 setMinutesLeft(minutes);
                 setSecondsLeft(seconds);
+
+                const countdownInterval = setInterval(() => {
+                    const updatedDiffTime = diffTime - 1000;
+                    if (updatedDiffTime < 0) {
+                        clearInterval(countdownInterval);
+                    } else {
+                        diffTime = updatedDiffTime;
+                        const updatedHours = Math.floor(diffTime / (1000 * 60 * 60));
+                        const updatedMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                        const updatedSeconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                        setHoursLeft(updatedHours);
+                        setMinutesLeft(updatedMinutes);
+                        setSecondsLeft(updatedSeconds);
+                    }
+                }, 1000);
             }
         };
 
