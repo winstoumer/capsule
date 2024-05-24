@@ -1,9 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../DataProvider/DataContext';
 import axios from 'axios';
 import './boost.scss';
-import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 
 interface Level {
     id: number;
@@ -29,8 +28,7 @@ interface MiningData {
 }
 
 export const Boost: React.FC = () => {
-    const { balanceData, userData } = useData();
-    const { currentTime, resetTimeStates } = useCurrentTime();
+    const { balanceData, userData, resetBalanceStates } = useData();
     const [level, setLevel] = useState<number | undefined>(undefined);
 
     const [nextTime, setNextTime] = useState<string | null>(null);
@@ -46,7 +44,6 @@ export const Boost: React.FC = () => {
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
 
-    const [timerFinished, setTimerFinished] = useState(false);
     const [value, setValue] = useState(0.000);
 
     const [animate, setAnimate] = useState(false);
@@ -56,6 +53,23 @@ export const Boost: React.FC = () => {
 
     const [button, setButton] = useState(false);
 
+    const [currentTime, setCurrentTime] = useState<string | null>(null);
+    const [resetCountdown, setResetCountdown] = useState(false);
+
+    const fetchCurrentTime = useCallback(async () => {
+        try {
+            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
+            const currentTimeFormatted = response.data.currentTime.replace(' ', 'T');
+            setCurrentTime(currentTimeFormatted);
+        } catch (error) {
+            console.error('Ошибка при получении текущего времени с сервера:', error);
+        }
+    }, []);
+
+    useEffect(() => {
+        fetchCurrentTime();
+    }, [fetchCurrentTime]);
+
     useEffect(() => {
         if (userData !== null && userData.id) {
             const telegramId = userData.id.toString();
@@ -64,6 +78,8 @@ export const Boost: React.FC = () => {
     }, [userData]);
 
     useEffect(() => {
+        let countdownInterval: ReturnType<typeof setInterval>;
+
         const updateCountdown = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
@@ -73,60 +89,46 @@ export const Boost: React.FC = () => {
                 if (nftEndDate !== null) {
                     const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
                     let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
-                    if (mintActive === false && diffTimeNft < 0) {
-                        setTimerFinished(true);
+                    if (!mintActive && diffTimeNft < 0) {
                         setMintActive(true);
                     }
                 }
 
                 if (diffTime < 0) {
                     diffTime = 0;
-                    setTimerFinished(true);
                 }
 
-                const hours = Math.floor(diffTime / (1000 * 60 * 60));
-                const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                setHoursLeft(hours);
-                setMinutesLeft(minutes);
-                setSecondsLeft(seconds);
+                const updateTimer = () => {
+                    diffTime -= 1000;
+
+                    if (diffTime <= 0) {
+                        clearInterval(countdownInterval);
+                        setHoursLeft(0);
+                        setMinutesLeft(0);
+                        setSecondsLeft(0);
+                        return;
+                    }
+
+                    const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+                    setHoursLeft(hours);
+                    setMinutesLeft(minutes);
+                    setSecondsLeft(seconds);
+                };
+
+                updateTimer();
+                countdownInterval = setInterval(updateTimer, 1000);
             }
         };
 
         updateCountdown();
 
-        return () => updateCountdown();
-    }, [nextTime, currentTime]);
-
-    useEffect(() => {
-        const countdownInterval = setInterval(() => {
-            if (hours === 0 && minutes === 0 && seconds === 0) {
-                clearInterval(countdownInterval);
-                setTimerFinished(true);
-                return;
-            }
-
-            if (!timerFinished) {
-                setSecondsLeft(prevSeconds => {
-                    if (prevSeconds === 0) {
-                        setMinutesLeft(prevMinutes => {
-                            if (prevMinutes === 0) {
-                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
-                                return 59;
-                            } else {
-                                return prevMinutes - 1;
-                            }
-                        });
-                        return 59;
-                    } else {
-                        return prevSeconds - 1;
-                    }
-                });
-            }
-        }, 1000);
-
-        return () => clearInterval(countdownInterval);
-    }, [hours, minutes, seconds, timerFinished]);
+        return () => {
+            clearInterval(countdownInterval);
+        };
+    }, [nextTime, currentTime, resetCountdown, nftEndDate, mintActive, setMintActive]);
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
@@ -163,11 +165,13 @@ export const Boost: React.FC = () => {
         }
     }, [coinsMine, timeMine]);
 
-    const fetchMiningData = async (telegramUserId: string) => {
+    const fetchMiningData = useCallback(async (telegramUserId: string) => {
         try {
-            const response = await axios.get<MiningData>(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
-            const data = response.data;
-            
+            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Ошибка при загрузке данных о текущей активности');
+            }
+            const data: MiningData = await response.json();
             setLevel(data.level);
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
@@ -177,9 +181,9 @@ export const Boost: React.FC = () => {
             setNftMined(data.nft_mined);
             setMintActive(data.mint_active);
         } catch (error) {
-            console.error('Ошибка при загрузке данных о текущей активности', error);
+            console.error(error);
         }
-    };
+    }, []);
 
     const updateBalanceCoins = async (coins: number) => {
         try {
@@ -264,9 +268,25 @@ export const Boost: React.FC = () => {
         generateNftDate();
     }, [nftDate, currentTime]);
 
+    const resetStatesBoost = () => {
+        setResetCountdown(prev => !prev);
+        setNextTime(null);
+        setCoinsMine(null);
+        setTimeMine(null);
+        setMatterId(null);
+        setHoursLeft(0);
+        setMinutesLeft(0);
+        setSecondsLeft(0);
+        setValue(0.000);
+        setNftDate(null);
+        setNftEndDate(null);
+        setButton(false);
+        setMintActive(false);
+    };
+
     const handleUpgrade = async () => {
         setButton(true);
-        if (nextLevel && balanceData >= nextLevel.price) {
+        if (nextLevel && balanceData >= nextLevel.price && userData) {
             try {
                 if (value !== null) {
                     await updateBalance(nextLevel.price);
@@ -295,8 +315,10 @@ export const Boost: React.FC = () => {
                         setAnimate(false);
                     }, 1000);
                 }
-                await resetTimeStates();
-                setButton(false);
+                fetchMiningData(userData.id.toString());
+                resetStatesBoost();
+                fetchCurrentTime();
+                resetBalanceStates();
             } catch (error) {
                 console.error('Ошибка при обновлении уровня пользователя:', error);
                 alert('Произошла ошибка при обновлении уровня пользователя');
