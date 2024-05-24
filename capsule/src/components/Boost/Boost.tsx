@@ -30,7 +30,7 @@ interface MiningData {
 
 export const Boost: React.FC = () => {
     const { balanceData, userData } = useData();
-    const { currentTime, fetchCurrentTime, resetStates } = useCurrentTime();
+    const { currentTime, resetStates } = useCurrentTime();
     const [level, setLevel] = useState<number | undefined>(undefined);
 
     const [nextTime, setNextTime] = useState<string | null>(null);
