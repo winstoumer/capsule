@@ -25,7 +25,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const { userData } = useUser();
 
     const [balanceData, setBalance] = useState<any>(() => {
-        const savedBalance = localStorage.getItem('balance');
+        const savedBalance = sessionStorage.getItem('balance');
         return savedBalance !== null ? parseFloat(savedBalance) : null;
     });
     const [loading, setLoading] = useState(true);
@@ -38,9 +38,9 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
     useEffect(() => {
         if (balanceData !== null) {
-            localStorage.setItem('balance', balanceData.toString());
+            sessionStorage.setItem('balance', balanceData.toString());
         } else {
-            localStorage.removeItem('balance');
+            sessionStorage.removeItem('balance');
         }
     }, [balanceData]);
 
@@ -84,11 +84,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
     const resetStates = async () => {
         setBalance(null);
-        localStorage.removeItem('balance');
+        sessionStorage.removeItem('balance');
         if (userData && userData.id) {
             await fetchBalance(userData.id.toString());
         }
-    };
+    };    
 
     if (loading) {
         return <Loading />;
