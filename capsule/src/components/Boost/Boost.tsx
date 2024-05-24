@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../DataProvider/DataContext';
 import axios from 'axios';
@@ -15,32 +15,13 @@ interface Level {
     price: number;
 }
 
-interface MiningData {
-    active: boolean;
-    nft_active: boolean;
-    coins_mine: number;
-    time_mine: number;
-    next_time: string;
-    matter_id: number;
-    time_end_mined_nft: string;
-    nft_mined: boolean;
-    level: number;
-    mint_active: boolean;
-}
-
 export const Boost: React.FC = () => {
-    const { balanceData, userData, resetBalanceStates } = useData();
+    const { balanceData, userData, resetMineStates, fetchMiningData, nextTime, coinsMine, timeMine, matterId, nftEndDate, nftMined, mintActive: initialMintActive, level } = useData();
     const { currentTime, fetchCurrentTime, resetTimeStates } = useCurrentTime();
-    const [level, setLevel] = useState<number | undefined>(undefined);
 
-    const [nextTime, setNextTime] = useState<string | null>(null);
-    const [coinsMine, setCoinsMine] = useState<number | null>(null);
-    const [timeMine, setTimeMine] = useState<number | null>(null);
-    const [matterId, setMatterId] = useState<number | null>(null);
+    const [mintActive, setMintActive] = useState<boolean>(initialMintActive ?? false);
+
     const [nftDate, setNftDate] = useState<Date | null>(null);
-    const [nftEndDate, setNftEndDate] = useState<string | null>(null);
-    const [nftMined, setNftMined] = useState(false);
-    const [mintActive, setMintActive] = useState(false);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -62,11 +43,9 @@ export const Boost: React.FC = () => {
     }, [fetchCurrentTime]);
 
     useEffect(() => {
-        if (userData !== null && userData.id) {
-            const telegramId = userData.id.toString();
-            fetchMiningData(telegramId);
-        }
-    }, [userData]);
+        if (userData !== null)
+        fetchMiningData(userData?.id.toString());
+    }, [fetchMiningData]);
 
     useEffect(() => {
         let countdownInterval: ReturnType<typeof setInterval>;
@@ -156,26 +135,6 @@ export const Boost: React.FC = () => {
         }
     }, [coinsMine, timeMine]);
 
-    const fetchMiningData = useCallback(async (telegramUserId: string) => {
-        try {
-            const response = await fetch(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
-            if (!response.ok) {
-                throw new Error('Ошибка при загрузке данных о текущей активности');
-            }
-            const data: MiningData = await response.json();
-            setLevel(data.level);
-            setNextTime(data.next_time);
-            setCoinsMine(data.coins_mine);
-            setTimeMine(data.time_mine);
-            setMatterId(data.matter_id);
-            setNftEndDate(data.time_end_mined_nft);
-            setNftMined(data.nft_mined);
-            setMintActive(data.mint_active);
-        } catch (error) {
-            console.error(error);
-        }
-    }, []);
-
     const updateBalanceCoins = async (coins: number) => {
         try {
             if (userData !== null)
@@ -261,16 +220,10 @@ export const Boost: React.FC = () => {
 
     const resetStatesBoost = () => {
         setResetCountdown(prev => !prev);
-        setNextTime(null);
-        setCoinsMine(null);
-        setTimeMine(null);
-        setMatterId(null);
         setHoursLeft(0);
         setMinutesLeft(0);
         setSecondsLeft(0);
         setValue(0.000);
-        setNftDate(null);
-        setNftEndDate(null);
         setButton(false);
         setMintActive(false);
     };
@@ -308,8 +261,7 @@ export const Boost: React.FC = () => {
                 }
                 resetStatesBoost();
                 resetTimeStates();
-                resetBalanceStates();
-                fetchMiningData(userData.id.toString());
+                resetMineStates();
             } catch (error) {
                 console.error('Ошибка при обновлении уровня пользователя:', error);
                 alert('Произошла ошибка при обновлении уровня пользователя');
@@ -370,7 +322,7 @@ export const Boost: React.FC = () => {
                         <span className='color-blue'>{nextLevel.price}</span>
                     ) : null}
                 </div>
-                {nextLevel && level !== undefined ? (
+                {nextLevel && level !== null ? (
                     level < levels.length ? (
                         balanceData >= nextLevel.price ? (
                             <div>

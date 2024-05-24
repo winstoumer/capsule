@@ -7,12 +7,34 @@ interface DataContextType {
     loading: boolean;
     userData: TelegramUserData | null;
     balanceData: any;
-    resetBalanceStates: () => void;
+    resetMineStates: () => void;
+    fetchMiningData: (telegramUserId: string) => Promise<void>;
+    level: number | null;
+    nextTime: string | null;
+    coinsMine: number | null;
+    timeMine: number | null;
+    matterId: number | null;
+    nftEndDate: string | null;
+    nftMined: boolean | null;
+    mintActive: boolean | null;
+    nftActive: boolean | null;
 }
 
 type TelegramUserData = {
     id: number;
     first_name: string;
+};
+
+type MiningData = {
+    level: number;
+    next_time: string;
+    coins_mine: number;
+    time_mine: number;
+    matter_id: number;
+    time_end_mined_nft: string;
+    nft_mined: boolean;
+    mint_active: boolean;
+    nft_active: boolean;
 };
 
 const DataContext = createContext<DataContextType | null>(null);
@@ -30,9 +52,20 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     });
     const [loading, setLoading] = useState(true);
 
+    const [level, setLevel] = useState<number | null>(null);
+    const [nextTime, setNextTime] = useState<string | null>(null);
+    const [coinsMine, setCoinsMine] = useState<number | null>(null);
+    const [timeMine, setTimeMine] = useState<number | null>(null);
+    const [matterId, setMatterId] = useState<number | null>(null);
+    const [nftEndDate, setNftEndDate] = useState<string | null>(null);
+    const [nftMined, setNftMined] = useState<boolean | null>(false);
+    const [mintActive, setMintActive] = useState<boolean | null>(false);
+    const [nftActive, setNftActive] = useState<boolean | null>(false);
+
     useEffect(() => {
         if (userData && userData.id) {
             fetchUserData(userData.id.toString(), userData.first_name);
+            fetchMiningData(userData.id.toString());
         }
     }, [userData]);
 
@@ -83,13 +116,43 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         }
     };
 
-    const resetBalanceStates = async () => {
+    const fetchMiningData = async (telegramUserId: string) => {
+        try {
+            const response = await axios.get<MiningData>(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            const data = response.data;
+
+            setLevel(data.level);
+            setNextTime(data.next_time);
+            setCoinsMine(data.coins_mine);
+            setTimeMine(data.time_mine);
+            setMatterId(data.matter_id);
+            setNftEndDate(data.time_end_mined_nft);
+            setNftMined(data.nft_mined);
+            setMintActive(data.mint_active);
+            setNftActive(data.nft_active);
+        } catch (error) {
+            console.error('Ошибка при загрузке данных о текущей активности', error);
+        }
+    };
+
+    const resetMineStates = async () => {
         setBalance(null);
         sessionStorage.removeItem('balance');
+        // Reset mining-related state variables
+        setLevel(null);
+        setNextTime(null);
+        setCoinsMine(null);
+        setTimeMine(null);
+        setMatterId(null);
+        setNftEndDate(null);
+        setNftMined(null);
+        setMintActive(null);
+        setNftActive(null);
 
         if (userData && userData.id) {
-            await fetchBalance(userData.id.toString());
             sessionStorage.setItem('balance', balanceData.toString());
+            await fetchBalance(userData.id.toString());
+            await fetchMiningData(userData.id.toString());
         }
     };
 
@@ -102,7 +165,17 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             balanceData,
             loading,
             userData,
-            resetBalanceStates
+            resetMineStates,
+            fetchMiningData,
+            level,
+            nextTime,
+            coinsMine,
+            timeMine,
+            matterId,
+            nftEndDate,
+            nftMined,
+            mintActive,
+            nftActive
         }}>
             {children}
         </DataContext.Provider>
