@@ -96,24 +96,22 @@ export const ActiveTime = () => {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-
-                if (nftEndDate !== null)
-                {
+    
+                if (nftEndDate !== null) {
                     const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
                     let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
-                    if (mintActive === false && diffTimeNft < 0)
-                    {
+                    if (mintActive === false && diffTimeNft < 0) {
                         setTimerFinished(true);
                         setMintActive(true);
                         setButtonMintActive(true);
                     }
                 }
-
+    
                 if (diffTime < 0) {
                     diffTime = 0;
                     setTimerFinished(true);
                 }
-
+    
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
@@ -122,15 +120,15 @@ export const ActiveTime = () => {
                 setSecondsLeft(seconds);
             }
         };
-
+    
         updateCountdown();
-
+    
         const countdownInterval = setInterval(() => {
             updateCountdown();
         }, 1000);
-
+    
         return () => clearInterval(countdownInterval);
-    }, [nextTime, currentTime]);
+    }, [nextTime, currentTime, nftEndDate, mintActive]); 
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
