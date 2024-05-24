@@ -5,17 +5,31 @@ import ActiveMine from '../ActiveMine/ActiveMine';
 import axios from 'axios';
 import { useData } from '../DataProvider/DataContext';
 
+type MiningData = {
+    level: number;
+    next_time: string;
+    coins_mine: number;
+    time_mine: number;
+    matter_id: number;
+    time_end_mined_nft: string;
+    nft_mined: boolean;
+    mint_active: boolean;
+    nft_active: boolean;
+};
+
 export const ActiveTime = () => {
     const { currentTime, resetTimeStates } = useCurrentTime();
-    const { userData, resetMineStates,
-        nextTime,
-        coinsMine,
-        timeMine,
-        matterId,
-        nftEndDate,
-        nftMined,
-        mintActive,
-        nftActive } = useData();
+    const { userData } = useData();
+
+    const [nextTime, setNextTime] = useState<string | null>(null);
+    const [coinsMine, setCoinsMine] = useState<number | null>(null);
+    const [timeMine, setTimeMine] = useState<number | null>(null);
+    const [matterId, setMatterId] = useState<number | null>(null);
+    const [nftDate, setNftDate] = useState<Date | null>(null);
+    const [nftEndDate, setNftEndDate] = useState<string | null>(null);
+    const [nftActive, setNftActive] = useState<boolean | null>(false);
+    const [nftMined, setNftMined] = useState(false);
+    const [mintActive, setMintActive] = useState(false);
 
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
@@ -25,12 +39,17 @@ export const ActiveTime = () => {
 
     const [value, setValue] = useState(0.00);
 
-    const [nftDate, setNftDate] = useState<Date | null>(null);
-
     const coinsMinedSoFarRef = useRef<number>(0);
 
     const [button, setButton] = useState(false);
     const [buttonMintActive, setButtonMintActive] = useState(false);
+
+    useEffect(() => {
+        if (userData !== null && userData.id) {
+            const telegramId = userData.id.toString();
+            fetchMiningData(telegramId);
+        }
+    }, [userData]);
 
     useEffect(() => {
         const updateCountdown = () => {
@@ -132,6 +151,24 @@ export const ActiveTime = () => {
         generateNftDate();
     }, [matterId, nftDate, currentTime]);
 
+    const fetchMiningData = async (telegramUserId: string) => {
+        try {
+            const response = await axios.get<MiningData>(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            const data = response.data;
+            
+            setNextTime(data.next_time);
+            setCoinsMine(data.coins_mine);
+            setTimeMine(data.time_mine);
+            setMatterId(data.matter_id);
+            setNftEndDate(data.time_end_mined_nft);
+            setNftMined(data.nft_mined);
+            setMintActive(data.mint_active);
+            setNftActive(data.nft_active);
+        } catch (error) {
+            console.error('Ошибка при загрузке данных о текущей активности', error);
+        }
+    };
+
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
             if (userData !== null)
@@ -185,7 +222,6 @@ export const ActiveTime = () => {
             }
             await updateBalance(value);
             resetTimeStates();
-            resetMineStates();
             resetStatesHome();
         } catch (error) {
             console.error('Error updating', error);
