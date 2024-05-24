@@ -97,10 +97,12 @@ export const ActiveTime = () => {
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
-                if (nftEndDate !== null) {
+                if (nftEndDate !== null)
+                {
                     const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
                     let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
-                    if (mintActive === false && diffTimeNft < 0) {
+                    if (mintActive === false && diffTimeNft < 0)
+                    {
                         setTimerFinished(true);
                         setMintActive(true);
                         setButtonMintActive(true);
@@ -123,7 +125,11 @@ export const ActiveTime = () => {
 
         updateCountdown();
 
-        return () => updateCountdown();
+        const countdownInterval = setInterval(() => {
+            updateCountdown();
+        }, 1000);
+
+        return () => clearInterval(countdownInterval);
     }, [nextTime, currentTime]);
 
     useEffect(() => {
