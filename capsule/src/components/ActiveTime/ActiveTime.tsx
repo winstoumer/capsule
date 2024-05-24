@@ -17,8 +17,6 @@ export const ActiveTime = () => {
         mintActive,
         nftActive } = useData();
 
-        const [newNextTime] = useState<string | null>(nextTime);
-
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
@@ -36,9 +34,9 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const updateCountdown = () => {
-            if (newNextTime && currentTime) {
+            if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
-                const currentNextTime = new Date(newNextTime.replace('T', ' ').replace('Z', ''));
+                const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
                 if (nftEndDate !== null) {
@@ -71,7 +69,7 @@ export const ActiveTime = () => {
         }, 1000);
 
         return () => clearInterval(countdownInterval);
-    }, [newNextTime, currentTime]);
+    }, [nextTime, currentTime, nftEndDate, mintActive]);
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
