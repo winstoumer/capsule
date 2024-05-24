@@ -96,7 +96,7 @@ export const ActiveTime = () => {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
-    
+
                 if (nftEndDate !== null) {
                     const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
                     let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
@@ -106,45 +106,56 @@ export const ActiveTime = () => {
                         setButtonMintActive(true);
                     }
                 }
-    
+
                 if (diffTime < 0) {
                     diffTime = 0;
                     setTimerFinished(true);
                 }
-    
+
                 const hours = Math.floor(diffTime / (1000 * 60 * 60));
                 const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
                 setHoursLeft(hours);
                 setMinutesLeft(minutes);
                 setSecondsLeft(seconds);
-    
-                // Обновляем время каждую секунду
-                const countdownInterval = setInterval(() => {
-                    const updatedDiffTime = diffTime - 1000; // Вычитаем одну секунду
-                    if (updatedDiffTime < 0) {
-                        clearInterval(countdownInterval);
-                        setTimerFinished(true);
-                        setMintActive(true);
-                        setButtonMintActive(true);
-                    } else {
-                        diffTime = updatedDiffTime;
-                        const updatedHours = Math.floor(diffTime / (1000 * 60 * 60));
-                        const updatedMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                        const updatedSeconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                        setHoursLeft(updatedHours);
-                        setMinutesLeft(updatedMinutes);
-                        setSecondsLeft(updatedSeconds);
-                    }
-                }, 1000);
             }
         };
-    
+
         updateCountdown();
-    
-        return () => {};
-    }, [nextTime, currentTime, nftEndDate, mintActive]);
-    
+
+        return () => updateCountdown();
+    }, [nextTime, currentTime]);
+
+    useEffect(() => {
+        const countdownInterval = setInterval(() => {
+            if (hours === 0 && minutes === 0 && seconds === 0) {
+                clearInterval(countdownInterval);
+                setTimerFinished(true);
+                return;
+            }
+
+            if (!timerFinished) {
+                setSecondsLeft(prevSeconds => {
+                    if (prevSeconds === 0) {
+                        setMinutesLeft(prevMinutes => {
+                            if (prevMinutes === 0) {
+                                setHoursLeft(prevHours => Math.max(0, prevHours - 1));
+                                return 59;
+                            } else {
+                                return prevMinutes - 1;
+                            }
+                        });
+                        return 59;
+                    } else {
+                        return prevSeconds - 1;
+                    }
+                });
+            }
+        }, 1000);
+
+        return () => clearInterval(countdownInterval);
+    }, [hours, minutes, seconds, timerFinished]);
+
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
@@ -293,7 +304,7 @@ export const ActiveTime = () => {
                         <div>
                             {
                                 !button && (
-                                    <button className={buttonMintActive ? 'default-button' : 'default-button' } onClick={handleClick}>
+                                    <button className={buttonMintActive ? 'default-button' : 'default-button'} onClick={handleClick}>
                                         Claim
                                     </button>
                                 )
