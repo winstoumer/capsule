@@ -19,7 +19,7 @@ const HomePage: React.FC = () => {
       <PageComponent>
         <Header />
         <div className='general'>
-          <div className='balance'>{balanceData !== null ? parseFloat(balanceData.toFixed(2)) : 'N/A'}</div>
+          <div className='balance'>{Number(balanceData).toFixed(2)}</div>
           <ActiveTime />
         </div>
         <Navigation />
