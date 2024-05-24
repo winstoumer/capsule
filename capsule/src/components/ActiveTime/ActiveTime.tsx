@@ -45,6 +45,8 @@ export const ActiveTime = () => {
     const [buttonMintActive, setButtonMintActive] = useState(false);
 
     const [currentTime, setCurrentTime] = useState<string | null>(null);
+    const [resetCountdown, setResetCountdown] = useState(false);
+    let countdownInterval: number;
 
     const fetchCurrentTime = useCallback(async () => {
         try {
@@ -147,8 +149,10 @@ export const ActiveTime = () => {
 
         updateCountdown();
 
-        return () => {};
-    }, [nextTime, currentTime]);
+        return () => {
+            clearInterval(countdownInterval);
+        };
+    }, [nextTime, currentTime, resetCountdown]);
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
@@ -233,6 +237,7 @@ export const ActiveTime = () => {
     };
 
     const resetStatesHome = () => {
+        setResetCountdown(prev => !prev);
         setNextTime(null);
         setCoinsMine(null);
         setTimeMine(null);
