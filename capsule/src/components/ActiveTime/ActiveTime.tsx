@@ -199,7 +199,7 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='current-coins'>
-                    {Number(balanceData.toFixed(2))}
+                    {Number(balanceData).toFixed(2)}
                 </div>
                 <div className='current-coins'>
                     {value.toFixed(2)}
