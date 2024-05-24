@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useData } from '../DataProvider/DataContext';
 import axios from 'axios';
 import './boost.scss';
+import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 
 interface Level {
     id: number;
@@ -29,6 +30,7 @@ interface MiningData {
 
 export const Boost: React.FC = () => {
     const { balanceData, userData, resetBalanceStates } = useData();
+    const { currentTime, fetchCurrentTime, resetTimeStates } = useCurrentTime();
     const [level, setLevel] = useState<number | undefined>(undefined);
 
     const [nextTime, setNextTime] = useState<string | null>(null);
@@ -53,18 +55,7 @@ export const Boost: React.FC = () => {
 
     const [button, setButton] = useState(false);
 
-    const [currentTime, setCurrentTime] = useState<string | null>(null);
     const [resetCountdown, setResetCountdown] = useState(false);
-
-    const fetchCurrentTime = useCallback(async () => {
-        try {
-            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
-            const currentTimeFormatted = response.data.currentTime.replace(' ', 'T');
-            setCurrentTime(currentTimeFormatted);
-        } catch (error) {
-            console.error('Ошибка при получении текущего времени с сервера:', error);
-        }
-    }, []);
 
     useEffect(() => {
         fetchCurrentTime();
@@ -315,10 +306,10 @@ export const Boost: React.FC = () => {
                         setAnimate(false);
                     }, 1000);
                 }
-                fetchMiningData(userData.id.toString());
                 resetStatesBoost();
-                fetchCurrentTime();
+                resetTimeStates();
                 resetBalanceStates();
+                fetchMiningData(userData.id.toString());
             } catch (error) {
                 console.error('Ошибка при обновлении уровня пользователя:', error);
                 alert('Произошла ошибка при обновлении уровня пользователя');
