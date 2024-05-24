@@ -105,7 +105,8 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         } catch (error) {
             console.error('Пользователь не найден:', error);
             try {
-                await axios.post(`https://capsule-server.onrender.com/api/user/new/${telegramUserId}`, { first_name: firstName });
+                await axios.post(`https://capsule-server.onrender.com/api/user/new/${telegramUserId}`,
+                { first_name: firstName });
                 fetchUserData(telegramUserId, firstName);
             } catch (createError) {
                 console.error('Ошибка при создании пользователя:', createError);
@@ -153,6 +154,25 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             await fetchMiningData(userData.id.toString());
         }
     };
+
+    useEffect(() => {
+        if (nextTime && userData !== null) {
+            const interval = setInterval(() => {
+                const now = new Date().getTime();
+                const countDownDate = new Date(nextTime).getTime();
+                const distance = countDownDate - now;
+
+                if (distance <= 0) {
+                    clearInterval(interval);
+                    fetchMiningData(userData.id.toString()); // Update mining data when countdown ends
+                } else {
+                    setNextTime(new Date(now + distance).toISOString());
+                }
+            }, 1000);
+
+            return () => clearInterval(interval);
+        }
+    }, [nextTime]);
 
     if (loading) {
         return <Loading />;
