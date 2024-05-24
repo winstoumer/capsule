@@ -118,17 +118,30 @@ export const ActiveTime = () => {
                 setHoursLeft(hours);
                 setMinutesLeft(minutes);
                 setSecondsLeft(seconds);
+    
+                // Обновляем время каждую секунду
+                const countdownInterval = setInterval(() => {
+                    const updatedDiffTime = diffTime - 1000; // Вычитаем одну секунду
+                    if (updatedDiffTime < 0) {
+                        clearInterval(countdownInterval); // Останавливаем интервал, когда время истекло
+                    } else {
+                        diffTime = updatedDiffTime;
+                        const updatedHours = Math.floor(diffTime / (1000 * 60 * 60));
+                        const updatedMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                        const updatedSeconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+                        setHoursLeft(updatedHours);
+                        setMinutesLeft(updatedMinutes);
+                        setSecondsLeft(updatedSeconds);
+                    }
+                }, 1000);
             }
         };
     
         updateCountdown();
     
-        const countdownInterval = setInterval(() => {
-            updateCountdown();
-        }, 1000);
+        return () => {};
+    }, [nextTime, currentTime, nftEndDate, mintActive]);
     
-        return () => clearInterval(countdownInterval);
-    }, [nextTime, currentTime, nftEndDate, mintActive]); 
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
