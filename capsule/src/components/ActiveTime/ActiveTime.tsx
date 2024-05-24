@@ -46,7 +46,6 @@ export const ActiveTime = () => {
 
     const [currentTime, setCurrentTime] = useState<string | null>(null);
     const [resetCountdown, setResetCountdown] = useState(false);
-    let countdownInterval: number;
 
     const fetchCurrentTime = useCallback(async () => {
         try {
@@ -95,18 +94,18 @@ export const ActiveTime = () => {
     }, [userData, fetchMiningData]);
 
     useEffect(() => {
+        let countdownInterval: ReturnType<typeof setInterval>;
+
         const updateCountdown = () => {
             if (nextTime && currentTime) {
                 const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
                 const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
-                if (nftEndDate !== null)
-                {
+                if (nftEndDate !== null) {
                     const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
                     let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
-                    if (mintActive === false && diffTimeNft < 0)
-                    {
+                    if (!mintActive && diffTimeNft < 0) {
                         setTimerFinished(true);
                         setMintActive(true);
                         setButtonMintActive(true);
@@ -118,32 +117,29 @@ export const ActiveTime = () => {
                     setTimerFinished(true);
                 }
 
-                const hours = Math.floor(diffTime / (1000 * 60 * 60));
-                const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                setHoursLeft(hours);
-                setMinutesLeft(minutes);
-                setSecondsLeft(seconds);
+                const updateTimer = () => {
+                    diffTime -= 1000;
 
-                const countdownInterval = setInterval(() => {
-                    const updatedDiffTime = diffTime - 1000;
-                    if (hours === 0 && minutes === 0 && seconds === 0) {
+                    if (diffTime <= 0) {
                         clearInterval(countdownInterval);
                         setTimerFinished(true);
+                        setHoursLeft(0);
+                        setMinutesLeft(0);
+                        setSecondsLeft(0);
                         return;
                     }
-                    if (updatedDiffTime < 0) {
-                        clearInterval(countdownInterval);
-                    } else {
-                        diffTime = updatedDiffTime;
-                        const updatedHours = Math.floor(diffTime / (1000 * 60 * 60));
-                        const updatedMinutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
-                        const updatedSeconds = Math.floor((diffTime % (1000 * 60)) / 1000);
-                        setHoursLeft(updatedHours);
-                        setMinutesLeft(updatedMinutes);
-                        setSecondsLeft(updatedSeconds);
-                    }
-                }, 1000);
+
+                    const hours = Math.floor(diffTime / (1000 * 60 * 60));
+                    const minutes = Math.floor((diffTime % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((diffTime % (1000 * 60)) / 1000);
+
+                    setHoursLeft(hours);
+                    setMinutesLeft(minutes);
+                    setSecondsLeft(seconds);
+                };
+
+                updateTimer();
+                countdownInterval = setInterval(updateTimer, 1000);
             }
         };
 
@@ -152,7 +148,7 @@ export const ActiveTime = () => {
         return () => {
             clearInterval(countdownInterval);
         };
-    }, [nextTime, currentTime, resetCountdown]);
+    }, [nextTime, currentTime, resetCountdown, nftEndDate, mintActive, setMintActive, setButtonMintActive]);
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
