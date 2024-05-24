@@ -7,7 +7,7 @@ interface DataContextType {
     loading: boolean;
     userData: TelegramUserData | null;
     balanceData: any;
-    resetMineStates: () => void;
+    resetBalanceStates: () => void;
 }
 
 type TelegramUserData = {
@@ -83,7 +83,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         }
     };
 
-    const resetMineStates = async () => {
+    const resetBalanceStates = async () => {
         setBalance(null);
         sessionStorage.removeItem('balance');
 
@@ -101,7 +101,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             balanceData,
             loading,
             userData,
-            resetMineStates
+            resetBalanceStates
         }}>
             {children}
         </DataContext.Provider>

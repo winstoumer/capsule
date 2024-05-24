@@ -2,6 +2,7 @@ import './activeTime.scss';
 import { useState, useEffect, useRef, useCallback } from 'react';
 import ActiveMine from '../ActiveMine/ActiveMine';
 import axios from 'axios';
+import { useData } from '../DataProvider/DataContext';
 
 interface MiningData {
     matter_id: number;
@@ -16,6 +17,7 @@ interface MiningData {
 }
 
 export const ActiveTime = () => {
+    const { resetBalanceStates } = useData();
     const [userData, setUserData] = useState<any>(null);
     const [nftActive, setNftActive] = useState(false);
     const [nextTime, setNextTime] = useState<string | null>(null);
@@ -285,6 +287,7 @@ export const ActiveTime = () => {
             fetchCurrentTime();
             resetStatesHome();
             fetchMiningData(userData.id.toString());
+            resetBalanceStates();
         } catch (error) {
             console.error('Error updating', error);
         }
