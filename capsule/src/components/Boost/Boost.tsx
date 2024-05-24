@@ -227,7 +227,7 @@ export const Boost: React.FC = () => {
     ];
 
     const currentLevelIndex: number = level !== undefined ? levels.findIndex(l => l.id === level) : -1;
-    const nextLevel: Level | null = currentLevelIndex !== -1 ? levels[currentLevelIndex + 1] : null;
+    const nextLevel: Level | null = currentLevelIndex !== -1 && currentLevelIndex + 1 < levels.length ? levels[currentLevelIndex + 1] : null;
     const userLevel: Level | null = currentLevelIndex !== -1 ? levels[currentLevelIndex] : null;
 
     useEffect(() => {
@@ -288,7 +288,6 @@ export const Boost: React.FC = () => {
                             await updateMining(nextLevel.id, false, null, false);
                     }
                 }
-                await resetStates();
                 await updateLevel(nextLevel.id);
                 if (nextLevel.id !== levels[levels.length - 1].id) {
                     setAnimate(true);
@@ -296,7 +295,7 @@ export const Boost: React.FC = () => {
                         setAnimate(false);
                     }, 1000);
                 }
-                await fetchCurrentTime();
+                await resetStates();
                 setButton(false);
             } catch (error) {
                 console.error('Ошибка при обновлении уровня пользователя:', error);
@@ -319,21 +318,29 @@ export const Boost: React.FC = () => {
                     <div className='boost-item'>
                         <img src={nextLevel.image} className='boost-item-image' alt="Boost Item" />
                     </div>
+                ) : userLevel ? (
+                    <div className='boost-item'>
+                        <img src={userLevel.image} className='boost-item-image' alt="Boost Item" />
+                    </div>
                 ) : (
                     <div className='boost-item'>
-                        <img src={userLevel!.image} className='boost-item-image' alt="Boost Item" />
+                        <span>No level data</span>
                     </div>
                 )}
                 <div className='boost-info'>
                     {nextLevel ? (
                         <div className='boost-name'>{nextLevel.name}</div>
+                    ) : userLevel ? (
+                        <div className='boost-name'>{userLevel.name}</div>
                     ) : (
-                        <div className='boost-name'>{userLevel!.name}</div>
+                        <div className='boost-name'>No level data</div>
                     )}
                     {nextLevel ? (
                         <div className='boost-param'>{nextLevel.coins}/{nextLevel.time}h</div>
+                    ) : userLevel ? (
+                        <div className='boost-param'>{userLevel.coins}/{userLevel.time}h</div>
                     ) : (
-                        <div className='boost-param'>{userLevel!.coins}/{userLevel!.time}h</div>
+                        <div className='boost-param'>No level data</div>
                     )}
                     {nextLevel && nextLevel.mines_nft ? (
                         <div className='boost-param'>
