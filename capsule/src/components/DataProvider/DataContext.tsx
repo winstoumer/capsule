@@ -155,25 +155,6 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         }
     };
 
-    useEffect(() => {
-        if (nextTime && userData !== null) {
-            const interval = setInterval(() => {
-                const now = new Date().getTime();
-                const countDownDate = new Date(nextTime).getTime();
-                const distance = countDownDate - now;
-
-                if (distance <= 0) {
-                    clearInterval(interval);
-                    fetchMiningData(userData.id.toString()); // Update mining data when countdown ends
-                } else {
-                    setNextTime(new Date(now + distance).toISOString());
-                }
-            }, 1000);
-
-            return () => clearInterval(interval);
-        }
-    }, [nextTime]);
-
     if (loading) {
         return <Loading />;
     }

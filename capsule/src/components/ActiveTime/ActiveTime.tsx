@@ -35,12 +35,12 @@ export const ActiveTime = () => {
     useEffect(() => {
         const updateCountdown = () => {
             if (nextTime && currentTime) {
-                const currentNowTime = new Date(currentTime.replace('T', ' ').replace('Z', ''));
-                const currentNextTime = new Date(nextTime.replace('T', ' ').replace('Z', ''));
+                const currentNowTime = new Date(currentTime);
+                const currentNextTime = new Date(nextTime);
                 let diffTime = currentNextTime.getTime() - currentNowTime.getTime();
 
                 if (nftEndDate !== null) {
-                    const currentNftEndDate = new Date(nftEndDate.replace('T', ' ').replace('Z', ''));
+                    const currentNftEndDate = new Date(nftEndDate);
                     let diffTimeNft = currentNftEndDate.getTime() - currentNowTime.getTime();
                     if (mintActive === false && diffTimeNft < 0) {
                         setTimerFinished(true);
