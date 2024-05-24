@@ -3,7 +3,7 @@ import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 
 interface TimeDisplayProps {
     nftEndDate: string | null;
-    nftActive: boolean;
+    nftActive: boolean | null;
 }
 
 function calculateTimeRemaining(currentTime: string, nftEndDate: string | null): string {
@@ -48,7 +48,7 @@ const ActiveMine: React.FC<TimeDisplayProps> = ({ nftEndDate, nftActive }) => {
 
     return (
         <div>
-            {nftActive && (!showRemainingTime ? <span className='color-purple'>{remainingTime}</span> : <span className='color-blue'>Active..</span>)}
+            {nftActive && nftActive !== null && (!showRemainingTime ? <span className='color-purple'>{remainingTime}</span> : <span className='color-blue'>Active..</span>)}
         </div>
     );
 };

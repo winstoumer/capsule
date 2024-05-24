@@ -4,7 +4,7 @@ import axios from 'axios';
 interface CurrentTimeContextType {
     currentTime: string | null;
     fetchCurrentTime: () => void;
-    resetStates: () => void;
+    resetTimeStates: () => void;
 }
 
 interface CurrentTimeProviderProps {
@@ -30,13 +30,13 @@ export const CurrentTimeProvider: React.FC<CurrentTimeProviderProps> = ({ childr
         fetchCurrentTime();
     }, [fetchCurrentTime]);
 
-    const resetStates = () => {
+    const resetTimeStates = () => {
         setCurrentTime(null);
         fetchCurrentTime();
     };
 
     return (
-        <CurrentTimeContext.Provider value={{ currentTime, fetchCurrentTime, resetStates }}>
+        <CurrentTimeContext.Provider value={{ currentTime, fetchCurrentTime, resetTimeStates }}>
             {children}
         </CurrentTimeContext.Provider>
     );

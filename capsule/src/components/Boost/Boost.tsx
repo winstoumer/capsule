@@ -30,7 +30,7 @@ interface MiningData {
 
 export const Boost: React.FC = () => {
     const { balanceData, userData } = useData();
-    const { currentTime, resetStates } = useCurrentTime();
+    const { currentTime, resetTimeStates } = useCurrentTime();
     const [level, setLevel] = useState<number | undefined>(undefined);
 
     const [nextTime, setNextTime] = useState<string | null>(null);
@@ -295,7 +295,7 @@ export const Boost: React.FC = () => {
                         setAnimate(false);
                     }, 1000);
                 }
-                await resetStates();
+                await resetTimeStates();
                 setButton(false);
             } catch (error) {
                 console.error('Ошибка при обновлении уровня пользователя:', error);
