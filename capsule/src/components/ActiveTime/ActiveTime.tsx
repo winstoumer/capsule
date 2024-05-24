@@ -142,11 +142,7 @@ export const ActiveTime = () => {
 
         updateCountdown();
 
-        const countdownInterval = setInterval(() => {
-            updateCountdown();
-        }, 1000);
-
-        return () => clearInterval(countdownInterval);
+        return () => {};
     }, [nextTime, currentTime]);
 
     useEffect(() => {
