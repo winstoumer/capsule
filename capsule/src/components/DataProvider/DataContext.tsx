@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 import axios from 'axios';
 import { Loading } from '../Loading/Loading';
 import { useUser } from '../UserProvider/UserContext';
@@ -46,41 +46,21 @@ interface DataProviderProps {
 export const DataProvider = ({ children }: DataProviderProps) => {
     const { userData } = useUser();
 
-    const [balanceData, setBalance] = useState<any>(() => {
-        const savedBalance = sessionStorage.getItem('balance');
-        return savedBalance !== null ? parseFloat(savedBalance) : null;
-    });
-    const [loading, setLoading] = useState(true);
-
-    const [level, setLevel] = useState<number | null>(() => {
-        const savedLevel = sessionStorage.getItem('level');
-        return savedLevel !== null ? parseInt(savedLevel, 10) : null;
-    });
-    const [nextTime, setNextTime] = useState<string | null>(() => sessionStorage.getItem('nextTime'));
-    const [coinsMine, setCoinsMine] = useState<number | null>(() => {
-        const savedCoinsMine = sessionStorage.getItem('coinsMine');
-        return savedCoinsMine !== null ? parseFloat(savedCoinsMine) : null;
-    });
-    const [timeMine, setTimeMine] = useState<number | null>(() => {
-        const savedTimeMine = sessionStorage.getItem('timeMine');
-        return savedTimeMine !== null ? parseFloat(savedTimeMine) : null;
-    });
-    const [matterId, setMatterId] = useState<number | null>(() => {
-        const savedMatterId = sessionStorage.getItem('matterId');
-        return savedMatterId !== null ? parseInt(savedMatterId, 10) : null;
-    });
-    const [nftEndDate, setNftEndDate] = useState<string | null>(() => sessionStorage.getItem('nftEndDate'));
-    const [nftMined, setNftMined] = useState<boolean | null>(() => {
-        const savedNftMined = sessionStorage.getItem('nftMined');
-        return savedNftMined !== null ? savedNftMined === savedNftMined : null;
-    });
-    const [mintActive, setMintActive] = useState<boolean | null>(() => {
-        const savedMintActive = sessionStorage.getItem('mintActive');
-        return savedMintActive !== null ? savedMintActive === savedMintActive : null;
-    });
-    const [nftActive, setNftActive] = useState<boolean | null>(() => {
-        const savedNftActive = sessionStorage.getItem('nftActive');
-        return savedNftActive !== null ? savedNftActive === savedNftActive : null;
+    const [state, setState] = useState<DataContextType>({
+        loading: true,
+        userData: null,
+        balanceData: null,
+        resetMineStates: () => {},
+        fetchMiningData: () => Promise.resolve(),
+        level: null,
+        nextTime: null,
+        coinsMine: null,
+        timeMine: null,
+        matterId: null,
+        nftEndDate: null,
+        nftMined: null,
+        mintActive: null,
+        nftActive: null,
     });
 
     useEffect(() => {
@@ -90,12 +70,12 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }, [userData]);
 
     useEffect(() => {
-        if (balanceData !== null) {
-            sessionStorage.setItem('balance', balanceData.toString());
+        if (state.balanceData !== null) {
+            sessionStorage.setItem('balance', state.balanceData.toString());
         } else {
             sessionStorage.removeItem('balance');
         }
-    }, [balanceData]);
+    }, [state.balanceData]);
 
     const fetchBalance = async (telegramUserId: string) => {
         try {
@@ -104,17 +84,17 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             if (responseData.hasOwnProperty('balance')) {
                 const balanceValue = parseFloat(responseData.balance);
                 if (!isNaN(balanceValue)) {
-                    setBalance(balanceValue);
+                    setState(prevState => ({ ...prevState, balanceData: balanceValue }));
                 } else {
-                    throw new Error('Неверный формат баланса');
+                    throw new Error('Invalid balance format');
                 }
             } else {
-                throw new Error('Отсутствует поле "balance" в ответе сервера');
+                throw new Error('Missing "balance" field in server response');
             }
         } catch (error) {
-            console.error('Ошибка при загрузке баланса пользователя:', error);
+            console.error('Error fetching user balance:', error);
         } finally {
-            setLoading(false);
+            setState(prevState => ({ ...prevState, loading: false }));
         }
     };
 
@@ -123,96 +103,67 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             await axios.get(`https://capsule-server.onrender.com/api/user/${telegramUserId}`);
             fetchBalance(telegramUserId);
         } catch (error) {
-            console.error('Пользователь не найден:', error);
+            console.error('User not found:', error);
             try {
                 await axios.post(`https://capsule-server.onrender.com/api/user/new/${telegramUserId}`, { first_name: firstName });
                 fetchUserData(telegramUserId, firstName);
             } catch (createError) {
-                console.error('Ошибка при создании пользователя:', createError);
+                console.error('Error creating user:', createError);
             }
-        } finally {
-            setLoading(false);
         }
     };
 
-    const fetchMiningData = async (telegramUserId: string) => {
+    const fetchMiningData = useCallback(async (telegramUserId: string) => {
         try {
             const response = await axios.get<MiningData>(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
             const data = response.data;
-
-            setLevel(data.level);
-            setNextTime(data.next_time);
-            setCoinsMine(data.coins_mine);
-            setTimeMine(data.time_mine);
-            setMatterId(data.matter_id);
-            setNftEndDate(data.time_end_mined_nft);
-            setNftMined(data.nft_mined);
-            setMintActive(data.mint_active);
-            setNftActive(data.nft_active);
-
-            // Store mining data in session storage
-            sessionStorage.setItem('level', data.level.toString());
-            sessionStorage.setItem('nextTime', data.next_time);
-            sessionStorage.setItem('coinsMine', data.coins_mine.toString());
-            sessionStorage.setItem('timeMine', data.time_mine.toString());
-            sessionStorage.setItem('matterId', data.matter_id.toString());
-            sessionStorage.setItem('nftEndDate', data.time_end_mined_nft);
-            sessionStorage.setItem('nftMined', data.nft_mined.toString());
-            sessionStorage.setItem('mintActive', data.mint_active.toString());
+            setState(prevState => ({
+                ...prevState,
+                level: data.level,
+                nextTime: data.next_time,
+                coinsMine: data.coins_mine,
+                timeMine: data.time_mine,
+                matterId: data.matter_id,
+                nftEndDate: data.time_end_mined_nft,
+                nftMined: data.nft_mined,
+                mintActive: data.mint_active,
+                nftActive: data.nft_active,
+            }));
         } catch (error) {
-            console.error('Ошибка при загрузке данных о текущей активности', error);
+            console.error('Error fetching current mining data:', error);
         }
-    };
+    }, []);
 
-    const resetMineStates = async () => {
-        setBalance(null);
-        sessionStorage.removeItem('balance');
-        // Reset mining-related state variables
-        setLevel(null);
-        setNextTime(null);
-        setCoinsMine(null);
-        setTimeMine(null);
-        setMatterId(null);
-        setNftEndDate(null);
-        setNftMined(null);
-        setMintActive(null);
-        setNftActive(null);
-        sessionStorage.removeItem('level');
-        sessionStorage.removeItem('nextTime');
-        sessionStorage.removeItem('coinsMine');
-        sessionStorage.removeItem('timeMine');
-        sessionStorage.removeItem('matterId');
-        sessionStorage.removeItem('nftEndDate');
-        sessionStorage.removeItem('nftMined');
-        sessionStorage.removeItem('mintActive');
-        sessionStorage.removeItem('nftActive');
-
+    const resetMineStates = useCallback(async () => {
+        setState(prevState => ({
+            ...prevState,
+            balanceData: null,
+            level: null,
+            nextTime: null,
+            coinsMine: null,
+            timeMine: null,
+            matterId: null,
+            nftEndDate: null,
+            nftMined: null,
+            mintActive: null,
+            nftActive: null,
+        }));
+        sessionStorage.clear();
         if (userData && userData.id) {
             await fetchBalance(userData.id.toString());
             await fetchMiningData(userData.id.toString());
         }
-    };
+    }, [userData, fetchBalance, fetchMiningData]);
 
-    if (loading) {
+    if (state.loading) {
         return <Loading />;
     }
 
     return (
         <DataContext.Provider value={{
-            balanceData,
-            loading,
-            userData,
+            ...state,
             resetMineStates,
             fetchMiningData,
-            level,
-            nextTime,
-            coinsMine,
-            timeMine,
-            matterId,
-            nftEndDate,
-            nftMined,
-            mintActive,
-            nftActive
         }}>
             {children}
         </DataContext.Provider>
