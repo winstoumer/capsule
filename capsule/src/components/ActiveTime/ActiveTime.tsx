@@ -17,7 +17,9 @@ export const ActiveTime = () => {
 
     const [timerFinished, setTimerFinished] = useState(false);
 
+
     const [value, setValue] = useState(0.00);
+    const [isInitialized, setIsInitialized] = useState(false);
 
     const [nftDate, setNftDate] = useState<Date | null>(null);
 
@@ -103,6 +105,7 @@ export const ActiveTime = () => {
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
             setValue(coinsMinedSoFarRef.current);
+            setIsInitialized(true);
 
             let isCoinsMineSet = false;
             const interval = setInterval(() => {
@@ -122,7 +125,7 @@ export const ActiveTime = () => {
 
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine, hours, minutes, seconds, setValue]);
+    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
         const generateNftDate = async () => {
@@ -176,7 +179,7 @@ export const ActiveTime = () => {
         setMinutesLeft(0);
         setSecondsLeft(0);
         setTimerFinished(false);
-        setValue(0.000);
+        setValue(0.00);
         setNftDate(null);
         setButton(false);
         setButtonMintActive(false);
@@ -217,7 +220,7 @@ export const ActiveTime = () => {
             </div>
             <div className='active-time'>
                 <div className='current-coins'>
-                    {value.toFixed(2)}
+                    {isInitialized ? value.toFixed(2) : null}
                 </div>
                 <div className='time-left'>
                     {timerFinished ? <span></span> : (hours > 0 ? `${hours}h ${minutes}m ${seconds}s` : `${minutes}m`)}
