@@ -287,7 +287,7 @@ export const Boost: React.FC = () => {
                     </div>
                 ) : (
                     <div className='boost-item'>
-                        <span></span>
+                        <div className='boost-item-image'></div>
                     </div>
                 )}
                 <div className='boost-info'>
