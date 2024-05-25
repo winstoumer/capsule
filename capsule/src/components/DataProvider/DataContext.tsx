@@ -18,6 +18,7 @@ interface DataContextType {
     nftMined: boolean | null;
     mintActive: boolean | null;
     nftActive: boolean | null;
+    imageUrl: string | null;
 }
 
 type TelegramUserData = {
@@ -35,6 +36,7 @@ type MiningData = {
     nft_mined: boolean;
     mint_active: boolean;
     nft_active: boolean;
+    image_url: string;
 };
 
 const DataContext = createContext<DataContextType | null>(null);
@@ -53,6 +55,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const [loading, setLoading] = useState(true);
 
     const [level, setLevel] = useState<number | null>(null);
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
     const [nextTime, setNextTime] = useState<string | null>(null);
     const [coinsMine, setCoinsMine] = useState<number | null>(null);
     const [timeMine, setTimeMine] = useState<number | null>(null);
@@ -122,6 +125,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             const data = response.data;
 
             setLevel(data.level);
+            setImageUrl(data.image_url);
             setNextTime(data.next_time);
             setCoinsMine(data.coins_mine);
             setTimeMine(data.time_mine);
@@ -140,6 +144,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         sessionStorage.removeItem('balance');
         // Reset mining-related state variables
         setLevel(null);
+        setImageUrl(null);
         setNextTime(null);
         setCoinsMine(null);
         setTimeMine(null);
@@ -168,6 +173,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             resetMineStates,
             fetchMiningData,
             level,
+            imageUrl,
             nextTime,
             coinsMine,
             timeMine,

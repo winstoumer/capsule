@@ -27,7 +27,8 @@ export const Boost: React.FC = () => {
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
 
-    const [value, setValue] = useState(0.000);
+    const [value, setValue] = useState(0.00);
+    const [isInitialized, setIsInitialized] = useState(false);
 
     const [animate, setAnimate] = useState(false);
     const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
@@ -105,18 +106,14 @@ export const Boost: React.FC = () => {
             const totalSecondsInTimeMine = timeMine * 3600;
             const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
             const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
+            const coinsPerSecond = (coinsMine / totalSecondsInTimeMine) / 2;
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
-        }
-    }, [coinsMine, timeMine, hours, minutes, seconds]);
+            setValue(coinsMinedSoFarRef.current);
+            setIsInitialized(true);
 
-    useEffect(() => {
-        let isCoinsMineSet = false;
-
-        if (coinsMine !== null && timeMine !== null) {
+            let isCoinsMineSet = false;
             const interval = setInterval(() => {
-                const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
-
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     setValue(coinsMinedSoFarRef.current);
                     isCoinsMineSet = true;
@@ -133,7 +130,7 @@ export const Boost: React.FC = () => {
 
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine]);
+    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     const updateBalanceCoins = async (coins: number) => {
         try {
@@ -234,6 +231,7 @@ export const Boost: React.FC = () => {
             try {
                 if (value !== null) {
                     await updateBalance(nextLevel.price);
+                    if (isInitialized)
                     await updateBalanceCoins(value);
                     if (nftDate && nextLevel !== null) {
                         if (nftMined && nftEndDate !== null && mintActive === false) {

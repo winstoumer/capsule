@@ -6,7 +6,7 @@ import { useData } from '../DataProvider/DataContext';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 
 export const ActiveTime = () => {
-    const { userData, resetMineStates, fetchMiningData, nextTime, coinsMine, timeMine, matterId, nftEndDate, nftMined, mintActive: initialMintActive, nftActive } = useData();
+    const { userData, resetMineStates, fetchMiningData, nextTime, coinsMine, timeMine, matterId, nftEndDate, nftMined, mintActive: initialMintActive, nftActive, imageUrl } = useData();
     const { currentTime, fetchCurrentTime, resetTimeStates } = useCurrentTime();
 
     const [mintActive, setMintActive] = useState<boolean>(initialMintActive ?? false);
@@ -16,7 +16,6 @@ export const ActiveTime = () => {
     const [seconds, setSecondsLeft] = useState<number>(0);
 
     const [timerFinished, setTimerFinished] = useState(false);
-
 
     const [value, setValue] = useState(0.00);
     const [isInitialized, setIsInitialized] = useState(false);
@@ -216,7 +215,7 @@ export const ActiveTime = () => {
     return (
         <>
             <div className='watch-capsule'>
-                <img src="/capsule_1.png" className='always-capsule' alt="Capsule" />
+                <img src={imageUrl ?? undefined} className='always-capsule' alt="Capsule" />
             </div>
             <div className='active-time'>
                 <div className='current-coins'>
