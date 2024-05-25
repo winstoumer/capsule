@@ -99,13 +99,13 @@ export const ActiveTime = () => {
             const totalSecondsInTimeMine = timeMine * 3600;
             const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
             const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
+            const coinsPerSecond = (coinsMine / totalSecondsInTimeMine) / 2;
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
+            setValue(coinsMinedSoFarRef.current);
 
             let isCoinsMineSet = false;
             const interval = setInterval(() => {
-                const coinsPerSecond = (coinsMine / totalSecondsInTimeMine) / 2;
-
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     setValue(coinsMinedSoFarRef.current);
                     isCoinsMineSet = true;
