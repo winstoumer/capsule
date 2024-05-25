@@ -101,21 +101,15 @@ export const ActiveTime = () => {
             const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
 
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
-        }
-    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
-    useEffect(() => {
-        let isCoinsMineSet = false;
-
-        if (coinsMine !== null && timeMine !== null) {
+            let isCoinsMineSet = false;
             const interval = setInterval(() => {
-                const coinsPerSecond = (coinsMine / (timeMine * 3600)) / 2;
+                const coinsPerSecond = (coinsMine / totalSecondsInTimeMine) / 2;
 
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     setValue(coinsMinedSoFarRef.current);
                     isCoinsMineSet = true;
-                }
-                else {
+                } else {
                     coinsMinedSoFarRef.current += coinsPerSecond;
                     setValue(coinsMinedSoFarRef.current);
                 }
@@ -128,7 +122,7 @@ export const ActiveTime = () => {
 
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine]);
+    }, [coinsMine, timeMine, hours, minutes, seconds, setValue]);
 
     useEffect(() => {
         const generateNftDate = async () => {
