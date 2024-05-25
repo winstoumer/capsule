@@ -54,16 +54,34 @@
     max-width: 210px;
     width: 100%;
     position: relative;
-    animation: bounce 0.5s ease;
+    animation: appearAndMoveCapsule 1s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
+    z-index: 2;
 }
 
-@keyframes bounce {
+@keyframes appearAndMoveCapsule {
     0% {
-        transform: translateY(-50px);
+        opacity: 0;
+        transform: translateY(-500px) scale(0);
+    }
+
+    70% {
+        opacity: 0.2;
+        transform: translateY(0) scale(0.3);
     }
 
     100% {
-        transform: translateY(0px);
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes moveCapsule {
+    0% {
+        top: 0px;
+    }
+
+    100% {
+        top: -10px;
     }
 }
 
