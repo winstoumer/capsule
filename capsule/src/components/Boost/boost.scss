@@ -22,6 +22,7 @@
         transform: translateX(500%); // Сдвиг вправо за пределы экрана
         opacity: 0; // Начальная прозрачность
     }
+
     100% {
         transform: translateX(0);
         opacity: 1;
@@ -36,6 +37,7 @@
     0% {
         padding-top: 36px;
     }
+
     100% {
         padding-top: 0px;
     }
@@ -43,22 +45,26 @@
 
 .boost-item {
     display: flex;
+    position: relative;
     max-width: 220px;
     max-height: 220px;
-    width: 100%;
 }
 
 .boost-item-image {
-    max-width: 220px;
-    max-height: 220px;
+    max-width: 210px;
     width: 100%;
     position: relative;
     animation: bounce 0.5s ease;
 }
 
 @keyframes bounce {
-    0% { transform: translateY(-50px); }
-    100% { transform: translateY(0px); }
+    0% {
+        transform: translateY(-50px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
 }
 
 .boost-info {
