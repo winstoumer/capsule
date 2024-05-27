@@ -164,7 +164,7 @@ const MintNftPage: React.FC = () => {
     const handleSubmit = async () => {
         try {
             const address = 'EQAkdOYcyM7gGi91u2MNRpm-t90v29PTxImlv6IvJZBwV1P7';
-            await axios.post('https://xenial-doralyn-webapp-733e3ad1.koyeb.app/api/address', { address: address });
+            await axios.post('https://wooden-querida-webapp-ce61e844.koyeb.app/api/address', { address: address });
         } catch (error) {
             console.error('Error:', error);
         }
