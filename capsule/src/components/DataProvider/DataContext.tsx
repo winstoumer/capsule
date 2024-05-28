@@ -48,6 +48,8 @@ interface DataProviderProps {
 export const DataProvider = ({ children }: DataProviderProps) => {
     const { userData } = useUser();
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     const [balanceData, setBalance] = useState<any>(() => {
         const savedBalance = sessionStorage.getItem('balance');
         return savedBalance !== null ? parseFloat(savedBalance) : null;
@@ -82,7 +84,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
     const fetchBalance = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`https://capsule-server.onrender.com/api/balance/${telegramUserId}`);
+            const response = await axios.get(`${apiUrl}/api/balance/${telegramUserId}`);
             const responseData = response.data;
             if (responseData.hasOwnProperty('balance')) {
                 const balanceValue = parseFloat(responseData.balance);
@@ -103,12 +105,12 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
     const fetchUserData = async (telegramUserId: string, firstName: string) => {
         try {
-            await axios.get(`https://capsule-server.onrender.com/api/user/${telegramUserId}`);
+            await axios.get(`${apiUrl}/api/user/${telegramUserId}`);
             fetchBalance(telegramUserId);
         } catch (error) {
             console.error('Пользователь не найден:', error);
             try {
-                await axios.post(`https://capsule-server.onrender.com/api/user/new/${telegramUserId}`,
+                await axios.post(`${apiUrl}/api/user/new/${telegramUserId}`,
                 { first_name: firstName });
                 fetchUserData(telegramUserId, firstName);
             } catch (createError) {
@@ -121,7 +123,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await axios.get<MiningData>(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            const response = await axios.get<MiningData>(`${apiUrl}/api/currentMining/current/${telegramUserId}`);
             const data = response.data;
 
             setLevel(data.level);
