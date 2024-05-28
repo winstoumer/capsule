@@ -8,6 +8,8 @@ export const Referral = () => {
     const [invitedCount, setInvitedCount] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -22,9 +24,9 @@ export const Referral = () => {
 
     const fetchInvitedCount = async (telegramUserId: string) => {
             try {
-                const response = await fetch(`https://capsule-server.onrender.com/api/referral/${telegramUserId}`);
+                const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
                 if (!response.ok) {
-                    throw new Error('Ошибка при загрузке данных о приглашенных пользователях');
+                    throw new Error('Error');
                 }
                 const data = await response.json();
                 setInvitedCount(data.invitedCount);
@@ -41,7 +43,7 @@ export const Referral = () => {
 
     const handleReferralLinkClick = async () => {
         try {
-            await axios.post('https://capsule-server.onrender.com/api/bot/sendReferralMessage', { telegramUserId: userData.id });
+            await axios.post(`${apiUrl}/api/bot/sendReferralMessage`, { telegramUserId: userData.id });
         } catch (error) {
             console.error(error);
         }

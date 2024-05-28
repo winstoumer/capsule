@@ -29,7 +29,7 @@ const AppWrapper: React.FC = () => {
 
           const backButton = window.Telegram.WebApp.BackButton;
           backButton.onClick(() => {
-            navigate(-1); // Use navigate with a negative number to go back
+            navigate(-1);
           });
 
           if (location.pathname.startsWith('/mint/')) {

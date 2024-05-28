@@ -40,6 +40,8 @@ export const Boost: React.FC = () => {
 
     const [resetCountdown, setResetCountdown] = useState(false);
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         fetchCurrentTime();
     
@@ -135,7 +137,7 @@ export const Boost: React.FC = () => {
     const updateBalanceCoins = async (coins: number) => {
         try {
             if (userData !== null)
-                await axios.put(`https://capsule-server.onrender.com/api/balance/plus/${userData.id}`, { amount: coins });
+                await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
         } catch (error) {
             throw error;
         }
@@ -144,7 +146,7 @@ export const Boost: React.FC = () => {
     const updateLevel = async (nextLevelId: number) => {
         try {
             if (userData !== null)
-                await axios.put(`https://capsule-server.onrender.com/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
+                await axios.put(`${apiUrl}/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
         } catch (error) {
             throw error;
         }
@@ -153,7 +155,7 @@ export const Boost: React.FC = () => {
     const updateBalance = async (price: number): Promise<void> => {
         try {
             if (userData !== null)
-                await axios.put(`https://capsule-server.onrender.com/api/balance/minus/${userData.id}`, { amount: price });
+                await axios.put(`${apiUrl}/api/balance/minus/${userData.id}`, { amount: price });
         } catch (error) {
             throw error;
         }
@@ -162,7 +164,7 @@ export const Boost: React.FC = () => {
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
             if (userData !== null)
-                await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${userData.id}`,
+                await axios.put(`${apiUrl}/api/currentMining/update/${userData.id}`,
                     { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
         } catch (error) {
             throw error;

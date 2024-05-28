@@ -20,6 +20,9 @@ interface CollectionData {
 }
 
 const MintPage: React.FC = () => {
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     const { id } = useParams<{ id: string }>();
     const [userData, setUserData] = useState<any>(null);
     const [userTonAddress, setUserTonAddress] = useState<string>('');
@@ -54,7 +57,7 @@ const MintPage: React.FC = () => {
     useEffect(() => {
         const fetchCollection = async () => {
             try {
-                const response = await axios.get<CollectionData>(`https://capsule-server.onrender.com/api/collections/${id}`);
+                const response = await axios.get<CollectionData>(`${apiUrl}/api/collections/${id}`);
                 setCollection(response.data);
             } catch (error) {
                 setError('Ошибка при получении данных коллекции');
@@ -68,7 +71,7 @@ const MintPage: React.FC = () => {
 
     const fetchMiningData = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`https://capsule-server.onrender.com/api/currentMining/current/${telegramUserId}`);
+            const response = await axios.get(`${apiUrl}/api/currentMining/current/${telegramUserId}`);
 
             if (response.status !== 200) {
                 throw new Error('Ошибка при загрузке данных о текущей активности');
@@ -84,7 +87,7 @@ const MintPage: React.FC = () => {
     const updateMining = async (): Promise<void> => {
         try {
             const telegramId = userData.id;
-            await axios.put(`https://capsule-server.onrender.com/api/currentMining/minted/${telegramId}`);
+            await axios.put(`${apiUrl}/api/currentMining/minted/${telegramId}`);
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating mining:', error);
@@ -98,7 +101,7 @@ const MintPage: React.FC = () => {
         }
 
         try {
-            const response = await axios.post('https://capsule-server.onrender.com/api/mint/add', {
+            const response = await axios.post(`${apiUrl}/api/mint/add`, {
                 telegram_id: userData.id,
                 address: userTonAddress,
                 send_ton: true,

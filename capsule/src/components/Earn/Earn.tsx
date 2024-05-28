@@ -17,6 +17,8 @@ export const Earn = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
 
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
             setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
@@ -31,7 +33,7 @@ export const Earn = () => {
 
     const fetchTasks = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`https://capsule-server.onrender.com/api/task/${telegramUserId}`);
+            const response = await axios.get(`${apiUrl}/api/task/${telegramUserId}`);
             setTasks(response.data);
         } catch (error) {
             console.error('Ошибка при загрузке списка задач:', error);
@@ -43,7 +45,7 @@ export const Earn = () => {
     const handleClick = async (taskId: number, taskLink: string) => {
         window.location.href = taskLink;
         try {
-            await axios.post(`https://capsule-server.onrender.com/api/task/${userData.id}/${taskId}/complete`);
+            await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             fetchTasks(userData.id.toString());
         } catch (error) {
             console.error('Ошибка при отправке запроса:', error);

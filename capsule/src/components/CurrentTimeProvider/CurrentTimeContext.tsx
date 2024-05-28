@@ -14,11 +14,14 @@ interface CurrentTimeProviderProps {
 const CurrentTimeContext = createContext<CurrentTimeContextType | undefined>(undefined);
 
 export const CurrentTimeProvider: React.FC<CurrentTimeProviderProps> = ({ children }) => {
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+
     const [currentTime, setCurrentTime] = useState<string | null>(null);
 
     const fetchCurrentTime = useCallback(async () => {
         try {
-            const response = await axios.get('https://capsule-server.onrender.com/api/currentTime');
+            const response = await axios.get(`${apiUrl}/api/currentTime`);
             const currentTimeFormatted = response.data.currentTime.replace(' ', 'T');
             setCurrentTime(currentTimeFormatted);
         } catch (error) {
