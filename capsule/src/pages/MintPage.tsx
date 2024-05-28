@@ -5,7 +5,7 @@ import { beginCell } from '@ton/ton';
 import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
-import './mintNft.scss';
+import './mint.scss';
 import { Loading } from '../components/Loading/Loading';
 
 interface CollectionData {
