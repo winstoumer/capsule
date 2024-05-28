@@ -195,9 +195,6 @@ const MintNftPage: React.FC = () => {
         <div className='content'>
             <PageComponent>
                 <div className='default-page nft-container'>
-                    <div className='total-nft'>
-                        {collection.nft_left}/{collection.total_nft}
-                    </div>
                     <div className='preview-nft'>
                         <div className='card'>
                             <div className='face front'>
@@ -210,8 +207,8 @@ const MintNftPage: React.FC = () => {
                     </div>
                     {mintActive ? (
                         <div className='nft-description'>
-                            <div className='nft-preview-title'>
-                                You have mined <span className='color-purple'>1</span> nft
+                            <div className='total-nft'>
+                                {collection.nft_left}/{collection.total_nft}
                             </div>
                             <div className='price-mint'>
                                 <span className='color-blue'>0.5</span> TON
