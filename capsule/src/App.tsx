@@ -5,8 +5,8 @@ import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import HomePageWithProviders from './pages/HomePageWithProviders';
 import BoostPageWithProviders from './pages/BoostPageWithProviders';
 import EarnPage from './pages/EarnPage';
-import NftPage from './pages/NftPage';
-import MintNftPage from './pages/MintNftPage';
+import NftPage from './pages/CollectionPage';
+import MintNftPage from './pages/MintPage';
 import { CurrentTimeProvider } from './components/CurrentTimeProvider/CurrentTimeContext';
 
 const AppWrapper: React.FC = () => {
