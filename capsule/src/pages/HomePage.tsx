@@ -6,6 +6,7 @@ import { Navigation } from "../components/Navigation/Navigation";
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import { useData } from '../components/DataProvider/DataContext';
 import { Loading } from '../components/Loading/Loading';
+import Balance from '../components/Balance/Balance';
 
 const HomePage: React.FC = () => {
   const { balanceData, loading } = useData();
@@ -15,16 +16,16 @@ const HomePage: React.FC = () => {
   }
 
   return (
-    <div className='content'>
-      <PageComponent>
-        <Header />
-        <div className='general'>
-          <div className='balance'>{Number(balanceData).toFixed(2)}</div>
-          <ActiveTime />
-        </div>
-        <Navigation />
-      </PageComponent>
-    </div>
+    <PageComponent>
+      <Header />
+      <div className='general'>
+        <Balance>
+          {Number(balanceData).toFixed(2)}
+        </Balance>
+        <ActiveTime />
+      </div>
+      <Navigation />
+    </PageComponent>
   );
 }
 

@@ -8,12 +8,10 @@ import PageComponent from '../components/PageComponent/PageComponent';
 const BoostPage: React.FC = () => {
 
     return (
-        <div className='content'>
-            <PageComponent>
-                <Boost />
-                <Navigation />
-            </PageComponent>
-        </div>
+        <PageComponent>
+            <Boost />
+            <Navigation />
+        </PageComponent>
     );
 }
 

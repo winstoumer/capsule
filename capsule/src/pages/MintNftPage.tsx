@@ -174,7 +174,7 @@ const MintNftPage: React.FC = () => {
     const handleSubmitTest = async () => {
         try {
             if (userData !== null)
-            await updateMining();
+                await updateMining();
         } catch (error) {
             console.error('Error:', error);
         }
@@ -193,49 +193,47 @@ const MintNftPage: React.FC = () => {
     }
 
     return (
-        <div className='content'>
-            <PageComponent>
-                <div className='default-page nft-container'>
-                    <div className='preview-nft'>
-                        <div className='card'>
-                            <div className='face front'>
-                                <img src="/nft_front.jpg" alt="NFT front" />
-                            </div>
-                            <div className='face back'>
-                                <img src="/nft_back.jpg" alt="NFT back" />
-                            </div>
+        <PageComponent>
+            <div className='default-page nft-container'>
+                <div className='preview-nft'>
+                    <div className='card'>
+                        <div className='face front'>
+                            <img src="/nft_front.jpg" alt="NFT front" />
+                        </div>
+                        <div className='face back'>
+                            <img src="/nft_back.jpg" alt="NFT back" />
                         </div>
                     </div>
-                    {disable ? (
-                        <div className='nft-description'>
-                            <div className='total-nft'>
-                                {collection.nft_left}/{collection.total_nft} {mintActive}
-                            </div>
-                            <div className='price-mint'>
-                                <span className='color-blue'>0.5</span> TON
-                            </div>
-                            <React.Fragment>
-                                {wallet ? (
-                                    <div>
-                                        <button className="default-button" onClick={() => handleSubmit()}>Send</button>
-                                        <button className="default-button" onClick={() => handleSubmitTest()}>Send test</button>
-                                        <button className="default-button" onClick={createTransaction}>Mint</button>
-                                    </div>
-                                ) : (
-                                    <button className="default-button" onClick={() => tonConnectUi.openModal()}>
-                                        Connect wallet
-                                    </button>
-                                )}
-                            </React.Fragment>
-                        </div>
-                    ) : (
-                        <div className="soon">
-                            Soon mint...
-                        </div>
-                    )}
                 </div>
-            </PageComponent>
-        </div>
+                {disable ? (
+                    <div className='nft-description'>
+                        <div className='total-nft'>
+                            {collection.nft_left}/{collection.total_nft} {mintActive}
+                        </div>
+                        <div className='price-mint'>
+                            <span className='color-blue'>0.5</span> TON
+                        </div>
+                        <React.Fragment>
+                            {wallet ? (
+                                <div>
+                                    <button className="default-button" onClick={() => handleSubmit()}>Send</button>
+                                    <button className="default-button" onClick={() => handleSubmitTest()}>Send test</button>
+                                    <button className="default-button" onClick={createTransaction}>Mint</button>
+                                </div>
+                            ) : (
+                                <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                    Connect wallet
+                                </button>
+                            )}
+                        </React.Fragment>
+                    </div>
+                ) : (
+                    <div className="soon">
+                        Soon mint...
+                    </div>
+                )}
+            </div>
+        </PageComponent>
     );
 };
 

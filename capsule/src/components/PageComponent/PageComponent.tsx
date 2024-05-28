@@ -6,7 +6,7 @@ interface PageComponentProps {
 
 const PageComponent: React.FC<PageComponentProps> = ({ children }) => {
 
-  return <>{children}</>;
+  return <div className='content'>{children}</div>;
 };
 
 export default PageComponent;

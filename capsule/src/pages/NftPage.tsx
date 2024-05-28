@@ -8,12 +8,10 @@ import PageComponent from '../components/PageComponent/PageComponent';
 const NftPage: React.FC = () => {
 
     return (
-        <div className='content'>
-            <PageComponent>
-                <CollectionList />
-                <Navigation />
-            </PageComponent>
-        </div>
+        <PageComponent>
+            <CollectionList />
+            <Navigation />
+        </PageComponent>
     );
 }
 

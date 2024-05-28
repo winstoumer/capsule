@@ -10,17 +10,15 @@ import PageComponent from '../components/PageComponent/PageComponent';
 const EarnPage: React.FC = () => {
 
     return (
-        <div className='content'>
-            <PageComponent>
-                <Tab
-                    tabs={[
-                        { title: 'Earn', content: <Earn /> },
-                        { title: 'Referral', content: <Referral /> }
-                    ]}
-                />
-                <Navigation />
-            </PageComponent>
-        </div>
+        <PageComponent>
+            <Tab
+                tabs={[
+                    { title: 'Earn', content: <Earn /> },
+                    { title: 'Referral', content: <Referral /> }
+                ]}
+            />
+            <Navigation />
+        </PageComponent>
     );
 }
 

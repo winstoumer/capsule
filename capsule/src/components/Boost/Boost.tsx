@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import { useData } from '../DataProvider/DataContext';
 import axios from 'axios';
 import './boost.scss';
+import { Link } from 'react-router-dom';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
+import { useData } from '../DataProvider/DataContext';
+import Balance from '../Balance/Balance';
 
 interface Level {
     id: number;
@@ -41,12 +42,11 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         fetchCurrentTime();
-    }, [fetchCurrentTime]);
-
-    useEffect(() => {
-        if (userData !== null)
-        fetchMiningData(userData?.id.toString());
-    }, [fetchMiningData]);
+    
+        if (userData !== null) {
+            fetchMiningData(userData.id.toString());
+        }
+    }, [fetchCurrentTime, fetchMiningData, userData]);    
 
     useEffect(() => {
         let countdownInterval: ReturnType<typeof setInterval>;
@@ -135,7 +135,7 @@ export const Boost: React.FC = () => {
     const updateBalanceCoins = async (coins: number) => {
         try {
             if (userData !== null)
-            await axios.put(`https://capsule-server.onrender.com/api/balance/plus/${userData.id}`, { amount: coins });
+                await axios.put(`https://capsule-server.onrender.com/api/balance/plus/${userData.id}`, { amount: coins });
         } catch (error) {
             throw error;
         }
@@ -144,7 +144,7 @@ export const Boost: React.FC = () => {
     const updateLevel = async (nextLevelId: number) => {
         try {
             if (userData !== null)
-            await axios.put(`https://capsule-server.onrender.com/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
+                await axios.put(`https://capsule-server.onrender.com/api/matter/upgrade/${userData.id}`, { matter_id: nextLevelId });
         } catch (error) {
             throw error;
         }
@@ -153,7 +153,7 @@ export const Boost: React.FC = () => {
     const updateBalance = async (price: number): Promise<void> => {
         try {
             if (userData !== null)
-            await axios.put(`https://capsule-server.onrender.com/api/balance/minus/${userData.id}`, { amount: price });
+                await axios.put(`https://capsule-server.onrender.com/api/balance/minus/${userData.id}`, { amount: price });
         } catch (error) {
             throw error;
         }
@@ -162,8 +162,8 @@ export const Boost: React.FC = () => {
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
             if (userData !== null)
-            await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${userData.id}`,
-                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
+                await axios.put(`https://capsule-server.onrender.com/api/currentMining/update/${userData.id}`,
+                    { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
         } catch (error) {
             throw error;
         }
@@ -232,7 +232,7 @@ export const Boost: React.FC = () => {
                 if (value !== null) {
                     await updateBalance(nextLevel.price);
                     if (isInitialized)
-                    await updateBalanceCoins(value);
+                        await updateBalanceCoins(value);
                     if (nftDate && nextLevel !== null) {
                         if (nftMined && nftEndDate !== null && mintActive === false) {
                             const date = new Date(nftEndDate);
@@ -273,9 +273,9 @@ export const Boost: React.FC = () => {
 
     return (
         <div className='default-page evently-container'>
-            <div className='balance'>
+            <Balance>
                 {Number(balanceData).toFixed(2)}
-            </div>
+            </Balance>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
                 {nextLevel ? (
                     <div className='boost-item'>

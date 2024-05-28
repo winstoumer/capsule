@@ -215,7 +215,7 @@ export const ActiveTime = () => {
     return (
         <>
             <div className='watch-capsule'>
-                <img src={imageUrl ?? undefined} className='always-capsule' alt="Capsule" />
+                <img src={imageUrl ?? undefined} className='always-capsule' />
             </div>
             <div className='active-time'>
                 <div className='current-coins'>
