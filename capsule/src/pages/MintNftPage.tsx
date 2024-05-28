@@ -29,6 +29,7 @@ const MintNftPage: React.FC = () => {
     const [nftUuid] = useState<string>(uuidv4());
 
     const [mintActive, setMintActive] = useState(false);
+    const [disable] = useState(false);
 
     const userFriendlyAddress = useTonAddress();
 
@@ -205,7 +206,7 @@ const MintNftPage: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    {mintActive ? (
+                    {disable ? (
                         <div className='nft-description'>
                             <div className='total-nft'>
                                 {collection.nft_left}/{collection.total_nft}
@@ -228,7 +229,9 @@ const MintNftPage: React.FC = () => {
                             </React.Fragment>
                         </div>
                     ) : (
-                        <div></div>
+                        <div className="soon">
+                            Soon mint...
+                        </div>
                     )}
                 </div>
             </PageComponent>
