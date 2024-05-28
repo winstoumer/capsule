@@ -20,7 +20,7 @@ const HomePage: React.FC = () => {
       <Header />
       <div className='general'>
         <Balance>
-          {Number(balanceData).toFixed(2)}
+          c {Number(balanceData).toFixed(2)}
         </Balance>
         <ActiveTime />
       </div>
