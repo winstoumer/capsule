@@ -2,12 +2,12 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
+import { CurrentTimeProvider } from './components/CurrentTimeProvider/CurrentTimeContext';
 import HomePageWithProviders from './pages/HomePageWithProviders';
 import BoostPageWithProviders from './pages/BoostPageWithProviders';
 import EarnPage from './pages/EarnPage';
-import NftPage from './pages/CollectionPage';
-import MintNftPage from './pages/MintPage';
-import { CurrentTimeProvider } from './components/CurrentTimeProvider/CurrentTimeContext';
+import CollectionPage from './pages/CollectionPage';
+import MintPage from './pages/MintPage';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -62,8 +62,8 @@ const AppWrapper: React.FC = () => {
       <Route path="/" element={<HomePageWithProviders />} />
       <Route path="/boost" element={<BoostPageWithProviders />} />
       <Route path="/earn" element={<EarnPage />} />
-      <Route path="/collections" element={<NftPage />} />
-      <Route path="/mint/:id" element={<MintNftPage />} />
+      <Route path="/collections" element={<CollectionPage />} />
+      <Route path="/mint/:id" element={<MintPage />} />
     </Routes>
   );
 };

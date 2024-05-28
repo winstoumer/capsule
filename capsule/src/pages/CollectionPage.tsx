@@ -1,11 +1,11 @@
-// src/pages/NftPage.tsx
+// src/pages/CollectionPage.tsx
 import './nft.scss';
 import React from 'react';
-import { Navigation } from "../components/Navigation/Navigation";
-import CollectionList from "../components/CollectionList/CollectionList";
 import PageComponent from '../components/PageComponent/PageComponent';
+import CollectionList from "../components/CollectionList/CollectionList";
+import { Navigation } from "../components/Navigation/Navigation";
 
-const NftPage: React.FC = () => {
+const CollectionPage: React.FC = () => {
 
     return (
         <PageComponent>
@@ -15,4 +15,4 @@ const NftPage: React.FC = () => {
     );
 }
 
-export default NftPage;
+export default CollectionPage;

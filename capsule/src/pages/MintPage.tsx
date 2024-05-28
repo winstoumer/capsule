@@ -19,7 +19,7 @@ interface CollectionData {
     nft_left: number;
 }
 
-const MintNftPage: React.FC = () => {
+const MintPage: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const [userData, setUserData] = useState<any>(null);
     const [userTonAddress, setUserTonAddress] = useState<string>('');
@@ -237,4 +237,4 @@ const MintNftPage: React.FC = () => {
     );
 };
 
-export default MintNftPage;
+export default MintPage;
