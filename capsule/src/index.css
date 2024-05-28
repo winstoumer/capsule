@@ -94,15 +94,15 @@ body {
   z-index: 1;
   /* Начальные стили для анимации */
   opacity: 0;
-  transform: translateY(20px);
-  animation: slideUp 1s forwards;
+  transform: translateY(30px);
+  animation: slideUp 0.8s forwards;
 }
 
 /* Определение анимации */
 @keyframes slideUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
 
   100% {
