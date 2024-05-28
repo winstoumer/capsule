@@ -24,17 +24,4 @@
 
 .color-nft {
     color: #c3008f;
-    animation: activeNft 2.4s ease infinite;
-}
-
-@keyframes activeNft {
-
-    0%,
-    100% {
-        opacity: 0.3;
-    }
-
-    50% {
-        opacity: 1;
-    }
 }
