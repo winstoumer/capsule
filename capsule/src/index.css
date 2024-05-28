@@ -79,6 +79,7 @@ body {
 .color-blue {
   color: var(--general-color-blue);
 }
+
 /* end colors */
 
 .content {
@@ -91,6 +92,23 @@ body {
   padding-left: 30px;
   padding-right: 30px;
   z-index: 1;
+  /* Начальные стили для анимации */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: slideUp 1s forwards;
+}
+
+/* Определение анимации */
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .default-page {
@@ -116,6 +134,7 @@ button {
   display: flex;
   align-items: center;
 }
+
 /* end buttons */
 
 @media (prefers-color-scheme: light) {
