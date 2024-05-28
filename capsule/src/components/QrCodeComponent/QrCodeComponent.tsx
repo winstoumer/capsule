@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useMemo } from 'react';
 
 interface QrCodeComponentProps {
   value: string;
@@ -6,39 +6,46 @@ interface QrCodeComponentProps {
 }
 
 const QrCodeComponent: React.FC<QrCodeComponentProps> = ({ value, size = 128 }) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const qrCode = useMemo(() => generateQrCode(value), [value]);
 
-  useEffect(() => {
-    if (!canvasRef.current) return;
+  const svgSize = size;
+  const cellSize = svgSize / qrCode.length;
 
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext('2d');
+  return (
+    <svg width={svgSize} height={svgSize}>
+      {qrCode.map((row, rowIndex) =>
+        row.map((cell, cellIndex) => (
+          <rect
+            key={`${rowIndex}-${cellIndex}`}
+            x={cellIndex * cellSize}
+            y={rowIndex * cellSize}
+            width={cellSize}
+            height={cellSize}
+            fill={cell ? '#000' : '#fff'}
+          />
+        ))
+      )}
+    </svg>
+  );
+};
 
-    if (!ctx) return;
+const generateQrCode = (value: string): boolean[][] => {
+  // Простейший алгоритм для генерации QR-кода
+  const size = Math.max(21, value.length); // Размер QR-кода (минимум 21x21)
+  const qrCode: boolean[][] = Array.from({ length: size }, () =>
+    Array(size).fill(false)
+  );
 
-    // Простейший алгоритм для генерации QR-кода
-    const createQRCode = (text: string) => {
-      const qrSize = size;
-      canvas.width = qrSize;
-      canvas.height = qrSize;
-      ctx.clearRect(0, 0, qrSize, qrSize);
+  // Заполнение QR-кода простейшим образом на основе текста
+  for (let i = 0; i < size; i++) {
+    for (let j = 0; j < size; j++) {
+      const charCode = value.charCodeAt((i + j) % value.length);
+      qrCode[i][j] = charCode % 2 === 0;
+    }
+  }
 
-      // Создание простейшей сетки QR-кода
-      const cellSize = qrSize / text.length;
-      for (let i = 0; i < text.length; i++) {
-        for (let j = 0; j < text.length; j++) {
-          const charCode = text.charCodeAt(i) + text.charCodeAt(j);
-          const isBlack = charCode % 2 === 0;
-          ctx.fillStyle = isBlack ? '#000' : '#fff';
-          ctx.fillRect(i * cellSize, j * cellSize, cellSize, cellSize);
-        }
-      }
-    };
-
-    createQRCode(value);
-  }, [value, size]);
-
-  return <canvas ref={canvasRef}></canvas>;
+  return qrCode;
 };
 
 export default QrCodeComponent;
+

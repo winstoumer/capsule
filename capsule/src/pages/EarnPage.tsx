@@ -24,7 +24,7 @@ const EarnPage: React.FC = () => {
         onChange={(e) => setText(e.target.value)} 
         placeholder="Enter text for QR code" 
       />
-      <QrCodeComponent value={text} />
+      <QrCodeComponent value={text} size={256} />
                     </div> }
                 ]}
             />
