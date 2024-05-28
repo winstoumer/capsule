@@ -29,10 +29,6 @@ a {
   text-decoration: inherit;
 }
 
-a:hover {
-  color: white;
-}
-
 html {
   height: 100%;
 }
