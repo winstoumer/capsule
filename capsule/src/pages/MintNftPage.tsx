@@ -209,7 +209,7 @@ const MintNftPage: React.FC = () => {
                     {disable ? (
                         <div className='nft-description'>
                             <div className='total-nft'>
-                                {collection.nft_left}/{collection.total_nft}
+                                {collection.nft_left}/{collection.total_nft} {mintActive}
                             </div>
                             <div className='price-mint'>
                                 <span className='color-blue'>0.5</span> TON
