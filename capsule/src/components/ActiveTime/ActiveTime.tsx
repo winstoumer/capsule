@@ -128,7 +128,7 @@ export const ActiveTime = () => {
     
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine, hours, minutes, seconds]);    
+    }, [coinsMine, timeMine, hours, minutes, seconds]);
 
     useEffect(() => {
         const generateNftDate = async () => {
