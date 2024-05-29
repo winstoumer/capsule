@@ -229,7 +229,7 @@ export const Boost: React.FC = () => {
 
     const handleUpgrade = async () => {
         setButton(true);
-        if (nextLevel && balanceData >= nextLevel.price && userData) {
+        if (nextLevel && balanceData >= nextLevel.price && userData && currentTime !== null) {
             try {
                 if (value !== null) {
                     await updateBalance(nextLevel.price);
