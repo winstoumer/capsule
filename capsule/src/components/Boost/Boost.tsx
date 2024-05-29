@@ -44,11 +44,11 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         fetchCurrentTime();
-
+    
         if (userData !== null) {
             fetchMiningData(userData.id.toString());
         }
-    }, [fetchCurrentTime, fetchMiningData, userData]);
+    }, [fetchCurrentTime, fetchMiningData, userData]);    
 
     useEffect(() => {
         let countdownInterval: ReturnType<typeof setInterval>;
@@ -273,94 +273,74 @@ export const Boost: React.FC = () => {
         }
     };
 
-    const [previousLevelIndex, setPreviousLevelIndex] = useState<number>(currentLevelIndex - 1);
-    const [nextLevelIndex, setNextLevelIndex] = useState<number>(currentLevelIndex + 1);
-
-    // Обновляем состояния при обновлении текущего уровня
-    useEffect(() => {
-        setPreviousLevelIndex(currentLevelIndex - 1);
-        setNextLevelIndex(currentLevelIndex + 1);
-    }, [currentLevelIndex]);
-
     return (
         <div className='default-page evently-container'>
             <Balance>
                 {Number(balanceData).toFixed(2)}
             </Balance>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                {previousLevelIndex >= 0 && (
+                {nextLevel ? (
                     <div className='boost-item'>
-                        <img src={levels[previousLevelIndex].image} className='boost-item-image' alt="Previous Level" />
-                        <div className='boost-info'>
-                            <div className='boost-name'>{levels[previousLevelIndex].name}</div>
-                            <div className='boost-param'>{levels[previousLevelIndex].coins}/{levels[previousLevelIndex].time}h</div>
-                            {levels[previousLevelIndex].mines_nft ? (
-                                <div className='boost-param'>
-                                    <span className='color-purple'>NFT</span>
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className='price-item'>
-                            <span className='color-blue'>{levels[previousLevelIndex].price}</span>
-                        </div>
-                        {/* Нет кнопки Upgrade для предыдущего уровня */}
+                        <img src={nextLevel.image} className='boost-item-image' alt="Boost Item" />
+                    </div>
+                ) : userLevel ? (
+                    <div className='boost-item'>
+                        <img src={userLevel.image} className='boost-item-image' alt="Boost Item" />
+                    </div>
+                ) : (
+                    <div className='boost-item'>
+                        <div className='boost-item-image'></div>
                     </div>
                 )}
-
-                {/* Текущий уровень */}
-                <div className='boost-item'>
-                    <img src={userLevel?.image} className='boost-item-image' alt="Current Level" />
-                    <div className='boost-info'>
-                        <div className='boost-name'>{userLevel?.name}</div>
-                        <div className='boost-param'>{userLevel?.coins}/{userLevel?.time}h</div>
-                        {userLevel?.mines_nft ? (
-                            <div className='boost-param'>
-                                <span className='color-purple'>NFT</span>
-                            </div>
-                        ) : null}
-                    </div>
-                    <div className='price-item'>
-                        {nextLevel ? (
-                            <span className='color-blue'>{nextLevel.price}</span>
-                        ) : null}
-                        {/* Кнопка Upgrade только для текущего уровня */}
-                        {level !== null && userLevel !== null ? (
-                            level < levels.length ? (
-                                balanceData >= userLevel.price ? (
+                <div className='boost-info'>
+                    {nextLevel ? (
+                        <div className='boost-name'>{nextLevel.name}</div>
+                    ) : userLevel ? (
+                        <div className='boost-name'>{userLevel.name}</div>
+                    ) : (
+                        <div className='boost-name'></div>
+                    )}
+                    {nextLevel ? (
+                        <div className='boost-param'>{nextLevel.coins}/{nextLevel.time}h</div>
+                    ) : userLevel ? (
+                        <div className='boost-param'>{userLevel.coins}/{userLevel.time}h</div>
+                    ) : (
+                        <div className='boost-param'></div>
+                    )}
+                    {nextLevel && nextLevel.mines_nft ? (
+                        <div className='boost-param'>
+                            <span className='color-purple'>NFT</span>
+                        </div>
+                    ) : (
+                        <div className='boost-param'>
+                            <span className='color-purple'>NFT</span>
+                        </div>
+                    )}
+                </div>
+                <div className='price-item'>
+                    {nextLevel ? (
+                        <span className='color-blue'>{nextLevel.price}</span>
+                    ) : null}
+                </div>
+                {nextLevel && level !== null ? (
+                    level < levels.length ? (
+                        balanceData >= nextLevel.price ? (
+                            <div>
+                                {
                                     !button && (
                                         <button className='default-button' onClick={handleUpgrade}>
                                             Upgrade
                                         </button>
                                     )
-                                ) : (
-                                    <Link to="/" className='default-button'>Mine</Link>
-                                )
-                            ) : null
-                        ) : null}
-                    </div>
-                </div>
-
-                {nextLevelIndex < levels.length && (
-                    <div className='boost-item'>
-                        <img src={levels[nextLevelIndex].image} className='boost-item-image' alt="Next Level" />
-                        <div className='boost-info'>
-                            <div className='boost-name'>{levels[nextLevelIndex].name}</div>
-                            <div className='boost-param'>{levels[nextLevelIndex].coins}/{levels[nextLevelIndex].time}h</div>
-                            {levels[nextLevelIndex].mines_nft ? (
-                                <div className='boost-param'>
-                                    <span className='color-purple'>NFT</span>
-                                </div>
-                            ) : null}
-                        </div>
-                        <div className='price-item'>
-                            <span className='color-blue'>{levels[nextLevelIndex].price}</span>
-                            {/* Нет кнопки Upgrade для следующего уровня */}
-                        </div>
-                    </div>
+                                }
+                            </div>
+                        ) : (
+                            <Link to="/" className='default-button'>Mine</Link>
+                        )
+                    ) : null
+                ) : (
+                    <div className={`${lastLevelAnimation ? 'boost-last-level' : ''}`}></div>
                 )}
-
-                {/* Анимация последнего уровня */}
-                <div className={`${lastLevelAnimation ? 'boost-last-level' : ''}`}></div>
             </div>
         </div>
     );
