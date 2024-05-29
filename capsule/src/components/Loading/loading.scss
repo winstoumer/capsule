@@ -1,12 +1,15 @@
+// loading.scss
 .loading-container {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     background-color: black;
+    overflow: hidden;
 }
 
-.loading {
+.loading-center {
     width: 50px;
     height: 50px;
     border: 5px solid var(--general-color-darkblue);
@@ -15,12 +18,30 @@
     animation: spin 1s linear infinite;
 }
 
+.diamond {
+    position: absolute;
+    font-size: 24px; /* Размер символа 💎 */
+    animation: moveToCenter 2s ease-in-out infinite;
+}
+
 @keyframes spin {
     0% {
         transform: rotate(0deg);
     }
-
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@keyframes moveToCenter {
+    0% {
+        top: calc(100% * var(--randomY, 0.5));
+        left: calc(100% * var(--randomX, 0.5));
+        transform: translate(-50%, -50%);
+    }
+    100% {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
     }
 }
