@@ -21,7 +21,7 @@ const Loading: React.FC = () => {
                 };
                 return [...prevDiamonds, newDiamond];
             });
-        }, 1000); // Interval for adding new diamonds (milliseconds)
+        }, 100); // Interval for adding new diamonds (milliseconds)
 
         return () => clearInterval(interval);
     }, []);
