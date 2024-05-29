@@ -20,7 +20,7 @@
 
 .diamond {
     position: absolute;
-    font-size: 24px; /* Размер символа 💎 */
+    font-size: 24px; /* Initial size of the diamond symbol */
     animation: moveToCenter 0.5s ease-in-out infinite;
 }
 
@@ -38,10 +38,14 @@
         top: calc(100% * var(--randomY, 0.5));
         left: calc(100% * var(--randomX, 0.5));
         transform: translate(-50%, -50%);
+        font-size: 24px;
+        opacity: 1;
     }
     100% {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        font-size: 1px;
+        opacity: 0;
     }
 }
