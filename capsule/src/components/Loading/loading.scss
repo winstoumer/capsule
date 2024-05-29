@@ -12,17 +12,17 @@
 .loading-center {
     width: 50px;
     height: 50px;
-    border: 3px solid var(--general-color-darkblue);
-    border-top: 3px solid var(--general-color-blue);
+    border: 5px solid var(--general-color-darkblue);
+    border-top: 5px solid var(--general-color-blue);
     border-radius: 50%;
-    animation: spin 0.2s linear infinite;
+    animation: spin 1s linear infinite;
 }
 
 .diamond {
     position: absolute;
     font-size: 24px; /* Initial size of the diamond symbol */
-    animation: moveToCenter 0.5s ease-in-out infinite;
-    z-index: 9000;
+    animation: moveToCenter 5s linear infinite, fadeInOut 5s linear infinite;
+    opacity: 0; /* Initially hidden until fadeInOut animation starts */
 }
 
 @keyframes spin {
@@ -36,17 +36,18 @@
 
 @keyframes moveToCenter {
     0% {
-        top: calc(100% * var(--randomY, 0.5));
-        left: calc(100% * var(--randomX, 0.5));
-        transform: translate(-50%, -50%);
-        font-size: 24px;
-        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
     }
     100% {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        font-size: 1px;
-        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(0.1);
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
     }
 }
