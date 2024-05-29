@@ -267,6 +267,7 @@ export const Boost: React.FC = () => {
                 alert('Произошла ошибка при обновлении уровня пользователя');
             }
         } else if (nextLevel && balanceData < nextLevel.price) {
+            lastLevelAnimation === false;
             alert('Недостаточно средств для покупки!');
         } else {
             alert('Вы достигли максимального уровня!');
