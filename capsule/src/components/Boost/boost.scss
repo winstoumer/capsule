@@ -11,6 +11,17 @@
     align-items: center;
     gap: 15px;
     overflow: hidden;
+    justify-content: space-between; /* Добавляем пространство между первым и последним элементами */
+}
+
+.boost-container .boost-item:first-child,
+.boost-container .boost-item:last-child {
+    opacity: 0.5; /* Уменьшаем прозрачность первого и последнего элементов */
+    transform: scale(0.8); /* Уменьшаем масштаб первого и последнего элементов */
+}
+
+.boost-container .boost-item:last-child {
+    margin-left: auto; /* Помещаем последний элемент вправо */
 }
 
 .boost-container-animate {
