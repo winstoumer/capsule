@@ -103,31 +103,32 @@ export const ActiveTime = () => {
             const totalSecondsInTimeMine = timeMine * 3600;
             const passedSeconds = (hours * 3600) + (minutes * 60) + seconds;
             const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
-            const coinsPerSecond = (coinsMine / totalSecondsInTimeMine) / 2;
-
+            const coinsPerSecond = coinsMine / totalSecondsInTimeMine;
+            const timeForIncrement = 0.01 / coinsPerSecond * 1000; // Время для добавления 0.01 монеты в миллисекундах
+    
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
             setValue(coinsMinedSoFarRef.current);
             setIsInitialized(true);
-
+    
             let isCoinsMineSet = false;
             const interval = setInterval(() => {
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
                     setValue(coinsMinedSoFarRef.current);
                     isCoinsMineSet = true;
                 } else {
-                    coinsMinedSoFarRef.current += coinsPerSecond;
+                    coinsMinedSoFarRef.current += coinsPerSecond * (timeForIncrement / 1000); // Увеличиваем на соответствующее количество монет
                     setValue(coinsMinedSoFarRef.current);
                 }
-
+    
                 if (coinsMine === coinsMinedSoFarRef.current) {
                     setValue(coinsMine);
                     clearInterval(interval);
                 }
-            }, 500);
-
+            }, timeForIncrement);
+    
             return () => clearInterval(interval);
         }
-    }, [coinsMine, timeMine, hours, minutes, seconds]);
+    }, [coinsMine, timeMine, hours, minutes, seconds]);    
 
     useEffect(() => {
         const generateNftDate = async () => {
