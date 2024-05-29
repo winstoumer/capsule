@@ -20,7 +20,7 @@
 
 .diamond {
     position: absolute;
-    font-size: 24px; /* Initial size of the diamond symbol */
+    font-size: 100px; /* Initial size of the diamond symbol */
     animation: moveToCenter 0.3s linear infinite, fadeInOut 0.3s linear infinite;
     opacity: 0; /* Initially hidden until fadeInOut animation starts */
 }

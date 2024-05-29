@@ -34,7 +34,7 @@ const Loading: React.FC = () => {
                     className="diamond"
                     style={{ top: `${diamond.top}vh`, left: `${diamond.left}vw` }}
                 >
-                    💎
+                    🖕
                 </span>
             ))}
             <div className="loading-center"></div>
