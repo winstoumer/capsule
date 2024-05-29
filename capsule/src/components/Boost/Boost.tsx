@@ -44,11 +44,11 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         fetchCurrentTime();
-    
+
         if (userData !== null) {
             fetchMiningData(userData.id.toString());
         }
-    }, [fetchCurrentTime, fetchMiningData, userData]);    
+    }, [fetchCurrentTime, fetchMiningData, userData]);
 
     useEffect(() => {
         let countdownInterval: ReturnType<typeof setInterval>;
@@ -275,17 +275,11 @@ export const Boost: React.FC = () => {
 
     return (
         <div className='default-page evently-container'>
-            <Balance>
-                {Number(balanceData).toFixed(2)}
-            </Balance>
+            <Balance>{Number(balanceData).toFixed(2)}</Balance>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                {nextLevel ? (
+                {nextLevel || userLevel ? (
                     <div className='boost-item'>
-                        <img src={nextLevel.image} className='boost-item-image' alt="Boost Item" />
-                    </div>
-                ) : userLevel ? (
-                    <div className='boost-item'>
-                        <img src={userLevel.image} className='boost-item-image' alt="Boost Item" />
+                        <img src={nextLevel ? nextLevel.image : userLevel?.image} className='boost-item-image' alt="Boost Item" />
                     </div>
                 ) : (
                     <div className='boost-item'>
@@ -293,53 +287,19 @@ export const Boost: React.FC = () => {
                     </div>
                 )}
                 <div className='boost-info'>
-                    {nextLevel ? (
-                        <div className='boost-name'>{nextLevel.name}</div>
-                    ) : userLevel ? (
-                        <div className='boost-name'>{userLevel.name}</div>
-                    ) : (
-                        <div className='boost-name'></div>
-                    )}
-                    {nextLevel ? (
-                        <div className='boost-param'>{nextLevel.coins}/{nextLevel.time}h</div>
-                    ) : userLevel ? (
-                        <div className='boost-param'>{userLevel.coins}/{userLevel.time}h</div>
-                    ) : (
-                        <div className='boost-param'></div>
-                    )}
-                    {nextLevel && nextLevel.mines_nft ? (
-                        <div className='boost-param'>
-                            <span className='color-purple'>NFT</span>
-                        </div>
-                    ) : (
-                        <div className='boost-param'>
-                            <span className='color-purple'>NFT</span>
-                        </div>
-                    )}
+                    <div className='boost-name'>{nextLevel ? nextLevel.name : userLevel?.name}</div>
+                    <div className='boost-param'>{nextLevel ? `${nextLevel.coins}/${nextLevel.time}h` : `${userLevel?.coins}/${userLevel?.time}h`}</div>
+                    <div className='boost-param'>
+                        <span className='color-purple'>NFT</span>
+                    </div>
                 </div>
                 <div className='price-item'>
-                    {nextLevel ? (
-                        <span className='color-blue'>{nextLevel.price}</span>
-                    ) : null}
+                    {nextLevel && <span className='color-blue'>{nextLevel.price}</span>}
                 </div>
-                {nextLevel && level !== null ? (
-                    level < levels.length ? (
-                        balanceData >= nextLevel.price ? (
-                            <div>
-                                {
-                                    !button && (
-                                        <button className='default-button' onClick={handleUpgrade}>
-                                            Upgrade
-                                        </button>
-                                    )
-                                }
-                            </div>
-                        ) : (
-                            <Link to="/" className='default-button'>Mine</Link>
-                        )
-                    ) : null
+                {nextLevel && level !== null && level < levels.length && balanceData >= nextLevel.price ? (
+                    !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
                 ) : (
-                    <div className={`${lastLevelAnimation ? 'boost-last-level' : ''}`}></div>
+                    <Link to="/" className='default-button'>Mine</Link>
                 )}
             </div>
         </div>
