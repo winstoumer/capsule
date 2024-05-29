@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './referral.scss';
-import { Loading } from '../Loading/Loading';
+import Loading from '../Loading/Loading';
 
 export const Referral = () => {
     const [userData, setUserData] = useState<any>(null);

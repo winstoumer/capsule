@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
-import { Loading } from '../Loading/Loading';
+import Loading from '../Loading/Loading';
 
 interface Task {
     id: number;

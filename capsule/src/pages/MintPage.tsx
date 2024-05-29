@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 import './mint.scss';
-import { Loading } from '../components/Loading/Loading';
+import Loading from '../components/Loading/Loading';
 
 interface CollectionData {
     id: number;
