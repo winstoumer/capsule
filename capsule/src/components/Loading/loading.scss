@@ -22,6 +22,7 @@
     position: absolute;
     font-size: 24px; /* Initial size of the diamond symbol */
     animation: moveToCenter 0.5s ease-in-out infinite;
+    z-index: 9000;
 }
 
 @keyframes spin {
