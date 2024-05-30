@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import CryptoJS from 'crypto-js';
 import axios from 'axios';
 import Loading from '../Loading/Loading';
 import { useUser } from '../UserProvider/UserContext';
@@ -49,6 +50,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const { userData } = useUser();
 
     const apiUrl = import.meta.env.VITE_API_URL;
+    const secretKey = import.meta.env.VITE_SECRET_KEY;
 
     const [balanceData, setBalance] = useState<any>(() => {
         const savedBalance = sessionStorage.getItem('balance');
@@ -83,8 +85,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     }, [balanceData]);
 
     const fetchBalance = async (telegramUserId: string) => {
+        const encryptedData = CryptoJS.AES.encrypt(telegramUserId, secretKey).toString();
         try {
-            const response = await axios.get(`${apiUrl}/api/balance/${telegramUserId}`);
+            const response = await axios.get(`${apiUrl}/api/balance`, {
+                params: { data: encryptedData },
+            });
             const responseData = response.data;
             if (responseData.hasOwnProperty('balance')) {
                 const balanceValue = parseFloat(responseData.balance);
@@ -111,7 +116,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             console.error('Пользователь не найден:', error);
             try {
                 await axios.post(`${apiUrl}/api/user/new/${telegramUserId}`,
-                { first_name: firstName });
+                    { first_name: firstName });
                 fetchUserData(telegramUserId, firstName);
             } catch (createError) {
                 console.error('Ошибка при создании пользователя:', createError);
@@ -122,8 +127,11 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     };
 
     const fetchMiningData = async (telegramUserId: string) => {
+        const encryptedUserId = CryptoJS.AES.encrypt(telegramUserId, secretKey).toString();
         try {
-            const response = await axios.get<MiningData>(`${apiUrl}/api/currentMining/current/${telegramUserId}`);
+            const response = await axios.get<MiningData>(`${apiUrl}/api/currentMining/current`, {
+                params: { data: encryptedUserId },
+            });
             const data = response.data;
 
             setLevel(data.level);
