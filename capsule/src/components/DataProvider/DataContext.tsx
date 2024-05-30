@@ -38,12 +38,6 @@ type EncryptedMiningData = {
     mint_active: string;
     nft_active: string;
     image_url: string;
-
-    id: string;
-    user_id: string;
-    telegram_id: string;
-    time: string;
-    matter_data: string;
 };
 
 const DataContext = createContext<DataContextType | null>(null);
@@ -139,9 +133,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
                 params: { data: encryptedUserId },
             });
             const encryptedData = response.data;
-    
-            console.log('Encrypted data from server:', encryptedData);
-    
+
             const decryptedData = {
                 level: Number(CryptoJS.AES.decrypt(encryptedData.level, secretKey).toString(CryptoJS.enc.Utf8)),
                 image_url: CryptoJS.AES.decrypt(encryptedData.image_url, secretKey).toString(CryptoJS.enc.Utf8),
@@ -154,9 +146,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
                 mint_active: CryptoJS.AES.decrypt(encryptedData.mint_active, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
                 nft_active: CryptoJS.AES.decrypt(encryptedData.nft_active, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
             };
-    
-            console.log('Decrypted data:', decryptedData);
-    
+
             setLevel(decryptedData.level);
             setImageUrl(decryptedData.image_url);
             setNextTime(decryptedData.next_time);
@@ -170,7 +160,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
         } catch (error) {
             console.error('Ошибка при загрузке данных о текущей активности', error);
         }
-    };    
+    };
 
     const resetMineStates = async () => {
         setBalance(null);
