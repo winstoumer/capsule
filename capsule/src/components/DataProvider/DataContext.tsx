@@ -27,7 +27,7 @@ type TelegramUserData = {
     first_name: string;
 };
 
-type MiningData = {
+type EncryptedMiningData = {
     level: string;
     next_time: string;
     coins_mine: string;
@@ -129,7 +129,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
     const fetchMiningData = async (telegramUserId: string) => {
         const encryptedUserId = CryptoJS.AES.encrypt(telegramUserId, secretKey).toString();
         try {
-            const response = await axios.get<MiningData>(`${apiUrl}/api/currentMining/current`, {
+            const response = await axios.get<EncryptedMiningData>(`${apiUrl}/api/currentMining/current`, {
                 params: { data: encryptedUserId },
             });
             const encryptedData = response.data;
