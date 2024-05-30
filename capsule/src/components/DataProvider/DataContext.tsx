@@ -28,15 +28,15 @@ type TelegramUserData = {
 };
 
 type MiningData = {
-    level: number;
+    level: string;
     next_time: string;
-    coins_mine: number;
-    time_mine: number;
-    matter_id: number;
+    coins_mine: string;
+    time_mine: string;
+    matter_id: string;
     time_end_mined_nft: string;
-    nft_mined: boolean;
-    mint_active: boolean;
-    nft_active: boolean;
+    nft_mined: string;
+    mint_active: string;
+    nft_active: string;
     image_url: string;
 };
 
@@ -132,18 +132,31 @@ export const DataProvider = ({ children }: DataProviderProps) => {
             const response = await axios.get<MiningData>(`${apiUrl}/api/currentMining/current`, {
                 params: { data: encryptedUserId },
             });
-            const data = response.data;
+            const encryptedData = response.data;
 
-            setLevel(data.level);
-            setImageUrl(data.image_url);
-            setNextTime(data.next_time);
-            setCoinsMine(data.coins_mine);
-            setTimeMine(data.time_mine);
-            setMatterId(data.matter_id);
-            setNftEndDate(data.time_end_mined_nft);
-            setNftMined(data.nft_mined);
-            setMintActive(data.mint_active);
-            setNftActive(data.nft_active);
+            const decryptedData = {
+                level: Number(CryptoJS.AES.decrypt(encryptedData.level, secretKey).toString(CryptoJS.enc.Utf8)),
+                image_url: CryptoJS.AES.decrypt(encryptedData.image_url, secretKey).toString(CryptoJS.enc.Utf8),
+                next_time: CryptoJS.AES.decrypt(encryptedData.next_time, secretKey).toString(CryptoJS.enc.Utf8),
+                coins_mine: Number(CryptoJS.AES.decrypt(encryptedData.coins_mine, secretKey).toString(CryptoJS.enc.Utf8)),
+                time_mine: Number(CryptoJS.AES.decrypt(encryptedData.time_mine, secretKey).toString(CryptoJS.enc.Utf8)),
+                matter_id: Number(CryptoJS.AES.decrypt(encryptedData.matter_id, secretKey).toString(CryptoJS.enc.Utf8)),
+                time_end_mined_nft: CryptoJS.AES.decrypt(encryptedData.time_end_mined_nft, secretKey).toString(CryptoJS.enc.Utf8),
+                nft_mined: CryptoJS.AES.decrypt(encryptedData.nft_mined, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
+                mint_active: CryptoJS.AES.decrypt(encryptedData.mint_active, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
+                nft_active: CryptoJS.AES.decrypt(encryptedData.nft_active, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
+            };
+
+            setLevel(decryptedData.level);
+            setImageUrl(decryptedData.image_url);
+            setNextTime(decryptedData.next_time);
+            setCoinsMine(decryptedData.coins_mine);
+            setTimeMine(decryptedData.time_mine);
+            setMatterId(decryptedData.matter_id);
+            setNftEndDate(decryptedData.time_end_mined_nft);
+            setNftMined(decryptedData.nft_mined);
+            setMintActive(decryptedData.mint_active);
+            setNftActive(decryptedData.nft_active);
         } catch (error) {
             console.error('Ошибка при загрузке данных о текущей активности', error);
         }
