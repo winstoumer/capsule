@@ -73,7 +73,7 @@ function App() {
     <TonConnectUIProvider
       manifestUrl="https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json"
       actionsConfiguration={{
-        twaReturnUrl: 'https://t.me/gbaswebtest_bot/app',
+        twaReturnUrl: 'https://t.me/bigmatter_bot/app',
       }}
     >
       <CurrentTimeProvider>
