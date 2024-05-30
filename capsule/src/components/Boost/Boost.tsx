@@ -173,8 +173,8 @@ export const Boost: React.FC = () => {
 
     const levels: Level[] = [
         { id: 1, name: 'Level 1', image: 'capsule_1.png', coins: 10, time: 1, mines_nft: false, price: 0 },
-        { id: 2, name: 'Level 2', image: 'capsule_2.png', coins: 80, time: 4, mines_nft: true, price: 250 },
-        { id: 3, name: 'Level 3', image: 'capsule_3.png', coins: 160, time: 6, mines_nft: false, price: 1400 },
+        { id: 2, name: 'Level 2', image: 'capsule_2.png', coins: 80, time: 4, mines_nft: false, price: 250 },
+        { id: 3, name: 'Level 3', image: 'capsule_3.png', coins: 160, time: 6, mines_nft: true, price: 1400 },
         { id: 4, name: 'Level 4', image: 'capsule_4.png', coins: 420, time: 8, mines_nft: true, price: 3600 },
         { id: 5, name: 'Level 5', image: 'capsule_5.png', coins: 800, time: 12, mines_nft: true, price: 7200 }
     ];
@@ -193,7 +193,7 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         const generateNftDate = async () => {
-            if (nextLevel && matterId && matterId < 2 && nextLevel.id < 2) {
+            if (nextLevel && matterId && matterId < 3 && nextLevel.id < 3) {
                 return;
             }
 
