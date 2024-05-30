@@ -141,7 +141,7 @@ export const DataProvider = ({ children }: DataProviderProps) => {
                 coins_mine: Number(CryptoJS.AES.decrypt(encryptedData.coins_mine, secretKey).toString(CryptoJS.enc.Utf8)),
                 time_mine: Number(CryptoJS.AES.decrypt(encryptedData.time_mine, secretKey).toString(CryptoJS.enc.Utf8)),
                 matter_id: Number(CryptoJS.AES.decrypt(encryptedData.matter_id, secretKey).toString(CryptoJS.enc.Utf8)),
-                time_end_mined_nft: CryptoJS.AES.decrypt(encryptedData.time_end_mined_nft, secretKey).toString(CryptoJS.enc.Utf8),
+                time_end_mined_nft: encryptedData.time_end_mined_nft ? CryptoJS.AES.decrypt(encryptedData.time_end_mined_nft, secretKey).toString(CryptoJS.enc.Utf8) : null,
                 nft_mined: CryptoJS.AES.decrypt(encryptedData.nft_mined, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
                 mint_active: CryptoJS.AES.decrypt(encryptedData.mint_active, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
                 nft_active: CryptoJS.AES.decrypt(encryptedData.nft_active, secretKey).toString(CryptoJS.enc.Utf8) === 'true',
