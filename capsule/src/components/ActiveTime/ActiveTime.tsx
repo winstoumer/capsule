@@ -4,6 +4,7 @@ import ActiveMine from '../ActiveMine/ActiveMine';
 import axios from 'axios';
 import { useData } from '../DataProvider/DataContext';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
+import TimerDisplay from '../TimerDisplay/TimerDisplay';
 
 export const ActiveTime = () => {
 
@@ -226,7 +227,7 @@ export const ActiveTime = () => {
                     {isInitialized ? value.toFixed(2) : null}
                 </div>
                 <div className='time-left'>
-                    {timerFinished ? <span></span> : (hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`)}
+                    <TimerDisplay timerFinished={timerFinished} hours={hours} minutes={minutes} seconds={seconds}/>
                 </div>
                 <div className='info-for'>
                     {coinsMine}c/{timeMine}h
