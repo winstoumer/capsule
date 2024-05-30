@@ -11,23 +11,23 @@
     padding-bottom: 20px;
 }
 
-.watch-capsule {
+.watch-matter {
     display: flex;
     position: relative;
     max-width: 210px;
     max-height: 210px;
 }
 
-.always-capsule {
+.always-matter {
     position: relative;
     z-index: 2;
     max-width: 210px;
     width: 100%;
-    animation: appearAndMoveCapsule 1s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
+    animation: appearAndMoveMatter 1s ease-in-out, moveMatter 1.3s infinite alternate 3s;
     /* `3s` delay to start the second animation after the first one completes */
 }
 
-@keyframes appearAndMoveCapsule {
+@keyframes appearAndMoveMatter {
     0% {
         opacity: 0;
         transform: translateY(-500px) scale(0);
@@ -44,7 +44,7 @@
     }
 }
 
-@keyframes moveCapsule {
+@keyframes moveMatter {
     0% {
         top: 0px;
     }

@@ -219,8 +219,8 @@ export const ActiveTime = () => {
 
     return (
         <>
-            <div className='watch-capsule'>
-                <img src={imageUrl ?? undefined} className='always-capsule' />
+            <div className='watch-matter'>
+                <img src={imageUrl ?? undefined} className='always-matter' />
             </div>
             <div className='active-time'>
                 <div className='current-coins'>
@@ -230,7 +230,7 @@ export const ActiveTime = () => {
                     <TimerDisplay timerFinished={timerFinished} hours={hours} minutes={minutes} seconds={seconds}/>
                 </div>
                 <div className='info-for'>
-                    {coinsMine}c/{timeMine}h
+                    {coinsMine}/{timeMine}h
                 </div>
                 <div className='info-for position-top'>
                     {currentTime !== null && timerFinished && matterId !== null && value !== null ? (

@@ -263,14 +263,14 @@ export const Boost: React.FC = () => {
                 resetTimeStates();
                 resetMineStates();
             } catch (error) {
-                console.error('Ошибка при обновлении уровня пользователя:', error);
-                alert('Произошла ошибка при обновлении уровня пользователя');
+                console.error('An error occurred while updating the user level:', error);
+                alert('An error occurred while updating the user level');
             }
         } else if (nextLevel && balanceData < nextLevel.price) {
             lastLevelAnimation === false;
-            alert('Недостаточно средств для покупки!');
+            alert('Insufficient funds to purchase!');
         } else {
-            alert('Вы достигли максимального уровня!');
+            alert('You have reached the maximum level!');
         }
     };
 
