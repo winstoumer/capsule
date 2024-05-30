@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
-import { Loading } from '../Loading/Loading';
+import Loading from '../Loading/Loading';
 import { useUser } from '../UserProvider/UserContext';
 
 interface DataContextType {
