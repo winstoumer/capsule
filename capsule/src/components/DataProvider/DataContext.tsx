@@ -38,6 +38,12 @@ type EncryptedMiningData = {
     mint_active: string;
     nft_active: string;
     image_url: string;
+
+    id: string;
+    user_id: string;
+    telegram_id: string;
+    time: string;
+    matter_data: string;
 };
 
 const DataContext = createContext<DataContextType | null>(null);
