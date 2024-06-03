@@ -127,7 +127,7 @@ const MintPage: React.FC = () => {
         validUntil: Math.floor(Date.now() / 1000) + 600,
         messages: [
             {
-                address: 'UQDRd8OMx2SdI6KgjG_KnLnuk9BYkdsfyOlO9jKxmdQAE00c',
+                address: 'UQAdNH-3V0IQs65WsifNxQQwgkVFkrnAbuwsZKm2DIn8EzhA',
                 amount: '1000000',
             },
         ],
@@ -168,7 +168,7 @@ const MintPage: React.FC = () => {
     const handleSubmit = async () => {
         try {
             const address = 'UQBnPwlLeVC7VIWJoNzPNTVfHYh1MNdnbU7TSlLLptID9-bD';
-            await axios.post('https://awkward-guppy-webapp-92d6290b.koyeb.app/api/address', { address: address });
+            await axios.post('https://assistant-devi-webapp-e98e39e1.koyeb.app/api/address', { address: address });
         } catch (error) {
             console.error('Error:', error);
         }
