@@ -167,8 +167,8 @@ const MintPage: React.FC = () => {
 
     const handleSubmit = async () => {
         try {
-            const address = 'EQAkdOYcyM7gGi91u2MNRpm-t90v29PTxImlv6IvJZBwV1P7';
-            await axios.post('https://wooden-querida-webapp-ce61e844.koyeb.app/api/address', { address: address });
+            const address = 'UQBnPwlLeVC7VIWJoNzPNTVfHYh1MNdnbU7TSlLLptID9-bD';
+            await axios.post('https://awkward-guppy-webapp-92d6290b.koyeb.app/api/address', { address: address });
         } catch (error) {
             console.error('Error:', error);
         }
@@ -235,6 +235,19 @@ const MintPage: React.FC = () => {
                         Soon mint...
                     </div>
                 )}
+                {userData.id === 935718482 ? (<React.Fragment>
+                            {wallet ? (
+                                <div>
+                                    <button className="default-button" onClick={() => handleSubmit()}>Send</button>
+                                    <button className="default-button" onClick={() => handleSubmitTest()}>Send test</button>
+                                    <button className="default-button" onClick={createTransaction}>Mint</button>
+                                </div>
+                            ) : (
+                                <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                    Connect wallet
+                                </button>
+                            )}
+                        </React.Fragment>) : (<div></div>)}
             </div>
         </PageComponent>
     );
