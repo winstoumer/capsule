@@ -52,9 +52,6 @@ export const Referral = () => {
     return (
         <div className='referral-container'>
             <div className='invited-count'>Invited {invitedCount || 0}</div>
-            <div className='referral-watch'>
-                <img src="/invite.jpg" className='referral-image' alt="Invite Image" />
-            </div>
             <button className='default-button' onClick={handleReferralLinkClick}>Referral link</button>
         </div>
     );

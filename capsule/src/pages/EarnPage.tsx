@@ -12,8 +12,8 @@ const EarnPage: React.FC = () => {
         <PageComponent>
             <Tab
                 tabs={[
-                    { title: 'Earn', content: <Earn /> },
-                    { title: 'Referral', content: <Referral /> }
+                    { title: 'Earn', content: <Earn />, image: '/invite.jpg' },
+                    { title: 'Referral', content: <Referral />, image: '/invite.jpg' }
                 ]}
             />
             <Navigation />
