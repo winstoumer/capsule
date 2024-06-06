@@ -222,7 +222,7 @@ export const ActiveTime = () => {
             <div className='watch-matter'>
                 <img src={imageUrl ?? undefined} className='always-matter' />
             </div>
-            <div className='active-time'>
+            <div className='active-time' style={{ transform: 'rotate(-5deg)' }}>
                 <div className='current-coins'>
                     {isInitialized ? value.toFixed(2) : null}
                 </div>
