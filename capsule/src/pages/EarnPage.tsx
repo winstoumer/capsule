@@ -13,7 +13,7 @@ const EarnPage: React.FC = () => {
             <Tab
                 tabs={[
                     { title: 'Earn', content: <Earn />, image: '💸' },
-                    { title: 'Referral', content: <Referral />, image: '💸' }
+                    { title: 'Referral', content: <Referral />, image: '🤝' }
                 ]}
             />
             <Navigation />
