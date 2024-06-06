@@ -13,14 +13,15 @@
 .honeycomb {
   display: flex;
   flex-wrap: wrap;
-  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .hex {
   width: 100px;
-  height: 115.47px; /* ширина * (sqrt(3)/2) */
+  height: 115.47px; /* width * sqrt(3)/2 */
+  margin: -28.87px 0; /* -height/4 */
   position: relative;
-  margin: 28.87px 0; /* height/2 */
 }
 
 .hex svg {
@@ -33,17 +34,6 @@
   justify-content: center;
 }
 
-.side-hex {
-  width: 100px;
-  height: 57.74px; /* ширина * (sqrt(3)/2) */
-  background-color: transparent;
-  position: absolute;
-}
-
-.side-hex-left {
-  left: -50px; /* Сдвигаем влево на половину ширины */
-}
-
-.side-hex-right {
-  right: -50px; /* Сдвигаем вправо на половину ширины */
+.hex-row:nth-child(odd) {
+  margin-left: 50px; /* half width */
 }

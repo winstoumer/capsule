@@ -2,27 +2,15 @@ import React from 'react';
 import styles from './honeycombBackground.module.scss';
 
 const HoneycombBackground: React.FC = () => {
+  // Calculate the number of hexagons needed to fill the screen
+  const numRows = Math.ceil(window.innerHeight / 115.47) + 2;
+  const numCols = Math.ceil(window.innerWidth / 100) + 2;
+
   return (
     <div className={styles.honeycomb}>
-      <div className={`${styles['hex-row']} ${styles['hex-row-top']}`}>
-        {[...Array(5)].map((_, colIndex) => (
-          <div className={styles['side-hex']} key={`top-${colIndex}`}>
-            <svg viewBox="0 0 100 57.74" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="50,0 100,28.87 100,86.6 50,115.47 0,86.6 0,28.87" fill="none" stroke="#777" strokeWidth="1"/>
-            </svg>
-          </div>
-        ))}
-      </div>
-      {[...Array(10)].map((_, rowIndex) => (
+      {[...Array(numRows)].map((_, rowIndex) => (
         <div className={styles['hex-row']} key={rowIndex}>
-          {[...Array(6)].map((_, colIndex) => (
-            <div className={styles['side-hex']} key={`left-${colIndex}`}>
-              <svg viewBox="0 0 100 57.74" xmlns="http://www.w3.org/2000/svg">
-                <polygon points="50,0 100,28.87 100,86.6 50,115.47 0,86.6 0,28.87" fill="none" stroke="#777" strokeWidth="1"/>
-              </svg>
-            </div>
-          ))}
-          {[...Array(5)].map((_, colIndex) => (
+          {[...Array(numCols)].map((_, colIndex) => (
             <div className={styles.hex} key={`${rowIndex}-${colIndex}`}>
               <svg viewBox="0 0 100 115.47" xmlns="http://www.w3.org/2000/svg">
                 <polygon points="50,0 100,28.87 100,86.6 50,115.47 0,86.6 0,28.87" fill="none" stroke="#777" strokeWidth="1"/>
@@ -31,19 +19,11 @@ const HoneycombBackground: React.FC = () => {
           ))}
         </div>
       ))}
-      <div className={`${styles['hex-row']} ${styles['hex-row-bottom']}`}>
-        {[...Array(5)].map((_, colIndex) => (
-          <div className={`${styles['side-hex']} ${styles['side-hex-right']}`} key={`bottom-${colIndex}`}>
-            <svg viewBox="0 0 100 57.74" xmlns="http://www.w3.org/2000/svg">
-              <polygon points="50,0 100,28.87 100,86.6 50,115.47 0,86.6 0,28.87" fill="none" stroke="#777" strokeWidth="1"/>
-            </svg>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };
 
 export default HoneycombBackground;
+
 
 
