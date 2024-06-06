@@ -15,8 +15,8 @@ const HoneycombBackground: React.FC = () => {
     };
   }, []);
 
-  const rows = Math.ceil(dimensions.height / 86.6);
-  const columns = Math.ceil(dimensions.width / 100);
+  const rows = Math.ceil(dimensions.height / 115.47) + 1;
+  const columns = Math.ceil(dimensions.width / 100) + 1;
 
   return (
     <div className={styles['honeycomb-container']}>
