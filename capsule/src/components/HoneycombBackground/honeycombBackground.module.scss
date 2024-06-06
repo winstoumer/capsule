@@ -6,9 +6,6 @@
   bottom: 0;
   background-color: #000;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .honeycomb {
@@ -20,8 +17,33 @@
 
 .hex {
   width: 100px;
-  height: 115.47px; /* width * sqrt(3)/2 */
-  margin: -1px; /* To avoid gaps between hexagons */
+  height: 86.6px; /* width * sqrt(3)/2 */
+  position: relative;
+  margin: -1px 0;
+}
+
+.hex:before {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-bottom: 28.87px solid #000;
+  position: absolute;
+  top: -28.87px;
+  left: 0;
+}
+
+.hex:after {
+  content: "";
+  width: 0;
+  height: 0;
+  border-left: 50px solid transparent;
+  border-right: 50px solid transparent;
+  border-top: 28.87px solid #000;
+  position: absolute;
+  bottom: -28.87px;
+  left: 0;
 }
 
 .hex svg {
@@ -31,7 +53,6 @@
 
 .hex-row {
   display: flex;
-  align-items: center;
 }
 
 .hex-row:nth-child(odd) {
