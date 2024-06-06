@@ -6,45 +6,24 @@
   bottom: 0;
   background-color: #000;
   overflow: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .honeycomb {
   display: flex;
   flex-wrap: wrap;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .hex {
-  width: 86.6px;
-  height: 100px;
-  position: relative;
-  margin: 1px 0;
-  transform: rotate(30deg) skewY(30deg);
+  width: 100px;
+  height: 115.47px; /* width * sqrt(3)/2 */
+  margin: -1px 0;
 }
 
-.hex::before,
-.hex::after {
-  content: "";
-  position: absolute;
-  width: inherit;
-  height: inherit;
-  background-color: inherit;
-  border: 1px solid #777;
-  transform: rotate(-30deg) skewY(-30deg);
-  left: 0;
-  top: 0;
-}
-
-.hex::before {
-  transform: rotate(-60deg) skewY(-30deg);
-}
-
-.hex::after {
-  transform: rotate(60deg) skewY(-30deg);
+.hex svg {
+  width: 100%;
+  height: 100%;
 }
 
 .hex-row {
@@ -52,5 +31,5 @@
 }
 
 .hex-row:nth-child(odd) {
-  margin-left: 43.3px; /* Half width */
+  margin-left: 50px; /* half width */
 }
