@@ -2,18 +2,21 @@ import React from 'react';
 import styles from './honeycombBackground.module.scss';
 
 const HoneycombBackground: React.FC = () => {
-  const hexagons = Array.from({ length: 50 }, (_, index) => (
-    <div className={styles.hex} key={index}></div>
-  ));
-
-  const rows = Array.from({ length: 10 }, (_, rowIndex) => (
-    <div className={styles['hex-row']} key={rowIndex}>
-      {hexagons.slice(rowIndex * 5, rowIndex * 5 + 5)}
+  return (
+    <div className={styles.honeycomb}>
+      {[...Array(10)].map((_, rowIndex) => (
+        <div className={styles['hex-row']} key={rowIndex}>
+          {[...Array(5)].map((_, colIndex) => (
+            <div className={styles.hex} key={`${rowIndex}-${colIndex}`}>
+              <svg viewBox="0 0 100 115.47" xmlns="http://www.w3.org/2000/svg">
+                <polygon points="50,0 100,28.87 100,86.6 50,115.47 0,86.6 0,28.87" fill="none" stroke="#777" strokeWidth="1"/>
+              </svg>
+            </div>
+          ))}
+        </div>
+      ))}
     </div>
-  ));
-
-  return <div className={styles.honeycomb}>{rows}</div>;
+  );
 };
 
 export default HoneycombBackground;
-
