@@ -15,7 +15,7 @@ const Tab: React.FC<TabProps> = ({ tabs }) => {
   return (
     <div className='tabs custom-scroll'>
       <div className='tab-image'>
-        <img src={tabs[activeTab].image} alt={tabs[activeTab].title} className='active-tab-image' />
+        <div className='active-tab-image'>{tabs[activeTab].image}</div>
       </div>
       <div className='tabs-buttons'>
         {tabs.map((tab, index) => (
