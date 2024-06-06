@@ -249,7 +249,9 @@ const MintPage: React.FC = () => {
                                     <button className="default-button" onClick={() => tonConnectUi.openModal()}>
                                         Connect wallet
                                     </button>
-                                    <HoneycombBackground />
+                                    <div className="honeycomb-container">
+                                        <HoneycombBackground />
+                                    </div>
                                 </div>
                             )}
                         </React.Fragment>) : (<div></div>)}
