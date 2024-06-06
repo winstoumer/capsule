@@ -4,9 +4,6 @@
   left: 0;
   right: 0;
   bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   background-color: #000;
   overflow: hidden;
 }
@@ -14,15 +11,14 @@
 .honeycomb {
   display: flex;
   flex-wrap: wrap;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
 }
 
 .hex {
   width: 100px;
   height: 115.47px; /* width * sqrt(3)/2 */
-  position: relative;
-  margin: 0;
+  margin: -1px; /* To avoid gaps between hexagons */
 }
 
 .hex svg {
@@ -35,5 +31,5 @@
 }
 
 .hex-row:nth-child(odd) {
-  margin-left: 50px; /* half width */
+  margin-left: 50px; /* Half width */
 }
