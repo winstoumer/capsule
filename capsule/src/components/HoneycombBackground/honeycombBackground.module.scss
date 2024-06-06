@@ -8,18 +8,21 @@
   justify-content: center;
   align-items: center;
   background-color: #000;
+  overflow: hidden;
 }
 
 .honeycomb {
   display: flex;
   flex-wrap: wrap;
+  width: 100vw;
+  height: 100vh;
 }
 
 .hex {
   width: 100px;
   height: 115.47px; /* width * sqrt(3)/2 */
   position: relative;
-  margin: 28.87px 0; /* height/2 */
+  margin: 0;
 }
 
 .hex svg {
@@ -33,10 +36,4 @@
 
 .hex-row:nth-child(odd) {
   margin-left: 50px; /* half width */
-}
-
-@media (min-width: 600px) {
-  .hex-row:nth-child(odd) {
-    margin-left: 50px; /* half width */
-  }
 }

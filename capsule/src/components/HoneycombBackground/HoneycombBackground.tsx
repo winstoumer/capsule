@@ -2,8 +2,8 @@ import React from 'react';
 import styles from './honeycombBackground.module.scss';
 
 const HoneycombBackground: React.FC = () => {
-  const rows = 10;
-  const columns = 10;
+  const rows = Math.ceil(window.innerHeight / 86.6);
+  const columns = Math.ceil(window.innerWidth / 100) + 1;
 
   return (
     <div className={styles.honeycomb}>
@@ -23,6 +23,3 @@ const HoneycombBackground: React.FC = () => {
 };
 
 export default HoneycombBackground;
-
-
-
