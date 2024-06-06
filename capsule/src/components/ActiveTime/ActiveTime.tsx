@@ -223,7 +223,7 @@ export const ActiveTime = () => {
                 <img src={imageUrl ?? undefined} className='always-matter' />
             </div>
             <div className='active-time'>
-                <div className='current-coins' style={{ transform: 'perspective(400px) rotateX(30deg)', transformOrigin: 'top' }}>
+                <div className='current-coins' style={{ transform: 'perspective(300px) rotateX(40deg)', transformOrigin: 'top' }}>
                     {isInitialized ? value.toFixed(2) : null}
                 </div>
                 <div className='time-left'>
