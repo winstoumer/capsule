@@ -18,7 +18,7 @@
 .hex {
   width: 100px;
   height: 115.47px; /* width * sqrt(3)/2 */
-  margin: -1px 0;
+  margin: -2px 0; /* Adjusted margin to ensure connection */
 }
 
 .hex svg {
@@ -31,5 +31,5 @@
 }
 
 .hex-row:nth-child(odd) {
-  margin-left: 50px; /* half width */
+  margin-left: 50px; /* Half width */
 }
