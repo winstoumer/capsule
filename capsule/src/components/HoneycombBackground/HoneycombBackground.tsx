@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './HoneycombBackground.module.scss';
+import styles from './honeycombBackground.module.scss';
 
 const HoneycombBackground: React.FC = () => {
   return (
