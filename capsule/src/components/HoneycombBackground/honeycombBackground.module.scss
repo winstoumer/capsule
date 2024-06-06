@@ -6,6 +6,9 @@
   bottom: 0;
   background-color: #000;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .honeycomb {
@@ -18,7 +21,7 @@
 .hex {
   width: 100px;
   height: 115.47px; /* width * sqrt(3)/2 */
-  margin: -2px 0; /* Adjusted margin to ensure connection */
+  margin: -1px; /* To avoid gaps between hexagons */
 }
 
 .hex svg {
@@ -28,6 +31,7 @@
 
 .hex-row {
   display: flex;
+  align-items: center;
 }
 
 .hex-row:nth-child(odd) {
