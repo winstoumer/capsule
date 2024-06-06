@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './honeycombBackground.module.scss';
 
 const HoneycombBackground: React.FC = () => {
-  const hexagons = Array.from({ length: 30 }, (_, index) => (
+  const hexagons = Array.from({ length: 50 }, (_, index) => (
     <div className={styles.hex} key={index}></div>
   ));
 
   const rows = Array.from({ length: 10 }, (_, rowIndex) => (
     <div className={styles['hex-row']} key={rowIndex}>
-      {hexagons.slice(rowIndex * 3, rowIndex * 3 + 3)}
+      {hexagons.slice(rowIndex * 5, rowIndex * 5 + 5)}
     </div>
   ));
 
@@ -16,3 +16,4 @@ const HoneycombBackground: React.FC = () => {
 };
 
 export default HoneycombBackground;
+
