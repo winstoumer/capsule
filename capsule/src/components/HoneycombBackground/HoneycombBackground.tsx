@@ -1,22 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styles from './honeycombBackground.module.scss';
 
 const HoneycombBackground: React.FC = () => {
-  const [dimensions, setDimensions] = useState({ width: window.innerWidth, height: window.innerHeight });
-
-  useEffect(() => {
-    const handleResize = () => {
-      setDimensions({ width: window.innerWidth, height: window.innerHeight });
-    };
-    
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
-  }, []);
-
-  const rows = Math.ceil(dimensions.height / 86.6);
-  const columns = Math.ceil(dimensions.width / 75); // Adjusted for better fitting
+  const rows = Math.ceil(window.innerHeight / 86.6);
+  const columns = Math.ceil(window.innerWidth / 100) + 1;
 
   return (
     <div className={styles.honeycomb}>
