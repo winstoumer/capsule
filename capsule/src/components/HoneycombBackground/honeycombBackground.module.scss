@@ -21,6 +21,27 @@
   );
   border: 1px solid #777;
   margin: 28.87px 0; /* height/2 */
+  position: relative; /* Необходимо для псевдоэлементов */
+}
+
+.hex:before,
+.hex:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  border: 1px solid #777; /* Боковые границы */
+}
+
+.hex:before {
+  top: 0;
+  left: 0;
+  border-right-width: 0; /* Отключаем правую границу для создания одной общей боковой границы */
+}
+
+.hex:after {
+  bottom: 0;
+  left: 0;
+  border-right-width: 0; /* Отключаем правую границу для создания одной общей боковой границы */
 }
 
 .hex-row {
