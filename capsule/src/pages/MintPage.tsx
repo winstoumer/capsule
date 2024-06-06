@@ -7,6 +7,7 @@ import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 import './mint.scss';
 import Loading from '../components/Loading/Loading';
+import HoneycombBackground from '../components/HoneycombBackground/HoneycombBackground';
 
 interface CollectionData {
     id: number;
@@ -241,6 +242,7 @@ const MintPage: React.FC = () => {
                                     <button className="default-button" onClick={() => handleSubmit()}>Send</button>
                                     <button className="default-button" onClick={() => handleSubmitTest()}>Send test</button>
                                     <button className="default-button" onClick={createTransaction}>Mint</button>
+                                    <HoneycombBackground />
                                 </div>
                             ) : (
                                 <button className="default-button" onClick={() => tonConnectUi.openModal()}>
