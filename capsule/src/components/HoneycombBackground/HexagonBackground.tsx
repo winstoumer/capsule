@@ -19,15 +19,18 @@ const HexagonBackground: React.FC = () => {
       const cols = Math.ceil(window.innerWidth / hexWidth); // Number of columns
       const rows = Math.ceil(window.innerHeight / (hexHeight * 0.75)); // Number of rows
 
-      canvas.width = cols * hexWidth;
-      canvas.height = rows * hexHeight * 0.75;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
 
       drawHexagons(ctx, cols, rows, hexWidth, hexHeight, hexRadius);
     };
 
     const drawHexagons = (ctx: CanvasRenderingContext2D, cols: number, rows: number, hexWidth: number, hexHeight: number, radius: number) => {
-      ctx.fillStyle = '#f0f0f0'; // Hexagon fill color
-      ctx.strokeStyle = '#f0f0f0'; // Hexagon border color
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = '#000'; // Background color
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      ctx.strokeStyle = '#fff'; // Hexagon border color
+      ctx.lineWidth = 2;
 
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
@@ -47,7 +50,6 @@ const HexagonBackground: React.FC = () => {
         ctx.lineTo(hx, hy);
       }
       ctx.closePath();
-      ctx.fill();
       ctx.stroke();
     };
 
@@ -63,7 +65,3 @@ const HexagonBackground: React.FC = () => {
 };
 
 export default HexagonBackground;
-
-
-
-
