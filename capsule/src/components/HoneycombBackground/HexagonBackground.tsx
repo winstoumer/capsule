@@ -30,12 +30,12 @@ const HexagonBackground: React.FC = () => {
       ctx.fillStyle = '#000'; // Background color
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.strokeStyle = '#fff'; // Hexagon border color
-      ctx.lineWidth = 2;
+      ctx.lineWidth = 1;
 
       for (let y = 0; y < rows; y++) {
         for (let x = 0; x < cols; x++) {
           const xOffset = x * hexWidth * 0.75;
-          const yOffset = y * hexHeight + (x % 2) * hexHeight * 0.5;
+          const yOffset = y * hexHeight * 0.75 + (x % 2) * hexHeight * 0.5;
           drawHexagon(ctx, xOffset, yOffset, radius);
         }
       }
