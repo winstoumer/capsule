@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000000; /* Серый цвет фона */
+  background-color: #000000; /* Цвет фона */
   z-index: -1;
 }
 
@@ -23,6 +23,17 @@
 .grid-cell {
   width: 50px; /* Ширина прямоугольника */
   height: 50px; /* Высота прямоугольника */
+  position: relative;
   background-color: #000000; /* Цвет прямоугольника */
+}
+
+.grid-cell::after {
+  content: '';
+  position: absolute;
+  width: calc(100% + 2px); /* Добавляем 2px к ширине, чтобы компенсировать границы */
+  height: calc(100% + 2px); /* Добавляем 2px к высоте, чтобы компенсировать границы */
+  top: -1px; /* Смещаем псевдоэлемент на 1px вверх */
+  left: -1px; /* Смещаем псевдоэлемент на 1px влево */
   border: 1px solid #1d1d1d; /* Серые линии */
 }
+
