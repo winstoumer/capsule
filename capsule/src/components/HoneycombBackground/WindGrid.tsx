@@ -6,23 +6,22 @@ const WindGrid: React.FC = () => {
 
   useEffect(() => {
     const handleWindStrengthChange = () => {
-      // Эмулируем изменение силы ветра в диапазоне от 0 до 100
       const newWindStrength = Math.floor(Math.random() * 101);
       setWindStrength(newWindStrength);
     };
 
-    // Эмулируем изменение силы ветра каждые 3 секунды
     const interval = setInterval(handleWindStrengthChange, 3000);
 
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="wind-grid-container">
-      <div className="wind-grid" style={{ '--wind-strength': windStrength } as React.CSSProperties}></div>
+    <div className="wind-grid">
+      {Array.from({ length: 100 }).map((_, index) => (
+        <div key={index} className="dot" style={{ '--wind-strength': windStrength } as React.CSSProperties}></div>
+      ))}
     </div>
   );
 };
 
 export default WindGrid;
-
