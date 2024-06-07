@@ -5,6 +5,9 @@
   right: 0;
   bottom: 0;
   background-color: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -19,7 +22,7 @@
   width: 100px;
   height: 86.6px; /* width * sqrt(3)/2 */
   position: relative;
-  margin: 0 -1px; /* To avoid gaps between hexagons */
+  margin: -1px;
 }
 
 .hex svg {

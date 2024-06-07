@@ -8,7 +8,7 @@ const HoneycombBackground: React.FC = () => {
     const handleResize = () => {
       setDimensions({ width: window.innerWidth, height: window.innerHeight });
     };
-    
+
     window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('resize', handleResize);
@@ -16,7 +16,7 @@ const HoneycombBackground: React.FC = () => {
   }, []);
 
   const rows = Math.ceil(dimensions.height / 86.6);
-  const columns = Math.ceil(dimensions.width / 100);
+  const columns = Math.ceil(dimensions.width / 100) + 1;
 
   return (
     <div className={styles['honeycomb-container']}>
@@ -38,4 +38,5 @@ const HoneycombBackground: React.FC = () => {
 };
 
 export default HoneycombBackground;
+
 
