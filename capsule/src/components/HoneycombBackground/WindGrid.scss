@@ -1,41 +1,27 @@
-.wind-grid {
+.northern-lights {
+  width: 100%;
+  height: 100%;
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
   pointer-events: none;
   z-index: -1;
 }
 
-.dots-container {
+.lights {
+  width: 100%;
+  height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  animation: animateLights 5s infinite;
 }
 
-.dot {
-  position: absolute;
-  width: 2px;
-  height: 2px;
-  background-color: rgba(35, 116, 216, 0.8);
-  border-radius: 50%;
-  transition: filter 0.3s;
-}
-
-.quantum-spin {
-  animation: quantum-spin 1s infinite alternate ease-in-out;
-  filter: brightness(50%);
-}
-
-@keyframes quantum-spin {
-  0% {
-    transform: rotate(0deg);
+@keyframes animateLights {
+  0%, 100% {
+    transform: translateY(-10%);
   }
-  100% {
-    transform: rotate(360deg);
+  50% {
+    transform: translateY(10%);
   }
 }
-
