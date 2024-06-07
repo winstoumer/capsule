@@ -20,20 +20,19 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background-color: rgba(101, 159, 218, 0.8);
+  background-color: rgba(193, 222, 97, 0.8);
   border-radius: 50%;
-  animation: wave 5s infinite alternate ease-in-out;
 }
 
-@keyframes wave {
+.quantum-spin {
+  animation: quantum-spin 1s infinite alternate ease-in-out;
+}
+
+@keyframes quantum-spin {
   0% {
-    transform: translateY(0) scale(1);
-  }
-  50% {
-    transform: translateY(-5px) scale(1.2);
+    transform: rotate(0deg);
   }
   100% {
-    transform: translateY(0) scale(1);
+    transform: rotate(360deg);
   }
 }
-

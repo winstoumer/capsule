@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';
 import './WindGrid.scss';
 
 const WindGrid: React.FC = () => {
-  const [windStrength, setWindStrength] = useState<number>(0);
+  const [quantumSpin, setQuantumSpin] = useState<boolean>(false);
 
   useEffect(() => {
-    const handleWindStrengthChange = () => {
-      const newWindStrength = Math.floor(Math.random() * 101);
-      setWindStrength(newWindStrength);
-    };
-
-    const interval = setInterval(handleWindStrengthChange, 3000);
+    const interval = setInterval(() => {
+      setQuantumSpin((prevQuantumSpin) => !prevQuantumSpin);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);
@@ -22,12 +19,11 @@ const WindGrid: React.FC = () => {
           Array.from({ length: 20 }).map((_, colIndex) => (
             <div
               key={`${rowIndex}-${colIndex}`}
-              className="dot"
+              className={`dot ${quantumSpin ? 'quantum-spin' : ''}`}
               style={{
-                '--wind-strength': windStrength,
                 left: `${colIndex * 5}vw`,
                 top: `${rowIndex * 5}vh`
-              } as React.CSSProperties}
+              }}
             ></div>
           ))
         ))}
