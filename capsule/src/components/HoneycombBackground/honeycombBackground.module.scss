@@ -5,9 +5,6 @@
   right: 0;
   bottom: 0;
   background-color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   overflow: hidden;
 }
 
@@ -22,7 +19,7 @@
   width: 100px;
   height: 86.6px; /* width * sqrt(3)/2 */
   position: relative;
-  margin: -1px;
+  margin: 0 -2px; /* Adjust margin to fit */
 }
 
 .hex svg {
@@ -35,5 +32,6 @@
 }
 
 .hex-row:nth-child(odd) {
-  margin-left: 50px; /* Half width */
+  margin-left: 50px; /* Shift odd rows to fit hexagons */
+  margin-top: -43.3px; /* Adjust vertical overlap */
 }

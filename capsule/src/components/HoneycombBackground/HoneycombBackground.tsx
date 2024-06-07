@@ -15,8 +15,8 @@ const HoneycombBackground: React.FC = () => {
     };
   }, []);
 
-  const rows = Math.ceil(dimensions.height / 86.6);
-  const columns = Math.ceil(dimensions.width / 100) + 1;
+  const rows = Math.ceil(dimensions.height / 43.3); // 43.3 is half height of hexagon
+  const columns = Math.ceil(dimensions.width / 50); // 50 is half width of hexagon
 
   return (
     <div className={styles['honeycomb-container']}>
@@ -38,5 +38,6 @@ const HoneycombBackground: React.FC = () => {
 };
 
 export default HoneycombBackground;
+
 
 
