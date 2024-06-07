@@ -12,30 +12,30 @@ const HexagonBackground: React.FC = () => {
     if (!ctx) return;
 
     const hexRadius = 30; // Radius of the hexagon
-    const hexWidth = Math.sqrt(3) * hexRadius;
-    const hexHeight = 2 * hexRadius;
+    const hexHeight = Math.sqrt(3) * hexRadius;
+    const hexWidth = 2 * hexRadius;
 
     const resizeCanvas = () => {
-      const cols = Math.ceil(window.innerWidth / hexWidth); // Number of columns
-      const rows = Math.ceil(window.innerHeight / (hexHeight * 0.75)); // Number of rows
-
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
 
-      drawHexagons(ctx, cols, rows, hexWidth, hexHeight, hexRadius);
+      drawHexagons(ctx, canvas.width, canvas.height, hexWidth, hexHeight, hexRadius);
     };
 
-    const drawHexagons = (ctx: CanvasRenderingContext2D, cols: number, rows: number, hexWidth: number, hexHeight: number, radius: number) => {
+    const drawHexagons = (ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, hexWidth: number, hexHeight: number, radius: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.fillStyle = '#000'; // Background color
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.strokeStyle = '#fff'; // Hexagon border color
       ctx.lineWidth = 1;
 
-      for (let y = 0; y < rows; y++) {
-        for (let x = 0; x < cols; x++) {
-          const xOffset = x * hexWidth * 0.75;
-          const yOffset = y * hexHeight * 0.75 + (x % 2) * hexHeight * 0.5;
+      const cols = Math.ceil(canvasWidth / (hexWidth * 0.75));
+      const rows = Math.ceil(canvasHeight / hexHeight) * 2;
+
+      for (let row = 0; row < rows; row++) {
+        for (let col = 0; col < cols; col++) {
+          const xOffset = col * (hexWidth * 0.75);
+          const yOffset = row * (hexHeight * 0.5) + (col % 2 === 0 ? 0 : hexHeight * 0.25);
           drawHexagon(ctx, xOffset, yOffset, radius);
         }
       }
