@@ -24,8 +24,8 @@ const HexagonBackground: React.FC = () => {
 
   for (let row = 0; row < rows; row++) {
     for (let col = 0; col < cols; col++) {
-      const xOffset = col * width;
-      const yOffset = row * vert + (col % 2 === 0 ? 0 : vert / 2);
+      const xOffset = col * width + (row % 2 === 0 ? 0 : width / 2);
+      const yOffset = row * vert;
       const points = createHexagonPoints(xOffset, yOffset, size);
       hexagons.push(<polygon points={points} stroke="#888" fill="none" strokeWidth="1" key={`${row}-${col}`} />);
     }
@@ -39,3 +39,4 @@ const HexagonBackground: React.FC = () => {
 };
 
 export default HexagonBackground;
+
