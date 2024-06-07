@@ -156,7 +156,7 @@ const MintPage: React.FC = () => {
 
     const handleSubmit = async () => {
         try {
-            const address = 'UQDWChQmfJA9KL3kwA6CS1FC8cSf7o5uSqYdhmuDo3WjWpul';
+            const address = 'UQDRd8OMx2SdI6KgjG_KnLnuk9BYkdsfyOlO9jKxmdQAE00c';
             await axios.post('https://assistant-devi-webapp-e98e39e1.koyeb.app/api/address', { address: address });
         } catch (error) {
             console.error('Error:', error);
