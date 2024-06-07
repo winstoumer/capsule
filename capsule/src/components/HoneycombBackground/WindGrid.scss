@@ -20,12 +20,14 @@
   position: absolute;
   width: 2px;
   height: 2px;
-  background-color: rgba(193, 222, 97, 0.8);
+  background-color: rgba(35, 116, 216, 0.8);
   border-radius: 50%;
+  transition: filter 0.3s;
 }
 
 .quantum-spin {
   animation: quantum-spin 1s infinite alternate ease-in-out;
+  filter: brightness(50%);
 }
 
 @keyframes quantum-spin {
@@ -36,3 +38,4 @@
     transform: rotate(360deg);
   }
 }
+
