@@ -7,7 +7,7 @@ import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 import './mint.scss';
 import Loading from '../components/Loading/Loading';
-import HoneycombBackground from '../components/HoneycombBackground/WaveGrid';
+import HoneycombBackground from '../components/HoneycombBackground/GridBackground';
 
 interface CollectionData {
     id: number;
