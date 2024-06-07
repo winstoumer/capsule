@@ -18,10 +18,11 @@ const WindGrid: React.FC = () => {
   return (
     <div className="wind-grid">
       {Array.from({ length: 100 }).map((_, index) => (
-        <div key={index} className="dot" style={{ '--wind-strength': windStrength } as React.CSSProperties}></div>
+        <div key={index} className="dot" style={{ '--wind-strength': windStrength, left: `${Math.random() * 100}vw`, top: `${Math.random() * 100}vh` } as React.CSSProperties}></div>
       ))}
     </div>
   );
 };
 
 export default WindGrid;
+
