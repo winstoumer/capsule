@@ -8,13 +8,21 @@
   z-index: -1;
 }
 
+.dots-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .dot {
   position: absolute;
   width: 2px;
   height: 2px;
-  background-color: rgb(20, 27, 99);
+  background-color: rgba(101, 159, 218, 0.8);
   border-radius: 50%;
-  animation: wave 10s infinite alternate ease-in-out;
+  animation: wave 5s infinite alternate ease-in-out;
 }
 
 @keyframes wave {
@@ -22,7 +30,7 @@
     transform: translateY(0) scale(1);
   }
   50% {
-    transform: translateY(-10px) scale(1.2);
+    transform: translateY(-5px) scale(1.2);
   }
   100% {
     transform: translateY(0) scale(1);
