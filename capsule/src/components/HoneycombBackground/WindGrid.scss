@@ -4,24 +4,71 @@
   position: fixed;
   top: 0;
   left: 0;
-  pointer-events: none;
+  background-color: #000;
+  overflow: hidden;
   z-index: -1;
 }
 
-.lights {
+.line {
+  position: relative;
   width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  animation: animateLights 5s infinite;
+  height: 100px;
+  margin-bottom: 20px;
 }
 
-@keyframes animateLights {
-  0%, 100% {
-    transform: translateY(-10%);
+.dot {
+  position: absolute;
+  width: 5px;
+  height: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+}
+
+.dot:nth-child(1) {
+  top: 0;
+  left: 10%;
+}
+
+.dot:nth-child(2) {
+  top: 10%;
+  left: 30%;
+}
+
+.dot:nth-child(3) {
+  top: 20%;
+  left: 50%;
+}
+
+.dot:nth-child(4) {
+  top: 30%;
+  left: 70%;
+}
+
+.dot:nth-child(5) {
+  top: 40%;
+  left: 90%;
+}
+
+@keyframes northern-lights {
+  0% {
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(10%);
+    transform: translateY(10px);
   }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.line:nth-child(1) {
+  animation: northern-lights 5s infinite;
+}
+
+.line:nth-child(2) {
+  animation: northern-lights 5s infinite 1s;
+}
+
+.line:nth-child(3) {
+  animation: northern-lights 5s infinite 2s;
 }
