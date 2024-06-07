@@ -11,31 +11,32 @@ const HexagonBackground: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    const hexRadius = 30; // Radius of the hexagon
+    const hexRadius = 30; // Радиус шестиугольника
     const hexHeight = Math.sqrt(3) * hexRadius;
     const hexWidth = 2 * hexRadius;
+    const hexVerticalSpacing = hexHeight;
+    const hexHorizontalSpacing = 1.5 * hexRadius;
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-
-      drawHexagons(ctx, canvas.width, canvas.height, hexWidth, hexHeight, hexRadius);
+      drawHexagons(ctx, canvas.width, canvas.height, hexWidth, hexHeight, hexRadius, hexHorizontalSpacing, hexVerticalSpacing);
     };
 
-    const drawHexagons = (ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, hexWidth: number, hexHeight: number, radius: number) => {
+    const drawHexagons = (ctx: CanvasRenderingContext2D, canvasWidth: number, canvasHeight: number, hexWidth: number, hexHeight: number, radius: number, hexHorizontalSpacing: number, hexVerticalSpacing: number) => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = '#000'; // Background color
+      ctx.fillStyle = '#000'; // Цвет фона
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      ctx.strokeStyle = '#fff'; // Hexagon border color
+      ctx.strokeStyle = '#fff'; // Цвет линии шестиугольника
       ctx.lineWidth = 1;
 
-      const cols = Math.ceil(canvasWidth / (hexWidth * 0.75));
-      const rows = Math.ceil(canvasHeight / hexHeight) * 2;
+      const cols = Math.ceil(canvasWidth / hexHorizontalSpacing);
+      const rows = Math.ceil(canvasHeight / hexVerticalSpacing);
 
       for (let row = 0; row < rows; row++) {
         for (let col = 0; col < cols; col++) {
-          const xOffset = col * (hexWidth * 0.75);
-          const yOffset = row * (hexHeight * 0.5) + (col % 2 === 0 ? 0 : hexHeight * 0.25);
+          const xOffset = col * hexHorizontalSpacing;
+          const yOffset = row * hexVerticalSpacing + (col % 2 === 0 ? 0 : hexHeight / 2);
           drawHexagon(ctx, xOffset, yOffset, radius);
         }
       }
@@ -54,7 +55,7 @@ const HexagonBackground: React.FC = () => {
     };
 
     window.addEventListener('resize', resizeCanvas);
-    resizeCanvas(); // Initial draw
+    resizeCanvas(); // Первоначальный вызов
 
     return () => {
       window.removeEventListener('resize', resizeCanvas);
