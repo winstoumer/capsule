@@ -7,7 +7,6 @@ import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 import './mint.scss';
 import Loading from '../components/Loading/Loading';
-import HoneycombBackground from '../components/HoneycombBackground/WindGrid';
 
 interface CollectionData {
     id: number;
@@ -33,7 +32,6 @@ const MintPage: React.FC = () => {
     const [nftUuid] = useState<string>(uuidv4());
 
     const [mintActive, setMintActive] = useState(false);
-    const [disable] = useState(false);
 
     const userFriendlyAddress = useTonAddress();
 
