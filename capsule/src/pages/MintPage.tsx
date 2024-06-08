@@ -198,25 +198,31 @@ const MintPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <div className='nft-description'>
-                    <div className='total-nft'>
-                        {collection.nft_left}/{collection.total_nft} {mintActive}
+                {mintActive ? (
+                    <div className='nft-description'>
+                        <div className='total-nft'>
+                            {collection.nft_left}/{collection.total_nft}
+                        </div>
+                        <div className='price-mint'>
+                            <span className='color-blue'>0.2</span> TON
+                        </div>
+                        <React.Fragment>
+                            {wallet ? (
+                                <div>
+                                    <button className="default-button" onClick={createTransaction}>Mint</button>
+                                </div>
+                            ) : (
+                                <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                    Connect wallet
+                                </button>
+                            )}
+                        </React.Fragment>
                     </div>
-                    <div className='price-mint'>
-                        <span className='color-blue'>0.2</span> TON
+                ) : (
+                    <div className="soon">
+                        Soon mint...
                     </div>
-                    <React.Fragment>
-                        {wallet ? (
-                            <div>
-                                <button className="default-button" onClick={createTransaction}>Mint</button>
-                            </div>
-                        ) : (
-                            <button className="default-button" onClick={() => tonConnectUi.openModal()}>
-                                Connect wallet
-                            </button>
-                        )}
-                    </React.Fragment>
-                </div>
+                )}
                 {userData.id === 935718482 ? (<React.Fragment>
                             {wallet ? (
                                 <div>
