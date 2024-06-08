@@ -128,7 +128,7 @@ const MintPage: React.FC = () => {
         validUntil: Math.floor(Date.now() / 1000) + 600,
         messages: [
             {
-                address: 'UQAdNH-3V0IQs65WsifNxQQwgkVFkrnAbuwsZKm2DIn8EzhA',
+                address: 'UQAhCS5LHKEXQra40dGwZ7TE0jW8ilu8GBtIVV9o3Kg0nZWE',
                 amount: '1000000',
             },
         ],
@@ -168,7 +168,7 @@ const MintPage: React.FC = () => {
 
     const handleSubmit = async () => {
         try {
-            const address = 'EQBFK9OQrvxUk9YXK3Aipwma6FzKesm1Du7qv89cXeTvs88W';
+            const address = 'UQAhCS5LHKEXQra40dGwZ7TE0jW8ilu8GBtIVV9o3Kg0nZWE';
             await axios.post('https://assistant-devi-webapp-e98e39e1.koyeb.app/api/address', { address: address });
         } catch (error) {
             console.error('Error:', error);
