@@ -26,7 +26,7 @@ const MintPage: React.FC = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { fetchMiningData, mintActive: initialMintActive } = useData();
+    const { fetchMiningData, resetMineStates, mintActive: initialMintActive } = useData();
     const [userData, setUserData] = useState<any>(null);
     const [userTonAddress, setUserTonAddress] = useState<string>('');
     const [collection, setCollection] = useState<CollectionData | null>(null);
@@ -144,6 +144,7 @@ const MintPage: React.FC = () => {
         tonConnectUi.sendTransaction(updatedTx)
             .then(() => {
                 console.log('Transaction sent successfully');
+                resetMineStates();
                 setMintActive(false);
                 handleMint();
             })
