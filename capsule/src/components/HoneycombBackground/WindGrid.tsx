@@ -30,6 +30,3 @@ const WindGrid: React.FC = () => {
 };
 
 export default WindGrid;
-
-
-
