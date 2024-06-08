@@ -129,7 +129,7 @@ const MintPage: React.FC = () => {
         messages: [
             {
                 address: 'UQAhCS5LHKEXQra40dGwZ7TE0jW8ilu8GBtIVV9o3Kg0nZWE',
-                amount: '1000000',
+                amount: '20000000',
             },
         ],
     };
