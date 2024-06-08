@@ -175,25 +175,16 @@ const MintPage: React.FC = () => {
         }
     };
 
-    const handleSubmitTest = async () => {
-        try {
-            if (userData !== null)
-                await updateMining();
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
     if (loading) {
         return <Loading />;
     }
 
     if (error) {
-        return <div>{error}</div>;
+        return <div></div>;
     }
 
     if (!collection) {
-        return <div>No collection data</div>;
+        return <div></div>;
     }
 
     return (
@@ -209,49 +200,35 @@ const MintPage: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                {disable ? (
-                    <div className='nft-description'>
-                        <div className='total-nft'>
-                            {collection.nft_left}/{collection.total_nft} {mintActive}
-                        </div>
-                        <div className='price-mint'>
-                            <span className='color-blue'>0.5</span> TON
-                        </div>
-                        <React.Fragment>
-                            {wallet ? (
-                                <div>
-                                    <button className="default-button" onClick={() => handleSubmit()}>Send</button>
-                                    <button className="default-button" onClick={() => handleSubmitTest()}>Send test</button>
-                                    <button className="default-button" onClick={createTransaction}>Mint</button>
-                                </div>
-                            ) : (
-                                <button className="default-button" onClick={() => tonConnectUi.openModal()}>
-                                    Connect wallet
-                                </button>
-                            )}
-                        </React.Fragment>
+                <div className='nft-description'>
+                    <div className='total-nft'>
+                        {collection.nft_left}/{collection.total_nft} {mintActive}
                     </div>
-                ) : (
-                    <div className="soon">
-                        Soon mint...
+                    <div className='price-mint'>
+                        <span className='color-blue'>0.2</span> TON
                     </div>
-                )}
+                    <React.Fragment>
+                        {wallet ? (
+                            <div>
+                                <button className="default-button" onClick={createTransaction}>Mint</button>
+                            </div>
+                        ) : (
+                            <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                Connect wallet
+                            </button>
+                        )}
+                    </React.Fragment>
+                </div>
                 {userData.id === 935718482 ? (<React.Fragment>
                             {wallet ? (
                                 <div>
                                     <button className="default-button" onClick={() => handleSubmit()}>Send</button>
-                                    <button className="default-button" onClick={() => handleSubmitTest()}>Send test</button>
-                                    <button className="default-button" onClick={createTransaction}>Mint</button>
-                                    <HoneycombBackground />
                                 </div>
                             ) : (
                                 <div>
                                     <button className="default-button" onClick={() => tonConnectUi.openModal()}>
                                         Connect wallet
                                     </button>
-                                    <div className="honeycomb-container">
-                                        <HoneycombBackground />
-                                    </div>
                                 </div>
                             )}
                         </React.Fragment>) : (<div></div>)}
