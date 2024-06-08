@@ -7,7 +7,7 @@ import HomePageWithProviders from './pages/HomePageWithProviders';
 import BoostPageWithProviders from './pages/BoostPageWithProviders';
 import EarnPage from './pages/EarnPage';
 import CollectionPage from './pages/CollectionPage';
-import MintPage from './pages/MintPage';
+import MintPageWithProviders from './pages/MintPageWithProviders';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -63,7 +63,7 @@ const AppWrapper: React.FC = () => {
       <Route path="/boost" element={<BoostPageWithProviders />} />
       <Route path="/earn" element={<EarnPage />} />
       <Route path="/collections" element={<CollectionPage />} />
-      <Route path="/mint/:id" element={<MintPage />} />
+      <Route path="/mint/:id" element={<MintPageWithProviders />} />
     </Routes>
   );
 };
