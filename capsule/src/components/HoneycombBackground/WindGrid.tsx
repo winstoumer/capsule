@@ -10,8 +10,6 @@ const WindGrid: React.FC = () => {
         <div className="dot"></div>
         <div className="dot"></div>
         <div className="dot"></div>
-      </div>
-      <div className="line">
         <div className="dot"></div>
         <div className="dot"></div>
         <div className="dot"></div>
@@ -19,6 +17,35 @@ const WindGrid: React.FC = () => {
         <div className="dot"></div>
       </div>
       <div className="line">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+      </div>
+      <div className="line">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+      </div>
+      <div className="line">
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
+        <div className="dot"></div>
         <div className="dot"></div>
         <div className="dot"></div>
         <div className="dot"></div>
