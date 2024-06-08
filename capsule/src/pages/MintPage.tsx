@@ -26,13 +26,14 @@ const MintPage: React.FC = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { fetchMiningData, mintActive } = useData();
+    const { fetchMiningData, mintActive: initialMintActive } = useData();
     const [userData, setUserData] = useState<any>(null);
     const [userTonAddress, setUserTonAddress] = useState<string>('');
     const [collection, setCollection] = useState<CollectionData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [nftUuid] = useState<string>(uuidv4());
+    const [mintActive, setMintActive] = useState<boolean>(initialMintActive ?? false);
 
     const userFriendlyAddress = useTonAddress();
 
@@ -143,6 +144,7 @@ const MintPage: React.FC = () => {
         tonConnectUi.sendTransaction(updatedTx)
             .then(() => {
                 console.log('Transaction sent successfully');
+                setMintActive(false);
                 handleMint();
             })
             .catch((error) => {
