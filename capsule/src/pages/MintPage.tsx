@@ -7,6 +7,7 @@ import PageComponent from '../components/PageComponent/PageComponent';
 import axios from 'axios';
 import './mint.scss';
 import Loading from '../components/Loading/Loading';
+import { useData } from '../components/DataProvider/DataContext';
 
 interface CollectionData {
     id: number;
@@ -24,14 +25,14 @@ const MintPage: React.FC = () => {
     const apiUrl = import.meta.env.VITE_API_URL;
 
     const { id } = useParams<{ id: string }>();
+
+    const { fetchMiningData, mintActive } = useData();
     const [userData, setUserData] = useState<any>(null);
     const [userTonAddress, setUserTonAddress] = useState<string>('');
     const [collection, setCollection] = useState<CollectionData | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
     const [nftUuid] = useState<string>(uuidv4());
-
-    const [mintActive, setMintActive] = useState(false);
 
     const userFriendlyAddress = useTonAddress();
 
@@ -51,7 +52,7 @@ const MintPage: React.FC = () => {
         if (userData && userData.id) {
             fetchMiningData(userData.id.toString());
         }
-    }, [userData]);
+    }, [userData, fetchMiningData]);
 
     useEffect(() => {
         const fetchCollection = async () => {
@@ -67,21 +68,6 @@ const MintPage: React.FC = () => {
 
         fetchCollection();
     }, [id]);
-
-    const fetchMiningData = async (telegramUserId: string) => {
-        try {
-            const response = await axios.get(`${apiUrl}/api/currentMining/current/${telegramUserId}`);
-
-            if (response.status !== 200) {
-                throw new Error('Ошибка при загрузке данных о текущей активности');
-            }
-
-            const data = response.data;
-            setMintActive(data.mint_active);
-        } catch (error) {
-            console.error(error);
-        }
-    };
 
     const updateMining = async (): Promise<void> => {
         try {
