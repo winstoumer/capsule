@@ -133,6 +133,7 @@ button {
   border: none;
   display: flex;
   align-items: center;
+  white-space: nowrap;
 }
 
 /* end buttons */
