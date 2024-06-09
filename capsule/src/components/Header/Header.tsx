@@ -25,14 +25,14 @@ export const Header: React.FC = () => {
     return (
         <header>
             <div className='header-width'>
-                <div className="header-b">
+                <div className="first-name">
                     {userData ? (
                         <>{userData.first_name}</>
                     ) : (
                         <span></span>
                     )}
                 </div>
-                <div className="header-b">
+                <div>
                     <React.Fragment>
                         {wallet ? (
                             <TonConnectButton />

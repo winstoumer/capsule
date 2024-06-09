@@ -47,8 +47,8 @@ body {
 /* scroll */
 .custom-scroll {
   overflow-y: auto;
-  scrollbar-width: thin;
-  scrollbar-color: #ffffff transparent;
+  scrollbar-width: none; /* thin */
+  scrollbar-color: var(--general-color-blue) transparent;
 
   &::-webkit-scrollbar {
     display: none;

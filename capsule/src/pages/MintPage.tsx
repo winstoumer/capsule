@@ -8,6 +8,7 @@ import axios from 'axios';
 import './mint.scss';
 import Loading from '../components/Loading/Loading';
 import { useData } from '../components/DataProvider/DataContext';
+import HexagonGrid from '../components/Hexagon/HexagonGrid';
 
 interface CollectionData {
     id: number;
@@ -222,6 +223,7 @@ const MintPage: React.FC = () => {
                                     <button className="default-button" onClick={() => tonConnectUi.openModal()}>
                                         Connect wallet
                                     </button>
+                                    <HexagonGrid />
                                 </div>
                             )}
                         </React.Fragment>) : (<div></div>)}
