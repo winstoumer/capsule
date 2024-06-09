@@ -1,4 +1,4 @@
-// src/components/HexagonGrid.tsx
+// src/components/Hexagon/HexagonGrid.tsx
 import React from 'react';
 import Hexagon from './Hexagon';
 import styles from './HexagonGrid.module.scss';

@@ -1,18 +1,5 @@
-// src/components/HexagonGrid.module.scss
-.container {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  z-index: -1;
-}
-
-.svgContainer {
-  width: 100%;
-  height: 100%;
-}
+// src/components/Hexagon/Hexagon.module.scss
+.hexagon {
+    stroke: #2980b9;
+    stroke-width: 2;
+  }

@@ -1,4 +1,4 @@
-// src/components/Hexagon.tsx
+// src/components/Hexagon/Hexagon.tsx
 import React from 'react';
 import styles from './Hexagon.module.scss';
 
