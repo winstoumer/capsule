@@ -1,4 +1,17 @@
 // src/components/Hexagon/HexagonGrid.module.scss
+// src/components/Hexagon/HexagonGrid.module.scss
+@keyframes pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
 .container {
   position: fixed;
   top: 50%;
@@ -14,10 +27,12 @@
   background: radial-gradient(circle at 50% 50%, #310047ab, transparent 70%, transparent 100%);
   box-shadow: inset 0 0 10px #000000;
   z-index: -1;
+  animation: pulse 5s ease-in-out infinite;
 }
 
 .svgContainer {
   width: 100%;
   height: 100%;
 }
+
 
