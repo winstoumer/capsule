@@ -5,7 +5,7 @@ import styles from './HexagonGrid.module.scss';
 
 const HexagonGrid: React.FC = () => {
   const size = 50; // Размер одного шестиугольника
-  const fill = 'transpatent'; // Цвет шестиугольника
+  const fill = '#3498db'; // Цвет шестиугольника
   const hexagons = [];
 
   const rows = Math.ceil(window.innerHeight / (Math.sqrt(3) * size));
