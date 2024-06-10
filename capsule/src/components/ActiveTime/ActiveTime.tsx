@@ -133,7 +133,7 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         const generateNftDate = async () => {
-            if (matterId && matterId < 2) {
+            if (matterId && matterId < 3) {
                 return;
             }
 
