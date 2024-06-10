@@ -147,7 +147,7 @@ export const ActiveTime = () => {
 
             const endDate = new Date(currentTime);
             const startDate = new Date(currentTime);
-            endDate.setDate(startDate.getDate() + 3);
+            endDate.setDate(startDate.getDate() + 5);
 
             const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
             setNftDate(randomDate);

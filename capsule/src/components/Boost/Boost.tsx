@@ -193,7 +193,7 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         const generateNftDate = async () => {
-            if (nextLevel && matterId && matterId < 3 && nextLevel.id < 3) {
+            if (nextLevel && matterId && matterId < 3) {
                 return;
             }
 
@@ -207,7 +207,7 @@ export const Boost: React.FC = () => {
 
             const endDate = new Date(currentTime);
             const startDate = new Date(currentTime);
-            endDate.setDate(startDate.getDate() + 3);
+            endDate.setDate(startDate.getDate() + 5);
 
             const randomDate = new Date(startDate.getTime() + Math.random() * (endDate.getTime() - startDate.getTime()));
 
