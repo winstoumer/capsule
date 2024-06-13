@@ -188,32 +188,26 @@ export const ActiveTime = () => {
         setButton(false);
         setButtonMintActive(false);
     };
-
+    
     const handleClick = async () => {
         setButton(true);
         try {
             if (nftDate && matterId !== null) {
-                if (nftMined && nftEndDate !== null && mintActive === false) {
-                    const date = new Date(nftEndDate);
-                    await updateMining(matterId, true, date, false);
-                }
-                else if (mintActive && nftEndDate !== null) {
-                    const date = new Date(nftEndDate);
-                    await updateMining(matterId, true, date, mintActive);
-                }
-                else {
-                    await updateMining(matterId, true, nftDate, false);
-                }
-            } else {
-                if (matterId !== null && mintActive === false)
-                    await updateMining(matterId, false, null, false);
+                const date = nftEndDate ? new Date(nftEndDate) : nftDate;
+                const minting = mintActive && nftEndDate !== null;
+                await updateMining(matterId, true, date, minting);
+            } else if (matterId !== null && !mintActive) {
+                await updateMining(matterId, false, null, false);
             }
+    
             await updateBalance(value);
             resetStatesHome();
             resetTimeStates();
             resetMineStates();
         } catch (error) {
             console.error('Error updating', error);
+        } finally {
+            setButton(false); // Восстанавливаем кнопку в исходное состояние
         }
     };
 
