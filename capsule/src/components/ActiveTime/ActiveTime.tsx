@@ -188,14 +188,20 @@ export const ActiveTime = () => {
         setButton(false);
         setButtonMintActive(false);
     };
-    
+
     const handleClick = async () => {
         setButton(true);
         try {
             if (nftDate && matterId !== null) {
-                const date = nftEndDate ? new Date(nftEndDate) : nftDate;
-                const minting = mintActive && nftEndDate !== null;
-                await updateMining(matterId, true, date, minting);
+                if (nftMined && nftEndDate !== null && !mintActive) {
+                    const date = new Date(nftEndDate);
+                    await updateMining(matterId, true, date, false);
+                } else if (mintActive && nftEndDate !== null) {
+                    const date = new Date(nftEndDate);
+                    await updateMining(matterId, true, date, mintActive);
+                } else {
+                    await updateMining(matterId, true, nftDate, false);
+                }
             } else if (matterId !== null && !mintActive) {
                 await updateMining(matterId, false, null, false);
             }
