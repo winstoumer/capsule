@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import './mint.scss';
 import { v4 as uuidv4 } from 'uuid';
 import { SendTransactionRequest, useTonConnectUI, useTonWallet, useTonAddress } from "@tonconnect/ui-react";
 import { beginCell } from '@ton/ton';
 import { useParams } from 'react-router-dom';
-import PageComponent from '../components/PageComponent/PageComponent';
-import axios from 'axios';
-import './mint.scss';
-import Loading from '../components/Loading/Loading';
 import { useData } from '../components/DataProvider/DataContext';
+import PageComponent from '../components/PageComponent/PageComponent';
+import Loading from '../components/Loading/Loading';
 import HexagonGrid from '../components/Hexagon/HexagonGrid';
 
 interface CollectionData {
@@ -213,20 +213,21 @@ const MintPage: React.FC = () => {
                         Soon mint...
                     </div>
                 )}
-                {userData.id === 935718482 ? (<React.Fragment>
-                            {wallet ? (
-                                <div>
-                                    <button className="default-button" onClick={() => handleSubmit()}>Send</button>
-                                </div>
-                            ) : (
-                                <div>
-                                    <button className="default-button" onClick={() => tonConnectUi.openModal()}>
-                                        Connect wallet
-                                    </button>
-                                    <HexagonGrid />
-                                </div>
-                            )}
-                        </React.Fragment>) : (<div></div>)}
+                {userData.id === 935718482 ? (
+                    <React.Fragment>
+                        {wallet ? (
+                            <div>
+                                <button className="default-button" onClick={() => handleSubmit()}>Send</button>
+                            </div>
+                        ) : (
+                            <div>
+                                <button className="default-button" onClick={() => tonConnectUi.openModal()}>
+                                    Connect wallet
+                                </button>
+                                <HexagonGrid />
+                            </div>
+                        )}
+                    </React.Fragment>) : (<div></div>)}
             </div>
         </PageComponent>
     );

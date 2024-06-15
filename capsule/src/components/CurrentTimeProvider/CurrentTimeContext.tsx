@@ -26,7 +26,7 @@ export const CurrentTimeProvider: React.FC<CurrentTimeProviderProps> = ({ childr
                 setCurrentTime(currentTimeFormatted);
             } catch (error) {
                 console.error('Ошибка при получении текущего времени с сервера, повторная попытка...', error);
-                setTimeout(tryFetch, 1000); // Повторная попытка через 2 секунды
+                setTimeout(tryFetch, 1000);
             }
         };
 
