@@ -16,6 +16,7 @@ export const Earn = () => {
     const [userData, setUserData] = useState<any>(null);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
+    const [totalReward, setTotalReward] = useState<number>(0);
 
     const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -30,6 +31,14 @@ export const Earn = () => {
             fetchTasks(userData.id.toString());
         }
     }, [userData]);
+
+    useEffect(() => {
+        // Calculate the total reward of completed tasks
+        const completedReward = tasks
+            .filter(task => !task.active || task.ready)
+            .reduce((sum, task) => sum + parseFloat(task.reward), 0);
+        setTotalReward(completedReward);
+    }, [tasks]);
 
     const fetchTasks = async (telegramUserId: string) => {
         try {
@@ -58,6 +67,10 @@ export const Earn = () => {
 
     return (
         <div className='tasks'>
+            <div className='earn-info'>
+                <div className='e-icon'>💸</div>
+                <div className='e-total'>{totalReward}</div>
+            </div>
             {tasks.map(task => (
                 <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
                     <div className='task-info'>
