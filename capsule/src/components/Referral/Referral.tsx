@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './referral.scss';
-import Loading from '../Loading/Loading';
+//import Loading from '../Loading/Loading';
 import EarnInfo from '../EarnInfo/EarnInfo';
 
 export const Referral = () => {
@@ -39,7 +39,7 @@ export const Referral = () => {
         };
 
     if (loading) {
-        return <Loading />;
+        return <div></div>;
     }
 
     const handleReferralLinkClick = async () => {
