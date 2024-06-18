@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
+import EarnInfo from '../EarnInfo/EarnInfo';
 //import Loading from '../Loading/Loading';
 
 interface Task {
@@ -67,10 +68,7 @@ export const Earn = () => {
 
     return (
         <div className='tasks'>
-            <div className='earn-info'>
-                <div className='e-icon'>💸</div>
-                <div className='e-total'>{totalReward}</div>
-            </div>
+            <EarnInfo totalReward={totalReward} icon="💸" />
             {tasks.map(task => (
                 <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
                     <div className='task-info'>
