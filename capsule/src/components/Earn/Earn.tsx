@@ -62,7 +62,7 @@ export const Earn = () => {
     };
 
     if (loading) {
-        return <Loading />;
+        return <div></div>;
     }
 
     return (
