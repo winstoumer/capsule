@@ -140,10 +140,11 @@ button {
 
 .custom-button {
   font-size: 18px;
-  font-weight: 500;
-  color: var(--general-color-blue);
-  background-color: var(--general-color-darkblue);
-  height: 36px;
+  font-weight: 300;
+  color: black;
+  background-color: #ffe31d;
+  width: 100%;
+  height: 46px;
   padding: 0 20px;
   border-radius: 20px;
   border: none;
