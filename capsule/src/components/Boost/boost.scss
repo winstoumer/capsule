@@ -47,12 +47,12 @@
 .boost-item {
     display: flex;
     position: relative;
-    max-width: 220px;
-    max-height: 220px;
+    max-width: 260px;
+    max-height: 260px;
 }
 
 .boost-item-image {
-    max-width: 210px;
+    max-width: 260px;
     width: 100%;
     position: relative;
     animation: appearAndMoveCapsule 1s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
