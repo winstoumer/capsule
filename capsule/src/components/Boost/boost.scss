@@ -13,9 +13,33 @@
     gap: 15px;
     overflow: hidden;
     border: 1px solid #1f1f1f;
-    border-radius: 30px;
     padding: 26px;
-}
+    position: relative;
+  }
+  
+  .boost-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #1f1f1f;
+    transform: skew(-20deg);
+    z-index: -1;
+  }
+  
+  .boost-container::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+    background-color: #1f1f1f;
+    transform: skew(-20deg);
+    z-index: -1;
+  }
 
 .boost-container-animate {
     animation: slideAndAppear 0.5s ease forwards; // Объединенная анимация
