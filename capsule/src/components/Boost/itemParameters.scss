@@ -3,12 +3,13 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
-    width: 300px;
+    width: 240px;
 
     .item-name,
     .item-value {
         white-space: nowrap;
         color: var(--color-text-info);
+        color: white;
         font-size: 18px;
         font-weight: 300;
         text-align: center;
