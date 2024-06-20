@@ -286,9 +286,7 @@ export const Boost: React.FC = () => {
                 <div className='boost-info'>
                     {!nextLevel && userLevel && (
                         <>
-                            {userLevel.name !== undefined && (
-                                <ItemParameters name="Level" value={userLevel.name} />
-                            )}
+                            <ItemParameters name="Level" value={userLevel.name} />
                             {userLevel.coins !== undefined && (
                                 <ItemParameters name="Coins" value={userLevel.coins} />
                             )}
