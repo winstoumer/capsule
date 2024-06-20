@@ -287,7 +287,13 @@ export const Boost: React.FC = () => {
                         <div className='boost-item-image'></div>
                     </div>
                 )}
-                <div className='boost-name'>{nextLevel?.name}</div>
+                {!nextLevel && userLevel && (
+                    <>
+                        {userLevel.name !== undefined && (
+                            <div className='boost-name'>{userLevel.name}</div>
+                        )}
+                    </>
+                )}
                 <div className='boost-info'>
                     {!nextLevel && userLevel && (
                         <>
@@ -303,9 +309,16 @@ export const Boost: React.FC = () => {
                         </>
                     )}
                 </div>
-                <div className='price-item'>
-                    {nextLevel && <span>{nextLevel.price}</span>}
-                </div>
+
+                {!nextLevel && userLevel && (
+                    <>
+                        {userLevel.price !== undefined && (
+                            <div className='price-item'>
+                                {nextLevel && <span>{userLevel.price}</span>}
+                            </div>
+                        )}
+                    </>
+                )}
             </div>
             {nextLevel && level !== null && level < levels.length && balanceData >= nextLevel.price ? (
                 !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
