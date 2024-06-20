@@ -13,7 +13,7 @@ const ItemParameters: React.FC<ItemParametersProps> = ({ name, value, suffix }) 
       <span className="item-name">{name}</span>
       <span className="dots"></span>
       <span className="item-value">
-        {value !== undefined ? `${value}${suffix || ''}` : ''}
+        {value}{suffix}
       </span>
     </div>
   );
