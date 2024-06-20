@@ -8,13 +8,12 @@ interface ItemParametersProps {
 }
 
 const ItemParameters: React.FC<ItemParametersProps> = ({ name, value, suffix }) => {
-  const displayValue = value !== undefined ? `${value}${suffix || ''}` : '';
   return (
     <div className="item-with-dots">
       <span className="item-name">{name}</span>
       <span className="dots"></span>
       <span className="item-value">
-        {displayValue}
+        {value !== undefined ? `${value}${suffix || ''}` : ''}
       </span>
     </div>
   );
