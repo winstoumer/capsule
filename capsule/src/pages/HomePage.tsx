@@ -7,7 +7,6 @@ import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 import { useData } from '../components/DataProvider/DataContext';
 import Loading from '../components/Loading/Loading';
 import Balance from '../components/Balance/Balance';
-import HexagonGrid from '../components/Hexagon/HexagonGrid';
 
 const HomePage: React.FC = () => {
   const { balanceData, loading } = useData();
@@ -25,7 +24,6 @@ const HomePage: React.FC = () => {
         </Balance>
         <ActiveTime />
       </div>
-      <HexagonGrid />
       <Navigation />
     </PageComponent>
   );
