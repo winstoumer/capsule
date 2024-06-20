@@ -295,7 +295,7 @@ export const Boost: React.FC = () => {
                     <ItemParameters name="NFT" value={nextLevel?.mines_nft ? 'yes' : 'no'} />
                 </div>
                 <div className='price-item'>
-                    {nextLevel && <span>{nextLevel.price}</span>}
+                    {nextLevel && <span>{nextLevel.price}</span>} 
                 </div>
             </div>
             {nextLevel && level !== null && level < levels.length && balanceData >= nextLevel.price ? (
