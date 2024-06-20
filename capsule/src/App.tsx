@@ -34,7 +34,11 @@ const AppWrapper: React.FC = () => {
 
           if (location.pathname.startsWith('/mint/')) {
             backButton.show();
-          } else {
+          }
+          else if (location.pathname.startsWith('/mint/')) {
+            backButton.show();
+          }
+          else {
             backButton.hide();
           }
         }
@@ -44,7 +48,11 @@ const AppWrapper: React.FC = () => {
       if (window.Telegram && window.Telegram.WebApp) {
         if (location.pathname.startsWith('/mint/')) {
           window.Telegram.WebApp.BackButton.show();
-        } else {
+        }
+        else if (location.pathname.startsWith('/boost')) {
+          window.Telegram.WebApp.BackButton.show();
+        }
+        else {
           window.Telegram.WebApp.BackButton.hide();
         }
       }
