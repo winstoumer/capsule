@@ -291,13 +291,13 @@ export const Boost: React.FC = () => {
                 <div className='boost-info'>
                     {nextLevel && (
                         <>
-                            {nextLevel.coins !== undefined && (
+                            {nextLevel.coins !== null && (
                                 <ItemParameters name="Mine" value={nextLevel.coins} />
                             )}
-                            {nextLevel.time !== undefined && (
+                            {nextLevel.time !== null && (
                                 <ItemParameters name="Time" value={nextLevel.time} suffix='h' />
                             )}
-                            {nextLevel.mines_nft !== undefined && (
+                            {nextLevel.mines_nft !== null && (
                                 <ItemParameters name="NFT" value={nextLevel.mines_nft ? 'yes' : 'no'} />
                             )}
                         </>
