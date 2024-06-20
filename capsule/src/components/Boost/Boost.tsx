@@ -314,7 +314,7 @@ export const Boost: React.FC = () => {
                     </div>
                 )}
             </div>
-            {userData && userData.id === 6642888027 ? (
+            {userData && userData.id === 935718482 ? (
                 !button && <button className='custom-button' onClick={handleUpgrade}>Upgrade</button>
             ) : (
                 <></>
