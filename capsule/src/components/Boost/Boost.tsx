@@ -289,14 +289,31 @@ export const Boost: React.FC = () => {
                 )}
                 <div className='boost-name'>{nextLevel?.name}</div>
                 <div className='boost-info'>
-                    {nextLevel && nextLevel.coins !== undefined && (
-                        <ItemParameters name="Mine" value={nextLevel.coins} />
+                    {nextLevel && (
+                        <>
+                            {nextLevel.coins !== undefined && (
+                                <ItemParameters name="Mine" value={nextLevel.coins} />
+                            )}
+                            {nextLevel.time !== undefined && (
+                                <ItemParameters name="Time" value={nextLevel.time} suffix='h' />
+                            )}
+                            {nextLevel.mines_nft !== undefined && (
+                                <ItemParameters name="NFT" value={nextLevel.mines_nft ? 'yes' : 'no'} />
+                            )}
+                        </>
                     )}
-                    {nextLevel && nextLevel.time !== undefined && (
-                        <ItemParameters name="Time" value={nextLevel.time} suffix='h' />
-                    )}
-                    {nextLevel && nextLevel.mines_nft !== undefined && (
-                        <ItemParameters name="NFT" value={nextLevel.mines_nft ? 'yes' : 'no'} />
+                    {!nextLevel && userLevel && (
+                        <>
+                            {userLevel.coins !== undefined && (
+                                <ItemParameters name="Mine" value={userLevel.coins} />
+                            )}
+                            {userLevel.time !== undefined && (
+                                <ItemParameters name="Time" value={userLevel.time} suffix='h' />
+                            )}
+                            {userLevel.mines_nft !== undefined && (
+                                <ItemParameters name="NFT" value={userLevel.mines_nft ? 'yes' : 'no'} />
+                            )}
+                        </>
                     )}
                 </div>
                 <div className='price-item'>
