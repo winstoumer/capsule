@@ -141,13 +141,12 @@ button {
 .custom-button {
   font-size: 22px;
   font-weight: 300;
-  color: black;
-  background-color: #ffe31d;
-  width: 100%;
+  color: white;
+  background-color: transparent;
   height: 48px;
   padding: 0 20px;
   border-radius: 20px;
-  border: none;
+  border: 1px solid white;
   display: flex;
   align-items: center;
   white-space: nowrap;
