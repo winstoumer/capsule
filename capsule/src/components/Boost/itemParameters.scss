@@ -1,0 +1,21 @@
+.item-with-dots {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+
+    .item-name,
+    .item-value {
+        white-space: nowrap;
+        color: var(--color-text-info);
+        font-size: 18px;
+        font-weight: 300;
+        text-align: center;
+    }
+
+    .dots {
+        flex-grow: 1;
+        border-bottom: 1px dotted var(--color-text-info);
+        margin: 0 8px;
+    }
+}

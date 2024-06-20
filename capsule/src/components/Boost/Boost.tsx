@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 import { useData } from '../DataProvider/DataContext';
 import Balance from '../Balance/Balance';
+import ItemParameters from './ItemParameters';
 
 interface Level {
     id: number;
@@ -287,6 +288,9 @@ export const Boost: React.FC = () => {
                         <div className='boost-item-image'></div>
                     </div>
                 )}
+                <ItemParameters name="Mine" value={nextLevel?.coins} />
+                <ItemParameters name="Time" value={nextLevel?.time} />
+                <ItemParameters name="NFT" value="yes" />
                 <div className='boost-info'>
                     <div className='boost-name'>{nextLevel ? nextLevel.name : userLevel?.name}</div>
                     <div className='boost-param'>{nextLevel ? `${nextLevel.coins}/${nextLevel.time}h` : `${userLevel?.coins}/${userLevel?.time}h`}</div>

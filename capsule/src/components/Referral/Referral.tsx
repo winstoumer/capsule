@@ -24,19 +24,19 @@ export const Referral = () => {
     }, [userData]);
 
     const fetchInvitedCount = async (telegramUserId: string) => {
-            try {
-                const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
-                if (!response.ok) {
-                    throw new Error('Error');
-                }
-                const data = await response.json();
-                setInvitedCount(data.invitedCount);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
+        try {
+            const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Error');
             }
-        };
+            const data = await response.json();
+            setInvitedCount(data.invitedCount);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     if (loading) {
         return <div></div>;
