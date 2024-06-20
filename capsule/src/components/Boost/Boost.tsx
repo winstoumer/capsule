@@ -314,7 +314,7 @@ export const Boost: React.FC = () => {
                     <>
                         {userLevel.price !== undefined && (
                             <div className='price-item'>
-                                {nextLevel && <span>{userLevel.price}</span>}
+                                <span>{userLevel.price}</span>
                             </div>
                         )}
                     </>
