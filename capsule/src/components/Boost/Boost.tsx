@@ -283,20 +283,20 @@ export const Boost: React.FC = () => {
                         <img src={nextLevel ? nextLevel.image : userLevel?.image} className='boost-item-image' alt="Boost Item" />
                     </div>
                 )}
-                {(!nextLevel && userLevel && userLevel.name !== undefined) && (
-                    <div className='boost-name'>{userLevel.name}</div>
-                )}
                 <div className='boost-info'>
                     {!nextLevel && userLevel && (
                         <>
                             {userLevel.coins !== undefined && (
-                                <ItemParameters name="Mine" value={userLevel.coins} />
+                                <ItemParameters name="Level" value={userLevel.name} />
+                            )}
+                            {userLevel.coins !== undefined && (
+                                <ItemParameters name="Coins" value={userLevel.coins} />
                             )}
                             {userLevel.time !== undefined && (
                                 <ItemParameters name="Time" value={userLevel.time} suffix='h' />
                             )}
                             {userLevel.mines_nft !== undefined && (
-                                <ItemParameters name="NFT" value={userLevel.mines_nft ? 'yes' : 'no'} />
+                                <ItemParameters name="NFTs" value={userLevel.mines_nft ? 'yes' : 'no'} />
                             )}
                         </>
                     )}
