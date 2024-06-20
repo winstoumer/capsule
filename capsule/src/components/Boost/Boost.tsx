@@ -288,15 +288,11 @@ export const Boost: React.FC = () => {
                         <div className='boost-item-image'></div>
                     </div>
                 )}
-                <ItemParameters name="Mine" value={nextLevel?.coins} />
-                <ItemParameters name="Time" value={nextLevel?.time} suffix='h' />
-                <ItemParameters name="NFT" value="yes" />
+                <div className='boost-name'>{nextLevel?.name}</div>
                 <div className='boost-info'>
-                    <div className='boost-name'>{nextLevel ? nextLevel.name : userLevel?.name}</div>
-                    <div className='boost-param'>{nextLevel ? `${nextLevel.coins}/${nextLevel.time}h` : `${userLevel?.coins}/${userLevel?.time}h`}</div>
-                    <div className='boost-param'>
-                        <span className='color-purple'>NFT</span>
-                    </div>
+                    <ItemParameters name="Mine" value={nextLevel?.coins} />
+                    <ItemParameters name="Time" value={nextLevel?.time} suffix='h' />
+                    <ItemParameters name="NFT" value="yes" />
                 </div>
                 <div className='price-item'>
                     {nextLevel && <span>{nextLevel.price}</span>}
