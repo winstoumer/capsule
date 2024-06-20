@@ -143,10 +143,10 @@ button {
   font-weight: 400;
   color: rgb(37, 0, 204);
   background-color: transparent;
-  height: 46px;
-  min-height: 46px;
+  height: 44px;
+  min-height: 44px;
   padding: 0 20px;
-  border-radius: 20px 4px 20px 4px;
+  border-radius: 28px;
   border: 1px solid rgb(28, 28, 28);
   display: flex;
   align-items: center;
