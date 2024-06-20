@@ -278,21 +278,13 @@ export const Boost: React.FC = () => {
         <div className='default-page evently-container'>
             <Balance>{Number(balanceData).toFixed(2)}</Balance>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                {nextLevel || userLevel ? (
+                {(nextLevel || userLevel) && (
                     <div className='boost-item'>
                         <img src={nextLevel ? nextLevel.image : userLevel?.image} className='boost-item-image' alt="Boost Item" />
                     </div>
-                ) : (
-                    <div className='boost-item'>
-                        <div className='boost-item-image'></div>
-                    </div>
                 )}
-                {!nextLevel && userLevel && (
-                    <>
-                        {userLevel.name !== undefined && (
-                            <div className='boost-name'>{userLevel.name}</div>
-                        )}
-                    </>
+                {(!nextLevel && userLevel && userLevel.name !== undefined) && (
+                    <div className='boost-name'>{userLevel.name}</div>
                 )}
                 <div className='boost-info'>
                     {!nextLevel && userLevel && (
@@ -308,16 +300,18 @@ export const Boost: React.FC = () => {
                             )}
                         </>
                     )}
+                    {nextLevel && (
+                        <>
+                            <ItemParameters name="Mine" value={nextLevel.coins} />
+                            <ItemParameters name="Time" value={nextLevel.time} suffix='h' />
+                            <ItemParameters name="NFT" value={nextLevel.mines_nft ? 'yes' : 'no'} />
+                        </>
+                    )}
                 </div>
-
-                {!nextLevel && userLevel && (
-                    <>
-                        {userLevel.price !== undefined && (
-                            <div className='price-item'>
-                                <span>{userLevel.price}</span>
-                            </div>
-                        )}
-                    </>
+                {(nextLevel && nextLevel.price !== undefined) && (
+                    <div className='price-item'>
+                        <span>{nextLevel.price}</span>
+                    </div>
                 )}
             </div>
             {nextLevel && level !== null && level < levels.length && balanceData >= nextLevel.price ? (
