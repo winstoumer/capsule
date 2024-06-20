@@ -289,7 +289,7 @@ export const Boost: React.FC = () => {
                     </div>
                 )}
                 <ItemParameters name="Mine" value={nextLevel?.coins} />
-                <ItemParameters name="Time" value={nextLevel?.time} />
+                <ItemParameters name="Time" value={nextLevel?.time} suffix='h' />
                 <ItemParameters name="NFT" value="yes" />
                 <div className='boost-info'>
                     <div className='boost-name'>{nextLevel ? nextLevel.name : userLevel?.name}</div>
