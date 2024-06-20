@@ -143,8 +143,8 @@ button {
   font-weight: 400;
   color: rgb(43, 0, 232);
   background-color: transparent;
-  height: 44px;
-  min-height: 44px;
+  height: 42px;
+  min-height: 42px;
   padding: 0 20px;
   border-radius: 28px;
   border: 1px solid rgb(28, 28, 28);
