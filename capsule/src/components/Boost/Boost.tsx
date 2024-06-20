@@ -45,7 +45,6 @@ export const Boost: React.FC = () => {
 
     useEffect(() => {
         fetchCurrentTime();
-
         if (userData !== null) {
             fetchMiningData(userData.id.toString());
         }
@@ -290,9 +289,19 @@ export const Boost: React.FC = () => {
                 )}
                 <div className='boost-name'>{nextLevel?.name}</div>
                 <div className='boost-info'>
-                    <ItemParameters name="Mine" value={nextLevel?.coins} />
-                    <ItemParameters name="Time" value={nextLevel?.time} suffix='h' />
-                    <ItemParameters name="NFT" value={nextLevel?.mines_nft ? 'yes' : 'no'} />
+                    {nextLevel && (
+                        <>
+                            {nextLevel.coins !== undefined && (
+                                <ItemParameters name="Mine" value={nextLevel.coins} />
+                            )}
+                            {nextLevel.time !== undefined && (
+                                <ItemParameters name="Time" value={nextLevel.time} suffix='h' />
+                            )}
+                            {nextLevel.mines_nft !== undefined && (
+                                <ItemParameters name="NFT" value={nextLevel.mines_nft ? 'yes' : 'no'} />
+                            )}
+                        </>
+                    )}
                 </div>
                 <div className='price-item'>
                     {nextLevel && <span>{nextLevel.price}</span>}
