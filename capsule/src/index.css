@@ -122,7 +122,7 @@ button {
   cursor: pointer;
 }
 
-.default-button {
+.default-buttonn {
   font-size: 18px;
   font-weight: 500;
   color: var(--general-color-blue);
@@ -131,6 +131,23 @@ button {
   padding: 0 20px;
   border-radius: 20px;
   border: none;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  text-align: center;
+  justify-content: center;
+}
+
+.default-button {
+  font-size: 22px;
+  font-weight: 400;
+  color: rgb(37, 0, 204);
+  background-color: transparent;
+  height: 44px;
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 28px;
+  border: 1px solid rgb(28, 28, 28);
   display: flex;
   align-items: center;
   white-space: nowrap;
