@@ -302,6 +302,7 @@ export const Boost: React.FC = () => {
                     )}
                     {nextLevel && (
                         <>
+                            <ItemParameters name="Level" value={nextLevel.name} />
                             <ItemParameters name="Mine" value={nextLevel.coins} />
                             <ItemParameters name="Time" value={nextLevel.time} suffix='h' />
                             <ItemParameters name="NFT" value={nextLevel.mines_nft ? 'yes' : 'no'} />
