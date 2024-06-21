@@ -232,101 +232,100 @@ export const Boost: React.FC = () => {
 
     const handleUpgrade = async () => {
         setButton(true);
-        if (nextLevel && balanceData >= nextLevel.price && userData && currentTime)
-        {
-        try {
-            if (value !== null) {
-                await updateBalance(nextLevel.price);
-                if (isInitialized) {
-                    await updateBalanceCoins(value);
-                }
-                if (nftDate && nextLevel !== null) {
-                    if (nftMined && nftEndDate !== null && mintActive === false) {
-                        const date = new Date(nftEndDate);
-                        await updateMining(nextLevel.id, true, date, false);
-                    } else if (mintActive && nftEndDate !== null) {
-                        const date = new Date(nftEndDate);
-                        await updateMining(nextLevel.id, true, date, mintActive);
+        if (nextLevel && balanceData >= nextLevel.price && userData && currentTime) {
+            try {
+                if (value !== null) {
+                    await updateBalance(nextLevel.price);
+                    if (isInitialized) {
+                        await updateBalanceCoins(value);
+                    }
+                    if (nftDate && nextLevel !== null) {
+                        if (nftMined && nftEndDate !== null && mintActive === false) {
+                            const date = new Date(nftEndDate);
+                            await updateMining(nextLevel.id, true, date, false);
+                        } else if (mintActive && nftEndDate !== null) {
+                            const date = new Date(nftEndDate);
+                            await updateMining(nextLevel.id, true, date, mintActive);
+                        } else {
+                            await updateMining(nextLevel.id, true, nftDate, false);
+                        }
                     } else {
-                        await updateMining(nextLevel.id, true, nftDate, false);
-                    }
-                } else {
-                    if (nextLevel !== null && mintActive === false) {
-                        await updateMining(nextLevel.id, false, null, false);
+                        if (nextLevel !== null && mintActive === false) {
+                            await updateMining(nextLevel.id, false, null, false);
+                        }
                     }
                 }
+                await updateLevel(nextLevel.id);
+                if (nextLevel.id !== levels[levels.length - 1].id) {
+                    setAnimate(true);
+                    setTimeout(() => {
+                        setAnimate(false);
+                    }, 1000);
+                }
+                resetStatesBoost();
+                resetTimeStates();
+                resetMineStates();
+                setCurrentLevelIndex(prevIndex => prevIndex + 1); // Move to the next level
+            } catch (error) {
+                console.error('An error occurred while updating the user level:', error);
+                alert('An error occurred while updating the user level');
             }
-            await updateLevel(nextLevel.id);
-            if (nextLevel.id !== levels[levels.length - 1].id) {
-                setAnimate(true);
-                setTimeout(() => {
-                    setAnimate(false);
-                }, 1000);
-            }
-            resetStatesBoost();
-            resetTimeStates();
-            resetMineStates();
-            setCurrentLevelIndex(prevIndex => prevIndex + 1); // Move to the next level
-        } catch (error) {
-            console.error('An error occurred while updating the user level:', error);
-            alert('An error occurred while updating the user level');
+
+        } else if (nextLevel && balanceData < nextLevel.price) {
+            //setLastLevelAnimation(false);
+            alert('Insufficient funds to purchase!');
+        } else {
+            alert('You have reached the maximum level!');
         }
-    
-    } else if (nextLevel && balanceData < nextLevel.price) {
-        //setLastLevelAnimation(false);
-        alert('Insufficient funds to purchase!');
-    } else {
-        alert('You have reached the maximum level!');
-    }
-};
+    };
 
-const handleNextLevel = () => {
-    if (nextLevel) {
-        setCurrentLevelIndex(prevIndex => prevIndex + 1);
-    }
-};
+    const handleNextLevel = () => {
+        if (nextLevel) {
+            setCurrentLevelIndex(prevIndex => prevIndex + 1);
+        }
+    };
 
-const handlePreviousLevel = () => {
-    if (currentLevelIndex > 0) {
-        setCurrentLevelIndex(prevIndex => prevIndex - 1);
-    }
-};
+    const handlePreviousLevel = () => {
+        if (currentLevelIndex > 0) {
+            setCurrentLevelIndex(prevIndex => prevIndex - 1);
+        }
+    };
 
-return (
-    <div className='default-page evently-container'>
-        <Balance>{Number(balanceData).toFixed(2)}</Balance>
-        <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-            <button onClick={handlePreviousLevel} disabled={currentLevelIndex === 0}>Previous</button>
-            {(nextLevel || currentLevel) && (
-                <div className='boost-item'>
-                    <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
+    return (
+        <div className='default-page evently-container'>
+            <Balance>{Number(balanceData).toFixed(2)}</Balance>
+            <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
+                <button onClick={handlePreviousLevel} disabled={currentLevelIndex === 0}>Previous</button>
+                {(nextLevel || currentLevel) && (
+                    <div className='boost-item'>
+                        <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
+                    </div>
+                )}
+                <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
+                <div className='boost-info'>
+                    <ItemParameters name="Level" value={currentLevel.name} />
+                    {currentLevel.coins !== undefined && (
+                        <ItemParameters name="Coins" value={currentLevel.coins} />
+                    )}
+                    {currentLevel.time !== undefined && (
+                        <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
+                    )}
+                    {currentLevel.mines_nft !== undefined && (
+                        <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
+                    )}
                 </div>
-            )}
-            <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
-            <div className='boost-info'>
-                <ItemParameters name="Level" value={currentLevel.name} />
-                {currentLevel.coins !== undefined && (
-                    <ItemParameters name="Coins" value={currentLevel.coins} />
-                )}
-                {currentLevel.time !== undefined && (
-                    <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
-                )}
-                {currentLevel.mines_nft !== undefined && (
-                    <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
+                {(nextLevel && nextLevel.price !== undefined) && (
+                    <div className='price-item'>
+                        <span>{nextLevel.price}</span>
+                    </div>
                 )}
             </div>
-            {(nextLevel && nextLevel.price !== undefined) && (
-                <div className='price-item'>
-                    <span>{nextLevel.price}</span>
-                </div>
+            {nextLevel && currentLevelIndex !== null && currentLevelIndex < levels.length - 1 && balanceData >= nextLevel.price ? (
+                !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
+            ) : (
+                <Link to="/" className='default-button'>Mine</Link>
             )}
         </div>
-        {nextLevel && currentLevelIndex !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price ? (
-            !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
-        ) : (
-            <Link to="/" className='default-button'>Mine</Link>
-        )}
-    </div>
-);
+    );
 };
 
