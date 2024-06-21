@@ -33,13 +33,14 @@ export const Boost: React.FC = () => {
     const [isInitialized, setIsInitialized] = useState(false);
 
     const [animate, setAnimate] = useState(false);
-    const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
+    //const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
 
     const coinsMinedSoFarRef = useRef<number>(0);
 
     const [button, setButton] = useState(false);
 
     const [resetCountdown, setResetCountdown] = useState(false);
+
 
     const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -182,9 +183,9 @@ export const Boost: React.FC = () => {
     const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(level !== undefined ? levels.findIndex(l => l.id === level) : 0);
 
     const nextLevel: Level | null = currentLevelIndex + 1 < levels.length ? levels[currentLevelIndex + 1] : null;
-    const previousLevel: Level | null = currentLevelIndex - 1 >= 0 ? levels[currentLevelIndex - 1] : null;
     const currentLevel: Level = levels[currentLevelIndex];
 
+    /*
     useEffect(() => {
         if (!nextLevel) {
             setLastLevelAnimation(true);
@@ -192,6 +193,7 @@ export const Boost: React.FC = () => {
             setLastLevelAnimation(false);
         }
     }, [nextLevel]);
+    */
 
     useEffect(() => {
         const generateNftDate = async () => {
@@ -230,98 +232,101 @@ export const Boost: React.FC = () => {
 
     const handleUpgrade = async () => {
         setButton(true);
-        if (nextLevel && balanceData >= nextLevel.price && userData && currentTime !== null) {
-            try {
-                if (value !== null) {
-                    await updateBalance(nextLevel.price);
-                    if (isInitialized)
-                        await updateBalanceCoins(value);
-                    if (nftDate && nextLevel !== null) {
-                        if (nftMined && nftEndDate !== null && mintActive === false) {
-                            const date = new Date(nftEndDate);
-                            await updateMining(nextLevel.id, true, date, false);
-                        }
-                        else if (mintActive && nftEndDate !== null) {
-                            const date = new Date(nftEndDate);
-                            await updateMining(nextLevel.id, true, date, mintActive);
-                        }
-                        else {
-                            await updateMining(nextLevel.id, true, nftDate, false);
-                        }
+        if (nextLevel && balanceData >= nextLevel.price && userData && currentTime)
+        {
+        try {
+            if (value !== null) {
+                await updateBalance(nextLevel.price);
+                if (isInitialized) {
+                    await updateBalanceCoins(value);
+                }
+                if (nftDate && nextLevel !== null) {
+                    if (nftMined && nftEndDate !== null && mintActive === false) {
+                        const date = new Date(nftEndDate);
+                        await updateMining(nextLevel.id, true, date, false);
+                    } else if (mintActive && nftEndDate !== null) {
+                        const date = new Date(nftEndDate);
+                        await updateMining(nextLevel.id, true, date, mintActive);
                     } else {
-                        if (nextLevel !== null && mintActive === false)
-                            await updateMining(nextLevel.id, false, null, false);
+                        await updateMining(nextLevel.id, true, nftDate, false);
+                    }
+                } else {
+                    if (nextLevel !== null && mintActive === false) {
+                        await updateMining(nextLevel.id, false, null, false);
                     }
                 }
-                await updateLevel(nextLevel.id);
-                if (nextLevel.id !== levels[levels.length - 1].id) {
-                    setAnimate(true);
-                    setTimeout(() => {
-                        setAnimate(false);
-                    }, 1000);
-                }
-                resetStatesBoost();
-                resetTimeStates();
-                resetMineStates();
-                handleNextLevel();
-            } catch (error) {
-                console.error('An error occurred while updating the user level:', error);
-                alert('An error occurred while updating the user level');
             }
-        } else if (nextLevel && balanceData < nextLevel.price) {
-            lastLevelAnimation === false;
-            alert('Insufficient funds to purchase!');
-        } else {
-            alert('You have reached the maximum level!');
+            await updateLevel(nextLevel.id);
+            if (nextLevel.id !== levels[levels.length - 1].id) {
+                setAnimate(true);
+                setTimeout(() => {
+                    setAnimate(false);
+                }, 1000);
+            }
+            resetStatesBoost();
+            resetTimeStates();
+            resetMineStates();
+            setCurrentLevelIndex(prevIndex => prevIndex + 1); // Move to the next level
+        } catch (error) {
+            console.error('An error occurred while updating the user level:', error);
+            alert('An error occurred while updating the user level');
         }
-    };
+    
+    } else if (nextLevel && balanceData < nextLevel.price) {
+        //setLastLevelAnimation(false);
+        alert('Insufficient funds to purchase!');
+    } else {
+        alert('You have reached the maximum level!');
+    }
+};
 
-    const handleNextLevel = () => {
-        if (nextLevel) {
-            setCurrentLevelIndex(prevIndex => prevIndex + 1);
-        }
-    };
+const handleNextLevel = () => {
+    if (nextLevel) {
+        setCurrentLevelIndex(prevIndex => prevIndex + 1);
+    }
+};
 
-    const handlePreviousLevel = () => {
-        if (previousLevel) {
-            setCurrentLevelIndex(prevIndex => prevIndex - 1);
-        }
-    };
+const handlePreviousLevel = () => {
+    if (currentLevelIndex > 0) {
+        setCurrentLevelIndex(prevIndex => prevIndex - 1);
+    }
+};
 
-    return (
-        <div className='default-page evently-container'>
-            <Balance>{Number(balanceData).toFixed(2)}</Balance>
-            <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                <button onClick={handlePreviousLevel} disabled={!previousLevel || currentLevelIndex === level}>Previous</button>
-                {(nextLevel || currentLevel) && (
-                    <div className='boost-item'>
-                        <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
-                    </div>
-                )}
-                <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
-                <div className='boost-info'>
-                    <ItemParameters name="Level" value={currentLevel.name} />
-                    {currentLevel.coins !== undefined && (
-                        <ItemParameters name="Coins" value={currentLevel.coins} />
-                    )}
-                    {currentLevel.time !== undefined && (
-                        <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
-                    )}
-                    {currentLevel.mines_nft !== undefined && (
-                        <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
-                    )}
+return (
+    <div className='default-page evently-container'>
+        <Balance>{Number(balanceData).toFixed(2)}</Balance>
+        <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
+            <button onClick={handlePreviousLevel} disabled={currentLevelIndex === 0}>Previous</button>
+            {(nextLevel || currentLevel) && (
+                <div className='boost-item'>
+                    <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
                 </div>
-                {(nextLevel && nextLevel.price !== undefined) && (
-                    <div className='price-item'>
-                        <span>{nextLevel.price}</span>
-                    </div>
+            )}
+            <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
+            <div className='boost-info'>
+                <ItemParameters name="Level" value={currentLevel.name} />
+                {currentLevel.coins !== undefined && (
+                    <ItemParameters name="Coins" value={currentLevel.coins} />
+                )}
+                {currentLevel.time !== undefined && (
+                    <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
+                )}
+                {currentLevel.mines_nft !== undefined && (
+                    <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
                 )}
             </div>
-            {nextLevel && currentLevelIndex !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price ? (
-                !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
-            ) : (
-                <Link to="/" className='default-button'>Mine</Link>
+            {(nextLevel && nextLevel.price !== undefined) && (
+                <div className='price-item'>
+                    <span>{nextLevel.price}</span>
+                </div>
             )}
         </div>
-    );
+        {nextLevel && currentLevelIndex !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price ? (
+            !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
+        ) : (
+            <Link to="/" className='default-button'>Mine</Link>
+        )}
+    </div>
+);
 };
+
