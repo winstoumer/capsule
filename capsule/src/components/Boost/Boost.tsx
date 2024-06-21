@@ -314,11 +314,6 @@ export const Boost: React.FC = () => {
                     </div>
                 )}
             </div>
-            {userData && userData.id === 935718482 ? (
-                !button && <button className='custom-button' onClick={handleUpgrade}>Upgrade</button>
-            ) : (
-                <></>
-            )}
             {nextLevel && level !== null && level < levels.length && balanceData >= nextLevel.price ? (
                 !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
             ) : (
