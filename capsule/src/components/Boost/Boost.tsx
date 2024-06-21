@@ -321,15 +321,19 @@ export const Boost: React.FC = () => {
                 )}
             </div>
             {nextLevel && currentLevelIndex !== -1 ? (
-                balanceData >= nextLevel.price && !(currentLevelIndex === levels.length - 1 && balanceData >= nextLevel.price) ? (
-                    !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
+                currentLevelIndex < levels.length - 1 ? (
+                    balanceData >= nextLevel.price ? (
+                        !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
+                    ) : (
+                        <Link to="/" className='default-button'>Insufficient Funds</Link>
+                    )
                 ) : (
-                    <Link to="/" className='default-button'>Mine</Link>
+                    <Link to="/" className='default-button'>Maximum Level</Link>
                 )
             ) : (
                 <Link to="/" className='default-button'>Mine</Link>
             )}
         </div>
-    );
+    );    
 };
 
