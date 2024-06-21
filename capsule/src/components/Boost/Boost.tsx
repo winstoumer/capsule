@@ -215,9 +215,8 @@ export const Boost: React.FC = () => {
 
             setNftDate(randomDate);
         };
-
         generateNftDate();
-    }, [nftDate, currentTime]);
+    }, [currentTime, nextLevel, nftDate, matterId]);
 
     const resetStatesBoost = () => {
         setResetCountdown(prev => !prev);
@@ -264,6 +263,7 @@ export const Boost: React.FC = () => {
                 resetStatesBoost();
                 resetTimeStates();
                 resetMineStates();
+                handleNextLevel();
             } catch (error) {
                 console.error('An error occurred while updating the user level:', error);
                 alert('An error occurred while updating the user level');
@@ -292,7 +292,7 @@ export const Boost: React.FC = () => {
         <div className='default-page evently-container'>
             <Balance>{Number(balanceData).toFixed(2)}</Balance>
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                <button onClick={handlePreviousLevel} disabled={!previousLevel}>Previous</button>
+                <button onClick={handlePreviousLevel} disabled={!previousLevel || currentLevelIndex === level}>Previous</button>
                 {(nextLevel || currentLevel) && (
                     <div className='boost-item'>
                         <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
