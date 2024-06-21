@@ -41,8 +41,6 @@ export const Boost: React.FC = () => {
 
     const [resetCountdown, setResetCountdown] = useState(false);
 
-    const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(level !== undefined ? levels.findIndex(l => l.id === level) : 0);
-
     const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -180,6 +178,7 @@ export const Boost: React.FC = () => {
         { id: 4, name: 'M4', image: 'capsule_4.png', coins: 420, time: 8, mines_nft: true, price: 3600 },
         { id: 5, name: 'M5', image: 'capsule_5.png', coins: 800, time: 12, mines_nft: true, price: 7200 }
     ];
+    const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(level !== undefined ? levels.findIndex(l => l.id === level) : 0);
 
     const nextLevel: Level | null = currentLevelIndex + 1 < levels.length ? levels[currentLevelIndex + 1] : null;
     const previousLevel: Level | null = currentLevelIndex - 1 >= 0 ? levels[currentLevelIndex - 1] : null;
