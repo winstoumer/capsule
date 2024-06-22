@@ -317,7 +317,7 @@ export const Boost: React.FC = () => {
                         </div>
                     )}
                 </div>
-                {nextLevel && currentLevelIndex !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price ? (
+                {nextLevel && currentLevelIndex !== null && level !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price && currentLevelIndex > level ? (
                     !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
                 ) : (
                     <Link to="/" className='default-button'>Mine</Link>
