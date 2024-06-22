@@ -35,7 +35,7 @@ const AppWrapper: React.FC = () => {
           if (location.pathname.startsWith('/mint/')) {
             backButton.show();
           }
-          else if (location.pathname.startsWith('/mint/')) {
+          else if (location.pathname.startsWith('/boost')) {
             backButton.show();
           }
           else {
