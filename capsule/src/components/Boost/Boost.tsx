@@ -292,13 +292,15 @@ export const Boost: React.FC = () => {
             <div className='default-page evently-container'>
                 <Balance>{Number(balanceData).toFixed(2)}</Balance>
                 <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                    <button onClick={handlePreviousLevel} disabled={!previousLevel}>Previous</button>
-                    {(nextLevel || currentLevel) && (
-                        <div className='boost-item'>
-                            <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
-                        </div>
-                    )}
-                    <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
+                    <div className='watch-levels'>
+                        <button onClick={handlePreviousLevel} disabled={!previousLevel}>Previous</button>
+                        {(nextLevel || currentLevel) && (
+                            <div className='boost-item'>
+                                <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
+                            </div>
+                        )}
+                        <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
+                    </div>
                     <div className='boost-info'>
                         <ItemParameters name="Level" value={currentLevel.name} />
                         {currentLevel.coins !== undefined && (
@@ -323,7 +325,6 @@ export const Boost: React.FC = () => {
                     <Link to="/" className='default-button'>Mine</Link>
                 )}
             </div>
-            <div></div>
         </>
     );
 };
