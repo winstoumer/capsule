@@ -51,6 +51,21 @@
     align-items: center;
 }
 
+button-arrow {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  button-arrow:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
 .boost-item {
     display: flex;
     position: relative;
