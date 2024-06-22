@@ -288,39 +288,42 @@ export const Boost: React.FC = () => {
     };
 
     return (
-        <div className='default-page evently-container'>
-            <Balance>{Number(balanceData).toFixed(2)}</Balance>
-            <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                <button onClick={handlePreviousLevel} disabled={!previousLevel}>Previous</button>
-                {(nextLevel || currentLevel) && (
-                    <div className='boost-item'>
-                        <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
+        <>
+            <div className='default-page evently-container'>
+                <Balance>{Number(balanceData).toFixed(2)}</Balance>
+                <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
+                    <button onClick={handlePreviousLevel} disabled={!previousLevel}>Previous</button>
+                    {(nextLevel || currentLevel) && (
+                        <div className='boost-item'>
+                            <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
+                        </div>
+                    )}
+                    <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
+                    <div className='boost-info'>
+                        <ItemParameters name="Level" value={currentLevel.name} />
+                        {currentLevel.coins !== undefined && (
+                            <ItemParameters name="Coins" value={currentLevel.coins} />
+                        )}
+                        {currentLevel.time !== undefined && (
+                            <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
+                        )}
+                        {currentLevel.mines_nft !== undefined && (
+                            <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
+                        )}
                     </div>
-                )}
-                <button onClick={handleNextLevel} disabled={!nextLevel}>Next</button>
-                <div className='boost-info'>
-                    <ItemParameters name="Level" value={currentLevel.name} />
-                    {currentLevel.coins !== undefined && (
-                        <ItemParameters name="Coins" value={currentLevel.coins} />
-                    )}
-                    {currentLevel.time !== undefined && (
-                        <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
-                    )}
-                    {currentLevel.mines_nft !== undefined && (
-                        <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
+                    {(nextLevel && nextLevel.price !== undefined) && (
+                        <div className='price-item'>
+                            <span>{nextLevel.price}</span>
+                        </div>
                     )}
                 </div>
-                {(nextLevel && nextLevel.price !== undefined) && (
-                    <div className='price-item'>
-                        <span>{nextLevel.price}</span>
-                    </div>
+                {nextLevel && currentLevelIndex !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price ? (
+                    !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
+                ) : (
+                    <Link to="/" className='default-button'>Mine</Link>
                 )}
             </div>
-            {nextLevel && currentLevelIndex !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price ? (
-                !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
-            ) : (
-                <Link to="/" className='default-button'>Mine</Link>
-            )}
-        </div>
+            <div></div>
+        </>
     );
 };
