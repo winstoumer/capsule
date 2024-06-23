@@ -52,10 +52,11 @@ export const Earn = () => {
         }
     };
 
-    const handleClick = async (taskId: number, taskLink: string) => {
+    const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
         window.location.href = taskLink;
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
+            await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
             fetchTasks(userData.id.toString());
         } catch (error) {
             console.error('Ошибка при отправке запроса:', error);
@@ -80,7 +81,7 @@ export const Earn = () => {
                         </div>
                         {!task.active || task.ready ? null :
                             <div className='task-start'>
-                                <button className='default-button' onClick={() => handleClick(task.id, task.link)}>Go</button>
+                                <button className='default-button' onClick={() => handleClick(task.id, task.link, Number(task.reward))}>Go</button>
                             </div>
                         }
                     </div>
