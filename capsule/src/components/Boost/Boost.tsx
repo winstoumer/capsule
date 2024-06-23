@@ -307,7 +307,7 @@ export const Boost: React.FC = () => {
         <>
             <div className='default-page evently-container'>
                 <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                    {currentLevel.name !== undefined && (
+                    {currentLevel.name !== null && (
                         <div className='boost-name'>{currentLevel.name}</div>
                     )}
                     <div className='watch-levels'>
@@ -324,9 +324,6 @@ export const Boost: React.FC = () => {
                         </button>
                     </div>
                     <div className='boost-info'>
-                        {currentLevel.name !== undefined && (
-                            <ItemParameters name="Level" value={currentLevel.name} />
-                        )}
                         {currentLevel.coins !== undefined && (
                             <ItemParameters name="Coins" value={currentLevel.coins} />
                         )}
