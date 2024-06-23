@@ -307,7 +307,7 @@ export const Boost: React.FC = () => {
         <>
             <div className='default-page evently-container'>
                 <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                    {currentLevel.name !== null && (
+                    {currentLevel?.name !== null && (
                         <div className='boost-name'>{currentLevel.name}</div>
                     )}
                     <div className='watch-levels'>
@@ -316,7 +316,7 @@ export const Boost: React.FC = () => {
                         </button>
                         {(nextLevel || currentLevel) && (
                             <div className='boost-item'>
-                                <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
+                                <img src={currentLevel?.image} className='boost-item-image' alt="Boost Item" />
                             </div>
                         )}
                         <button className='button-arrow' onClick={handleNextLevel} disabled={!nextLevel}>
