@@ -62,10 +62,16 @@ export const Boost: React.FC = () => {
     const currentLevel: Level | undefined = levels[currentLevelIndex];
 
     useEffect(() => {
-        fetchCurrentTime();
-        if (userData !== null) {
-            fetchMiningData(userData.id.toString());
-        }
+        const loadData = async () => {
+            // Fetch current time
+            await fetchCurrentTime();
+
+            if (userData !== null) {
+                await fetchMiningData(userData.id.toString());
+            }
+        };
+
+        loadData();
     }, [fetchCurrentTime, fetchMiningData, userData]);
 
     useEffect(() => {
