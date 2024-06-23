@@ -59,7 +59,7 @@ export const Boost: React.FC = () => {
     const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(level !== undefined ? levels.findIndex(l => l.id === level) : 0);
     const nextLevel: Level | null = currentLevelIndex + 1 < levels.length ? levels[currentLevelIndex + 1] : null;
     const previousLevel: Level | null = currentLevelIndex - 1 >= 0 ? levels[currentLevelIndex - 1] : null;
-    const currentLevel: Level = levels[currentLevelIndex];
+    const currentLevel: Level | undefined = levels[currentLevelIndex];
 
     useEffect(() => {
         fetchCurrentTime();
@@ -220,10 +220,10 @@ export const Boost: React.FC = () => {
         };
 
         generateNftDate();
-    }, [nftDate, currentTime]);
+    }, [currentTime, nextLevel, nftDate, setNftDate]);
 
     const resetStatesBoost = () => {
-        setResetCountdown(prev => !prev);
+        setResetCountdown((prev) => !prev);
         setHoursLeft(0);
         setMinutesLeft(0);
         setSecondsLeft(0);
@@ -281,13 +281,13 @@ export const Boost: React.FC = () => {
 
     const handleNextLevel = () => {
         if (nextLevel) {
-            setCurrentLevelIndex(prevIndex => prevIndex + 1);
+            setCurrentLevelIndex((prevIndex) => prevIndex + 1);
         }
     };
 
     const handlePreviousLevel = () => {
         if (previousLevel) {
-            setCurrentLevelIndex(prevIndex => prevIndex - 1);
+            setCurrentLevelIndex((prevIndex) => prevIndex - 1);
         }
     };
 
@@ -303,49 +303,51 @@ export const Boost: React.FC = () => {
         </svg>
     );
 
+    console.log('currentLevel:', currentLevel);
+
     return (
-        <>
-            <div className='default-page evently-container'>
-                <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                    {currentLevel?.name !== null && (
-                        <div className='boost-name'>{currentLevel.name}</div>
+        <div className="default-page evently-container">
+            <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
+                {currentLevel && currentLevel.name && (
+                    <div className="boost-name">{currentLevel.name}</div>
+                )}
+                <div className="watch-levels">
+                    <button className="button-arrow" onClick={handlePreviousLevel} disabled={!previousLevel}>
+                        <PreviousArrow />
+                    </button>
+                    {(nextLevel || currentLevel) && currentLevel && (
+                        <div className="boost-item">
+                            <img src={currentLevel.image} className="boost-item-image" alt="Boost Item" />
+                        </div>
                     )}
-                    <div className='watch-levels'>
-                        <button className='button-arrow' onClick={handlePreviousLevel} disabled={!previousLevel}>
-                            <PreviousArrow />
-                        </button>
-                        {(nextLevel || currentLevel) && (
-                            <div className='boost-item'>
-                                <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
-                            </div>
-                        )}
-                        <button className='button-arrow' onClick={handleNextLevel} disabled={!nextLevel}>
-                            <NextArrow />
-                        </button>
-                    </div>
-                    <div className='boost-info'>
-                        {currentLevel?.coins !== undefined && (
+                    <button className="button-arrow" onClick={handleNextLevel} disabled={!nextLevel}>
+                        <NextArrow />
+                    </button>
+                </div>
+                {currentLevel && (
+                    <div className="boost-info">
+                        {currentLevel.coins !== undefined && (
                             <ItemParameters name="Coins" value={currentLevel.coins} />
                         )}
-                        {currentLevel?.time !== undefined && (
-                            <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
+                        {currentLevel.time !== undefined && (
+                            <ItemParameters name="Time" value={currentLevel.time} suffix="h" />
                         )}
-                        {currentLevel?.mines_nft !== undefined && (
+                        {currentLevel.mines_nft !== undefined && (
                             <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
                         )}
                     </div>
-                    {(nextLevel && nextLevel?.price !== undefined) && (
-                        <div className='price-item'>
-                            <span>{nextLevel.price}</span>
-                        </div>
-                    )}
-                </div>
-                {nextLevel && currentLevelIndex !== null && level !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price && currentLevelIndex > level ? (
-                    !button && <button className='default-button' onClick={handleUpgrade}>Upgrade</button>
-                ) : (
-                    <Link to="/" className='default-button'>Mine</Link>
+                )}
+                {nextLevel && nextLevel.price !== undefined && (
+                    <div className="price-item">
+                        <span>{nextLevel.price}</span>
+                    </div>
                 )}
             </div>
-        </>
+            {nextLevel && currentLevelIndex !== null && level !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price && currentLevelIndex > level ? (
+                !button && <button className="default-button" onClick={handleUpgrade}>Upgrade</button>
+            ) : (
+                <Link to="/" className="default-button">Mine</Link>
+            )}
+        </div>
     );
 };
