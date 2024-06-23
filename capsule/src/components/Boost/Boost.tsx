@@ -301,6 +301,9 @@ export const Boost: React.FC = () => {
         </svg>
     );
 
+
+    console.log('currentLevel:', currentLevel)
+
     // <Balance>{Number(balanceData).toFixed(2)}</Balance>
 
     return (
