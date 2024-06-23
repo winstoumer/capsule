@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 import { useData } from '../DataProvider/DataContext';
 import ItemParameters from './ItemParameters';
+import Balance from '../Balance/Balance';
 
 interface Level {
     id: number;
@@ -314,7 +315,9 @@ export const Boost: React.FC = () => {
     return (
         <div className="default-page evently-container">
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
-                <div className="boost-name">Boost</div>
+                <Balance>
+                    {Number(balanceData).toFixed(2)}
+                </Balance>
                 <div className="watch-levels">
                     <button className="button-arrow" onClick={handlePreviousLevel} disabled={!previousLevel}>
                         <PreviousArrow />
