@@ -316,7 +316,7 @@ export const Boost: React.FC = () => {
                         </button>
                         {(nextLevel || currentLevel) && (
                             <div className='boost-item'>
-                                <img src={currentLevel?.image} className='boost-item-image' alt="Boost Item" />
+                                <img src={currentLevel.image} className='boost-item-image' alt="Boost Item" />
                             </div>
                         )}
                         <button className='button-arrow' onClick={handleNextLevel} disabled={!nextLevel}>
@@ -334,7 +334,7 @@ export const Boost: React.FC = () => {
                             <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
                         )}
                     </div>
-                    {(nextLevel && nextLevel.price !== undefined) && (
+                    {(nextLevel && nextLevel?.price !== undefined) && (
                         <div className='price-item'>
                             <span>{nextLevel.price}</span>
                         </div>
