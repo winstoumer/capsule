@@ -343,17 +343,19 @@ export const Boost: React.FC = () => {
                         )}
                     </div>
                 )}
+            </div>
+            <div className='bottom-boost-action'>
                 {nextLevel && nextLevel.price !== undefined && (
                     <div className="price-item">
                         <span>{nextLevel.price}</span>
                     </div>
                 )}
+                {nextLevel && currentLevelIndex !== null && level !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price && currentLevelIndex > level ? (
+                    !button && <button className="default-button" onClick={handleUpgrade}>Upgrade</button>
+                ) : (
+                    <Link to="/" className="default-button">Mine</Link>
+                )}
             </div>
-            {nextLevel && currentLevelIndex !== null && level !== null && currentLevelIndex < levels.length && balanceData >= nextLevel.price && currentLevelIndex > level ? (
-                !button && <button className="default-button" onClick={handleUpgrade}>Upgrade</button>
-            ) : (
-                <Link to="/" className="default-button">Mine</Link>
-            )}
         </div>
     );
 };
