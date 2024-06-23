@@ -307,6 +307,7 @@ export const Boost: React.FC = () => {
         <>
             <div className='default-page evently-container'>
                 <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
+                    <div className='boost-name'>{currentLevel.name}</div>
                     <div className='watch-levels'>
                         <button className='button-arrow' onClick={handlePreviousLevel} disabled={!previousLevel}>
                             <PreviousArrow />
