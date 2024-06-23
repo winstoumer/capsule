@@ -4,7 +4,6 @@ import './boost.scss';
 import { Link } from 'react-router-dom';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 import { useData } from '../DataProvider/DataContext';
-//import Balance from '../Balance/Balance';
 import ItemParameters from './ItemParameters';
 
 interface Level {
@@ -26,30 +25,41 @@ const levels: Level[] = [
 ];
 
 export const Boost: React.FC = () => {
-    const { balanceData, userData, resetMineStates, fetchMiningData, nextTime, coinsMine, timeMine, matterId, nftEndDate, nftMined, mintActive: initialMintActive, level } = useData();
+    const {
+        balanceData,
+        userData,
+        resetMineStates,
+        fetchMiningData,
+        nextTime,
+        coinsMine,
+        timeMine,
+        matterId,
+        nftEndDate,
+        nftMined,
+        mintActive: initialMintActive,
+        level
+    } = useData();
+
     const { currentTime, fetchCurrentTime, resetTimeStates } = useCurrentTime();
 
     const [mintActive, setMintActive] = useState<boolean>(initialMintActive ?? false);
-
     const [nftDate, setNftDate] = useState<Date | null>(null);
-
     const [hours, setHoursLeft] = useState<number>(0);
     const [minutes, setMinutesLeft] = useState<number>(0);
     const [seconds, setSecondsLeft] = useState<number>(0);
-
     const [value, setValue] = useState(0.00);
     const [isInitialized, setIsInitialized] = useState(false);
-
     const [animate, setAnimate] = useState(false);
     const [lastLevelAnimation, setLastLevelAnimation] = useState(false);
-
     const coinsMinedSoFarRef = useRef<number>(0);
-
     const [button, setButton] = useState(false);
-
     const [resetCountdown, setResetCountdown] = useState(false);
-
     const apiUrl = import.meta.env.VITE_API_URL;
+
+    const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(level !== undefined ? levels.findIndex(l => l.id === level) : 0);
+    const nextLevel: Level | null = currentLevelIndex + 1 < levels.length ? levels[currentLevelIndex + 1] : null;
+    const previousLevel: Level | null = currentLevelIndex - 1 >= 0 ? levels[currentLevelIndex - 1] : null;
+    const currentLevel: Level = levels[currentLevelIndex];
 
     useEffect(() => {
         fetchCurrentTime();
@@ -57,13 +67,6 @@ export const Boost: React.FC = () => {
             fetchMiningData(userData.id.toString());
         }
     }, [fetchCurrentTime, fetchMiningData, userData]);
-
-
-    const [currentLevelIndex, setCurrentLevelIndex] = useState<number>(level !== undefined ? levels.findIndex(l => l.id === level) : 0);
-
-    const nextLevel: Level | null = currentLevelIndex + 1 < levels.length ? levels[currentLevelIndex + 1] : null;
-    const previousLevel: Level | null = currentLevelIndex - 1 >= 0 ? levels[currentLevelIndex - 1] : null;
-    const currentLevel: Level = levels[currentLevelIndex];
 
     useEffect(() => {
         let countdownInterval: ReturnType<typeof setInterval>;
@@ -179,8 +182,7 @@ export const Boost: React.FC = () => {
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
             if (userData !== null)
-                await axios.put(`${apiUrl}/api/currentMining/update/${userData.id}`,
-                    { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
+                await axios.put(`${apiUrl}/api/currentMining/update/${userData.id}`, { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
         } catch (error) {
             throw error;
         }
@@ -300,11 +302,6 @@ export const Boost: React.FC = () => {
             <path d="M9 5L16 12L9 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     );
-
-
-    console.log('currentLevel:', currentLevel)
-
-    // <Balance>{Number(balanceData).toFixed(2)}</Balance>
 
     return (
         <>
