@@ -313,7 +313,7 @@ export const Boost: React.FC = () => {
     console.log('currentLevel:', currentLevel);
 
     return (
-        <div className="default-page evently-container">
+        <div className="evently-container">
             <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
                 <Balance>
                     {Number(balanceData).toFixed(2)}
