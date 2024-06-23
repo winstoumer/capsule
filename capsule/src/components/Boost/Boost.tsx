@@ -325,10 +325,10 @@ export const Boost: React.FC = () => {
                     </div>
                     <div className='boost-info'>
                         {currentLevel.coins !== undefined && (
-                            <ItemParameters name="Coins" value={currentLevel.coins} />
+                            <ItemParameters name="Coins" value={currentLevel.coins.toString()} />
                         )}
                         {currentLevel.time !== undefined && (
-                            <ItemParameters name="Time" value={currentLevel.time} suffix='h' />
+                            <ItemParameters name="Time" value={currentLevel.time.toString()} suffix='h' />
                         )}
                         {currentLevel.mines_nft !== undefined && (
                             <ItemParameters name="NFTs" value={currentLevel.mines_nft ? 'yes' : 'no'} />
