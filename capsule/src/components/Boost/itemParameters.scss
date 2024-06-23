@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 8px;
-    width: 200px;
+    width: 100%;
 
     .item-name,
     .item-value {
@@ -16,7 +16,7 @@
 
     .dots {
         flex-grow: 1;
-        border-bottom: 1px solid var(--color-text-info);
+        border-bottom: 1px solid rgb(28, 28, 28);
         margin: 0 8px;
     }
 }
