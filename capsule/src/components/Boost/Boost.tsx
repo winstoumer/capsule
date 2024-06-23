@@ -4,7 +4,7 @@ import './boost.scss';
 import { Link } from 'react-router-dom';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 import { useData } from '../DataProvider/DataContext';
-import Balance from '../Balance/Balance';
+//import Balance from '../Balance/Balance';
 import ItemParameters from './ItemParameters';
 
 interface Level {
@@ -289,20 +289,21 @@ export const Boost: React.FC = () => {
 
     const PreviousArrow = () => (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M15 19L8 12L15 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M15 19L8 12L15 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-      );
-      
-      const NextArrow = () => (
+    );
+
+    const NextArrow = () => (
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M9 5L16 12L9 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M9 5L16 12L9 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-      );
+    );
+
+    // <Balance>{Number(balanceData).toFixed(2)}</Balance>
 
     return (
         <>
             <div className='default-page evently-container'>
-                <Balance>{Number(balanceData).toFixed(2)}</Balance>
                 <div className={`boost-container ${animate ? 'boost-container-animate' : ''}`}>
                     <div className='watch-levels'>
                         <button className='button-arrow' onClick={handlePreviousLevel} disabled={!previousLevel}>
