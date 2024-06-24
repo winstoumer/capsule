@@ -73,13 +73,9 @@
 
 .boost-item {
     display: flex;
-    position: fixed;
+    position: relative;
     max-width: 410px;
     max-height: 410px;
-    bottom: 0;
-    left: 50%;
-    transform: translate(-50%, 0);
-    z-index: -1;
 }
 
 .boost-item-image {
