@@ -74,12 +74,12 @@
 .boost-item {
     display: flex;
     position: relative;
-    max-width: 410px;
-    max-height: 410px;
+    max-width: 210px;
+    max-height: 210px;
 }
 
 .boost-item-image {
-    max-width: 410px;
+    max-width: 210px;
     width: 100%;
     position: relative;
     animation: appearAndMoveCapsule 1s ease-in-out, moveCapsule 1.3s infinite alternate 3s;
