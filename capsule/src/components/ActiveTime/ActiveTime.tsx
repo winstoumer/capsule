@@ -226,7 +226,7 @@ export const ActiveTime = () => {
                 <div className='time-left'>
                     <TimerDisplay timerFinished={timerFinished} hours={hours} minutes={minutes} seconds={seconds} />
                 </div>
-                {timerFinished && (
+                {timerFinished === false && (
                     <div className='info-for'>
                         {coinsMine}/{timeMine}h
                     </div>
