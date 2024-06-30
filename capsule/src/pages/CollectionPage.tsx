@@ -3,14 +3,12 @@ import './nft.scss';
 import React from 'react';
 import PageComponent from '../components/PageComponent/PageComponent';
 import CollectionList from "../components/CollectionList/CollectionList";
-import { Navigation } from "../components/Navigation/Navigation";
 
 const CollectionPage: React.FC = () => {
 
     return (
-        <PageComponent>
+        <PageComponent navigation={true}>
             <CollectionList />
-            <Navigation />
         </PageComponent>
     );
 }
