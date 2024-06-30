@@ -5,13 +5,11 @@ import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 
 const MiningPage: React.FC = () => {
 
-  return (
-    <PageComponent>
-      <div className='general'>
-        <ActiveTime />
-      </div>
-    </PageComponent>
-  );
+    return (
+        <PageComponent>
+            <ActiveTime />
+        </PageComponent>
+    );
 }
 
 export default MiningPage;
