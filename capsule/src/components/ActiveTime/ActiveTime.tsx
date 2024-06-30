@@ -39,7 +39,7 @@ export const ActiveTime = () => {
 
     useEffect(() => {
         if (userData !== null)
-        fetchMiningData(userData?.id.toString());
+            fetchMiningData(userData?.id.toString());
     }, [fetchMiningData]);
 
     useEffect(() => {
@@ -106,11 +106,11 @@ export const ActiveTime = () => {
             const remainingSeconds = totalSecondsInTimeMine - passedSeconds;
             const coinsPerSecond = coinsMine / totalSecondsInTimeMine;
             const timeForIncrement = 0.01 / coinsPerSecond * 1000; // Время для добавления 0.01 монеты в миллисекундах
-    
+
             coinsMinedSoFarRef.current = (coinsMine * remainingSeconds) / totalSecondsInTimeMine;
             setValue(coinsMinedSoFarRef.current);
             setIsInitialized(true);
-    
+
             let isCoinsMineSet = false;
             const interval = setInterval(() => {
                 if (!isCoinsMineSet && coinsMinedSoFarRef.current === coinsMine) {
@@ -120,13 +120,13 @@ export const ActiveTime = () => {
                     coinsMinedSoFarRef.current += coinsPerSecond * (timeForIncrement / 1000); // Увеличиваем на соответствующее количество монет
                     setValue(coinsMinedSoFarRef.current);
                 }
-    
+
                 if (coinsMine === coinsMinedSoFarRef.current) {
                     setValue(coinsMine);
                     clearInterval(interval);
                 }
             }, timeForIncrement);
-    
+
             return () => clearInterval(interval);
         }
     }, [coinsMine, timeMine, hours, minutes, seconds]);
@@ -159,8 +159,8 @@ export const ActiveTime = () => {
     const updateMining = async (matterId: number, nftMined: boolean, nftDate: Date | null, mintActive: boolean): Promise<void> => {
         try {
             if (userData !== null)
-            await axios.put(`${apiUrl}/api/currentMining/update/${userData.id}`,
-                { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
+                await axios.put(`${apiUrl}/api/currentMining/update/${userData.id}`,
+                    { matter_id: matterId, nft_mined: nftMined, time_end_mined_nft: nftDate, mint_active: mintActive });
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating mining:', error);
@@ -170,7 +170,7 @@ export const ActiveTime = () => {
     const updateBalance = async (coins: number): Promise<void> => {
         try {
             if (userData !== null)
-            await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
+                await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
             console.log('Update successful');
         } catch (error) {
             console.error('Error updating balance:', error);
@@ -205,7 +205,7 @@ export const ActiveTime = () => {
             } else if (matterId !== null && !mintActive) {
                 await updateMining(matterId, false, null, false);
             }
-    
+
             await updateBalance(value);
             resetStatesHome();
             resetTimeStates();
@@ -224,11 +224,13 @@ export const ActiveTime = () => {
                     {isInitialized ? value.toFixed(2) : null}
                 </div>
                 <div className='time-left'>
-                    <TimerDisplay timerFinished={timerFinished} hours={hours} minutes={minutes} seconds={seconds}/>
+                    <TimerDisplay timerFinished={timerFinished} hours={hours} minutes={minutes} seconds={seconds} />
                 </div>
-                <div className='info-for'>
-                    {coinsMine}/{timeMine}h
-                </div>
+                {timerFinished && (
+                    <div className='info-for'>
+                        {coinsMine}/{timeMine}h
+                    </div>
+                )}
                 <div className='info-for position-top'>
                     {currentTime !== null && timerFinished && matterId !== null && value !== null ? (
                         <div>
