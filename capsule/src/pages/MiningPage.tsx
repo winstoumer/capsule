@@ -6,7 +6,7 @@ import { ActiveTime } from "../components/ActiveTime/ActiveTime";
 const MiningPage: React.FC = () => {
 
     return (
-        <PageComponent>
+        <PageComponent title='Mining'>
             <ActiveTime />
         </PageComponent>
     );
