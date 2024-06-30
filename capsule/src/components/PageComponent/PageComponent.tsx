@@ -10,9 +10,7 @@ const PageComponent: React.FC<PageComponentProps> = ({ children, title }) => {
   return (
     <div className='content custom-scroll'>
       {title && <div className='page-title'>{title}</div>}
-      <div className='page-content'>
-        {children}
-      </div>
+      {children}
     </div>
   );
 };
