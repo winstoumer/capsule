@@ -136,7 +136,7 @@ const MintPage: React.FC = () => {
             ...tx,
             messages: [
                 {
-                    ...tx.messages[0],
+                    ...tx.messages[0], 
                     payload: payload,
                 },
             ],

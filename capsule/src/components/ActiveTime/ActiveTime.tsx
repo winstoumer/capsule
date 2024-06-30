@@ -10,7 +10,7 @@ export const ActiveTime = () => {
 
     const apiUrl = import.meta.env.VITE_API_URL;
 
-    const { userData, resetMineStates, fetchMiningData, nextTime, coinsMine, timeMine, matterId, nftEndDate, nftMined, mintActive: initialMintActive, nftActive, imageUrl } = useData();
+    const { userData, resetMineStates, fetchMiningData, nextTime, coinsMine, timeMine, matterId, nftEndDate, nftMined, mintActive: initialMintActive, nftActive } = useData();
     const { currentTime, fetchCurrentTime, resetTimeStates } = useCurrentTime();
 
     const [mintActive, setMintActive] = useState<boolean>(initialMintActive ?? false);
@@ -219,9 +219,6 @@ export const ActiveTime = () => {
 
     return (
         <>
-            <div className='watch-matter'>
-                <img src={imageUrl ?? undefined} className='always-matter' />
-            </div>
             <div className='active-time'>
                 <div className='current-coins'>
                     {isInitialized ? value.toFixed(2) : null}

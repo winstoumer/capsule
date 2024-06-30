@@ -8,6 +8,7 @@ import BoostPageWithProviders from './pages/BoostPageWithProviders';
 import EarnPage from './pages/EarnPage';
 import CollectionPage from './pages/CollectionPage';
 import MintPageWithProviders from './pages/MintPageWithProviders';
+import MiningPageWithProviders from './pages/MiningPageWithProviders';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -38,6 +39,9 @@ const AppWrapper: React.FC = () => {
           else if (location.pathname.startsWith('/boost')) {
             backButton.show();
           }
+          else if (location.pathname.startsWith('/mining')) {
+            backButton.show();
+          }
           else {
             backButton.hide();
           }
@@ -50,6 +54,9 @@ const AppWrapper: React.FC = () => {
           window.Telegram.WebApp.BackButton.show();
         }
         else if (location.pathname.startsWith('/boost')) {
+          window.Telegram.WebApp.BackButton.show();
+        }
+        else if (location.pathname.startsWith('/mining')) {
           window.Telegram.WebApp.BackButton.show();
         }
         else {
@@ -68,6 +75,7 @@ const AppWrapper: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePageWithProviders />} />
+      <Route path="/mining" element={<MiningPageWithProviders />} />
       <Route path="/boost" element={<BoostPageWithProviders />} />
       <Route path="/earn" element={<EarnPage />} />
       <Route path="/collections" element={<CollectionPage />} />
