@@ -11,7 +11,7 @@
 
 .info-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
     gap: 20px;
 }
@@ -23,7 +23,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotateY(-14deg);
 }
 
 .current-coins {
@@ -43,7 +42,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotateY(14deg);
 }
 
 .position-top {
