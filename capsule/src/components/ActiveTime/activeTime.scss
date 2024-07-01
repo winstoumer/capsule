@@ -9,6 +9,12 @@
     align-items: center;
 }
 
+.info-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .time-left {
     font-size: 20px;
     font-weight: 600;
@@ -16,6 +22,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: rotateY(-10deg);
 }
 
 .current-coins {
@@ -35,6 +42,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    transform: rotateY(10deg);
 }
 
 .position-top {
