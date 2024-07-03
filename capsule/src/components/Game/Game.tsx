@@ -4,9 +4,10 @@ import './game.scss';
 interface GameProps {
     duration: number; // Длительность игры в секундах
     coinsPerClick: number; // Количество монет за клик
+    maxTouches: number; // Максимальное количество точек касания
 }
 
-const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
+const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
     const [coins, setCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
     const [nextId, setNextId] = useState<number>(0);
@@ -18,10 +19,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
         if (!gameStarted) return;
 
         const rect = e.currentTarget.getBoundingClientRect();
+        const touchCount = Math.min(e.touches.length, maxTouches);
         const newClicks: { id: number; x: number; y: number }[] = [];
         let totalCoins = 0;
 
-        for (let i = 0; i < e.touches.length; i++) {
+        for (let i = 0; i < touchCount; i++) {
             const touch = e.touches[i];
             const x = touch.clientX - rect.left;
             const y = touch.clientY - rect.top;
@@ -31,7 +33,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
 
         setCoins(coins + totalCoins);
         setClicks([...clicks, ...newClicks]);
-        setNextId(nextId + e.touches.length);
+        setNextId(nextId + touchCount);
 
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
@@ -121,7 +123,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                {coinsPerClick}
+                                +{coinsPerClick}
                             </div>
                         ))}
                     </button>
