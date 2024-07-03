@@ -44,10 +44,14 @@ const Game: React.FC = () => {
 
     return (
         <div className="game">
-            {!gameStarted && <button className="start-button default-button" onClick={handleStartClick}>Start</button>}
+            {!gameStarted && (
+                <button className="start-button default-button fade-out" onClick={handleStartClick}>Start</button>
+            )}
             {gameStarted && (
                 <>
-                    <div className='coins'>{coins}</div>
+                    <div className='coins-container'>
+                        <div className='coins'>{coins}</div>
+                    </div>
                     <button className='button-game' onClick={handleButtonClick}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="115" cy="115" r="110" stroke="white" strokeWidth="1" fill="none" />
@@ -68,6 +72,7 @@ const Game: React.FC = () => {
                             style={{ width: `${(timeLeft / 10) * 100}%` }}
                         />
                     </div>
+                    <button className="claim-button default-button">Claim</button>
                 </>
             )}
         </div>
