@@ -3,9 +3,10 @@ import './game.scss';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
+    coinsPerClick: number; // Количество монет за клик
 }
 
-const Game: React.FC<GameProps> = ({ duration }) => {
+const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
     const [coins, setCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
     const [nextId, setNextId] = useState<number>(0);
@@ -20,7 +21,7 @@ const Game: React.FC<GameProps> = ({ duration }) => {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        setCoins(coins + 1);
+        setCoins(coins + coinsPerClick);
         setClicks([...clicks, { id: nextId, x, y }]);
         setNextId(nextId + 1);
 
@@ -76,8 +77,8 @@ const Game: React.FC<GameProps> = ({ duration }) => {
                     </div>
                     <button className="button-game" onClick={handleButtonClick}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="115" cy="115" r="110" stroke="#ddd1ff" stroke-width="1" fill="none" />
-                            <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" stroke-width="10" fill="none">
+                            <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
+                            <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" strokeWidth="10" fill="none">
                                 <animateTransform
                                     attributeName="transform"
                                     type="rotate"
@@ -94,7 +95,7 @@ const Game: React.FC<GameProps> = ({ duration }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                1
+                                +{coinsPerClick}
                             </div>
                         ))}
                     </button>

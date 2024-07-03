@@ -7,7 +7,7 @@ const GamePage: React.FC = () => {
 
   return (
     <PageComponent>
-        <Game duration={30} />
+        <Game duration={30} coinsPerClick={5} />
     </PageComponent>
   );
 }
