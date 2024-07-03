@@ -3,7 +3,7 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: space-evenly;
     align-items: center;
     gap: 30px;
 }
@@ -15,4 +15,11 @@
 }
 
 .button-game {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    cursor: none;
 }
