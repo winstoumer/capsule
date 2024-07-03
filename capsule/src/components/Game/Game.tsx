@@ -76,7 +76,7 @@ const Game: React.FC<GameProps> = ({ duration }) => {
                     </div>
                     <button className="button-game" onClick={handleButtonClick}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
+                            <circle cx="115" cy="115" r="110" stroke="white" strokeWidth="1" fill="none" />
                         </svg>
                         {clicks.map((click) => (
                             <div
@@ -90,6 +90,7 @@ const Game: React.FC<GameProps> = ({ duration }) => {
                     </button>
                     <div className="progress-bar-container">
                         <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                        <div className="time-left">{timeLeft}s</div>
                     </div>
                 </>
             )}
