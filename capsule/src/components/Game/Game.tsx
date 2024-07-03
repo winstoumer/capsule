@@ -33,9 +33,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
             totalCoins += coinsPerClick;
         });
 
-        setCoins(coins + totalCoins);
-        setClicks([...clicks, ...newClicks]);
-        setNextId(nextId + touchCount);
+        setCoins(prevCoins => prevCoins + totalCoins);
+        setClicks(prevClicks => [...prevClicks, ...newClicks]);
+        setNextId(prevId => prevId + touchCount);
 
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
@@ -55,9 +55,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
 
         const newClick = { id: nextId, x, y };
 
-        setCoins(coins + coinsPerClick);
-        setClicks([...clicks, newClick]);
-        setNextId(nextId + 1);
+        setCoins(prevCoins => prevCoins + coinsPerClick);
+        setClicks(prevClicks => [...prevClicks, newClick]);
+        setNextId(prevId => prevId + 1);
 
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
@@ -129,7 +129,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                {coinsPerClick}
+                                +{coinsPerClick}
                             </div>
                         ))}
                     </button>
