@@ -10,7 +10,7 @@ const Game: React.FC = () => {
 
     return (
         <div className="game">
-            <div className='coins'>Coins: {coins}</div>
+            <div className='coins'>{coins}</div>
             <button className='button-game' onClick={handleButtonClick}>
                 <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="115" cy="115" r="110" stroke="white" stroke-width="1" fill="none" />
