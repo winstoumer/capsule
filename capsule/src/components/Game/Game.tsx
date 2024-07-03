@@ -5,9 +5,10 @@ interface GameProps {
     duration: number; // Длительность игры в секундах
     coinsPerClick: number; // Количество монет за клик
     maxTouches: number; // Максимальное количество точек касания
+    multiplier: boolean; // Флаг для отображения и использования мультипликатора x2
 }
 
-const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
+const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
     const [coins, setCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
     const [nextId, setNextId] = useState<number>(0);
@@ -30,7 +31,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
             const x = touch.clientX - rect.left;
             const y = touch.clientY - rect.top;
             newClicks.push({ id: nextId + i, x, y });
-            totalCoins += coinsPerClick;
+            totalCoins += coinsPerClick * (multiplier ? 2 : 1); // Умножаем на 2, если multiplier === true
         });
 
         setCoins(prevCoins => prevCoins + totalCoins);
@@ -55,7 +56,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
 
         const newClick = { id: nextId, x, y };
 
-        setCoins(prevCoins => prevCoins + coinsPerClick);
+        setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
         setClicks(prevClicks => [...prevClicks, newClick]);
         setNextId(prevId => prevId + 1);
 
@@ -107,7 +108,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
             {gameStarted && (
                 <>
                     <div className="coins-container">
-                        <div className="coins">{coins.toFixed(2)}</div>
+                        <div className="coins">{coins}</div>
+                        {multiplier && <div className="multiplier">x2</div>}
                     </div>
                     <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +131,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                {coinsPerClick}
+                                +{coinsPerClick * (multiplier ? 2 : 1)}
                             </div>
                         ))}
                     </button>
