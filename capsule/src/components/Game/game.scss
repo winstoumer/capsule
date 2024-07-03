@@ -55,9 +55,9 @@
 
 .progress-bar-container {
     width: 100%;
-    height: 10px;
-    background-color: #ccc;
-    margin-top: 20px;
+    height: 6px;
+    background-color: #ffffff;
+    margin-top: 12px;
     position: relative;
 }
 
@@ -65,4 +65,5 @@
     height: 100%;
     background-color: #76c7c0;
     transition: width 1s linear;
+    border-radius: 6px;
 }
