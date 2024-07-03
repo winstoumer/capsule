@@ -36,13 +36,15 @@ const Game: React.FC = () => {
             }, 1000);
             return () => clearTimeout(timer);
         } else if (timeLeft === 0) {
-            setGameStarted(false);
+            setTimeout(() => {
+                setGameStarted(false);
+            }, 1000); // Give enough time for the progress bar to complete its transition
         }
     }, [gameStarted, timeLeft]);
 
     return (
         <div className="game">
-            {!gameStarted && <button className="start-button default-button" onClick={handleStartClick}>Start</button>}
+            {!gameStarted && <button className="start-button" onClick={handleStartClick}>Start</button>}
             {gameStarted && (
                 <>
                     <div className='coins'>{coins}</div>
