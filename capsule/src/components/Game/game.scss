@@ -9,10 +9,28 @@
     gap: 30px;
 }
 
+.coins-container {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* Расстояние между монетами и мультипликатором */
+    position: relative;
+}
+
 .coins {
     font-size: 48px;
     font-weight: 600;
     color: white;
+    position: relative; /* Чтобы позиционировать мультипликатор относительно coins */
+}
+
+.multiplier {
+    font-size: 84px; /* Размер мультипликатора */
+    font-weight: 600;
+    color: #ddd1ff; /* Цвет мультипликатора */
+    position: absolute;
+    right: -30px; /* Расстояние мультипликатора от правого края coins */
+    top: 50%; /* Положение мультипликатора по вертикали */
+    transform: translateY(-50%); /* Центрирование мультипликатора по вертикали */
 }
 
 .button-game {
@@ -100,10 +118,4 @@
     font-size: 20px;
     font-weight: 600;
     color: white;
-}
-
-.multiplier {
-    font-size: 24px;
-    color: yellow;
-    margin-left: 5px;
 }
