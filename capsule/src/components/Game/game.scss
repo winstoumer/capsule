@@ -32,23 +32,23 @@
     font-weight: 600;
     color: white;
     animation: floatUpAndAbsorb 1s ease-out forwards;
+    pointer-events: none;
 }
 
 @keyframes floatUpAndAbsorb {
     0% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
     50% {
         opacity: 1;
-        transform: translateY(-140px);
+        transform: translateY(-140px) scale(1);
     }
     100% {
         opacity: 0;
-        transform: translate(-115px, -115px) scale(0);
+        transform: translate(-50%, -50%) scale(0);
     }
 }
-
 
 @keyframes floatUp {
     0% {
