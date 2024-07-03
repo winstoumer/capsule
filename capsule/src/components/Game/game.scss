@@ -31,8 +31,24 @@
     font-size: 28px;
     font-weight: 600;
     color: white;
-    animation: floatUp 1s ease-out forwards;
+    animation: floatUpAndAbsorb 1s ease-out forwards;
 }
+
+@keyframes floatUpAndAbsorb {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-140px);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-115px, -115px) scale(0);
+    }
+}
+
 
 @keyframes floatUp {
     0% {
