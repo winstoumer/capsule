@@ -44,7 +44,7 @@ const Game: React.FC = () => {
 
     return (
         <div className="game">
-            {!gameStarted && <button className="start-button" onClick={handleStartClick}>Start</button>}
+            {!gameStarted && <button className="start-button default-button" onClick={handleStartClick}>Start</button>}
             {gameStarted && (
                 <>
                     <div className='coins'>{coins}</div>
