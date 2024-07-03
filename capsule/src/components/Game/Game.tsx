@@ -76,7 +76,17 @@ const Game: React.FC<GameProps> = ({ duration }) => {
                     </div>
                     <button className="button-game" onClick={handleButtonClick}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="115" cy="115" r="110" stroke="white" strokeWidth="1" fill="none" />
+                            <circle cx="115" cy="115" r="110" stroke="#ddd1ff" stroke-width="1" fill="none" />
+                            <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" stroke-width="10" fill="none">
+                                <animateTransform
+                                    attributeName="transform"
+                                    type="rotate"
+                                    from="0 115 115"
+                                    to="360 115 115"
+                                    dur="2s"
+                                    repeatCount="indefinite"
+                                />
+                            </path>
                         </svg>
                         {clicks.map((click) => (
                             <div
