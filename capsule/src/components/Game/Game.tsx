@@ -107,7 +107,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
             {gameStarted && (
                 <>
                     <div className="coins-container">
-                        <div className="coins">{coins}</div>
+                        <div className="coins">{coins.toFixed(2)}</div>
                     </div>
                     <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
@@ -129,7 +129,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                +{coinsPerClick}
+                                {coinsPerClick}
                             </div>
                         ))}
                     </button>
