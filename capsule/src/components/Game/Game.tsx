@@ -123,7 +123,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                {coinsPerClick}
+                                +{coinsPerClick}
                             </div>
                         ))}
                     </button>
