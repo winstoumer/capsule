@@ -44,9 +44,9 @@ const Game: React.FC = () => {
 
     return (
         <div className="game">
-            {!gameStarted && (
-                <button className="start-button default-button fade-out" onClick={handleStartClick}>Start</button>
-            )}
+            <button className={`start-button default-button ${gameStarted ? 'fade-out' : ''}`} onClick={handleStartClick}>
+                Start
+            </button>
             {gameStarted && (
                 <>
                     <div className='coins-container'>
