@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './App.css';
+import './game.scss';
 
 const Game: React.FC = () => {
     const [coins, setCoins] = useState<number>(0);
