@@ -217,12 +217,14 @@ const MintPage: React.FC = () => {
                         {wallet ? (
                             <div>
                                 <button className="default-button" onClick={() => handleSubmit()}>Send</button>
+                                <Link to="/game">Play</Link>
                             </div>
                         ) : (
                             <div>
                                 <button className="default-button" onClick={() => tonConnectUi.openModal()}>
                                     Connect wallet
                                 </button>
+
                                 <Link to="/game">Play</Link>
                             </div>
                         )}
