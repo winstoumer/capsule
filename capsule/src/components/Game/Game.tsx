@@ -108,7 +108,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             {gameStarted && (
                 <>
                     <div className="coins-container">
-                        <div className="coins">{coins}</div>
+                        <div className="coins">{coins.toFixed(2)}</div>
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
                     <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
@@ -131,7 +131,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                +{coinsPerClick * (multiplier ? 2 : 1)}
+                                {coinsPerClick * (multiplier ? 2 : 1)}
                             </div>
                         ))}
                     </button>
