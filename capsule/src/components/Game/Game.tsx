@@ -83,7 +83,7 @@ const Game: React.FC<GameProps> = ({ duration }) => {
                                     type="rotate"
                                     from="0 115 115"
                                     to="360 115 115"
-                                    dur="2s"
+                                    dur="1s"
                                     repeatCount="indefinite"
                                 />
                             </path>
