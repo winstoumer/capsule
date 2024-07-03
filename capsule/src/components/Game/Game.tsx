@@ -95,7 +95,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                +{coinsPerClick}
+                                {coinsPerClick}
                             </div>
                         ))}
                     </button>
