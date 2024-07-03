@@ -7,6 +7,7 @@ const Game: React.FC = () => {
     const [nextId, setNextId] = useState<number>(0);
     const [gameStarted, setGameStarted] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(10);
+    const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!gameStarted) return;
@@ -30,8 +31,10 @@ const Game: React.FC = () => {
     };
 
     const handleClaimClick = () => {
-        // Logic for claiming rewards or ending the game
-        console.log('Claim button clicked');
+        setGameStarted(false);
+        setShowClaimButton(false);
+        setCoins(0);
+        setClicks([]);
     };
 
     useEffect(() => {
@@ -40,10 +43,9 @@ const Game: React.FC = () => {
                 setTimeLeft(timeLeft - 1);
             }, 1000);
             return () => clearTimeout(timer);
-        } else if (timeLeft === 0) {
-            setTimeout(() => {
-                setGameStarted(false);
-            }, 1000); // Give enough time for the progress bar to complete its transition
+        } else if (timeLeft === 0 && gameStarted) {
+            setShowClaimButton(true);
+            setGameStarted(false);
         }
     }, [gameStarted, timeLeft]);
 
@@ -75,9 +77,11 @@ const Game: React.FC = () => {
                             ))}
                         </button>
                     ) : (
-                        <button className="claim-button default-button" onClick={handleClaimClick}>
-                            Claim
-                        </button>
+                        showClaimButton && (
+                            <button className="claim-button default-button" onClick={handleClaimClick}>
+                                Claim
+                            </button>
+                        )
                     )}
                     <div className='progress-bar-container'>
                         <div
