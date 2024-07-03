@@ -4,11 +4,10 @@ import './mint.scss';
 import { v4 as uuidv4 } from 'uuid';
 import { SendTransactionRequest, useTonConnectUI, useTonWallet, useTonAddress } from "@tonconnect/ui-react";
 import { beginCell } from '@ton/ton';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useData } from '../components/DataProvider/DataContext';
 import PageComponent from '../components/PageComponent/PageComponent';
 import Loading from '../components/Loading/Loading';
-import HexagonGrid from '../components/Hexagon/HexagonGrid';
 
 interface CollectionData {
     id: number;
@@ -224,7 +223,7 @@ const MintPage: React.FC = () => {
                                 <button className="default-button" onClick={() => tonConnectUi.openModal()}>
                                     Connect wallet
                                 </button>
-                                <HexagonGrid />
+                                <Link to="/game">Play</Link>
                             </div>
                         )}
                     </React.Fragment>) : (<div></div>)}
