@@ -15,7 +15,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
     const [timeLeft, setTimeLeft] = useState<number>(duration);
     const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
 
-    const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
+    const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) => {
         if (!gameStarted) return;
 
         const rect = e.currentTarget.getBoundingClientRect();
@@ -103,7 +103,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
                     <div className="coins-container">
                         <div className="coins">{coins}</div>
                     </div>
-                    <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouch}>
+                    <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
                             <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" strokeWidth="10" fill="none">
@@ -123,7 +123,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches }) => {
                                 className="floating-number"
                                 style={{ left: click.x, top: click.y }}
                             >
-                                +{coinsPerClick}
+                                {coinsPerClick}
                             </div>
                         ))}
                     </button>
