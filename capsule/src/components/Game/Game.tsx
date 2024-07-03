@@ -14,6 +14,30 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
     const [timeLeft, setTimeLeft] = useState<number>(duration);
     const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
 
+    const handleTouch = (e: React.TouchEvent<HTMLButtonElement>) => {
+        if (!gameStarted) return;
+
+        const rect = e.currentTarget.getBoundingClientRect();
+        const newClicks: { id: number; x: number; y: number }[] = [];
+        let totalCoins = 0;
+
+        for (let i = 0; i < e.touches.length; i++) {
+            const touch = e.touches[i];
+            const x = touch.clientX - rect.left;
+            const y = touch.clientY - rect.top;
+            newClicks.push({ id: nextId + i, x, y });
+            totalCoins += coinsPerClick;
+        }
+
+        setCoins(coins + totalCoins);
+        setClicks([...clicks, ...newClicks]);
+        setNextId(nextId + e.touches.length);
+
+        setTimeout(() => {
+            setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
+        }, 1000);
+    };
+
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!gameStarted) return;
 
@@ -21,12 +45,14 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
+        const newClick = { id: nextId, x, y };
+
         setCoins(coins + coinsPerClick);
-        setClicks([...clicks, { id: nextId, x, y }]);
+        setClicks([...clicks, newClick]);
         setNextId(nextId + 1);
 
         setTimeout(() => {
-            setClicks((currentClicks) => currentClicks.filter((click) => click.id !== nextId));
+            setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
         }, 1000);
     };
 
@@ -75,7 +101,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick }) => {
                     <div className="coins-container">
                         <div className="coins">{coins}</div>
                     </div>
-                    <button className="button-game" onClick={handleButtonClick}>
+                    <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouch}>
                         <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
                             <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" strokeWidth="10" fill="none">
