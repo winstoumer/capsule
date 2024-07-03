@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './game.scss';
 
-const Game: React.FC = () => {
+interface GameProps {
+    duration: number; // Длительность игры в секундах
+}
+
+const Game: React.FC<GameProps> = ({ duration }) => {
     const [coins, setCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
     const [nextId, setNextId] = useState<number>(0);
     const [gameStarted, setGameStarted] = useState<boolean>(false);
-    const [timeLeft, setTimeLeft] = useState<number>(10);
+    const [timeLeft, setTimeLeft] = useState<number>(duration);
     const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -27,7 +31,7 @@ const Game: React.FC = () => {
 
     const handleStartClick = () => {
         setGameStarted(true);
-        setTimeLeft(10);
+        setTimeLeft(duration); // Установите начальное время из пропса
     };
 
     const handleClaimClick = () => {
@@ -85,7 +89,7 @@ const Game: React.FC = () => {
                         ))}
                     </button>
                     <div className="progress-bar-container">
-                        <div className="progress-bar" style={{ width: `${(timeLeft / 10) * 100}%` }} />
+                        <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
                     </div>
                 </>
             )}
