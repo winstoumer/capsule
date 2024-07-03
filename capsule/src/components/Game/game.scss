@@ -28,9 +28,9 @@
 
 .floating-number {
     position: absolute;
-    font-size: 28px;
+    font-size: 32px;
     font-weight: 600;
-    color: white;
+    color: rgb(221, 209, 255);
     animation: floatUpAndAbsorb 1s ease-out forwards;
     pointer-events: none;
 }
