@@ -88,8 +88,10 @@ const Game: React.FC<GameProps> = ({ duration }) => {
                             </div>
                         ))}
                     </button>
-                    <div className="progress-bar-container">
-                        <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                    <div className="progress-bar-wrapper">
+                        <div className="progress-bar-container">
+                            <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                        </div>
                         <div className="time-left">{timeLeft}s</div>
                     </div>
                 </>

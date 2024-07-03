@@ -72,16 +72,20 @@
     pointer-events: none;
 }
 
-.progress-bar-container {
-    width: 100%;
-    height: 6px;
-    background-color: #1a1a1a;
-    margin-top: 12px;
-    position: relative;
-    border-radius: 6px;
+.progress-bar-wrapper {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px; /* Расстояние между прогресс-баром и временем */
+    width: 100%;
+    margin-top: 12px;
+}
+
+.progress-bar-container {
+    flex-grow: 1;
+    height: 6px;
+    background-color: #1a1a1a;
+    position: relative;
+    border-radius: 6px;
 }
 
 .progress-bar {
@@ -95,5 +99,4 @@
     font-size: 24px;
     font-weight: 600;
     color: white;
-    margin-left: 10px;
 }
