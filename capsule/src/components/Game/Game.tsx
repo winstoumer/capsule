@@ -108,7 +108,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             {gameStarted && (
                 <>
                     <div className="coins-container">
-                        <div className="coins">{coins.toFixed(2)}</div>
+                        <div className="coins">{coins.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</div>
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
                     <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
