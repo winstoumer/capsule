@@ -13,25 +13,18 @@
     display: flex;
     align-items: center;
     gap: 5px; /* Расстояние между монетами и мультипликатором */
-    position: relative;
 }
 
 .coins {
     font-size: 48px;
     font-weight: 600;
     color: white;
-    position: relative; /* Чтобы позиционировать мультипликатор относительно coins */
 }
 
 .multiplier {
-    font-size: 94px; /* Размер мультипликатора */
+    font-size: 34px; /* Размер мультипликатора */
     font-weight: 600;
     color: #ddd1ff; /* Цвет мультипликатора */
-    position: absolute;
-    right: 50%; /* Расстояние мультипликатора от правого края coins */
-    top: 50%; /* Положение мультипликатора по вертикали */
-    transform: translateY(-50%, -50%); /* Центрирование мультипликатора по вертикали */
-    z-index: -1;
 }
 
 .button-game {
