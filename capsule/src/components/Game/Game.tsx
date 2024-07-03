@@ -29,6 +29,11 @@ const Game: React.FC = () => {
         setTimeLeft(10);
     };
 
+    const handleClaimClick = () => {
+        // Logic for claiming rewards or ending the game
+        console.log('Claim button clicked');
+    };
+
     useEffect(() => {
         if (gameStarted && timeLeft > 0) {
             const timer = setTimeout(() => {
@@ -44,35 +49,42 @@ const Game: React.FC = () => {
 
     return (
         <div className="game">
-            <button className={`start-button default-button ${gameStarted ? 'fade-out' : ''}`} onClick={handleStartClick}>
-                Start
-            </button>
+            {!gameStarted && (
+                <button className={`start-button default-button ${gameStarted ? 'fade-out' : ''}`} onClick={handleStartClick}>
+                    Start
+                </button>
+            )}
             {gameStarted && (
                 <>
                     <div className='coins-container'>
                         <div className='coins'>{coins}</div>
                     </div>
-                    <button className='button-game' onClick={handleButtonClick}>
-                        <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="115" cy="115" r="110" stroke="white" strokeWidth="1" fill="none" />
-                        </svg>
-                        {clicks.map(click => (
-                            <div
-                                key={click.id}
-                                className="floating-number"
-                                style={{ left: click.x, top: click.y }}
-                            >
-                                1
-                            </div>
-                        ))}
-                    </button>
+                    {timeLeft > 0 ? (
+                        <button className='button-game' onClick={handleButtonClick}>
+                            <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="115" cy="115" r="110" stroke="white" strokeWidth="1" fill="none" />
+                            </svg>
+                            {clicks.map(click => (
+                                <div
+                                    key={click.id}
+                                    className="floating-number"
+                                    style={{ left: click.x, top: click.y }}
+                                >
+                                    1
+                                </div>
+                            ))}
+                        </button>
+                    ) : (
+                        <button className="claim-button default-button" onClick={handleClaimClick}>
+                            Claim
+                        </button>
+                    )}
                     <div className='progress-bar-container'>
                         <div
                             className='progress-bar'
                             style={{ width: `${(timeLeft / 10) * 100}%` }}
                         />
                     </div>
-                    <button className="claim-button default-button">Claim</button>
                 </>
             )}
         </div>
