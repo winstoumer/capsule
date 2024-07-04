@@ -46,6 +46,7 @@
     color: #ddd1ff;
     animation: floatUpAndAbsorb 1s ease-out forwards;
     pointer-events: none;
+    z-index: 1;
 }
 
 @keyframes floatUpAndAbsorb {
