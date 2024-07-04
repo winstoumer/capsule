@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
 
 interface GameProps {
@@ -15,23 +15,33 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [gameStarted, setGameStarted] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(duration);
     const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
-    const activeTouches = React.useRef<Set<number>>(new Set());
+    const activeTouches = useRef<Set<number>>(new Set());
+    const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const isWithinCircle = (x: number, y: number) => {
+        const centerX = 115;
+        const centerY = 115;
+        const radius = 115;
+        return (x - centerX) ** 2 + (y - centerY) ** 2 <= radius ** 2;
+    };
 
     const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) => {
-        if (!gameStarted) return;
+        if (!gameStarted || !buttonRef.current) return;
 
-        const rect = e.currentTarget.getBoundingClientRect();
+        const rect = buttonRef.current.getBoundingClientRect();
         const newTouches = Array.from(e.changedTouches).filter(touch => !activeTouches.current.has(touch.identifier));
         const touchCount = Math.min(newTouches.length, maxTouches);
         const newClicks: { id: number; x: number; y: number }[] = [];
         let totalCoins = 0;
 
         newTouches.slice(0, touchCount).forEach((touch, i) => {
-            activeTouches.current.add(touch.identifier);
             const x = touch.clientX - rect.left;
             const y = touch.clientY - rect.top;
-            newClicks.push({ id: nextId + i, x, y });
-            totalCoins += coinsPerClick * (multiplier ? 2 : 1); // Умножаем на 2, если multiplier === true
+            if (isWithinCircle(x, y)) {
+                activeTouches.current.add(touch.identifier);
+                newClicks.push({ id: nextId + i, x: touch.clientX - rect.left, y: touch.clientY - rect.top });
+                totalCoins += coinsPerClick * (multiplier ? 2 : 1); // Умножаем на 2, если multiplier === true
+            }
         });
 
         setCoins(prevCoins => prevCoins + totalCoins);
@@ -48,21 +58,23 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     };
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-        if (!gameStarted) return;
+        if (!gameStarted || !buttonRef.current) return;
 
-        const rect = e.currentTarget.getBoundingClientRect();
+        const rect = buttonRef.current.getBoundingClientRect();
         const x = e.clientX - rect.left;
         const y = e.clientY - rect.top;
 
-        const newClick = { id: nextId, x, y };
+        if (isWithinCircle(x, y)) {
+            const newClick = { id: nextId, x: e.clientX - rect.left, y: e.clientY - rect.top };
 
-        setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
-        setClicks(prevClicks => [...prevClicks, newClick]);
-        setNextId(prevId => prevId + 1);
+            setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
+            setClicks(prevClicks => [...prevClicks, newClick]);
+            setNextId(prevId => prevId + 1);
 
-        setTimeout(() => {
-            setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
-        }, 1000);
+            setTimeout(() => {
+                setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
+            }, 1000);
+        }
     };
 
     const handleStartClick = () => {
@@ -111,30 +123,33 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         <div className="coins">{coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
-                    <button className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
-                        <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
-                            <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" strokeWidth="10" fill="none">
-                                <animateTransform
-                                    attributeName="transform"
-                                    type="rotate"
-                                    from="0 115 115"
-                                    to="360 115 115"
-                                    dur="0.4s"
-                                    repeatCount="indefinite"
-                                />
-                            </path>
-                        </svg>
+                    <div className="clicks-wrapper">
+                        <button ref={buttonRef} className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+                            <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="115" cy="115" r="115" fill="transparent" />
+                                <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
+                                <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" strokeWidth="10" fill="none">
+                                    <animateTransform
+                                        attributeName="transform"
+                                        type="rotate"
+                                        from="0 115 115"
+                                        to="360 115 115"
+                                        dur="0.4s"
+                                        repeatCount="indefinite"
+                                    />
+                                </path>
+                            </svg>
+                        </button>
                         {clicks.map((click) => (
                             <div
                                 key={click.id}
                                 className="floating-number"
-                                style={{ left: click.x, top: click.y }}
+                                style={{ left: click.x + buttonRef.current!.getBoundingClientRect().left, top: click.y + buttonRef.current!.getBoundingClientRect().top }}
                             >
                                 {coinsPerClick * (multiplier ? 2 : 1)}
                             </div>
                         ))}
-                    </button>
+                    </div>
                     <div className="progress-bar-wrapper">
                         <div className="progress-bar-container">
                             <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
