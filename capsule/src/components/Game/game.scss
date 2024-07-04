@@ -124,3 +124,17 @@
     font-weight: 600;
     color: white;
 }
+
+.panel-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.nav-wrapper {
+
+}
+
+.n-ic {
+    font-size: 32px;
+}

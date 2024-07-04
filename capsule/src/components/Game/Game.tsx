@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
+import { Link } from 'react-router-dom';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -185,11 +186,16 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                             </div>
                         ))}
                     </div>
-                    <div className="progress-bar-wrapper">
-                        <div className="progress-bar-container">
-                            <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                    <div className='panel-wrapper'>
+                        <div className='nav-wrapper'>
+                            <Link to="/boost" className='n-ic'>🚀</Link>
                         </div>
-                        <div className="time-left">{timeLeft}s</div>
+                        <div className="progress-bar-wrapper">
+                            <div className="progress-bar-container">
+                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                            </div>
+                            <div className="time-left">{timeLeft}s</div>
+                        </div>
                     </div>
                 </>
             )}
