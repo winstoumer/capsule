@@ -30,17 +30,22 @@
 .button-game {
     position: relative;
     display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 230px;
+    height: 230px;
     padding: 0;
     margin: 0;
     background: transparent;
     border: 1px solid transparent;
-    border-radius: 100%;
+    border-radius: 50%;
     cursor: pointer;
+    overflow: hidden;
 }
 
-    .button-game svg {
-        overflow: hidden;
-    }
+.button-game svg {
+    pointer-events: none;
+}
 
 .floating-number {
     position: absolute;
