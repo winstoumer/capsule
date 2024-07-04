@@ -10,7 +10,7 @@ const GamePage: React.FC = () => {
       <Game
         duration={30}
         coinsPerClick={0.01}
-        maxTouches={1}
+        maxTouches={0}
         multiplier={false}
       />
     </PageComponent>
