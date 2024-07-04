@@ -51,7 +51,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setNextId(prevId => prevId + touchCount);
 
         setCircleScale(true);
-        setAnimationSpeed('0.4s');
+        setAnimationSpeed('0.2s');
 
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
@@ -79,7 +79,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setNextId(prevId => prevId + 1);
 
             setCircleScale(true);
-            setAnimationSpeed('0.4s');
+            setAnimationSpeed('0.2s');
 
             setTimeout(() => {
                 setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
