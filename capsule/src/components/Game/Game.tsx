@@ -43,9 +43,15 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     activeTouches.current.add(touch.identifier);
                     newClicks.push({ id: nextId + newClicks.length, x, y });
                     totalCoins += coinsPerClick * (multiplier ? 2 : 1);
+                    touchCount++;
                 }
             }
         });
+    
+        if (newClicks.length > 0) {
+            setCircleScale(true);
+            setAnimationSpeed('0.2s');
+        }
     
         setCoins(prevCoins => prevCoins + totalCoins);
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
@@ -53,14 +59,13 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
+            setCircleScale(false); // Сбрасываем масштабирование после анимации
+            setAnimationSpeed('1s'); // Сбрасываем скорость анимации после завершения
         }, 1000);
     
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
-        
-        setCircleScale(true);
-        setAnimationSpeed('0.2s');
-    };                   
-
+    };
+    
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
         Array.from(e.changedTouches).forEach(touch => {
             if (activeTouches.current.has(touch.identifier)) {
@@ -69,10 +74,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         });
     
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
-        
-        setCircleScale(false);
-        setAnimationSpeed('1s');
-    };      
+    };    
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!gameStarted || !buttonRef.current) return;
