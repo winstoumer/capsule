@@ -36,8 +36,11 @@
     border: 1px solid transparent;
     border-radius: 100%;
     cursor: pointer;
-    overflow: hidden;
 }
+
+    .button-game svg {
+        overflow: hidden;
+    }
 
 .floating-number {
     position: absolute;
@@ -46,7 +49,6 @@
     color: #ddd1ff;
     animation: floatUpAndAbsorb 1s ease-out forwards;
     pointer-events: none;
-    z-index: 1;
 }
 
 @keyframes floatUpAndAbsorb {
