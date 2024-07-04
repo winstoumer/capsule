@@ -58,7 +58,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
         }, 1000);
-    };           
+    
+        e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
+    };               
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
         Array.from(e.changedTouches).forEach(touch => {
