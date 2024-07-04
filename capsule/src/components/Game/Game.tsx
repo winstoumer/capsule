@@ -51,14 +51,14 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
         setNextId(prevId => prevId + touchCount);
     
-        setCircleScale(true);
-        setAnimationSpeed('0.2s');
-    
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
         }, 1000);
     
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
+        
+        setCircleScale(true);
+        setAnimationSpeed('0.2s');
     };                   
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
@@ -67,10 +67,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                 activeTouches.current.delete(touch.identifier);
             }
         });
-        setCircleScale(false);
-        setAnimationSpeed('1s');
     
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
+        
+        setCircleScale(false);
+        setAnimationSpeed('1s');
     };      
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
