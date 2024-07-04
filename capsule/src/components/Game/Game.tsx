@@ -36,14 +36,13 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         let touchCount = 0;
     
         Array.from(e.changedTouches).forEach(touch => {
-            if (touchCount < maxTouches && !activeTouches.current.has(touch.identifier)) {
+            if (activeTouches.current.size < maxTouches && !activeTouches.current.has(touch.identifier)) {
                 const x = touch.clientX - rect.left;
                 const y = touch.clientY - rect.top;
                 if (isWithinCircle(x, y)) {
                     activeTouches.current.add(touch.identifier);
-                    newClicks.push({ id: nextId + touchCount, x, y });
+                    newClicks.push({ id: nextId + newClicks.length, x, y });
                     totalCoins += coinsPerClick * (multiplier ? 2 : 1);
-                    touchCount++;
                 }
             }
         });
