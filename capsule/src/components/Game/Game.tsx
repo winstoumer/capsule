@@ -60,7 +60,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         }, 1000);
     
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
-    };               
+    };                   
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
         Array.from(e.changedTouches).forEach(touch => {
