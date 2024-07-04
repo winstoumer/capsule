@@ -29,40 +29,42 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 
     const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) => {
         if (!gameStarted || !buttonRef.current) return;
-
+    
         const rect = buttonRef.current.getBoundingClientRect();
-        const newTouches = Array.from(e.changedTouches).filter(touch => !activeTouches.current.has(touch.identifier));
-        const touchCount = Math.min(newTouches.length, maxTouches);
         const newClicks: { id: number; x: number; y: number }[] = [];
         let totalCoins = 0;
-
-        newTouches.slice(0, touchCount).forEach((touch, i) => {
-            const x = touch.clientX - rect.left;
-            const y = touch.clientY - rect.top;
-            if (isWithinCircle(x, y)) {
-                activeTouches.current.add(touch.identifier);
-                newClicks.push({ id: nextId + i, x, y });
-                totalCoins += coinsPerClick * (multiplier ? 2 : 1); // Умножаем на 2, если multiplier === true
+    
+        Array.from(e.changedTouches).forEach(touch => {
+            if (activeTouches.current.size < maxTouches && !activeTouches.current.has(touch.identifier)) {
+                const x = touch.clientX - rect.left;
+                const y = touch.clientY - rect.top;
+                if (isWithinCircle(x, y)) {
+                    activeTouches.current.add(touch.identifier);
+                    newClicks.push({ id: nextId + newClicks.length, x, y });
+                    totalCoins += coinsPerClick * (multiplier ? 2 : 1);
+                }
             }
         });
-
+    
         setCoins(prevCoins => prevCoins + totalCoins);
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
-        setNextId(prevId => prevId + touchCount);
-
+        setNextId(prevId => prevId + newClicks.length);
+    
         setCircleScale(true);
         setAnimationSpeed('0.2s');
-
+    
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
         }, 1000);
-    };
+    };    
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
-        Array.from(e.changedTouches).forEach(touch => activeTouches.current.delete(touch.identifier));
+        Array.from(e.changedTouches).forEach(touch => {
+            activeTouches.current.delete(touch.identifier);
+        });
         setCircleScale(false);
         setAnimationSpeed('1s');
-    };
+    };    
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!gameStarted || !buttonRef.current) return;
