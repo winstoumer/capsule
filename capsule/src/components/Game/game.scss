@@ -128,7 +128,10 @@
 .panel-wrapper {
     display: flex;
     flex-direction: column;
-    gap: 14px;
+    gap: 12px;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
 
 .nav-wrapper {

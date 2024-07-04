@@ -188,7 +188,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     </div>
                     <div className='panel-wrapper'>
                         <div className='nav-wrapper'>
-                            <Link to="/boost" className='n-ic'>🚀</Link>
+                            <Link to="/boostgame" className='n-ic'>🚀</Link>
                         </div>
                         <div className="progress-bar-wrapper">
                             <div className="progress-bar-container">
