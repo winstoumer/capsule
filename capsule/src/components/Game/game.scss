@@ -41,6 +41,11 @@
     border-radius: 50%;
     cursor: pointer;
     overflow: visible; /* Allow overflow */
+    transition: transform 0.4s; /* Animation for scaling */
+}
+
+.button-game.scaled {
+    transform: scale(1.1); /* Scale up by 10% */
 }
 
 .floating-number {

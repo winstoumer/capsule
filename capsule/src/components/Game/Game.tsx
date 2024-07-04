@@ -15,6 +15,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [gameStarted, setGameStarted] = useState<boolean>(false);
     const [timeLeft, setTimeLeft] = useState<number>(duration);
     const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
+    const [circleScale, setCircleScale] = useState<boolean>(false);
+    const [animationSpeed, setAnimationSpeed] = useState<string>('1s');
     const activeTouches = useRef<Set<number>>(new Set());
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -48,6 +50,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
         setNextId(prevId => prevId + touchCount);
 
+        setCircleScale(true);
+        setAnimationSpeed('0.4s');
+
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
         }, 1000);
@@ -55,6 +60,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
         Array.from(e.changedTouches).forEach(touch => activeTouches.current.delete(touch.identifier));
+        setCircleScale(false);
+        setAnimationSpeed('1s');
     };
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -70,6 +77,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
             setClicks(prevClicks => [...prevClicks, newClick]);
             setNextId(prevId => prevId + 1);
+
+            setCircleScale(true);
+            setAnimationSpeed('0.4s');
 
             setTimeout(() => {
                 setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
@@ -124,17 +134,30 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
                     <div className="clicks-wrapper">
-                        <button ref={buttonRef} className="button-game" onMouseDown={handleButtonClick} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
+                        <button
+                            ref={buttonRef}
+                            className={`button-game ${circleScale ? 'scaled' : ''}`}
+                            onMouseDown={handleButtonClick}
+                            onMouseUp={() => setCircleScale(false)}
+                            onTouchStart={handleTouchStart}
+                            onTouchEnd={handleTouchEnd}
+                        >
                             <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
                                 <circle cx="115" cy="115" r="115" fill="transparent" />
                                 <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
-                                <path d="M 5,115 A 110,110 0 0,1 225,115" stroke="black" strokeWidth="10" fill="none">
+                                <path
+                                    d="M 5,115 A 110,110 0 0,1 225,115"
+                                    stroke="black"
+                                    strokeWidth="10"
+                                    fill="none"
+                                    style={{ animationDuration: animationSpeed }}
+                                >
                                     <animateTransform
                                         attributeName="transform"
                                         type="rotate"
                                         from="0 115 115"
                                         to="360 115 115"
-                                        dur="0.4s"
+                                        dur={animationSpeed}
                                         repeatCount="indefinite"
                                     />
                                 </path>
