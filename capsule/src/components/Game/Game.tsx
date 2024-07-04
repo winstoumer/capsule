@@ -56,15 +56,17 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
         }, 1000);
-    };    
+    };       
 
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
         Array.from(e.changedTouches).forEach(touch => {
-            activeTouches.current.delete(touch.identifier);
+            if (activeTouches.current.has(touch.identifier)) {
+                activeTouches.current.delete(touch.identifier);
+            }
         });
         setCircleScale(false);
         setAnimationSpeed('1s');
-    };    
+    };   
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!gameStarted || !buttonRef.current) return;
