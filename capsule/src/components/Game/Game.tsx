@@ -70,7 +70,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         });
         setCircleScale(false);
         setAnimationSpeed('1s');
-    };   
+    
+        e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
+    };      
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!gameStarted || !buttonRef.current) return;
