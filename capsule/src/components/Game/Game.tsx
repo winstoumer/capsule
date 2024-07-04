@@ -39,7 +39,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             const y = touch.clientY - rect.top;
             if (isWithinCircle(x, y)) {
                 activeTouches.current.add(touch.identifier);
-                newClicks.push({ id: nextId + i, x: touch.clientX - rect.left, y: touch.clientY - rect.top });
+                newClicks.push({ id: nextId + i, x, y });
                 totalCoins += coinsPerClick * (multiplier ? 2 : 1); // Умножаем на 2, если multiplier === true
             }
         });
@@ -65,7 +65,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         const y = e.clientY - rect.top;
 
         if (isWithinCircle(x, y)) {
-            const newClick = { id: nextId, x: e.clientX - rect.left, y: e.clientY - rect.top };
+            const newClick = { id: nextId, x, y };
 
             setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
             setClicks(prevClicks => [...prevClicks, newClick]);
