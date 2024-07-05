@@ -46,14 +46,14 @@ const getNextLevel = (currentLevel: number, levels: LevelInfo[]) => {
 
 const items = [
     {
-        icon: '',
+        icon: '⏱️',
         name: 'Time',
         price: getNextLevel(userLevels.Time as number, allLevels.Time)?.price,
         mark: getNextLevel(userLevels.Time as number, allLevels.Time)?.level,
         i: 'lvl'
     },
     {
-        icon: '',
+        icon: '👆',
         name: 'Multitap',
         price: getNextLevel(userLevels.Multitap as number, allLevels.Multitap)?.price,
         mark: getNextLevel(userLevels.Multitap as number, allLevels.Multitap)?.level,
