@@ -11,11 +11,12 @@ interface Item {
 
 interface ListItemsProps {
     items: Item[];
+    isBordered: boolean;
 }
 
-const ListItems: React.FC<ListItemsProps> = ({ items }) => {
+const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
     return (
-        <div className='list'>
+        <div className={`list ${isBordered ? 'bordered' : ''}`}>
             {items.map((item, index) => (
                 <div className='item' key={index}>
                     <div className='icon'>

@@ -41,3 +41,15 @@
 .mark {
     font-weight: 200;
 }
+
+.list.bordered {
+    border: 1px solid rgb(24, 24, 24);
+    border-radius: 26px;
+    padding: 0 20px;
+}
+
+.list.bordered .item {
+    padding: 12px 0;
+    border: none;
+    border-radius: 0;
+}
