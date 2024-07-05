@@ -70,7 +70,7 @@ const items = [
 
 const Boost: React.FC = () => {
     return (
-        <ListItems items={items} isBordered={true} />
+        <ListItems items={items} isBordered={false} />
     );
 }
 
