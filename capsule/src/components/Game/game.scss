@@ -106,15 +106,6 @@
     pointer-events: none;
 }
 
-.progress-bar-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Расстояние между прогресс-баром и временем */
-    width: 100%;
-    max-width: 280px;
-    margin-top: 12px;
-}
-
 .progress-bar-container {
     flex-grow: 1;
     height: 6px;
@@ -123,20 +114,31 @@
     border-radius: 6px;
 }
 
-.progress-bar {
-    height: 100%;
-    background-color: #ddd1ff;
-    transition: width 1s linear;
-    border-radius: 6px;
+.progress-bar-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Расстояние между прогресс-баром и временем */
+    width: 100%;
+    max-width: 280px;
+    margin-top: 12px;
+
+    .progress-bar {
+        height: 100%;
+        background-color: #ddd1ff;
+        transition: width 1s linear;
+        border-radius: 6px;
+        transition: width 1s linear, background-color 1s linear; // Добавим анимацию смены цвета
+    }
+
+    .progress-bar.orange {
+        background-color: orange; // Цвет прогресс-бара при 25%
+    }
+
+    .progress-bar.red {
+        background-color: red; // Цвет прогресс-бара при 10%
+    }
 }
 
-.progress-bar-orange {
-    background-color: orange; /* Цвет прогресс-бара при 25% */
-}
-
-.progress-bar-red {
-    background-color: red; /* Цвет прогресс-бара при 10% */
-}
 
 .time-left {
     font-size: 20px;
@@ -159,3 +161,4 @@
 .n-ic {
     font-size: 32px;
 }
+
