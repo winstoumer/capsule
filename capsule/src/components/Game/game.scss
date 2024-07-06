@@ -111,7 +111,7 @@
     align-items: center;
     gap: 10px; /* Расстояние между прогресс-баром и временем */
     width: 100%;
-    max-width: 200px;
+    max-width: 230px;
     margin-top: 8px;
 }
 
@@ -124,7 +124,7 @@
 
     .progress-bar {
         height: 100%;
-        background-color: #00ab33;
+        background-color: #25005a;
         transition: width 1s linear, background-color 1s linear;
         border-radius: 6px;
     }

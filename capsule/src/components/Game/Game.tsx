@@ -201,7 +201,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Второй круг, вращающийся против часовой стрелки */}
                                     <path
                                         d="M 5,115 A 110,110 0 0,0 225,115"
-                                        stroke="red"
+                                        stroke="#25005a"
                                         strokeWidth="3"
                                         fill="none"
                                         style={{ animationDirection: 'reverse', animationDuration: animationSpeed }}
