@@ -40,9 +40,9 @@ const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
                     </div>
                     <div className='info'>
                         <div className='name'>{item.name} {item.mark !== undefined && item.i !== undefined && <div className='mark'>{item.mark} {item.i}</div>}</div>
-                        <div className='description'>
-                            {item.price !== undefined && <div className='price'>{item.price}</div>}
-                        </div>
+                    </div>
+                    <div className='description'>
+                        {item.price !== undefined && <div className='price'>{item.price}</div>}
                     </div>
                 </div>
             ))}
@@ -65,9 +65,9 @@ const Modal: React.FC<ModalProps> = ({ item, onClose, isExiting }) => {
         <div className={`modal ${isExiting ? 'modal-exit' : ''}`}>
             <div className='modal-content'>
                 <span className='close' onClick={onClose}>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
-                        <path d="M6 6L18 18" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
+                        <path d="M6 6L18 18" stroke="#fff" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                 </span>
                 <div className='modal-icon'>{item.icon}</div>
