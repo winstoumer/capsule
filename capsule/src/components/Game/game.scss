@@ -112,12 +112,12 @@
     gap: 10px; /* Расстояние между прогресс-баром и временем */
     width: 100%;
     max-width: 230px;
-    margin-top: 8px;
+    margin-top: 28px;
 }
 
 .progress-bar-container {
     flex-grow: 1;
-    height: 4px;
+    height: 14px;
     background-color: #1a1a1a;
     position: relative;
     border-radius: 6px;
