@@ -65,12 +65,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setAnimationSpeed('1s'); // Сбрасываем скорость анимации после завершения
         }, 1000);
 
-        // Увеличение контейнера с монетами и мультипликатором на 10%
-        setCoinContainerClicked(true);
-        setTimeout(() => {
-            setCoinContainerClicked(false);
-        }, 400);
-
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
     };
 
@@ -146,6 +140,18 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         };
     }, [gameStarted, timeLeft]);
 
+    // Функция для определения класса прогресс-бара в зависимости от процента времени
+    const getProgressBarColorClass = () => {
+        const percentage = (timeLeft / duration) * 100;
+        if (percentage <= 25) {
+            return 'progress-bar-orange';
+        } else if (percentage <= 10) {
+            return 'progress-bar-red';
+        } else {
+            return ''; // Возвращаем пустую строку, если не нужно менять цвет
+        }
+    };
+
     return (
         <div className="game">
             {!gameStarted && !showClaimButton && (
@@ -191,10 +197,10 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Второй круг, вращающийся против часовой стрелки */}
                                     <path
                                         d="M 5,115 A 110,110 0 0,0 225,115"
-                                        stroke="red"  // Красный цвет
-                                        strokeWidth="3"
+                                        stroke="black"
+                                        strokeWidth="2"
                                         fill="none"
-                                        style={{ animationDirection: 'reverse', animationDuration: animationSpeed }}
+                                        style={{ animationDuration: animationSpeed }}
                                     >
                                         <animateTransform
                                             attributeName="transform"
@@ -223,8 +229,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                             <Link to="/boostgame" className='n-ic'>🚀</Link>
                         </div>
                         <div className="progress-bar-wrapper">
-                            <div className="progress-bar-container">
-                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                            <div className={`progress-bar-container ${getProgressBarColorClass()}`}>
+                                <div className={`progress-bar ${getProgressBarColorClass()}`} style={{ width: `${(timeLeft / duration) * 100}%` }} />
                             </div>
                             <div className="time-left">{timeLeft}s</div>
                         </div>

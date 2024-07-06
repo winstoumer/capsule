@@ -130,6 +130,14 @@
     border-radius: 6px;
 }
 
+.progress-bar-orange {
+    background-color: orange; /* Цвет прогресс-бара при 25% */
+}
+
+.progress-bar-red {
+    background-color: red; /* Цвет прогресс-бара при 10% */
+}
+
 .time-left {
     font-size: 20px;
     font-weight: 600;
@@ -151,4 +159,3 @@
 .n-ic {
     font-size: 32px;
 }
-
