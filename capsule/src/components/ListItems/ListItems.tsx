@@ -39,10 +39,9 @@ const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
                         {item.icon}
                     </div>
                     <div className='info'>
-                        <div className='name'>{item.name}</div>
+                        <div className='name'>{item.name} {item.mark !== undefined && item.i !== undefined && <div className='mark'>{item.mark} {item.i}</div>}</div>
                         <div className='description'>
                             {item.price !== undefined && <div className='price'>{item.price}</div>}
-                            {item.mark !== undefined && item.i !== undefined && <div className='mark'>{item.mark} {item.i}</div>}
                         </div>
                     </div>
                 </div>
