@@ -175,16 +175,16 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         />
                                     </path>
                                 </svg>
+                                {clicks.map((click) => (
+                                    <div
+                                        key={click.id}
+                                        className="floating-number"
+                                        style={{ left: click.x, top: click.y }}
+                                    >
+                                        {coinsPerClick * (multiplier ? 2 : 1)}
+                                    </div>
+                                ))}
                             </button>
-                            {clicks.map((click) => (
-                                <div
-                                    key={click.id}
-                                    className="floating-number"
-                                    style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
-                                >
-                                    {coinsPerClick * (multiplier ? 2 : 1)}
-                                </div>
-                            ))}
                         </div>
                     </div>
                     <div className='panel-wrapper'>
