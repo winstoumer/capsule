@@ -61,9 +61,9 @@ const Modal: React.FC<ModalProps> = ({ item, onClose }) => {
                 <span className='close' onClick={onClose}>&times;</span>
                 <div className='modal-icon'>{item.icon}</div>
                 <div className='modal-name'>{item.name}</div>
-                {item.price !== undefined && <div className='modal-price'>Price: {item.price}</div>}
-                {item.mark !== undefined && <div className='modal-mark'>Mark: {item.mark}</div>}
-                {item.i !== undefined && <div className='modal-i'>I: {item.i}</div>}
+                {item.price !== undefined && <div className='modal-price'>{item.price}</div>}
+                {item.mark !== undefined && item.i !== undefined && <div className='modal-mark'>{item.mark} {item.i}</div>}
+                <button className='default-button'>Up</button>
             </div>
         </div>
     );
