@@ -120,13 +120,13 @@
     height: 14px;
     background-color: #1a1a1a;
     position: relative;
-    border-radius: 6px;
+    border-radius: 8px;
 
     .progress-bar {
         height: 100%;
         background-color: #25005a;
         transition: width 1s linear, background-color 1s linear;
-        border-radius: 6px;
+        border-radius: 8px;
     }
 
     &.orange .progress-bar {
