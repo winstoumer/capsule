@@ -139,9 +139,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         setGameStarted(false);
                     }
                     // Установка класса прогресс-бара в зависимости от оставшегося времени
-                    if (newTimeLeft <= duration * 0.1) {
+                    if (newTimeLeft <= duration * 0.15) {
                         setProgressBarColor('red');
-                    } else if (newTimeLeft <= duration * 0.25) {
+                    } else if (newTimeLeft <= duration * 0.35) {
                         setProgressBarColor('orange');
                     } else {
                         setProgressBarColor('');
