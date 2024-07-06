@@ -65,7 +65,12 @@ const Modal: React.FC<ModalProps> = ({ item, onClose, isExiting }) => {
     return (
         <div className={`modal ${isExiting ? 'modal-exit' : ''}`}>
             <div className='modal-content'>
-                <span className='close' onClick={onClose}>&times;</span>
+                <span className='close' onClick={onClose}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M18 6L6 18" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M6 6L18 18" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                </span>
                 <div className='modal-icon'>{item.icon}</div>
                 <div className='modal-name'>{item.name}</div>
                 <div className='modal-info'>
