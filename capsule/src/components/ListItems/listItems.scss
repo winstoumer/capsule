@@ -61,6 +61,28 @@
     border-radius: 0;
 }
 
+@keyframes slideInUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes slideOutDown {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
 .modal {
     position: fixed;
     left: 0;
@@ -75,6 +97,7 @@
     align-items: center;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+    animation: slideInUp 0.3s forwards;
 }
 
 .modal-content {
@@ -134,4 +157,8 @@
     padding: 2px 8px;
     border-radius: 20px;
     border: 1px solid rgb(24, 24, 24);
+}
+
+.modal-exit {
+    animation: slideOutDown 0.3s forwards;
 }

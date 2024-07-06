@@ -17,13 +17,18 @@ interface ListItemsProps {
 
 const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
     const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+    const [isExiting, setIsExiting] = useState<boolean>(false);
 
     const handleItemClick = (item: Item) => {
         setSelectedItem(item);
+        setIsExiting(false);
     };
 
     const closeModal = () => {
-        setSelectedItem(null);
+        setIsExiting(true);
+        setTimeout(() => {
+            setSelectedItem(null);
+        }, 300); // Duration of the slide out animation
     };
 
     return (
@@ -44,7 +49,7 @@ const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
             ))}
 
             {selectedItem && (
-                <Modal item={selectedItem} onClose={closeModal} />
+                <Modal item={selectedItem} onClose={closeModal} isExiting={isExiting} />
             )}
         </div>
     );
@@ -53,11 +58,12 @@ const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
 interface ModalProps {
     item: Item;
     onClose: () => void;
+    isExiting: boolean;
 }
 
-const Modal: React.FC<ModalProps> = ({ item, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ item, onClose, isExiting }) => {
     return (
-        <div className='modal'>
+        <div className={`modal ${isExiting ? 'modal-exit' : ''}`}>
             <div className='modal-content'>
                 <span className='close' onClick={onClose}>&times;</span>
                 <div className='modal-icon'>{item.icon}</div>
