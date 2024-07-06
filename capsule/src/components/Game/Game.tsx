@@ -233,7 +233,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                             <Link to="/boostgame" className='n-ic'>🚀</Link>
                         </div>
                         <div className="progress-bar-wrapper">
-                            <div className={`progress-bar-container ${progressBarColor ? progressBarColor : ''}`}>
+                            <div className={`progress-bar-container ${progressBarColor}`}>
                                 <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
                             </div>
                             <div className="time-left">{timeLeft}s</div>
