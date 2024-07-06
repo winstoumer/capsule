@@ -1,5 +1,5 @@
 import './listItems.scss';
-import React from 'react';
+import React, { useState } from 'react';
 
 interface Item {
     icon: string;
@@ -15,10 +15,20 @@ interface ListItemsProps {
 }
 
 const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
+    const [selectedItem, setSelectedItem] = useState<Item | null>(null);
+
+    const handleItemClick = (item: Item) => {
+        setSelectedItem(item);
+    };
+
+    const closeModal = () => {
+        setSelectedItem(null);
+    };
+
     return (
         <div className={`list ${isBordered ? 'bordered' : ''}`}>
             {items.map((item, index) => (
-                <div className='item' key={index}>
+                <div className='item' key={index} onClick={() => handleItemClick(item)}>
                     <div className='icon'>
                         {item.icon}
                     </div>
@@ -31,6 +41,30 @@ const ListItems: React.FC<ListItemsProps> = ({ items, isBordered }) => {
                     </div>
                 </div>
             ))}
+
+            {selectedItem && (
+                <Modal item={selectedItem} onClose={closeModal} />
+            )}
+        </div>
+    );
+};
+
+interface ModalProps {
+    item: Item;
+    onClose: () => void;
+}
+
+const Modal: React.FC<ModalProps> = ({ item, onClose }) => {
+    return (
+        <div className='modal'>
+            <div className='modal-content'>
+                <span className='close' onClick={onClose}>&times;</span>
+                <div className='modal-icon'>{item.icon}</div>
+                <div className='modal-name'>{item.name}</div>
+                {item.price !== undefined && <div className='modal-price'>Price: {item.price}</div>}
+                {item.mark !== undefined && <div className='modal-mark'>Mark: {item.mark}</div>}
+                {item.i !== undefined && <div className='modal-i'>I: {item.i}</div>}
+            </div>
         </div>
     );
 };

@@ -12,6 +12,7 @@
     padding: 14px 22px;
     border: 1px solid rgb(24, 24, 24);
     border-radius: 26px;
+    cursor: pointer;
 }
 
 .icon {
@@ -58,4 +59,48 @@
     padding: 14px 0;
     border: none;
     border-radius: 0;
+}
+
+.modal {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 500px;
+    position: relative;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-icon {
+    font-size: 42px;
+}
+
+.modal-name {
+    font-size: 24px;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.modal-price, .modal-mark, .modal-i {
+    margin-top: 10px;
+    font-size: 18px;
 }
