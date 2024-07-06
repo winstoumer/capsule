@@ -147,12 +147,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
                     <div className="clicks-wrapper">
-                        <div className={`button-game-container ${circleScale ? 'scaled' : ''}`}>
+                        <div className="button-game-container">
                             <button
                                 ref={buttonRef}
-                                className="button-game"
+                                className={`button-game ${circleScale ? 'scaled' : ''}`}
                                 onMouseDown={handleButtonClick}
-                                onMouseUp={() => setCircleScale(false)}
                                 onTouchStart={handleTouchStart}
                                 onTouchEnd={handleTouchEnd}
                             >
@@ -177,16 +176,16 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     </path>
                                 </svg>
                             </button>
+                            {clicks.map((click) => (
+                                <div
+                                    key={click.id}
+                                    className="floating-number"
+                                    style={{ left: '50%', top: '50%', transform: 'translate(-50%, -50%)' }}
+                                >
+                                    {coinsPerClick * (multiplier ? 2 : 1)}
+                                </div>
+                            ))}
                         </div>
-                        {clicks.map((click) => (
-                            <div
-                                key={click.id}
-                                className="floating-number"
-                                style={{ left: click.x, top: click.y }}
-                            >
-                                {coinsPerClick * (multiplier ? 2 : 1)}
-                            </div>
-                        ))}
                     </div>
                     <div className='panel-wrapper'>
                         <div className='nav-wrapper'>

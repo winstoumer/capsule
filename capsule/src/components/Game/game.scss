@@ -66,22 +66,11 @@
     }
     50% {
         opacity: 1;
-        transform: translateY(-180px) scale(1);
+        transform: translateY(-100px) scale(1);
     }
     100% {
         opacity: 0;
         transform: translate(-50%, -50%) scale(0);
-    }
-}
-
-@keyframes floatUp {
-    0% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-180px);
     }
 }
 
