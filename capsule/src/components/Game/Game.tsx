@@ -158,6 +158,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="115" cy="115" r="115" fill="transparent" />
                                     <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
+                                    {/* Первый круг, вращающийся по часовой стрелке */}
                                     <path
                                         d="M 5,115 A 110,110 0 0,1 225,115"
                                         stroke="black"
@@ -170,6 +171,23 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             type="rotate"
                                             from="0 115 115"
                                             to="360 115 115"
+                                            dur={animationSpeed}
+                                            repeatCount="indefinite"
+                                        />
+                                    </path>
+                                    {/* Второй круг, вращающийся против часовой стрелки */}
+                                    <path
+                                        d="M 5,115 A 110,110 0 0,0 225,115"
+                                        stroke="red"  // Красный цвет
+                                        strokeWidth="10"
+                                        fill="none"
+                                        style={{ animationDirection: 'reverse', animationDuration: animationSpeed }}
+                                    >
+                                        <animateTransform
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 115 115"
+                                            to="-360 115 115"
                                             dur={animationSpeed}
                                             repeatCount="indefinite"
                                         />
