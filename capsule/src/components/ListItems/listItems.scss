@@ -109,16 +109,16 @@
 }
 
 .modal-info {
-    font-size: 14px;
-    font-weight: 400;
-}
-
-.modal-description {
     display: flex;
     gap: 8px;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.modal-description {
+    font-size: 14px;
+    font-weight: 400;
 }
 
 .modal-price {
@@ -127,6 +127,7 @@
 }
 
 .modal-mark {
+    display: flex;
     font-size: 14px;
     font-weight: 600;
     padding: 2px 8px;
