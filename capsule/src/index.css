@@ -127,7 +127,7 @@ button {
   font-weight: 500;
   color: var(--general-color-blue);
   background-color: var(--general-color-darkblue);
-  height: 36px;
+  height: 34px;
   padding: 0 20px;
   border-radius: 20px;
   border: none;
@@ -143,8 +143,8 @@ button {
   font-size: 22px;
   font-weight: 500;
   background-color: transparent;
-  height: 42px;
-  min-height: 42px;
+  height: 40px;
+  min-height: 40px;
   padding: 0 20px;
   border-radius: 28px;
   border: 1px solid #1b1b1b;
@@ -160,8 +160,8 @@ button {
   font-weight: 400;
   color: rgb(37, 0, 204);
   background-color: transparent;
-  height: 44px;
-  min-height: 44px;
+  height: 40px;
+  min-height: 40px;
   padding: 0 20px;
   border-radius: 28px;
   border: 1px solid rgb(28, 28, 28);
