@@ -30,12 +30,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 
     const handleTouchStart = (e: React.TouchEvent<HTMLButtonElement>) => {
         if (!gameStarted || !buttonRef.current) return;
-    
+
         const rect = buttonRef.current.getBoundingClientRect();
         const newClicks: { id: number; x: number; y: number }[] = [];
         let totalCoins = 0;
         let touchCount = 0;
-    
+
         Array.from(e.changedTouches).forEach(touch => {
             if (activeTouches.current.size < maxTouches && !activeTouches.current.has(touch.identifier)) {
                 const x = touch.clientX - rect.left;
@@ -48,34 +48,34 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                 }
             }
         });
-    
+
         if (newClicks.length > 0) {
             setCircleScale(true);
             setAnimationSpeed('0.2s');
         }
-    
+
         setCoins(prevCoins => prevCoins + totalCoins);
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
         setNextId(prevId => prevId + touchCount);
-    
+
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
             setCircleScale(false); // Сбрасываем масштабирование после анимации
             setAnimationSpeed('1s'); // Сбрасываем скорость анимации после завершения
         }, 1000);
-    
+
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
     };
-    
+
     const handleTouchEnd = (e: React.TouchEvent<HTMLButtonElement>) => {
         Array.from(e.changedTouches).forEach(touch => {
             if (activeTouches.current.has(touch.identifier)) {
                 activeTouches.current.delete(touch.identifier);
             }
         });
-    
+
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
-    };    
+    };
 
     const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
         if (!gameStarted || !buttonRef.current) return;
@@ -147,35 +147,37 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
                     <div className="clicks-wrapper">
-                        <button
-                            ref={buttonRef}
-                            className={`button-game ${circleScale ? 'scaled' : ''}`}
-                            onMouseDown={handleButtonClick}
-                            onMouseUp={() => setCircleScale(false)}
-                            onTouchStart={handleTouchStart}
-                            onTouchEnd={handleTouchEnd}
-                        >
-                            <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="115" cy="115" r="115" fill="transparent" />
-                                <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
-                                <path
-                                    d="M 5,115 A 110,110 0 0,1 225,115"
-                                    stroke="black"
-                                    strokeWidth="10"
-                                    fill="none"
-                                    style={{ animationDuration: animationSpeed }}
-                                >
-                                    <animateTransform
-                                        attributeName="transform"
-                                        type="rotate"
-                                        from="0 115 115"
-                                        to="360 115 115"
-                                        dur={animationSpeed}
-                                        repeatCount="indefinite"
-                                    />
-                                </path>
-                            </svg>
-                        </button>
+                        <div className={`button-container ${circleScale ? 'scaled' : ''}`}>
+                            <button
+                                ref={buttonRef}
+                                className="button-game"
+                                onMouseDown={handleButtonClick}
+                                onMouseUp={() => setCircleScale(false)}
+                                onTouchStart={handleTouchStart}
+                                onTouchEnd={handleTouchEnd}
+                            >
+                                <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="115" cy="115" r="115" fill="transparent" />
+                                    <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
+                                    <path
+                                        d="M 5,115 A 110,110 0 0,1 225,115"
+                                        stroke="black"
+                                        strokeWidth="10"
+                                        fill="none"
+                                        style={{ animationDuration: animationSpeed }}
+                                    >
+                                        <animateTransform
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 115 115"
+                                            to="360 115 115"
+                                            dur={animationSpeed}
+                                            repeatCount="indefinite"
+                                        />
+                                    </path>
+                                </svg>
+                            </button>
+                        </div>
                         {clicks.map((click) => (
                             <div
                                 key={click.id}

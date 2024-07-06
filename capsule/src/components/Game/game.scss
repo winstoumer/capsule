@@ -27,6 +27,13 @@
     color: #ddd1ff; /* Цвет мультипликатора */
 }
 
+.button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .button-game {
     position: relative;
     display: flex;
@@ -44,8 +51,8 @@
     transition: transform 0.4s; /* Animation for scaling */
 }
 
-.button-game.scaled {
-    transform: scale(1.24); /* Scale up by 10% */
+.button-container.scaled {
+    transform: scale(1.24); /* Scale up by 24% */
 }
 
 .floating-number {
