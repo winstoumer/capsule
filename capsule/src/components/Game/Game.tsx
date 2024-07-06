@@ -18,6 +18,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
     const [circleScale, setCircleScale] = useState<boolean>(false);
     const [animationSpeed, setAnimationSpeed] = useState<string>('1s');
+    const [coinContainerClicked, setCoinContainerClicked] = useState<boolean>(false);
     const activeTouches = useRef<Set<number>>(new Set());
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -97,6 +98,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setTimeout(() => {
                 setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
             }, 1000);
+
+            // Увеличение контейнера с монетами и мультипликатором на 10%
+            setCoinContainerClicked(true);
+            setTimeout(() => {
+                setCoinContainerClicked(false);
+            }, 400);
         }
     };
 
@@ -142,7 +149,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             )}
             {gameStarted && (
                 <>
-                    <div className="coins-container">
+                    <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
                         <div className="coins">{coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
