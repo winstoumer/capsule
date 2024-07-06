@@ -111,13 +111,13 @@
     align-items: center;
     gap: 10px; /* Расстояние между прогресс-баром и временем */
     width: 100%;
-    max-width: 280px;
-    margin-top: 12px;
+    max-width: 200px;
+    margin-top: 8px;
 }
 
 .progress-bar-container {
     flex-grow: 1;
-    height: 6px;
+    height: 4px;
     background-color: #1a1a1a;
     position: relative;
     border-radius: 6px;
@@ -138,10 +138,9 @@
     }
 }
 
-
 .time-left {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 500;
     color: white;
 }
 
