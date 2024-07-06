@@ -138,6 +138,9 @@
 }
 
 .modal-name {
+    display: flex;
+    align-items: center;
+    gap: 6px;
     font-size: 28px;
     font-weight: 600;
     margin-top: 10px;

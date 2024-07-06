@@ -71,9 +71,8 @@ const Modal: React.FC<ModalProps> = ({ item, onClose, isExiting }) => {
                     </svg>
                 </span>
                 <div className='modal-icon'>{item.icon}</div>
-                <div className='modal-name'>{item.name}</div>
+                <div className='modal-name'>{item.name} {item.mark !== undefined && item.i !== undefined && <div className='modal-mark'>{item.mark} {item.i}</div>}</div>
                 <div className='modal-info'>
-                    {item.mark !== undefined && item.i !== undefined && <div className='modal-mark'>{item.mark} {item.i}</div>}
                     {item.description !== undefined && <div className='modal-description'>{item.description}</div>}
                     {item.price !== undefined && <div className='modal-price'>{item.price}</div>}
                 </div>
