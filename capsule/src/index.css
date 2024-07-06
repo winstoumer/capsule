@@ -89,8 +89,8 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding-left: 30px;
-  padding-right: 30px;
+  padding-left: 14px;
+  padding-right: 14px;
   z-index: 1;
   /* Начальные стили для анимации */
   opacity: 0;
