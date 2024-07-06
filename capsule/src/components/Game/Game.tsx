@@ -65,6 +65,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setAnimationSpeed('1s'); // Сбрасываем скорость анимации после завершения
         }, 1000);
 
+        // Увеличение контейнера с монетами и мультипликатором на 10%
+        setCoinContainerClicked(true);
+        setTimeout(() => {
+            setCoinContainerClicked(false);
+        }, 400);
+
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
     };
 
