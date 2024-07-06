@@ -147,7 +147,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         {multiplier && <div className="multiplier">x2</div>}
                     </div>
                     <div className="clicks-wrapper">
-                        <div className={`button-container ${circleScale ? 'scaled' : ''}`}>
+                        <div className={`button-game-container ${circleScale ? 'scaled' : ''}`}>
                             <button
                                 ref={buttonRef}
                                 className="button-game"
@@ -182,7 +182,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                             <div
                                 key={click.id}
                                 className="floating-number"
-                                style={{ left: click.x + buttonRef.current!.getBoundingClientRect().left, top: click.y + buttonRef.current!.getBoundingClientRect().top }}
+                                style={{ left: click.x, top: click.y }}
                             >
                                 {coinsPerClick * (multiplier ? 2 : 1)}
                             </div>
