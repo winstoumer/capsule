@@ -39,8 +39,11 @@
 }
 
 .mark {
-    font-size: 22px;
+    font-size: 14px;
     font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    border: 1px solid rgb(24, 24, 24);
 }
 
 .list.bordered {
