@@ -78,7 +78,9 @@ const Modal: React.FC<ModalProps> = ({ item, onClose, isExiting }) => {
                     {item.description !== undefined && <div className='modal-description'>{item.description}</div>}
                     {item.price !== undefined && <div className='modal-price'>{item.price}</div>}
                 </div>
-                <button className='default-button'>Up</button>
+                <div className='modal-action'>
+                    <button className='default-button'>Up</button>
+                </div>
             </div>
         </div>
     );
