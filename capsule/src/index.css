@@ -139,7 +139,7 @@ button {
 }
 
 .default-button {
-  color: #6d00f4;
+  color: #1a41ff;
   font-size: 22px;
   font-weight: 500;
   background-color: transparent;
@@ -147,7 +147,7 @@ button {
   min-height: 42px;
   padding: 0 20px;
   border-radius: 28px;
-  border: 1px solid #6d00f4;
+  border: 1px solid #1a41ff;
   display: flex;
   align-items: center;
   white-space: nowrap;
