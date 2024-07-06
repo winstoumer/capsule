@@ -7,6 +7,7 @@ interface Item {
     price?: number;
     mark?: string | number;
     i?: string;
+    description?: string;
 }
 
 interface ListItemsProps {
@@ -61,7 +62,8 @@ const Modal: React.FC<ModalProps> = ({ item, onClose }) => {
                 <span className='close' onClick={onClose}>&times;</span>
                 <div className='modal-icon'>{item.icon}</div>
                 <div className='modal-name'>{item.name}</div>
-                <div className='modal-description'>
+                <div className='modal-info'>
+                    {item.description !== undefined && <div className='modal-description'>{item.description}</div>}
                     {item.mark !== undefined && item.i !== undefined && <div className='modal-mark'>{item.mark} {item.i}</div>}
                     {item.price !== undefined && <div className='modal-price'>{item.price}</div>}
                 </div>
