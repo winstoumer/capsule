@@ -162,7 +162,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <path
                                         d="M 5,115 A 110,110 0 0,1 225,115"
                                         stroke="black"
-                                        strokeWidth="10"
+                                        strokeWidth="2"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
                                     >
@@ -179,7 +179,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <path
                                         d="M 5,115 A 110,110 0 0,0 225,115"
                                         stroke="red"  // Красный цвет
-                                        strokeWidth="10"
+                                        strokeWidth="2"
                                         fill="none"
                                         style={{ animationDirection: 'reverse', animationDuration: animationSpeed }}
                                     >
