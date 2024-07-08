@@ -219,7 +219,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <path
                                         d="M 115,5 A 110,110 0 0,1 115,225"
                                         stroke="red"
-                                        strokeWidth="2"
+                                        strokeWidth="4"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
                                     >
@@ -236,7 +236,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <path
                                         d="M 225,115 A 110,110 0 0,1 5,115"
                                         stroke="blue"
-                                        strokeWidth="2"
+                                        strokeWidth="1"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
                                     >
@@ -253,7 +253,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <path
                                         d="M 115,225 A 110,110 0 0,1 115,5"
                                         stroke="green"
-                                        strokeWidth="2"
+                                        strokeWidth="3"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
                                     >
