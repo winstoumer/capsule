@@ -215,6 +215,57 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             repeatCount="indefinite"
                                         />
                                     </path>
+                                    {/* Третий круг, начиная с точки (115, 5) */}
+                                    <path
+                                        d="M 115,5 A 110,110 0 0,1 115,225"
+                                        stroke="red"
+                                        strokeWidth="2"
+                                        fill="none"
+                                        style={{ animationDuration: animationSpeed }}
+                                    >
+                                        <animateTransform
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 115 115"
+                                            to="360 115 115"
+                                            dur={animationSpeed}
+                                            repeatCount="indefinite"
+                                        />
+                                    </path>
+                                    {/* Четвертый круг, начиная с точки (225, 115) */}
+                                    <path
+                                        d="M 225,115 A 110,110 0 0,1 5,115"
+                                        stroke="blue"
+                                        strokeWidth="2"
+                                        fill="none"
+                                        style={{ animationDuration: animationSpeed }}
+                                    >
+                                        <animateTransform
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 115 115"
+                                            to="360 115 115"
+                                            dur={animationSpeed}
+                                            repeatCount="indefinite"
+                                        />
+                                    </path>
+                                    {/* Пятый круг, начиная с точки (115, 225) */}
+                                    <path
+                                        d="M 115,225 A 110,110 0 0,1 115,5"
+                                        stroke="green"
+                                        strokeWidth="2"
+                                        fill="none"
+                                        style={{ animationDuration: animationSpeed }}
+                                    >
+                                        <animateTransform
+                                            attributeName="transform"
+                                            type="rotate"
+                                            from="0 115 115"
+                                            to="360 115 115"
+                                            dur={animationSpeed}
+                                            repeatCount="indefinite"
+                                        />
+                                    </path>
                                 </svg>
                                 {clicks.map((click) => (
                                     <div
@@ -251,3 +302,4 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 };
 
 export default Game;
+
