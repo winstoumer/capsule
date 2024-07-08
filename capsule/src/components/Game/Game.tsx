@@ -202,7 +202,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <path
                                         d="M 5,115 A 110,110 0 0,0 225,115"
                                         stroke="#25005a"
-                                        strokeWidth="3"
+                                        strokeWidth="5"
                                         fill="none"
                                         style={{ animationDirection: 'reverse', animationDuration: animationSpeed }}
                                     >
@@ -252,7 +252,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Пятый круг, начиная с точки (115, 225) */}
                                     <path
                                         d="M 115,225 A 110,110 0 0,1 115,5"
-                                        stroke="#F7EC03"
+                                        stroke="#3956FA"
                                         strokeWidth="3"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
