@@ -218,7 +218,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Третий круг, начиная с точки (115, 5) */}
                                     <path
                                         d="M 115,5 A 110,110 0 0,1 115,225"
-                                        stroke="red"
+                                        stroke="#FA398B"
                                         strokeWidth="4"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
@@ -235,7 +235,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Четвертый круг, начиная с точки (225, 115) */}
                                     <path
                                         d="M 225,115 A 110,110 0 0,1 5,115"
-                                        stroke="blue"
+                                        stroke="#F7EC03"
                                         strokeWidth="1"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
@@ -252,7 +252,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Пятый круг, начиная с точки (115, 225) */}
                                     <path
                                         d="M 115,225 A 110,110 0 0,1 115,5"
-                                        stroke="green"
+                                        stroke="#F7EC03"
                                         strokeWidth="3"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
