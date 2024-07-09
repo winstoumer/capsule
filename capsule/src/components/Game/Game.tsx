@@ -180,8 +180,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                             >
                                 <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="115" cy="115" r="115" fill="black" />
-                                    {/* Полоса сверху */}
-                                    <rect x="230" y="0" width="20" height="80" fill="#2d2d2d">
+                                    {/* Полоса сверху справа */}
+                                    <rect x="230" y="0" width="20" height="40" fill="#2d2d2d">
                                         <animate
                                             attributeName="x"
                                             from="230"
@@ -197,8 +197,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             repeatCount="indefinite"
                                         />
                                     </rect>
-                                    {/* Полоса снизу */}
-                                    <rect x="230" y="150" width="20" height="80" fill="#2d2d2d">
+                                    {/* Полоса снизу справа */}
+                                    <rect x="230" y="190" width="20" height="40" fill="#2d2d2d">
                                         <animate
                                             attributeName="x"
                                             from="230"
@@ -208,6 +208,74 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         />
                                         <animate
                                             attributeName="width"
+                                            from="20"
+                                            to="0"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                    </rect>
+                                    {/* Полоса сверху слева */}
+                                    <rect x="-20" y="0" width="20" height="40" fill="#2d2d2d">
+                                        <animate
+                                            attributeName="x"
+                                            from="-20"
+                                            to="115"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="width"
+                                            from="20"
+                                            to="0"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                    </rect>
+                                    {/* Полоса снизу слева */}
+                                    <rect x="-20" y="190" width="20" height="40" fill="#2d2d2d">
+                                        <animate
+                                            attributeName="x"
+                                            from="-20"
+                                            to="115"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="width"
+                                            from="20"
+                                            to="0"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                    </rect>
+                                    {/* Горизонтальная полоса сверху */}
+                                    <rect x="0" y="-20" width="230" height="20" fill="#2d2d2d">
+                                        <animate
+                                            attributeName="y"
+                                            from="-20"
+                                            to="115"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="height"
+                                            from="20"
+                                            to="0"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                    </rect>
+                                    {/* Горизонтальная полоса снизу */}
+                                    <rect x="0" y="230" width="230" height="20" fill="#2d2d2d">
+                                        <animate
+                                            attributeName="y"
+                                            from="230"
+                                            to="115"
+                                            dur="2s"
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="height"
                                             from="20"
                                             to="0"
                                             dur="2s"
