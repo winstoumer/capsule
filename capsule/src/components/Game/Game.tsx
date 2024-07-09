@@ -180,7 +180,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <defs>
                                         {/* Градиент для сияющего эффекта */}
                                         <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                                            <stop offset="0%" style={{ stopColor: '#F8E900', stopOpacity: 1 }} />
+                                            <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
                                             <stop offset="70%" style={{ stopColor: 'black', stopOpacity: 0.5 }} />
                                             <stop offset="100%" style={{ stopColor: 'black', stopOpacity: 0 }} />
                                         </radialGradient>
@@ -196,7 +196,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         <animateTransform attributeName="transform" type="rotate" dur="4s" from="0 140 140" to="360 140 140" repeatCount="indefinite" />
                                     </circle>
                                     {/* Черный круг внутри сияющего эффекта */}
-                                    <circle cx="140" cy="140" r="60" fill="black" />
+                                    <circle cx="140" cy="140" r="54" fill="black" />
                                 </svg>
                                 {/* Конец SVG кода */}
                                 {clicks.map((click) => (
