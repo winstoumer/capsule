@@ -9,6 +9,11 @@ interface GameProps {
     multiplier: boolean; // Флаг для отображения и использования мультипликатора x2
 }
 
+interface CustomCSSProperties extends React.CSSProperties {
+    '--click-x'?: string;
+    '--click-y'?: string;
+}
+
 const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
     const [coins, setCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
@@ -70,12 +75,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setCoinContainerClicked(false);
         }, 400);
 
-        // Установка переменных для координат клика
-        newClicks.forEach(click => {
-            document.documentElement.style.setProperty('--click-x', `${click.x}px`);
-            document.documentElement.style.setProperty('--click-y', `${click.y}px`);
-        });
-
         e.preventDefault(); // Отменяем действие по умолчанию, чтобы предотвратить нежелательное поведение браузера
     };
 
@@ -114,10 +113,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setTimeout(() => {
                 setCoinContainerClicked(false);
             }, 400);
-
-            // Установка переменных для координат клика
-            document.documentElement.style.setProperty('--click-x', `${x}px`);
-            document.documentElement.style.setProperty('--click-y', `${y}px`);
         }
     };
 
@@ -185,8 +180,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 onTouchEnd={handleTouchEnd}
                                 style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
                             >
-                                 {/* Ваш SVG код здесь */}
-                                 <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+                                {/* Ваш SVG код здесь */}
+                                <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
                                     <defs>
                                         {/* Градиент для сияющего эффекта */}
                                         <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
@@ -214,29 +209,34 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         key={click.id}
                                         className="floating-number"
                                         style={{
-                                            left: `${click.x}px`,
-                                            top: `${click.y}px`,
-                                        }}
+                                            transform: `translate(${click.x}px, ${click.y}px)`,
+                                            '--click-x': `${140 - click.x}px`, // Расчетное значение для x
+                                            '--click-y': `${140 - click.y}px`  // Расчетное значение для y
+                                        } as CustomCSSProperties}
                                     >
-                                        +{coinsPerClick * (multiplier ? 2 : 1)}
+                                        {coinsPerClick * (multiplier ? 2 : 1)}
                                     </div>
                                 ))}
                             </button>
                         </div>
-                        <div className={`progress-bar ${progressBarColor}`} style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                    </div>
+                    <div className='panel-wrapper'>
+                        <div className='nav-wrapper'>
+                            <Link to="/boostgame" className='n-ic'>🚀</Link>
+                        </div>
+                        <div className="progress-bar-wrapper">
+                            <div className={`progress-bar-container ${progressBarColor}`}>
+                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                            </div>
+                            <div className="time-left">{timeLeft}s</div>
+                        </div>
                     </div>
                 </>
             )}
-            {showClaimButton && (
-                <div className="claim-container">
-                    <p>You earned {coins.toLocaleString()} coins!</p>
-                    <button className="claim-button default-button" onClick={handleClaimClick}>
-                        Claim
-                    </button>
-                    <Link to="/" className="back-link">
-                        Back to Home
-                    </Link>
-                </div>
+            {!gameStarted && showClaimButton && (
+                <button className="claim-button default-button" onClick={handleClaimClick}>
+                    Claim
+                </button>
             )}
         </div>
     );
