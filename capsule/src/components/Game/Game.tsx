@@ -203,7 +203,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <div
                                         key={click.id}
                                         className="floating-number"
-                                        style={{ transform: `translate(${click.x}px, ${click.y}px)` }}
+                                        style={{ left: click.x, top: click.y }}
                                     >
                                         {coinsPerClick * (multiplier ? 2 : 1)}
                                     </div>
