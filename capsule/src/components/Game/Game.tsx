@@ -9,11 +9,6 @@ interface GameProps {
     multiplier: boolean; // Флаг для отображения и использования мультипликатора x2
 }
 
-interface CustomCSSProperties extends React.CSSProperties {
-    '--click-x'?: string;
-    '--click-y'?: string;
-}
-
 const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
     const [coins, setCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
@@ -192,11 +187,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     </defs>
                                     {/* Фон */}
                                     <rect width="100%" height="100%" fill="black" />
-                                    {/* Черная дыра */}
-                                    <circle cx="140" cy="140" r="70" fill="black" />
-                                    {/* Анимированное сияние */}
-                                    <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
-                                        <animate attributeName="r" dur="10s" values="100; 220; 100" repeatCount="indefinite" />
+                                    {/* Сияющий эффект */}
+                                    <circle cx="140" cy="140" r="120" fill="url(#glowGradient)">
+                                        <animate attributeName="r" dur="2s" values="120; 140; 120" repeatCount="indefinite" />
                                         <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
                                         <animateTransform attributeName="transform" type="rotate" dur="4s" from="0 140 140" to="360 140 140" repeatCount="indefinite" />
                                     </circle>
@@ -210,9 +203,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         className="floating-number"
                                         style={{
                                             transform: `translate(${click.x}px, ${click.y}px)`,
-                                            '--click-x': `${click.x}px`,
-                                            '--click-y': `${click.y}px`
-                                        } as CustomCSSProperties}
+                                        }}
                                     >
                                         {coinsPerClick * (multiplier ? 2 : 1)}
                                     </div>

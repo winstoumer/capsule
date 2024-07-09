@@ -7,155 +7,149 @@
     justify-content: space-evenly;
     align-items: center;
     gap: 30px;
-}
 
-.coins-container {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* Расстояние между монетами и мультипликатором */
-    transition: transform 0.4s; /* Для анимации увеличения */
-}
-
-.coins {
-    font-size: 58px;
-    font-weight: 600;
-    color: white;
-    transition: transform 0.4s; /* Для анимации увеличения */
-}
-
-.multiplier {
-    font-size: 34px; /* Размер мультипликатора */
-    font-weight: 600;
-    color: #ddd1ff; /* Цвет мультипликатора */
-    transition: transform 0.4s; /* Для анимации увеличения */
-}
-
-.coins-container.scaled {
-    transform: scale(1.1); /* Увеличение на 10% */
-}
-
-.multiplier.scaled {
-    transform: scale(1.1); /* Увеличение на 10% */
-}
-
-.button-game {
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 230px;
-    height: 230px;
-    padding: 0;
-    margin: 0;
-    background: transparent;
-    border: 1px solid transparent;
-    border-radius: 50%;
-    cursor: pointer;
-    overflow: visible; /* Allow overflow */
-    transition: transform 0.4s; /* Анимация для масштабирования */
-}
-
-.button-game.scaled {
-    transform: scale(1.24); /* Увеличение на 24% */
-}
-
-.floating-number {
-    position: absolute;
-    font-size: 36px;
-    font-weight: 600;
-    color: #ddd1ff;
-    animation: floatUpAndAbsorb 1s ease-out forwards;
-    pointer-events: none;
-    will-change: transform;
-    --click-x: 0px; /* Переменные для хранения координат клика */
-    --click-y: 0px;
-}
-
-@keyframes floatUpAndAbsorb {
-    0% {
+    .start-button,
+    .claim-button {
+        cursor: pointer;
         opacity: 1;
-        transform: translate(0, 0) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(calc(140px - var(--click-x)), calc(140px - var(--click-y))) scale(0);
-    }
-}
+        transition: opacity 0.3s ease-in-out;
 
-@keyframes floatUp {
-    0% {
-        opacity: 1;
-        transform: translateY(0);
-    }
-    100% {
-        opacity: 0;
-        transform: translateY(-180px);
-    }
-}
-
-.start-button, .claim-button {
-    cursor: pointer;
-    opacity: 1;
-    transition: opacity 0.3s ease-in-out;
-}
-
-.start-button.fade-out, .claim-button.fade-out {
-    opacity: 0;
-    pointer-events: none;
-}
-
-.progress-bar-wrapper {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* Расстояние между прогресс-баром и временем */
-    width: 100%;
-    max-width: 230px;
-    margin-top: 20px;
-}
-
-.progress-bar-container {
-    flex-grow: 1;
-    height: 10px;
-    background-color: #1a1a1a;
-    position: relative;
-    border-radius: 8px;
-
-    .progress-bar {
-        height: 100%;
-        background-color: #25005a;
-        transition: width 1s linear, background-color 1s linear;
-        border-radius: 8px;
+        &.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
     }
 
-    &.orange .progress-bar {
-        background-color: orange;
+    .coins-container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        transition: transform 0.4s;
+
+        .coins {
+            font-size: 58px;
+            font-weight: 600;
+            color: white;
+            transition: transform 0.4s;
+        }
+
+        .multiplier {
+            font-size: 34px;
+            font-weight: 600;
+            color: #ddd1ff;
+            transition: transform 0.4s;
+        }
+
+        &.scaled {
+            transform: scale(1.1);
+        }
     }
 
-    &.red .progress-bar {
-        background-color: red;
+    .button-game {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 230px;
+        height: 230px;
+        padding: 0;
+        margin: 0;
+        background: transparent;
+        border: 1px solid transparent;
+        border-radius: 50%;
+        cursor: pointer;
+        overflow: visible;
+        transition: transform 0.4s;
+
+        svg {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .floating-number {
+            position: absolute;
+            font-size: 36px;
+            font-weight: 600;
+            color: #ddd1ff;
+            animation: floatUpAndAbsorb 1s ease-out forwards;
+            pointer-events: none;
+            will-change: transform;
+            --click-x: 0px;
+            --click-y: 0px;
+        }
+
+        &.scaled {
+            transform: scale(1.24);
+        }
+    }
+
+    .progress-bar-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        max-width: 230px;
+        margin-top: 20px;
+
+        .progress-bar-container {
+            flex-grow: 1;
+            height: 10px;
+            background-color: #1a1a1a;
+            position: relative;
+            border-radius: 8px;
+
+            .progress-bar {
+                height: 100%;
+                background-color: #25005a;
+                transition: width 1s linear, background-color 1s linear;
+                border-radius: 8px;
+            }
+
+            &.orange .progress-bar {
+                background-color: orange;
+            }
+
+            &.red .progress-bar {
+                background-color: red;
+            }
+        }
+
+        .time-left {
+            font-size: 18px;
+            font-weight: 500;
+            color: white;
+        }
+    }
+
+    .panel-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+
+        .nav-wrapper {
+            display: none;
+
+            .n-ic {
+                font-size: 32px;
+            }
+        }
+    }
+
+    @keyframes floatUpAndAbsorb {
+        0% {
+            opacity: 1;
+            transform: translate(0, 0) scale(1);
+        }
+        100% {
+            opacity: 0;
+            transform: translate(calc(140px - var(--click-x)), calc(140px - var(--click-y))) scale(0);
+        }
     }
 }
-
-.time-left {
-    font-size: 18px;
-    font-weight: 500;
-    color: white;
-}
-
-.panel-wrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-}
-
-.nav-wrapper {
-    display: none;
-}
-
-.n-ic {
-    font-size: 32px;
-}
-
