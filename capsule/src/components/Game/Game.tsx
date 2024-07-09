@@ -181,7 +181,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         {/* Градиент для сияющего эффекта */}
                                         <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
                                             <stop offset="0%" style={{ stopColor: 'orange', stopOpacity: 1 }} />
-                                            <stop offset="70%" style={{ stopColor: 'purple', stopOpacity: 0.5 }} />
+                                            <stop offset="70%" style={{ stopColor: 'black', stopOpacity: 0.5 }} />
                                             <stop offset="100%" style={{ stopColor: 'black', stopOpacity: 0 }} />
                                         </radialGradient>
                                     </defs>
