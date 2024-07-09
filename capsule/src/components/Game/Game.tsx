@@ -178,136 +178,30 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 onTouchStart={handleTouchStart}
                                 onTouchEnd={handleTouchEnd}
                             >
-                                <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="115" cy="115" r="115" fill="black" />
-                                    {/* Первый круг, вращающийся по часовой стрелке */}
-                                    <path
-                                        d="M 5,115 A 110,110 0 0,1 225,115"
-                                        stroke="#2d2d2d"
-                                        strokeWidth="2"
-                                        fill="none"
-                                        style={{ animationDuration: animationSpeed }}
-                                    >
-                                        <animateTransform
-                                            attributeName="transform"
-                                            type="rotate"
-                                            from="0 115 115"
-                                            to="360 115 115"
-                                            dur={animationSpeed}
-                                            repeatCount="indefinite"
-                                        />
-                                        <animate
-                                            attributeName="stroke-width"
-                                            values="2;5;2"
-                                            dur="1s"
-                                            repeatCount="indefinite"
-                                        />
-                                    </path>
-                                    {/* Второй круг, вращающийся против часовой стрелки */}
-                                    <path
-                                        d="M 5,115 A 110,110 0 0,0 225,115"
-                                        stroke="#1a1a1a"
-                                        strokeWidth="5"
-                                        fill="none"
-                                        style={{ animationDirection: 'reverse', animationDuration: animationSpeed }}
-                                    >
-                                        <animateTransform
-                                            attributeName="transform"
-                                            type="rotate"
-                                            from="0 115 115"
-                                            to="-360 115 115"
-                                            dur={animationSpeed}
-                                            repeatCount="indefinite"
-                                        />
-                                        <animate
-                                            attributeName="stroke-width"
-                                            values="5;2;5"
-                                            dur="1s"
-                                            repeatCount="indefinite"
-                                        />
-                                    </path>
-                                    {/* Третий круг, начиная с точки (115, 5) */}
-                                    <path
-                                        d="M 115,5 A 110,110 0 0,1 115,225"
-                                        stroke="#0d0d0d"
-                                        strokeWidth="4"
-                                        fill="none"
-                                        style={{ animationDuration: animationSpeed }}
-                                    >
-                                        <animateTransform
-                                            attributeName="transform"
-                                            type="rotate"
-                                            from="0 115 115"
-                                            to="360 115 115"
-                                            dur={animationSpeed}
-                                            repeatCount="indefinite"
-                                        />
-                                        <animate
-                                            attributeName="stroke-width"
-                                            values="4;7;4"
-                                            dur="1s"
-                                            repeatCount="indefinite"
-                                        />
-                                        <animate
-                                            attributeName="opacity"
-                                            values="1;0.5;1"
-                                            dur="1s"
-                                            repeatCount="indefinite"
-                                        />
-                                    </path>
-                                    {/* Четвертый круг, начиная с точки (225, 115) */}
-                                    <path
-                                        d="M 225,115 A 110,110 0 0,1 5,115"
-                                        stroke="#000000"
-                                        strokeWidth="1"
-                                        fill="none"
-                                        style={{ animationDuration: animationSpeed }}
-                                    >
-                                        <animateTransform
-                                            attributeName="transform"
-                                            type="rotate"
-                                            from="0 115 115"
-                                            to="360 115 115"
-                                            dur={animationSpeed}
-                                            repeatCount="indefinite"
-                                        />
-                                        <animate
-                                            attributeName="stroke-width"
-                                            values="1;4;1"
-                                            dur="1s"
-                                            repeatCount="indefinite"
-                                        />
-                                        <animate
-                                            attributeName="opacity"
-                                            values="1;0.3;1"
-                                            dur="1s"
-                                            repeatCount="indefinite"
-                                        />
-                                    </path>
-                                    {/* Пятый круг, начиная с точки (115, 225) */}
-                                    <path
-                                        d="M 115,225 A 110,110 0 0,1 115,5"
-                                        stroke="#1a1a1a"
-                                        strokeWidth="3"
-                                        fill="none"
-                                        style={{ animationDuration: animationSpeed }}
-                                    >
-                                        <animateTransform
-                                            attributeName="transform"
-                                            type="rotate"
-                                            from="0 115 115"
-                                            to="360 115 115"
-                                            dur={animationSpeed}
-                                            repeatCount="indefinite"
-                                        />
-                                        <animate
-                                            attributeName="stroke-width"
-                                            values="3;6;3"
-                                            dur="1s"
-                                            repeatCount="indefinite"
-                                        />
-                                    </path>
+                                {/* Ваш SVG код здесь */}
+                                <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+                                    <defs>
+                                        {/* Градиент для сияющего эффекта */}
+                                        <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                            <stop offset="0%" style={{ stopColor: 'orange', stopOpacity: 1 }} />
+                                            <stop offset="70%" style={{ stopColor: 'purple', stopOpacity: 0.5 }} />
+                                            <stop offset="100%" style={{ stopColor: 'black', stopOpacity: 0 }} />
+                                        </radialGradient>
+                                    </defs>
+                                    {/* Фон */}
+                                    <rect width="100%" height="100%" fill="black" />
+                                    {/* Черная дыра */}
+                                    <circle cx="200" cy="200" r="50" fill="black" />
+                                    {/* Анимированное сияние */}
+                                    <circle cx="200" cy="200" r="100" fill="url(#glowGradient)">
+                                        <animate attributeName="r" dur="10s" values="100; 120; 100" repeatCount="indefinite" />
+                                        <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
+                                        <animateTransform attributeName="transform" type="rotate" dur="4s" from="0 200 200" to="360 200 200" repeatCount="indefinite" />
+                                    </circle>
+                                    {/* Черный круг внутри сияющего эффекта */}
+                                    <circle cx="200" cy="200" r="30" fill="black" />
                                 </svg>
+                                {/* Конец SVG кода */}
                                 {clicks.map((click) => (
                                     <div
                                         key={click.id}
