@@ -63,9 +63,25 @@
     position: absolute;
     font-size: 36px;
     font-weight: 600;
-    color: #c6bddd;
+    color: #ddd1ff;
+    animation: floatUpAndAbsorb 1s ease-out forwards;
     pointer-events: none;
-    will-change: transform;
+    will-change: transform; /* Оптимизация анимации */
+}
+
+@keyframes floatUpAndAbsorb {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: translateY(-180px) scale(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+    }
 }
 
 @keyframes floatUp {

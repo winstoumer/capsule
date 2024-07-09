@@ -203,14 +203,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <div
                                         key={click.id}
                                         className="floating-number"
-                                        style={{
-                                            left: `${click.x}px`, // Координата X места нажатия
-                                            top: `${click.y}px`, // Координата Y места нажатия
-                                            transition: 'transform 0.5s ease', // Плавное перемещение
-                                            transform: `translate(140px, 140px)` // Перемещение в центр кнопки (координаты центра кнопки)
-                                        }}
+                                        style={{ transform: `translate(${click.x}px, ${click.y}px)` }}
                                     >
-                                        +{coinsPerClick * (multiplier ? 2 : 1)}
+                                        {coinsPerClick * (multiplier ? 2 : 1)}
                                     </div>
                                 ))}
                             </button>
