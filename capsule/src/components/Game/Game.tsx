@@ -175,7 +175,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 onTouchEnd={handleTouchEnd}
                             >
                                 {/* Ваш SVG код здесь */}
-                                <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+                                <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
                                     <defs>
                                         {/* Градиент для сияющего эффекта */}
                                         <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
