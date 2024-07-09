@@ -9,6 +9,11 @@ interface GameProps {
     multiplier: boolean; // Флаг для отображения и использования мультипликатора x2
 }
 
+interface CustomCSSProperties extends React.CSSProperties {
+    '--click-x'?: string;
+    '--click-y'?: string;
+}
+
 const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
     const [coins, setCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
@@ -207,7 +212,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             transform: `translate(${click.x}px, ${click.y}px)`,
                                             '--click-x': `${click.x}px`,
                                             '--click-y': `${click.y}px`
-                                        }}
+                                        } as CustomCSSProperties}
                                     >
                                         {coinsPerClick * (multiplier ? 2 : 1)}
                                     </div>
