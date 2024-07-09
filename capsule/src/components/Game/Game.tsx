@@ -197,6 +197,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             dur={animationSpeed}
                                             repeatCount="indefinite"
                                         />
+                                        <animate
+                                            attributeName="stroke-width"
+                                            values="2;5;2"
+                                            dur="1s"
+                                            repeatCount="indefinite"
+                                        />
                                     </path>
                                     {/* Второй круг, вращающийся против часовой стрелки */}
                                     <path
@@ -212,6 +218,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             from="0 115 115"
                                             to="-360 115 115"
                                             dur={animationSpeed}
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="stroke-width"
+                                            values="5;2;5"
+                                            dur="1s"
                                             repeatCount="indefinite"
                                         />
                                     </path>
@@ -231,6 +243,18 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             dur={animationSpeed}
                                             repeatCount="indefinite"
                                         />
+                                        <animate
+                                            attributeName="stroke-width"
+                                            values="4;7;4"
+                                            dur="1s"
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="opacity"
+                                            values="1;0.5;1"
+                                            dur="1s"
+                                            repeatCount="indefinite"
+                                        />
                                     </path>
                                     {/* Четвертый круг, начиная с точки (225, 115) */}
                                     <path
@@ -248,6 +272,18 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             dur={animationSpeed}
                                             repeatCount="indefinite"
                                         />
+                                        <animate
+                                            attributeName="stroke-width"
+                                            values="1;4;1"
+                                            dur="1s"
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="opacity"
+                                            values="1;0.3;1"
+                                            dur="1s"
+                                            repeatCount="indefinite"
+                                        />
                                     </path>
                                     {/* Пятый круг, начиная с точки (115, 225) */}
                                     <path
@@ -263,6 +299,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             from="0 115 115"
                                             to="360 115 115"
                                             dur={animationSpeed}
+                                            repeatCount="indefinite"
+                                        />
+                                        <animate
+                                            attributeName="stroke-width"
+                                            values="3;6;3"
+                                            dur="1s"
                                             repeatCount="indefinite"
                                         />
                                     </path>
@@ -302,4 +344,3 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 };
 
 export default Game;
-
