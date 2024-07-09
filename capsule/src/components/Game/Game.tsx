@@ -179,12 +179,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 onTouchEnd={handleTouchEnd}
                             >
                                 <svg width="230" height="230" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="115" cy="115" r="115" fill="transparent" />
-                                    <circle cx="115" cy="115" r="110" stroke="#ddd1ff" strokeWidth="1" fill="none" />
+                                    <circle cx="115" cy="115" r="115" fill="black" />
                                     {/* Первый круг, вращающийся по часовой стрелке */}
                                     <path
                                         d="M 5,115 A 110,110 0 0,1 225,115"
-                                        stroke="black"
+                                        stroke="#2d2d2d"
                                         strokeWidth="2"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
@@ -207,7 +206,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Второй круг, вращающийся против часовой стрелки */}
                                     <path
                                         d="M 5,115 A 110,110 0 0,0 225,115"
-                                        stroke="#25005a"
+                                        stroke="#1a1a1a"
                                         strokeWidth="5"
                                         fill="none"
                                         style={{ animationDirection: 'reverse', animationDuration: animationSpeed }}
@@ -230,7 +229,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Третий круг, начиная с точки (115, 5) */}
                                     <path
                                         d="M 115,5 A 110,110 0 0,1 115,225"
-                                        stroke="#FA398B"
+                                        stroke="#0d0d0d"
                                         strokeWidth="4"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
@@ -259,7 +258,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Четвертый круг, начиная с точки (225, 115) */}
                                     <path
                                         d="M 225,115 A 110,110 0 0,1 5,115"
-                                        stroke="#F7EC03"
+                                        stroke="#000000"
                                         strokeWidth="1"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
@@ -288,7 +287,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Пятый круг, начиная с точки (115, 225) */}
                                     <path
                                         d="M 115,225 A 110,110 0 0,1 115,5"
-                                        stroke="#3956FA"
+                                        stroke="#1a1a1a"
                                         strokeWidth="3"
                                         fill="none"
                                         style={{ animationDuration: animationSpeed }}
