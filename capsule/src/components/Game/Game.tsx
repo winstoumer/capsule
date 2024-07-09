@@ -24,9 +24,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     const isWithinCircle = (x: number, y: number) => {
-        const centerX = 115;
-        const centerY = 115;
-        const radius = 115;
+        const centerX = 200; // Адаптировано под размеры кнопки
+        const centerY = 200; // Адаптировано под размеры кнопки
+        const radius = 115; // Адаптировано под размеры кнопки
         return (x - centerX) ** 2 + (y - centerY) ** 2 <= radius ** 2;
     };
 
