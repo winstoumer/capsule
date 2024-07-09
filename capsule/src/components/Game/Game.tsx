@@ -185,8 +185,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 onTouchEnd={handleTouchEnd}
                                 style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
                             >
-                                {/* Ваш SVG код здесь */}
-                                <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+                                 {/* Ваш SVG код здесь */}
+                                 <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
                                     <defs>
                                         {/* Градиент для сияющего эффекта */}
                                         <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
@@ -195,7 +195,18 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             <stop offset="100%" style={{ stopColor: 'black', stopOpacity: 0 }} />
                                         </radialGradient>
                                     </defs>
-                                    <circle cx="140" cy="140" r="140" fill="url(#glowGradient)" />
+                                    {/* Фон */}
+                                    <rect width="100%" height="100%" fill="black" />
+                                    {/* Черная дыра */}
+                                    <circle cx="140" cy="140" r="70" fill="black" />
+                                    {/* Анимированное сияние */}
+                                    <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
+                                        <animate attributeName="r" dur="10s" values="100; 220; 100" repeatCount="indefinite" />
+                                        <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
+                                        <animateTransform attributeName="transform" type="rotate" dur="4s" from="0 140 140" to="360 140 140" repeatCount="indefinite" />
+                                    </circle>
+                                    {/* Черный круг внутри сияющего эффекта */}
+                                    <circle cx="140" cy="140" r="60" fill="black" />
                                 </svg>
                                 {/* Конец SVG кода */}
                                 {clicks.map((click) => (
