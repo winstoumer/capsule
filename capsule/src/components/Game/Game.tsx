@@ -24,9 +24,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     const isWithinCircle = (x: number, y: number) => {
-        const centerX = 115;
-        const centerY = 115;
-        const radius = 115;
+        const centerX = 140; // Адаптировано под размеры кнопки
+        const centerY = 140; // Адаптировано под размеры кнопки
+        const radius = 140; // Адаптировано под размеры кнопки
         return (x - centerX) ** 2 + (y - centerY) ** 2 <= radius ** 2;
     };
 
@@ -173,6 +173,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 onMouseDown={handleButtonClick}
                                 onTouchStart={handleTouchStart}
                                 onTouchEnd={handleTouchEnd}
+                                style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
                             >
                                 {/* Ваш SVG код здесь */}
                                 <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
