@@ -67,19 +67,7 @@
     animation: floatUpAndAbsorb 1s ease-out forwards;
     pointer-events: none;
     will-change: transform;
-    --click-x: 0px; /* Переменные для хранения начальных координат клика */
-    --click-y: 0px;
-}
-
-@keyframes floatUpAndAbsorb {
-    0% {
-        opacity: 1;
-        transform: translate(var(--click-x), var(--click-y)) scale(1);
-    }
-    100% {
-        opacity: 0;
-        transform: translate(140px, 140px) scale(0);
-    }
+    transition: transform 0.5s ease; /* Плавное перемещение */
 }
 
 @keyframes floatUp {

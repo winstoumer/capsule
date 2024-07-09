@@ -210,7 +210,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         className="floating-number"
                                         style={{
                                             '--click-x': `${click.x}px`, // Начальное значение для x (координата клика)
-                                            '--click-y': `${click.y}px`  // Начальное значение для y (координата клика)
+                                            '--click-y': `${click.y}px`, // Начальное значение для y (координата клика)
+                                            transform: `translate(${140 - click.x}px, ${140 - click.y}px)` // Перемещение в центр кнопки
                                         } as CustomCSSProperties}
                                     >
                                         {coinsPerClick * (multiplier ? 2 : 1)}
