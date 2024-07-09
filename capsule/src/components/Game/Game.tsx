@@ -17,7 +17,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [timeLeft, setTimeLeft] = useState<number>(duration);
     const [showClaimButton, setShowClaimButton] = useState<boolean>(false);
     const [circleScale, setCircleScale] = useState<boolean>(false);
-    const [animationSpeed, setAnimationSpeed] = useState<string>('1s');
     const [coinContainerClicked, setCoinContainerClicked] = useState<boolean>(false);
     const [progressBarColor, setProgressBarColor] = useState<string>('');
 
@@ -54,7 +53,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 
         if (newClicks.length > 0) {
             setCircleScale(true);
-            setAnimationSpeed('0.2s');
         }
 
         setCoins(prevCoins => prevCoins + totalCoins);
@@ -64,7 +62,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setTimeout(() => {
             setClicks((currentClicks) => currentClicks.filter((click) => !newClicks.some(newClick => newClick.id === click.id)));
             setCircleScale(false); // Сбрасываем масштабирование после анимации
-            setAnimationSpeed('1s'); // Сбрасываем скорость анимации после завершения
         }, 1000);
 
         // Увеличение контейнера с монетами и мультипликатором на 10%
@@ -101,7 +98,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             setNextId(prevId => prevId + 1);
 
             setCircleScale(true);
-            setAnimationSpeed('0.2s');
 
             setTimeout(() => {
                 setClicks((currentClicks) => currentClicks.filter((click) => click.id !== newClick.id));
