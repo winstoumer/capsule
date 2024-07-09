@@ -189,7 +189,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     {/* Черная дыра */}
                                     <circle cx="200" cy="200" r="50" fill="black" />
                                     {/* Анимированное сияние */}
-                                    <circle cx="200" cy="200" r="100" fill="url(#glowGradient)">
+                                    <circle cx="200" cy="200" r="115" fill="url(#glowGradient)">
                                         <animate attributeName="r" dur="10s" values="100; 120; 100" repeatCount="indefinite" />
                                         <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
                                         <animateTransform attributeName="transform" type="rotate" dur="4s" from="0 200 200" to="360 200 200" repeatCount="indefinite" />
