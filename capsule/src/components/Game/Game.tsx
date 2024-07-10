@@ -230,9 +230,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     <div className='rewards-coins'>
                         {coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
-                    <button className="claim-button default-button" onClick={handleClaimClick}>
-                        Claim
-                    </button>
+                    <div>
+                        <button className="claim-button default-button" onClick={handleClaimClick}>
+                            Claim
+                        </button>
+                    </div>
                 </div>
             )}
         </div>
