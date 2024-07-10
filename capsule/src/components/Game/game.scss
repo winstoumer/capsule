@@ -161,3 +161,19 @@
     font-size: 32px;
 }
 
+
+.rewards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.rewards-title {
+    font-size: 32px;
+    font-weight: 600;
+}
+
+.rewards-coins {
+    font-size: 28px;
+    font-weight: 600;
+}
