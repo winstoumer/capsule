@@ -108,25 +108,28 @@
 
 .progress-bar-wrapper {
     display: flex;
-    align-items: center;
-    gap: 10px; /* Расстояние между прогресс-баром и временем */
+    flex-direction: column; /* Ставим элементы в колонку */
+    align-items: center; /* Выравниваем элементы по центру */
     width: 100%;
     max-width: 230px;
     margin-top: 20px;
 }
 
 .progress-bar-container {
-    flex-grow: 1;
-    height: 10px;
-    background-color: #1a1a1a;
     position: relative;
-    border-radius: 8px;
+    width: 100%;
+    height: 20px; /* Увеличиваем высоту для создания полукруга */
+    background-color: #1a1a1a;
+    border-top-left-radius: 100px;
+    border-top-right-radius: 100px;
+    border-bottom-left-radius: 100px; /* Чтобы создать полукруг */
+    border-bottom-right-radius: 100px; /* Чтобы создать полукруг */
+    overflow: hidden; /* Обрезаем содержимое, выходящее за края */
 
     .progress-bar {
         height: 100%;
         background-color: #CF00F8;
         transition: width 1s linear, background-color 1s linear;
-        border-radius: 8px;
     }
 
     &.orange .progress-bar {
@@ -139,10 +142,12 @@
 }
 
 .time-left {
+    margin-top: 10px; /* Расстояние между прогресс-баром и временем */
     font-size: 18px;
     font-weight: 500;
     color: white;
 }
+
 
 .panel-wrapper {
     display: flex;
