@@ -115,16 +115,24 @@
     margin-top: 20px;
 }
 
+.progress-bar-wrapper {
+    display: flex;
+    flex-direction: column; /* Ставим элементы в колонку */
+    align-items: center; /* Выравниваем элементы по центру */
+    width: 100%;
+    max-width: 230px;
+    margin-top: 20px;
+}
+
 .progress-bar-container {
     position: relative;
     width: 100%;
-    height: 20px; /* Увеличиваем высоту для создания полукруга */
+    height: 100px; /* Высота для полукруга */
     background-color: #1a1a1a;
     border-top-left-radius: 100px;
     border-top-right-radius: 100px;
-    border-bottom-left-radius: 100px; /* Чтобы создать полукруг */
-    border-bottom-right-radius: 100px; /* Чтобы создать полукруг */
     overflow: hidden; /* Обрезаем содержимое, выходящее за края */
+    clip-path: ellipse(100% 50% at 50% 100%); /* Создаем форму полукруга */
 
     .progress-bar {
         height: 100%;
@@ -147,7 +155,6 @@
     font-weight: 500;
     color: white;
 }
-
 
 .panel-wrapper {
     display: flex;
