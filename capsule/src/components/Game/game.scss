@@ -108,54 +108,41 @@
 
 .progress-bar-wrapper {
     display: flex;
-    flex-direction: column;
     align-items: center;
     gap: 10px;
     width: 100%;
     max-width: 230px;
     margin-top: 4px;
-  }
-  
-  .progress-bar-container {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding-bottom: 50%;
-    border-radius: 50% 50% 0 0;
-    overflow: hidden;
+}
+
+.progress-bar-container {
+    flex-grow: 1;
+    height: 2px;
     background-color: #1a1a1a;
-  }
-  
-  .progress-bar-container::before {
-    content: '';
-    display: block;
-    padding-top: 100%;
-  }
-  
-  .progress-bar {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #CF00F8;
-    transform-origin: bottom center;
-    transition: transform 1s linear, background-color 1s linear;
-    border-radius: 50% 50% 0 0;
-  }
-  
-  .progress-bar-container.orange .progress-bar {
-    background-color: #750243;
-  }
-  
-  .progress-bar-container.red .progress-bar {
-    background-color: #CF2035;
-  }
-  
-  .time-left {
+    position: relative;
+    border-radius: 8px;
+
+    .progress-bar {
+        height: 100%;
+        background-color: #CF00F8;
+        transition: width 1s linear, background-color 1s linear;
+        border-radius: 8px;
+    }
+
+    &.orange .progress-bar {
+        background-color: #750243;
+    }
+
+    &.red .progress-bar {
+        background-color: #CF2035;
+    }
+}
+
+.time-left {
     font-size: 18px;
     font-weight: 500;
     color: white;
-  }
-  
+}
 
 .panel-wrapper {
     display: flex;

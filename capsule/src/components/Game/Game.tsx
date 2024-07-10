@@ -152,8 +152,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         };
     }, [gameStarted, timeLeft, duration]);
 
-    const progress = (timeLeft / duration) * 100;
-
     return (
         <div className="game">
             {!gameStarted && !showClaimButton && (
@@ -219,7 +217,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         </div>
                         <div className="progress-bar-wrapper">
                             <div className={`progress-bar-container ${progressBarColor}`}>
-                                <div className="progress-bar" style={{ transform: `rotate(${progress * 1.8}deg)` }} />
+                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
                             </div>
                             <div className="time-left">{timeLeft}s</div>
                         </div>
