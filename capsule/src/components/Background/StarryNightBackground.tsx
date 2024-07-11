@@ -6,6 +6,8 @@ interface StarProps {
   x: number;
   y: number;
   speed: number;
+  upwardSpeed: number;
+  downwardSpeed: number;
 }
 
 const StarryNightBackground: React.FC<{ maxStars: number; falling?: boolean }> = ({ maxStars, falling = false }) => {
@@ -16,7 +18,9 @@ const StarryNightBackground: React.FC<{ maxStars: number; falling?: boolean }> =
       id: index,
       x: Math.random() * window.innerWidth,   // Начальная позиция x
       y: Math.random() * window.innerHeight,  // Начальная позиция y
-      speed: Math.random() * 10 + 5,          // Скорость движения звезды (быстро вниз)
+      speed: Math.random() * 2 + 1,           // Скорость по умолчанию для движения вверх
+      upwardSpeed: Math.random() * 1 + 0.5,   // Скорость движения вверх (медленно)
+      downwardSpeed: Math.random() * 10 + 5,  // Скорость движения вниз (быстро)
     }));
 
     setStars(initialStars);
@@ -25,10 +29,10 @@ const StarryNightBackground: React.FC<{ maxStars: number; falling?: boolean }> =
       setStars(prevStars => (
         prevStars.map(star => ({
           ...star,
-          y: falling ? star.y + star.speed : star.y - star.speed,  // Движение вверх или вниз
+          y: falling ? star.y + star.downwardSpeed : star.y - star.upwardSpeed,  // Движение вверх или вниз
           // Если звезда исчезла за пределами экрана, создать новую в случайной позиции
-          ...(falling ? (star.y > window.innerHeight ? { x: Math.random() * window.innerWidth, y: 0, speed: Math.random() * 10 + 5 } : {}) : 
-                       (star.y < 0 ? { x: Math.random() * window.innerWidth, y: window.innerHeight, speed: Math.random() * 10 + 5 } : {}))
+          ...(falling ? (star.y > window.innerHeight ? { x: Math.random() * window.innerWidth, y: 0 } : {}) :
+                       (star.y < 0 ? { x: Math.random() * window.innerWidth, y: window.innerHeight } : {}))
         }))
       ));
     }, 50);
