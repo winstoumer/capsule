@@ -180,8 +180,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <defs>
                                         {/* Градиент для сияющего эффекта */}
                                         <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                                            <stop offset="80%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
-                                            <stop offset="90%" style={{ stopColor: 'black', stopOpacity: 0.5 }} />
+                                            <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
+                                            <stop offset="70%" style={{ stopColor: 'black', stopOpacity: 0.5 }} />
                                             <stop offset="100%" style={{ stopColor: 'black', stopOpacity: 0 }} />
                                         </radialGradient>
                                     </defs>
@@ -193,7 +193,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
                                         <animate attributeName="r" dur="10s" values="100; 220; 100" repeatCount="indefinite" />
                                         <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
-                                        <animateTransform attributeName="transform" type="rotate" dur="4s" from="0 140 140" to="360 140 140" repeatCount="indefinite" />
+                                        <animateTransform attributeName="transform" type="rotate" dur="4s" from="280 140 140" to="360 140 140" repeatCount="indefinite" />
                                     </circle>
                                     {/* Черный круг внутри сияющего эффекта */}
                                     <circle cx="140" cy="140" r="54" fill="black" />
