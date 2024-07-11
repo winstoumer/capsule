@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
 import { Link } from 'react-router-dom';
+import StarryNightBackground from '../Background/StarryNightBackground';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -227,6 +228,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 </button>
                             </div>
                         </div>
+                        <StarryNightBackground />
                     </>
                 )}
                 {!gameStarted && showClaimButton && (
