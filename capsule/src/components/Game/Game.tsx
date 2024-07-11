@@ -232,17 +232,20 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     </>
                 )}
                 {!gameStarted && showClaimButton && (
-                    <div className='rewards'>
-                        <div className='rewards-title'>Congratulations</div>
-                        <div className='rewards-coins'>
-                            {coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    <>
+                        <div className='rewards'>
+                            <div className='rewards-title'>Congratulations</div>
+                            <div className='rewards-coins'>
+                                {coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                            </div>
+                            <div>
+                                <button className="claim-button default-button" onClick={handleClaimClick}>
+                                    Claim
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <button className="claim-button default-button" onClick={handleClaimClick}>
-                                Claim
-                            </button>
-                        </div>
-                    </div>
+                        <StarryNightBackground maxStars={24} falling={true} />
+                    </>
                 )}
             </div>
         </>
