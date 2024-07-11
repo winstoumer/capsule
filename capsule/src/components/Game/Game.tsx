@@ -228,7 +228,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 </button>
                             </div>
                         </div>
-                        <StarryNightBackground />
+                        <StarryNightBackground maxStars={14} />
                     </>
                 )}
                 {!gameStarted && showClaimButton && (
