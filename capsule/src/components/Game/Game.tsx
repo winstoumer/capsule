@@ -161,6 +161,17 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             )}
             {gameStarted && (
                 <>
+                    <div className='panel-wrapper'>
+                        <div className='nav-wrapper'>
+                            <Link to="/boostgame" className='n-ic'>🚀</Link>
+                        </div>
+                        <div className="progress-bar-wrapper">
+                            <div className={`progress-bar-container ${progressBarColor}`}>
+                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
+                            </div>
+                            <div className="time-left">{timeLeft}s</div>
+                        </div>
+                    </div>
                     <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
                         <div className="coins">{coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                         {multiplier && <div className="multiplier">x2</div>}
@@ -209,17 +220,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                     </div>
                                 ))}
                             </button>
-                        </div>
-                    </div>
-                    <div className='panel-wrapper'>
-                        <div className='nav-wrapper'>
-                            <Link to="/boostgame" className='n-ic'>🚀</Link>
-                        </div>
-                        <div className="progress-bar-wrapper">
-                            <div className={`progress-bar-container ${progressBarColor}`}>
-                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
-                            </div>
-                            <div className="time-left">{timeLeft}s</div>
                         </div>
                     </div>
                 </>
