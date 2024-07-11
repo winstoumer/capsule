@@ -203,7 +203,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                             </radialGradient>
                                         </defs>
                                         {/* Фон */}
-                                        <rect width="100%" height="100%" fill="black" />
+                                        <rect width="100%" height="100%" fill="transparent" />
                                         {/* Черная дыра */}
                                         <circle cx="140" cy="140" r="70" fill="black" />
                                         {/* Анимированное сияние */}
