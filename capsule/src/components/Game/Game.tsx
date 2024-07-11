@@ -242,7 +242,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 <button className="claim-button default-button" onClick={handleClaimClick}>
                                     Claim
                                 </button>
-                                <button className="x2-button claim-button default-button" onClick={handleClaimClick}>
+                                <button className="claim-button default-button x2-button" onClick={handleClaimClick}>
                                     Buy x2
                                 </button>
                             </div>
