@@ -11,15 +11,40 @@ const StarryNightBackground: React.FC = () => {
       </defs>
 
       {/* Stars */}
-      <g id="stars">
-        <circle cx="50" cy="100" r="2" fill="url(#starGradient)" />
-        <circle cx="200" cy="50" r="1.5" fill="url(#starGradient)" />
-        <circle cx="300" cy="150" r="2.5" fill="url(#starGradient)" />
-        <circle cx="150" cy="200" r="1" fill="url(#starGradient)" />
-        <circle cx="250" cy="250" r="2" fill="url(#starGradient)" />
-        <circle cx="100" cy="300" r="1.5" fill="url(#starGradient)" />
-        <circle cx="350" cy="350" r="2.5" fill="url(#starGradient)" />
-      </g>
+      <circle cx="50" cy="100" r="2">
+        <animate attributeName="cx" from="50" to="450" dur="5s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="100" to="-50" dur="5s" repeatCount="indefinite" />
+      </circle>
+
+      <circle cx="200" cy="50" r="1.5">
+        <animate attributeName="cx" from="200" to="550" dur="4s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="50" to="-100" dur="4s" repeatCount="indefinite" />
+      </circle>
+
+      <circle cx="300" cy="150" r="2.5">
+        <animate attributeName="cx" from="300" to="650" dur="6s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="150" to="-150" dur="6s" repeatCount="indefinite" />
+      </circle>
+
+      <circle cx="150" cy="200" r="1">
+        <animate attributeName="cx" from="150" to="500" dur="3s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="200" to="-200" dur="3s" repeatCount="indefinite" />
+      </circle>
+
+      <circle cx="250" cy="250" r="2">
+        <animate attributeName="cx" from="250" to="600" dur="4.5s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="250" to="-250" dur="4.5s" repeatCount="indefinite" />
+      </circle>
+
+      <circle cx="100" cy="300" r="1.5">
+        <animate attributeName="cx" from="100" to="550" dur="3.5s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="300" to="-300" dur="3.5s" repeatCount="indefinite" />
+      </circle>
+
+      <circle cx="350" cy="350" r="2.5">
+        <animate attributeName="cx" from="350" to="700" dur="5s" repeatCount="indefinite" />
+        <animate attributeName="cy" from="350" to="-350" dur="5s" repeatCount="indefinite" />
+      </circle>
     </svg>
   );
 };
