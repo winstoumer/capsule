@@ -153,91 +153,97 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     }, [gameStarted, timeLeft, duration]);
 
     return (
-        <div className="game">
-            {!gameStarted && !showClaimButton && (
-                <button className="start-button default-button" onClick={handleStartClick}>
-                    Start
-                </button>
-            )}
+        <>
             {gameStarted && (
-                <>
-                    <div className='panel-wrapper'>
-                        <div className='nav-wrapper'>
-                            <Link to="/boostgame" className='n-ic'>🚀</Link>
+                <div className='panel-wrapper'>
+                    <div className='nav-wrapper'>
+                        <Link to="/boostgame" className='n-ic'>🚀</Link>
+                    </div>
+                    <div className="progress-bar-wrapper">
+                        <div className={`progress-bar-container ${progressBarColor}`}>
+                            <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
                         </div>
-                        <div className="progress-bar-wrapper">
-                            <div className={`progress-bar-container ${progressBarColor}`}>
-                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
-                            </div>
-                            <div className="time-left">{timeLeft}s</div>
-                        </div>
-                    </div>
-                    <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
-                        <div className="coins">{coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                        {multiplier && <div className="multiplier">x2</div>}
-                    </div>
-                    <div className="clicks-wrapper">
-                        <div className="button-game-container">
-                            <button
-                                ref={buttonRef}
-                                className={`button-game ${circleScale ? 'scaled' : ''}`}
-                                onMouseDown={handleButtonClick}
-                                onTouchStart={handleTouchStart}
-                                onTouchEnd={handleTouchEnd}
-                                style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
-                            >
-                                {/* Ваш SVG код здесь */}
-                                <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
-                                    <defs>
-                                        {/* Градиент для сияющего эффекта */}
-                                        <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                                            <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
-                                            <stop offset="70%" style={{ stopColor: 'black', stopOpacity: 0.5 }} />
-                                            <stop offset="100%" style={{ stopColor: 'black', stopOpacity: 0 }} />
-                                        </radialGradient>
-                                    </defs>
-                                    {/* Фон */}
-                                    <rect width="100%" height="100%" fill="black" />
-                                    {/* Черная дыра */}
-                                    <circle cx="140" cy="140" r="70" fill="black" />
-                                    {/* Анимированное сияние */}
-                                    <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
-                                        <animate attributeName="r" dur="10s" values="220; 220; 220" repeatCount="indefinite" />
-                                        <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
-                                        <animateTransform attributeName="transform" type="rotate" dur="4s" from="360 100 140" to="360 100 140" repeatCount="indefinite" />
-                                    </circle>
-                                    {/* Черный круг внутри сияющего эффекта */}
-                                    <circle cx="140" cy="140" r="54" fill="black" />
-                                </svg>
-                                {/* Конец SVG кода */}
-                                {clicks.map((click) => (
-                                    <div
-                                        key={click.id}
-                                        className="floating-number"
-                                        style={{ left: click.x, top: click.y }}
-                                    >
-                                        {coinsPerClick * (multiplier ? 2 : 1)}
-                                    </div>
-                                ))}
-                            </button>
-                        </div>
-                    </div>
-                </>
-            )}
-            {!gameStarted && showClaimButton && (
-                <div className='rewards'>
-                    <div className='rewards-title'>Congratulations</div>
-                    <div className='rewards-coins'>
-                        {coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                    </div>
-                    <div>
-                        <button className="claim-button default-button" onClick={handleClaimClick}>
-                            Claim
-                        </button>
                     </div>
                 </div>
             )}
-        </div>
+            <div className="game">
+                {!gameStarted && !showClaimButton && (
+                    <button className="start-button default-button" onClick={handleStartClick}>
+                        Start
+                    </button>
+                )}
+                {gameStarted && (
+                    <>
+                        <div className='farm-container'>
+                            <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
+                                <div className="coins">{coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                {multiplier && <div className="multiplier">x2</div>}
+                            </div>
+                            <div className="time-left">{timeLeft}s</div>
+                        </div>
+                        <div className="clicks-wrapper">
+                            <div className="button-game-container">
+                                <button
+                                    ref={buttonRef}
+                                    className={`button-game ${circleScale ? 'scaled' : ''}`}
+                                    onMouseDown={handleButtonClick}
+                                    onTouchStart={handleTouchStart}
+                                    onTouchEnd={handleTouchEnd}
+                                    style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
+                                >
+                                    {/* Ваш SVG код здесь */}
+                                    <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+                                        <defs>
+                                            {/* Градиент для сияющего эффекта */}
+                                            <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                                <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
+                                                <stop offset="70%" style={{ stopColor: 'black', stopOpacity: 0.5 }} />
+                                                <stop offset="100%" style={{ stopColor: 'black', stopOpacity: 0 }} />
+                                            </radialGradient>
+                                        </defs>
+                                        {/* Фон */}
+                                        <rect width="100%" height="100%" fill="black" />
+                                        {/* Черная дыра */}
+                                        <circle cx="140" cy="140" r="70" fill="black" />
+                                        {/* Анимированное сияние */}
+                                        <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
+                                            <animate attributeName="r" dur="10s" values="220; 220; 220" repeatCount="indefinite" />
+                                            <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
+                                            <animateTransform attributeName="transform" type="rotate" dur="4s" from="360 100 140" to="360 100 140" repeatCount="indefinite" />
+                                        </circle>
+                                        {/* Черный круг внутри сияющего эффекта */}
+                                        <circle cx="140" cy="140" r="54" fill="black" />
+                                    </svg>
+                                    {/* Конец SVG кода */}
+                                    {clicks.map((click) => (
+                                        <div
+                                            key={click.id}
+                                            className="floating-number"
+                                            style={{ left: click.x, top: click.y }}
+                                        >
+                                            {coinsPerClick * (multiplier ? 2 : 1)}
+                                        </div>
+                                    ))}
+                                </button>
+                            </div>
+                        </div>
+                    </>
+                )}
+                {!gameStarted && showClaimButton && (
+                    <div className='rewards'>
+                        <div className='rewards-title'>Congratulations</div>
+                        <div className='rewards-coins'>
+                            {coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                        </div>
+                        <div>
+                            <button className="claim-button default-button" onClick={handleClaimClick}>
+                                Claim
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
+        </>
     );
 };
 

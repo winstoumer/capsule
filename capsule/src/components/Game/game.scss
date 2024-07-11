@@ -9,6 +9,13 @@
     gap: 30px;
 }
 
+.farm-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    align-items: center;
+}
+
 .coins-container {
     display: flex;
     align-items: center;
@@ -17,7 +24,7 @@
 }
 
 .coins {
-    font-size: 58px;
+    font-size: 50px;
     font-weight: 600;
     color: white;
     transition: transform 0.4s; /* Для анимации увеличения */
@@ -111,7 +118,6 @@
     align-items: center;
     gap: 10px;
     width: 100%;
-    max-width: 160px;
     margin-top: 4px;
 }
 
@@ -139,7 +145,7 @@
 }
 
 .time-left {
-    font-size: 16px;
+    font-size: 50px;
     font-weight: 600;
     color: white;
 }
@@ -160,7 +166,6 @@
 .n-ic {
     font-size: 32px;
 }
-
 
 .rewards {
     display: flex;
