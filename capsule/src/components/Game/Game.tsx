@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
 import { Link } from 'react-router-dom';
 import StarryNightBackground from '../Background/StarryNightBackground';
+import Button from '../Default/Button';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -239,12 +240,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 {coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </div>
                             <div className='rewards-actions'>
-                                <button className="claim-button default-button" onClick={handleClaimClick}>
-                                    Claim
-                                </button>
-                                <button className="claim-button default-button x2-button" onClick={handleClaimClick}>
-                                    Buy x2
-                                </button>
+                                <Button text="Claim" custom={false} onClick={handleClaimClick} />
+                                <Button text="Buy x2" custom={true} onClick={handleClaimClick} />
                             </div>
                         </div>
                         <StarryNightBackground maxStars={24} falling={true} />
