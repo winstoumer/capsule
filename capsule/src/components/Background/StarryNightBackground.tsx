@@ -5,8 +5,8 @@ const StarryNightBackground: React.FC = () => {
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" style={{ position: 'fixed', width: '100%', height: '100%', top: 0, left: 0, zIndex: -1 }}>
       <defs>
         <radialGradient id="skyGradient" cx="50%" cy="50%" r="75%">
-          <stop offset="0%" style={{ stopColor: '#001848', stopOpacity: 1 }} />
-          <stop offset="100%" style={{ stopColor: '#000000', stopOpacity: 1 }} />
+          <stop offset="0%" style={{ stopColor: '#001848', stopOpacity: 0.2 }} />
+          <stop offset="100%" style={{ stopColor: '#000000', stopOpacity: 0.2 }} />
         </radialGradient>
         <radialGradient id="starGradient" cx="50%" cy="50%" r="50%">
           <stop offset="0%" style={{ stopColor: '#ffffff', stopOpacity: 1 }} />
