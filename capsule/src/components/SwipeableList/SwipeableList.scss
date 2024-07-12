@@ -1,18 +1,25 @@
 .swipeable-list-container {
     width: 100%;
-    overflow: hidden; /* Скрыть содержимое, выходящее за пределы контейнера */
-  }
-  
-  .swipeable-list {
-    display: flex; /* Располагаем элементы списка в строку */
-    transition: transform 0.3s ease-in-out; /* Плавный переход при изменении transform */
-  }
-  
-  .swipeable-list-item {
-    flex: 0 0 100%; /* Элементы списка равны по ширине и не увеличиваются */
+    overflow: hidden;
+    /* Скрыть содержимое, выходящее за пределы контейнера */
+}
+
+.swipeable-list {
+    display: flex;
+    /* Располагаем элементы списка в строку */
+    transition: transform 0.3s ease-in-out;
+    /* Плавный переход при изменении transform */
+}
+
+.swipeable-list-item {
+    flex: 0 0 100%;
+    /* Элементы списка равны по ширине и не увеличиваются */
     box-sizing: border-box;
-    padding: 10px; /* Пример отступа между элементами */
-  }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .item-logo {
     max-width: 100%;
