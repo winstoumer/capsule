@@ -38,6 +38,12 @@ const AppWrapper: React.FC = () => {
           if (location.pathname.startsWith('/mint/')) {
             backButton.show();
           }
+          else if (location.pathname.startsWith('/earn')) {
+            backButton.show();
+          }
+          else if (location.pathname.startsWith('/collections')) {
+            backButton.show();
+          }
           else if (location.pathname.startsWith('/game')) {
             backButton.show();
           }
@@ -61,7 +67,10 @@ const AppWrapper: React.FC = () => {
         if (location.pathname.startsWith('/mint/')) {
           window.Telegram.WebApp.BackButton.show();
         }
-        else if (location.pathname.startsWith('/game')) {
+        else if (location.pathname.startsWith('/earn')) {
+          window.Telegram.WebApp.BackButton.show();
+        }
+        else if (location.pathname.startsWith('/collections')) {
           window.Telegram.WebApp.BackButton.show();
         }
         else if (location.pathname.startsWith('/boostgame')) {
