@@ -2,16 +2,19 @@
     overflow: hidden;
     width: 100%;
     position: relative;
-}
-
-.swipeable-list {
+  }
+  
+  .swipeable-list {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-}
-
-.swipeable-list-item {
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    width: 100%; /* Расширение для обеспечения полного видимого содержимого */
+  }
+  
+  .swipeable-list-item {
     flex: 0 0 auto;
     scroll-snap-align: start;
     display: flex;
@@ -20,7 +23,7 @@
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
-}
+  }
 
 .item-logo {
     max-width: 100%;
