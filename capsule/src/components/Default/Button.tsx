@@ -4,7 +4,7 @@ import './Button.scss'; // Импортируем файл стилей SCSS
 interface ButtonProps {
   onClick: () => void;
   background?: string;
-  text: string;
+  text: string | JSX.Element;
   custom?: boolean;
 }
 
@@ -19,8 +19,12 @@ const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <button className={`mod-button ${custom ? 'mod-custom-button' : ''}`} style={buttonStyle} onClick={onClick}>
-      {text}
+    <button
+      className={`mod-button ${custom ? 'mod-custom-button' : ''}`}
+      style={buttonStyle}
+      onClick={onClick}
+    >
+      {typeof text === 'string' ? text : <span dangerouslySetInnerHTML={{ __html: text }} />}
     </button>
   );
 };
