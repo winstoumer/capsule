@@ -62,7 +62,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                     containerRef.current.style.transition = 'none';
                     containerRef.current.style.transform = `translateX(0)`;
                 }
-            }, 300);
+            }, 50);
         }
     };
 
