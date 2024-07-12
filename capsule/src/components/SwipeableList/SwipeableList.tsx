@@ -51,6 +51,13 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
 
   const slideNext = () => {
     if (containerRef.current) {
+      const isLastItem = containerRef.current.lastChild === containerRef.current.children[containerRef.current.children.length - 1];
+  
+      if (isLastItem) {
+        // если последний элемент, не выполняем никаких действий
+        return;
+      }
+  
       containerRef.current.style.transition = 'transform 0.3s ease-in-out';
       containerRef.current.style.transform = `translateX(-${slideWidth}px)`;
       setTimeout(() => {
@@ -62,20 +69,26 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
       }, 300);
     }
   };
-
+  
   const slidePrev = () => {
     if (containerRef.current) {
+      const isFirstItem = containerRef.current.firstChild === containerRef.current.children[0];
+  
+      if (isFirstItem) {
+        // если первый элемент, не выполняем никаких действий
+        return;
+      }
+  
+      containerRef.current.style.transition = 'transform 0.3s ease-in-out';
       containerRef.current.insertBefore(containerRef.current.lastElementChild!, containerRef.current.firstChild);
-      containerRef.current.style.transition = 'none'; // Убираем анимацию
-      containerRef.current.style.transform = `translateX(-${slideWidth}px)`; // Устанавливаем начальное положение без анимации
+      containerRef.current.style.transform = `translateX(${slideWidth}px)`;
       setTimeout(() => {
-        if (containerRef.current) {
-          containerRef.current.style.transition = 'transform 0.3s ease-in-out'; // Добавляем анимацию обратно через небольшой интервал
-          containerRef.current.style.transform = `translateX(0)`; // Возвращаемся к начальной позиции с анимацией
-        }
+        containerRef.current!.style.transition = 'none';
+        containerRef.current!.style.transform = `translateX(0)`;
       }, 50);
     }
-  };  
+  };
+  
 
   const handleClick = () => {
     // Handle button click logic
