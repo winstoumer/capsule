@@ -103,7 +103,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
           {items.map((item, index) => (
             <div key={index}
             className="swipeable-list-item"
-            style={{ flex: '0 0 auto', width: '100%', display: 'flex', textAlign: 'center', alignItems: 'center', justifyContent: 'center' }}>
+            style={{ flex: '0 0 auto', width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', alignItems: 'center', justifyContent: 'center' }}>
               {typeof item.logo === 'string' ? (
                 <img src={item.logo} alt={`logo-${index}`} className="item-logo" style={{ maxWidth: '100%' }} />
               ) : (
