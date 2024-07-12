@@ -26,11 +26,15 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
     if (startX !== null && containerRef.current) {
       const touch = e.touches[0];
       const distX = touch.clientX - startX;
-      currentX = Math.min(0, Math.max(-slideWidth, distX)); // ограничение свайпа
+      currentX = Math.min(0, Math.max(-slideWidth, distX)); // Ограничение свайпа
       containerRef.current.style.transform = `translateX(${currentX}px)`;
       deltaX = Math.sign(distX);
+
+      // Проверяем, если свайп более вертикален, чем горизонтален, отменяем обработку по умолчанию
+      if (Math.abs(distX) > Math.abs(touch.clientY - startX!)) {
+        e.preventDefault();
+      }
     }
-    e.preventDefault();
   };
 
   const handleTouchEnd = () => {
