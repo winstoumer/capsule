@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { TonConnectButton, useTonWallet, useTonConnectUI } from "@tonconnect/ui-react";
 import './header.scss';
+import Button from '../Default/Button';
 
 type TelegramUserData = {
     id: number;
@@ -37,9 +38,7 @@ export const Header: React.FC = () => {
                         {wallet ? (
                             <TonConnectButton />
                         ) : (
-                            <button className="default-button" onClick={() => tonConnectUi.openModal()}>
-                                Connect wallet
-                            </button>
+                            <Button text='Connect wallet' custom={true} onClick={() => tonConnectUi.openModal()} />
                         )}
                     </React.Fragment>
                 </div>
