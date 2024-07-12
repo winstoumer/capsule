@@ -1,30 +1,52 @@
 .mod-button {
-    color: white;
-    font-size: 22px;
-    font-weight: 500;
-    background-color: transparent;
-    height: 40px;
-    min-height: 40px;
-    padding: 0 20px;
-    border-radius: 28px;
-    border: 1px solid #1B1B1B;
-    display: flex;
-    align-items: center;
-    white-space: nowrap;
-    text-align: center;
-    justify-content: center;
-  
-    &:hover {
-      opacity: 1;
-    }
-  
-    &:active {
-      transform: translateY(0px);
-    }
-  
-    &.mod-custom-button {
-      border-color: #430050;
-      color: #CF00F8;
-    }
+  color: white;
+  font-size: 22px;
+  font-weight: 500;
+  background-color: transparent;
+  height: 40px;
+  min-height: 40px;
+  padding: 0 20px;
+  border-radius: 28px;
+  border: 1px solid #1B1B1B;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  text-align: center;
+  justify-content: center;
+
+  &:hover {
+    opacity: 1;
   }
-  
+
+  &:active {
+    transform: translateY(0px);
+  }
+
+  &.mod-custom-button {
+    border-color: #430050;
+    color: #CF00F8;
+  }
+}
+
+.arrow-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 50%;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &.arrow-left {
+    left: 0.5rem;
+  }
+
+  &.arrow-right {
+    right: 0.5rem;
+  }
+
+  svg {
+    width: 24px;
+    height: 24px;
+  }
+}
