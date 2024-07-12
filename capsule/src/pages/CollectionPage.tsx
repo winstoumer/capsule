@@ -7,7 +7,7 @@ import CollectionList from "../components/CollectionList/CollectionList";
 const CollectionPage: React.FC = () => {
 
     return (
-        <PageComponent navigation={true}>
+        <PageComponent>
             <CollectionList />
         </PageComponent>
     );

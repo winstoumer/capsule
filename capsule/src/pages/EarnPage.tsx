@@ -9,7 +9,7 @@ import StarryNightBackground from '../components/Background/StarryNightBackgroun
 
 const EarnPage: React.FC = () => {
     return (
-        <PageComponent navigation={true}>
+        <PageComponent>
             <Tab
                 tabs={[
                     { title: 'Earn', content: <Earn />, image: '💸' },
