@@ -62,7 +62,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                     containerRef.current.style.transition = 'none';
                     containerRef.current.style.transform = `translateX(0)`;
                 }
-            }, 50);
+            }, 300);
         }
     };
 
@@ -76,7 +76,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                     containerRef.current.style.transition = 'transform 0.3s ease-in-out'; // Добавляем анимацию обратно через небольшой интервал
                     containerRef.current.style.transform = `translateX(0)`; // Возвращаемся к начальной позиции с анимацией
                 }
-            }, 50);
+            }, 300);
         }
     };
 
