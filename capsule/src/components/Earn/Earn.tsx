@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
 import EarnInfo from '../EarnInfo/EarnInfo';
+import Button from '../Default/Button';
 //import Loading from '../Loading/Loading';
 
 interface Task {
@@ -79,12 +80,12 @@ export const Earn = () => {
                         <div className='task-reward'>
                             {task.reward}
                         </div>
-                        {!task.active || task.ready ? null :
-                            <div className='task-start'>
-                                <button className='default-button' onClick={() => handleClick(task.id, task.link, Number(task.reward))}>Go</button>
-                            </div>
-                        }
                     </div>
+                    {!task.active || task.ready ? null :
+                        <div className='task-start'>
+                            <Button text='Go' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
+                        </div>
+                    }
                 </div>
             ))}
         </div>

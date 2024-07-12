@@ -1,20 +1,18 @@
 .tasks {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 10px;
 }
 
 .task {
     background-color: #000000ca;
-    border-radius: 26px;
+    border-radius: 16px;
     border: 1px solid rgb(24, 24, 24);
-    padding-top: 20px;
-    padding-left: 22px;
-    padding-right: 22px;
-    padding-bottom: 20px;
+    padding: 10px 12px;
     display: flex;
     flex-direction: row;
-    gap: 16px;
+    justify-content: space-between;
+    gap: 10px;
 }
 
 .task-watch {
@@ -41,6 +39,7 @@
 .task-reward {
     font-size: 22px;
     font-weight: 600;
+    line-height: 22px;
 }
 
 .task-start {
