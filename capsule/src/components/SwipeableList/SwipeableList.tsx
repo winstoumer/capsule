@@ -13,7 +13,9 @@ interface SwipeableListProps {
 
 const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
   const containerRef = useRef<HTMLDivElement>(null);
+  const screenRef = useRef<HTMLDivElement>(null);
   let startX: number | null = null;
+  let currentX = 0;
   let deltaX = 0;
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -21,10 +23,12 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (startX !== null && containerRef.current) {
+    if (startX !== null && containerRef.current && screenRef.current) {
       const touch = e.touches[0];
       const distX = touch.clientX - startX;
-      containerRef.current.style.transform = `translateX(${distX}px)`;
+      const maxVisibleWidth = screenRef.current.clientWidth * 0.7; // 70% видимости первого элемента
+      currentX = Math.min(0, Math.max(-maxVisibleWidth, distX)); // ограничение свайпа
+      containerRef.current.style.transform = `translateX(${currentX}px)`;
       deltaX = Math.sign(distX);
     }
     e.preventDefault();
@@ -47,11 +51,9 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
       containerRef.current.style.transition = 'transform 0.3s ease-in-out';
       containerRef.current.style.transform = `translateX(-100%)`;
       setTimeout(() => {
-        if (containerRef.current) {
-          containerRef.current.appendChild(containerRef.current.firstElementChild!);
-          containerRef.current.style.transition = 'none';
-          containerRef.current.style.transform = `translateX(0)`;
-        }
+        containerRef.current!.appendChild(containerRef.current!.firstElementChild!);
+        containerRef.current!.style.transition = 'none';
+        containerRef.current!.style.transform = `translateX(0)`;
       }, 300);
     }
   };
@@ -62,10 +64,8 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
       containerRef.current.style.transition = 'none';
       containerRef.current.style.transform = `translateX(-100%)`;
       setTimeout(() => {
-        if (containerRef.current) {
-          containerRef.current.style.transition = 'transform 0.3s ease-in-out';
-          containerRef.current.style.transform = `translateX(0)`;
-        }
+        containerRef.current!.style.transition = 'transform 0.3s ease-in-out';
+        containerRef.current!.style.transform = `translateX(0)`;
       }, 50);
     }
   };
@@ -77,22 +77,27 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
   return (
     <div className="swipeable-list-container">
       <div
-        ref={containerRef}
-        className="swipeable-list"
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
+        ref={screenRef}
+        className="swipeable-list-screen"
       >
-        {items.map((item, index) => (
-          <div key={index} className="swipeable-list-item">
-            {typeof item.logo === 'string' ? (
-              <img src={item.logo} alt={`logo-${index}`} className="item-logo" />
-            ) : (
-              <div className="item-logo">{item.logo}</div>
-            )}
-            <Button text={item.buttonText} onClick={handleClick} />
-          </div>
-        ))}
+        <div
+          ref={containerRef}
+          className="swipeable-list"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+        >
+          {items.map((item, index) => (
+            <div key={index} className="swipeable-list-item">
+              {typeof item.logo === 'string' ? (
+                <img src={item.logo} alt={`logo-${index}`} className="item-logo" />
+              ) : (
+                <div className="item-logo">{item.logo}</div>
+              )}
+              <Button text={item.buttonText} onClick={handleClick} />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
