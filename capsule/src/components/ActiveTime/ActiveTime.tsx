@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useData } from '../DataProvider/DataContext';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
 import TimerDisplay from '../TimerDisplay/TimerDisplay';
+import Button from '../Default/Button';
 
 export const ActiveTime = () => {
 
@@ -29,7 +30,6 @@ export const ActiveTime = () => {
     const coinsMinedSoFarRef = useRef<number>(0);
 
     const [button, setButton] = useState(false);
-    const [buttonMintActive, setButtonMintActive] = useState(false);
 
     const [resetCountdown, setResetCountdown] = useState(false);
 
@@ -57,7 +57,6 @@ export const ActiveTime = () => {
                     if (!mintActive && diffTimeNft < 0) {
                         setTimerFinished(true);
                         setMintActive(true);
-                        setButtonMintActive(true);
                     }
                 }
 
@@ -97,7 +96,7 @@ export const ActiveTime = () => {
         return () => {
             clearInterval(countdownInterval);
         };
-    }, [nextTime, currentTime, resetCountdown, nftEndDate, mintActive, setMintActive, setButtonMintActive]);
+    }, [nextTime, currentTime, resetCountdown, nftEndDate, mintActive, setMintActive]);
 
     useEffect(() => {
         if (coinsMine !== null && timeMine !== null) {
@@ -186,7 +185,6 @@ export const ActiveTime = () => {
         setValue(0.00);
         setNftDate(null);
         setButton(false);
-        setButtonMintActive(false);
     };
 
     const handleClick = async () => {
@@ -238,9 +236,7 @@ export const ActiveTime = () => {
                         <div>
                             {
                                 !button && (
-                                    <button className={buttonMintActive ? 'custom-button' : 'custom-button'} onClick={handleClick}>
-                                        Claim
-                                    </button>
+                                    <Button text='Claim' onClick={handleClick} />
                                 )
                             }
                         </div>
