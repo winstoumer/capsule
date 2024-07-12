@@ -3,6 +3,7 @@ import axios from 'axios';
 import './referral.scss';
 //import Loading from '../Loading/Loading';
 import EarnInfo from '../EarnInfo/EarnInfo';
+import Button from '../Default/Button';
 
 export const Referral = () => {
     const [userData, setUserData] = useState<any>(null);
@@ -53,7 +54,7 @@ export const Referral = () => {
     return (
         <div className='referral-container'>
             <EarnInfo totalReward={invitedCount || 0} icon="🤝" />
-            <button className='default-button' onClick={handleReferralLinkClick}>Referral link</button>
+            <Button text='Copy invitation link' onClick={handleReferralLinkClick} />
         </div>
     );
 };
