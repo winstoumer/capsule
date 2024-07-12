@@ -12,6 +12,18 @@ interface SwipeableListProps {
     items: Item[];
 }
 
+const PreviousArrow = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 19L8 12L15 5" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+);
+
+const NextArrow = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 5L16 12L9 19" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+);
+
 const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
@@ -98,6 +110,9 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                     maxWidth: '100vw', // максимальная ширина равная ширине экрана
                 }}
             >
+                <div className="arrow arrow-left" onClick={slidePrev}>
+                    <PreviousArrow />
+                </div>
                 <div
                     ref={containerRef}
                     style={{
@@ -117,6 +132,9 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                             <Button text={item.buttonText} onClick={() => handleClick(item.link)} />
                         </div>
                     ))}
+                </div>
+                <div className="arrow arrow-right" onClick={slideNext}>
+                    <NextArrow />
                 </div>
             </div>
         </div>
