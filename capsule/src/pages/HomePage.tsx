@@ -38,6 +38,7 @@ const HomePage: React.FC = () => {
   const items = [
     { logo: SvgLogo, buttonText: 'Open' },
     { logo: SvgLogo, buttonText: 'Open' },
+    { logo: SvgLogo, buttonText: 'Open' },
     { logo: SvgLogo, buttonText: 'Open' }
   ];
 
