@@ -1,4 +1,5 @@
 import React, { useRef } from 'react';
+import './SwipeableList.scss';
 import Button from '../Default/Button';
 
 interface Item {
