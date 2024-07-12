@@ -17,17 +17,18 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
   let startX: number | null = null;
   let currentX = 0;
   let deltaX = 0;
+  let slideWidth = 0;
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     startX = e.touches[0].clientX;
+    slideWidth = containerRef.current?.getBoundingClientRect().width || 0;
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (startX !== null && containerRef.current && screenRef.current) {
       const touch = e.touches[0];
       const distX = touch.clientX - startX;
-      const maxVisibleWidth = screenRef.current.clientWidth * 0.7; // 70% видимости первого элемента
-      currentX = Math.min(0, Math.max(-maxVisibleWidth, distX)); // ограничение свайпа
+      currentX = Math.min(0, Math.max(-slideWidth, distX)); // ограничение свайпа
       containerRef.current.style.transform = `translateX(${currentX}px)`;
       deltaX = Math.sign(distX);
     }
@@ -49,22 +50,24 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
   const slideNext = () => {
     if (containerRef.current) {
       containerRef.current.style.transition = 'transform 0.3s ease-in-out';
-      containerRef.current.style.transform = `translateX(-100%)`;
+      containerRef.current.style.transform = `translateX(-${slideWidth}px)`;
       setTimeout(() => {
-        containerRef.current!.appendChild(containerRef.current!.firstElementChild!);
-        containerRef.current!.style.transition = 'none';
-        containerRef.current!.style.transform = `translateX(0)`;
+        if (containerRef.current) {
+          containerRef.current.appendChild(containerRef.current.firstElementChild!);
+          containerRef.current.style.transition = 'none';
+          containerRef.current.style.transform = `translateX(0)`;
+        }
       }, 300);
     }
   };
 
   const slidePrev = () => {
     if (containerRef.current) {
+      containerRef.current.style.transition = 'transform 0.3s ease-in-out';
       containerRef.current.insertBefore(containerRef.current.lastElementChild!, containerRef.current.firstChild);
-      containerRef.current.style.transition = 'none';
-      containerRef.current.style.transform = `translateX(-100%)`;
+      containerRef.current.style.transform = `translateX(-${slideWidth}px)`;
       setTimeout(() => {
-        containerRef.current!.style.transition = 'transform 0.3s ease-in-out';
+        containerRef.current!.style.transition = 'none';
         containerRef.current!.style.transform = `translateX(0)`;
       }, 50);
     }
