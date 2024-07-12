@@ -15,10 +15,6 @@
     flex: 0 0 100%;
     /* Элементы списка равны по ширине и не увеличиваются */
     box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .item-logo {

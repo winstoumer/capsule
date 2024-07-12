@@ -1,5 +1,4 @@
 import React, { useRef } from 'react';
-import './SwipeableList.scss';
 import Button from '../Default/Button';
 
 interface Item {
@@ -99,10 +98,12 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
           style={{
             display: 'flex',
             transition: 'transform 0.3s ease-in-out',
+            alignItems: 'center', // Выравнивание по центру по вертикали
+            justifyContent: 'center', // Выравнивание по центру по горизонтали
           }}
         >
           {items.map((item, index) => (
-            <div key={index} className="swipeable-list-item" style={{ flex: '0 0 auto', width: '100%' }}>
+            <div key={index} className="swipeable-list-item" style={{ flex: '0 0 auto', width: '100%', textAlign: 'center' }}>
               {typeof item.logo === 'string' ? (
                 <img src={item.logo} alt={`logo-${index}`} className="item-logo" style={{ maxWidth: '100%' }} />
               ) : (
