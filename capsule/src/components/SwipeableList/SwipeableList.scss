@@ -2,31 +2,27 @@
     overflow: hidden;
     width: 100%;
     position: relative;
-  }
-  
-  .swipeable-list {
+}
+
+.swipeable-list {
     display: flex;
     flex-direction: row;
     overflow-x: auto;
-    scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-  }
-  
-  .swipeable-list-item {
-    flex: 0 0 70%; // Ширина элемента составляет 70% ширины контейнера
-    max-width: 280px; // Максимальная ширина элемента - 280 пикселей
-    scroll-snap-align: center;
+}
+
+.swipeable-list-item {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
-    margin-right: -30%; // Отрицательный отступ, чтобы перекрыть следующий элемент
-    padding-right: 30%; // Внутренний отступ справа, чтобы освободить место для следующего элемента
-  }
-  
-  .item-logo {
+}
+
+.item-logo {
     max-width: 100%;
     height: auto;
-  }
+}
