@@ -14,7 +14,6 @@ interface SwipeableListProps {
 const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   let startX: number | null = null;
-  let currentX = 0;
   let deltaX = 0;
 
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -22,14 +21,11 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
   };
 
   const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
-    if (startX !== null) {
+    if (startX !== null && containerRef.current) {
       const touch = e.touches[0];
       const distX = touch.clientX - startX;
-      currentX = distX; // Используем currentX здесь для установки значения
+      containerRef.current.style.transform = `translateX(${distX}px)`;
       deltaX = Math.sign(distX);
-      if (containerRef.current) {
-        containerRef.current.style.transform = `translateX(${distX}px)`;
-      }
     }
     e.preventDefault();
   };
@@ -51,9 +47,11 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
       containerRef.current.style.transition = 'transform 0.3s ease-in-out';
       containerRef.current.style.transform = `translateX(-100%)`;
       setTimeout(() => {
-        containerRef.current!.appendChild(containerRef.current!.firstElementChild!);
-        containerRef.current!.style.transition = 'none';
-        containerRef.current!.style.transform = `translateX(0)`;
+        if (containerRef.current) {
+          containerRef.current.appendChild(containerRef.current.firstElementChild!);
+          containerRef.current.style.transition = 'none';
+          containerRef.current.style.transform = `translateX(0)`;
+        }
       }, 300);
     }
   };
@@ -64,15 +62,17 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
       containerRef.current.style.transition = 'none';
       containerRef.current.style.transform = `translateX(-100%)`;
       setTimeout(() => {
-        containerRef.current!.style.transition = 'transform 0.3s ease-in-out';
-        containerRef.current!.style.transform = `translateX(0)`;
+        if (containerRef.current) {
+          containerRef.current.style.transition = 'transform 0.3s ease-in-out';
+          containerRef.current.style.transform = `translateX(0)`;
+        }
       }, 50);
     }
   };
 
-  const hClick = () => {
-    return;
-  }
+  const handleClick = () => {
+    // Handle button click logic
+  };
 
   return (
     <div className="swipeable-list-container">
@@ -90,7 +90,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
             ) : (
               <div className="item-logo">{item.logo}</div>
             )}
-            <Button text={item.buttonText} onClick={hClick} />
+            <Button text={item.buttonText} onClick={handleClick} />
           </div>
         ))}
       </div>
