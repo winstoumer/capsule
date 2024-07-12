@@ -7,6 +7,7 @@ import Loading from '../components/Loading/Loading';
 import Balance from '../components/Balance/Balance';
 import { Link } from 'react-router-dom';
 import SwipeableList from '../components/SwipeableList/SwipeableList';
+import StarryNightBackground from '../components/Background/StarryNightBackground';
 
 const SvgLogo = (
   <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
@@ -37,9 +38,7 @@ const HomePage: React.FC = () => {
 
   const items = [
     { logo: SvgLogo, buttonText: 'Open' },
-    { logo: SvgLogo, buttonText: 'Mining' },
-    { logo: SvgLogo, buttonText: 'Open 3' },
-    { logo: SvgLogo, buttonText: 'Open 4' }
+    { logo: SvgLogo, buttonText: 'Mining' }
   ];
 
   return (
@@ -52,6 +51,7 @@ const HomePage: React.FC = () => {
         <SwipeableList items={items} />
         <Link className='default-button' to="/mining">Mining</Link>
       </div>
+      <StarryNightBackground maxStars={14} />
     </PageComponent>
   );
 }
