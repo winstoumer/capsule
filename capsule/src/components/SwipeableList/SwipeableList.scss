@@ -1,0 +1,30 @@
+.swipeable-list-container {
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+  
+  .swipeable-list {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 30%; /* Отступ между элементами */
+  }
+  
+  .swipeable-list-item {
+    flex: 0 0 calc(100% - 30%); /* Ширина элемента с учетом отступа */
+    scroll-snap-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  .item-logo {
+    max-width: 100%;
+    height: auto;
+  }
