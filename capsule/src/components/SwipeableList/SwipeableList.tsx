@@ -97,13 +97,13 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
           ref={containerRef}
           style={{
             display: 'flex',
-            transition: 'transform 0.3s ease-in-out',
-            alignItems: 'center', // Выравнивание по центру по вертикали
-            justifyContent: 'center', // Выравнивание по центру по горизонтали
+            transition: 'transform 0.3s ease-in-out'
           }}
         >
           {items.map((item, index) => (
-            <div key={index} className="swipeable-list-item" style={{ flex: '0 0 auto', width: '100%', textAlign: 'center' }}>
+            <div key={index}
+            className="swipeable-list-item"
+            style={{ flex: '0 0 auto', width: '100%', display: 'flex', textAlign: 'center', alignItems: 'center', justifyContent: 'center' }}>
               {typeof item.logo === 'string' ? (
                 <img src={item.logo} alt={`logo-${index}`} className="item-logo" style={{ maxWidth: '100%' }} />
               ) : (
