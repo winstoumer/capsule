@@ -43,7 +43,7 @@ const HomePage: React.FC = () => {
   ];
 
   return (
-    <PageComponent navigation={true}>
+    <PageComponent navigation={true} scroll={false}>
       <Header />
       <div className='general'>
         <Balance>
