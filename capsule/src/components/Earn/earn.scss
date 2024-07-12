@@ -1,18 +1,18 @@
 .tasks {
     display: flex;
     flex-direction: column;
-    gap: 10px;
 }
 
 .task {
     position: relative;
     background-color: #000000ba;
     border-bottom: 2px solid rgb(22, 22, 22);
-    padding: 10px 12px;
+    padding: 14px 0;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
 }
 
 .task-watch {
