@@ -1,9 +1,11 @@
 import React, { useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../Default/Button';
 
 interface Item {
     logo: string | JSX.Element;
     buttonText: string;
+    link: string; // Добавляем поле для ссылки
 }
 
 interface SwipeableListProps {
@@ -12,6 +14,7 @@ interface SwipeableListProps {
 
 const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
     const containerRef = useRef<HTMLDivElement>(null);
+    const navigate = useNavigate();
     let startX: number | null = null;
     let currentX = 0;
     let deltaX = 0;
@@ -77,8 +80,8 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
         }
     };
 
-    const handleClick = () => {
-        // Handle button click logic
+    const handleClick = (link: string) => {
+        navigate(link);
     };
 
     return (
@@ -111,7 +114,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                             ) : (
                                 <div className="item-logo">{item.logo}</div>
                             )}
-                            <Button text={item.buttonText} onClick={handleClick} />
+                            <Button text={item.buttonText} onClick={() => handleClick(item.link)} />
                         </div>
                     ))}
                 </div>

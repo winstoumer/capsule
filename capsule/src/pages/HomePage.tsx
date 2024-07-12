@@ -5,7 +5,6 @@ import { Header } from "../components/Header/Header";
 import { useData } from '../components/DataProvider/DataContext';
 import Loading from '../components/Loading/Loading';
 import Balance from '../components/Balance/Balance';
-import { Link } from 'react-router-dom';
 import SwipeableList from '../components/SwipeableList/SwipeableList';
 import StarryNightBackground from '../components/Background/StarryNightBackground';
 
@@ -37,8 +36,8 @@ const HomePage: React.FC = () => {
   }
 
   const items = [
-    { logo: SvgLogo, buttonText: 'Open' },
-    { logo: SvgLogo, buttonText: 'Mining' }
+    { logo: SvgLogo, buttonText: 'Open', link: '/home' },
+    { logo: SvgLogo, buttonText: 'Mining', link: '/mining' }
   ];
 
   return (
@@ -49,7 +48,6 @@ const HomePage: React.FC = () => {
           {Number(balanceData).toFixed(2)}
         </Balance>
         <SwipeableList items={items} />
-        <Link className='default-button' to="/mining">Mining</Link>
       </div>
       <StarryNightBackground maxStars={14} />
     </PageComponent>
