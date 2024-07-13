@@ -7,7 +7,7 @@ export const Navigation = () => {
     <div className='bottom-navigation'>
       <div className='navigation'>
         <div className="nav-b">
-          <Link to="/earn">Task</Link>
+          <Link to="/earn">Tasks</Link>
         </div>
         <div className="nav-b">
           <Link to="/frens">Frens</Link>
