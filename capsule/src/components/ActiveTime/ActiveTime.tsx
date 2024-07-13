@@ -222,14 +222,9 @@ export const ActiveTime = () => {
                     {isInitialized ? value.toFixed(2) : null}
                 </div>
                 <div className='info-container'>
-                    <div className='time-left'>
+                    <div className='current-time-left'>
                         <TimerDisplay timerFinished={timerFinished} hours={hours} minutes={minutes} seconds={seconds} />
                     </div>
-                    {!timerFinished && (
-                        <div className='info-for'>
-                            {coinsMine}/{timeMine}h
-                        </div>
-                    )}
                 </div>
                 <div className='info-for position-top'>
                     {currentTime !== null && timerFinished && matterId !== null && value !== null ? (
