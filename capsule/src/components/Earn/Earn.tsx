@@ -89,26 +89,28 @@ export const Earn = () => {
     );
 
     return (
-        <div className='tasks'>
+        <>
             <EarnInfo totalReward={totalReward} icon="💸" />
-            {tasks.map(task => (
-                <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
-                    <div className='task-info'>
-                        <div className='task-name'>
-                            {task.name}
+            <div className='tasks'>
+                {tasks.map(task => (
+                    <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
+                        <div className='task-info'>
+                            <div className='task-name'>
+                                {task.name}
+                            </div>
+                            <div className='task-reward'>
+                                +{task.reward} P
+                            </div>
                         </div>
-                        <div className='task-reward'>
-                            +{task.reward} P
-                        </div>
+                        {!task.active || task.ready ?
+                            <Completed /> :
+                            <div className='task-start'>
+                                <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
+                            </div>
+                        }
                     </div>
-                    {!task.active || task.ready ?
-                        <Completed /> :
-                        <div className='task-start'>
-                            <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
-                        </div>
-                    }
-                </div>
-            ))}
-        </div>
+                ))}
+            </div>
+        </>
     );
 };
