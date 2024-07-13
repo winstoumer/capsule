@@ -19,12 +19,12 @@ const SvgLogo = (
     </defs>
     <rect width="100%" height="100%" fill="transparent" />
     <circle cx="140" cy="140" r="70" fill="black" />
-    <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
+    <circle cx="140" cy="140" r="100" fill="url(#glowGradient)">
       <animate attributeName="r" dur="10s" values="220; 220; 220" repeatCount="indefinite" />
       <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
       <animateTransform attributeName="transform" type="rotate" dur="4s" from="360 100 140" to="360 100 140" repeatCount="indefinite" />
     </circle>
-    <circle cx="140" cy="140" r="54" fill="black" />
+    <circle cx="140" cy="140" r="46" fill="black" />
   </svg>
 );
 
