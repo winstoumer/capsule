@@ -48,10 +48,10 @@ const ButtonArrow: React.FC<ButtonProps> = ({ onClick, arrowType }) => {
 
   if (arrowType === 'previous') {
     arrow = previousArrow;
-    arrowClassName = 'arrow-button arrow-left';
+    arrowClassName = 'arrow-button';
   } else {
     arrow = nextArrow;
-    arrowClassName = 'arrow-button arrow-right';
+    arrowClassName = 'arrow-button';
   }
 
   return (
