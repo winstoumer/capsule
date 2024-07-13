@@ -47,7 +47,7 @@ const ActiveMine: React.FC<TimeDisplayProps> = ({ nftEndDate, nftActive }) => {
     }, [currentTime, nftEndDate, nftActive]);
 
     return (
-        <div>
+        <div className='active-signal'>
             {nftActive && nftActive !== null && (!showRemainingTime ? <span className='color-purple'>{remainingTime}</span> : <span className='color-blue'>⛏️</span>)}
         </div>
     );
