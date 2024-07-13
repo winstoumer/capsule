@@ -74,6 +74,7 @@ const HomePage: React.FC = () => {
           {Number(balanceData).toFixed(2)}
         </Balance>
         <SwipeableList items={items} />
+        <div></div>
       </div>
       <StarryNightBackground maxStars={14} />
     </PageComponent>
