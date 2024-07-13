@@ -1,17 +1,17 @@
-// src/pages/EarnPage.tsx
-import './earn.scss';
+// src/pages/FrensPage.tsx
+import './frens.scss';
 import React from 'react';
-import { Earn } from "../components/Earn/Earn";
+import { Referral } from "../components/Referral/Referral";
 import PageComponent from '../components/PageComponent/PageComponent';
 import StarryNightBackground from '../components/Background/StarryNightBackground';
 
-const EarnPage: React.FC = () => {
+const FrensPage: React.FC = () => {
     return (
         <PageComponent>
-            <Earn />
+            <Referral />
             <StarryNightBackground maxStars={14} />
         </PageComponent>
     );
 }
 
-export default EarnPage;
+export default FrensPage;
