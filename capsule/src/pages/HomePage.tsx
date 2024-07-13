@@ -46,7 +46,7 @@ const SvgMatter = (
         type="rotate"
         from="0 140 140"
         to="360 140 140"
-        dur="4s"
+        dur="20s"
         repeatCount="indefinite"
       />
       <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
