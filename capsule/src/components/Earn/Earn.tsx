@@ -78,7 +78,7 @@ export const Earn = () => {
                             {task.name}
                         </div>
                         <div className='task-reward'>
-                            {task.reward}
+                            +{task.reward} P
                         </div>
                     </div>
                     {!task.active || task.ready ? null :
