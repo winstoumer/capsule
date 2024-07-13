@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useCurrentTime } from '../CurrentTimeProvider/CurrentTimeContext';
+import './activeMine.scss';
 
 interface TimeDisplayProps {
     nftEndDate: string | null;
