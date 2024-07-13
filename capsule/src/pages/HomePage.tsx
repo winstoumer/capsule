@@ -39,7 +39,6 @@ const SvgMatter = (
     </defs>
     <rect width="100%" height="100%" fill="transparent" />
     <circle cx="140" cy="140" r="70" fill="black" />
-    <circle cx="140" cy="140" r="34" fill="black" />
     <circle cx="140" cy="80" r="60" fill="url(#glowGradient)">
       <animateTransform
         attributeName="transform"
@@ -51,7 +50,7 @@ const SvgMatter = (
       />
       <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
     </circle>
-    <circle cx="140" cy="140" r="54" fill="black" />
+    <circle cx="140" cy="140" r="34" fill="black" />
   </svg>
 );
 
