@@ -7,7 +7,7 @@ import StarryNightBackground from '../components/Background/StarryNightBackgroun
 
 const FrensPage: React.FC = () => {
     return (
-        <PageComponent>
+        <PageComponent title='Frens'>
             <Referral />
             <StarryNightBackground maxStars={14} />
         </PageComponent>

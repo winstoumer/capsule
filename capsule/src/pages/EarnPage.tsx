@@ -7,7 +7,7 @@ import StarryNightBackground from '../components/Background/StarryNightBackgroun
 
 const EarnPage: React.FC = () => {
     return (
-        <PageComponent>
+        <PageComponent title='Task'>
             <Earn />
             <StarryNightBackground maxStars={14} />
         </PageComponent>
