@@ -12,6 +12,7 @@ import MiningPageWithProviders from './pages/MiningPageWithProviders';
 import GamePage from './pages/GamePage';
 import BoostGamePage from './pages/BoostGamePage';
 import FrensPage from './pages/FrensPage';
+import StarryNightBackground from './components/Background/StarryNightBackground';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -142,6 +143,7 @@ function App() {
         <Router>
           <AppWrapper />
         </Router>
+        <StarryNightBackground maxStars={14} />
       </CurrentTimeProvider>
     </TonConnectUIProvider>
   );

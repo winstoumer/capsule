@@ -6,7 +6,6 @@ import { useData } from '../components/DataProvider/DataContext';
 import Loading from '../components/Loading/Loading';
 import Balance from '../components/Balance/Balance';
 import SwipeableList from '../components/SwipeableList/SwipeableList';
-import StarryNightBackground from '../components/Background/StarryNightBackground';
 
 const SvgLogo = (
   <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
@@ -76,7 +75,6 @@ const HomePage: React.FC = () => {
         <SwipeableList items={items} />
         <div></div>
       </div>
-      <StarryNightBackground maxStars={14} />
     </PageComponent>
   );
 }
