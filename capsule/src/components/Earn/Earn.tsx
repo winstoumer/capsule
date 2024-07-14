@@ -19,6 +19,7 @@ export const Earn = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
     const [totalReward, setTotalReward] = useState<number>(0);
+    const [completedCount, setCompletedCount] = useState<number>(0);
 
     const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -88,10 +89,18 @@ export const Earn = () => {
         </span>
     );
 
+    useEffect(() => {
+        // Calculate completed tasks count
+        const completedTasks = tasks.filter(task => !task.active || task.ready);
+        setCompletedCount(completedTasks.length);
+    }, [tasks]);
+
     return (
         <>
             <EarnInfo totalReward={totalReward} icon="💸" />
-            <div className='list-count'>Completed: <span className='count-l'>0/6</span></div>
+            <div className='task-completion-count'>
+                Completed: <span className='completed-count'>{completedCount}/{tasks.length}</span>
+            </div>
             <div className='tasks'>
                 {tasks.map(task => (
                     <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
