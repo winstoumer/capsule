@@ -58,7 +58,7 @@ export const Referral = () => {
                     <span className='completed-count'>{invitedCount || 0}</span>
                 </div>
                 <div className='task-completion-count'>
-                    <Button text='Link' onClick={handleReferralLinkClick} />
+                    <Button text='Get link' onClick={handleReferralLinkClick} />
                 </div>
             </div>
         </div>
