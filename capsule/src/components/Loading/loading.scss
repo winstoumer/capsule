@@ -12,12 +12,11 @@
 .loading-center {
     width: 60px;
     height: 60px;
-    border: 0px solid #ffffff;
-    border-top: 2px solid #8d2efc;
+    border: 0px solid black;
+    border-top: 0.5px solid #8d2efc;
     background: #000000;
     border-radius: 50%;
     animation: spin 1.5s linear infinite;
-    box-shadow: 0 0 100px #200941;
 }
 
 @keyframes spin {
