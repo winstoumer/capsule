@@ -57,12 +57,17 @@
 
 .task-completion-count {
     margin-bottom: 12px;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 800;
+    display: flex;
+    gap: 6px;
+    justify-content: left;
+    width: 100%;
+    align-items: center;
 }
 
 .completed-count {
     color: #dddddd;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 600;
 }
