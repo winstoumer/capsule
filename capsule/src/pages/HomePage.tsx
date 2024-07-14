@@ -61,7 +61,7 @@ const HomePage: React.FC = () => {
   }
 
   const items = [
-    { logo: SvgLogo, buttonText: 'Open', link: '/' },
+    { logo: SvgLogo, buttonText: 'Open', link: '/mining' },
     { logo: SvgMatter, buttonText: 'Mining', link: '/mining' }
   ];
 
