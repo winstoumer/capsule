@@ -114,15 +114,55 @@ export const Earn = () => {
         </span>
     );
 
+    const CompletedSmall = () => (
+        <span className='arrow-button'>
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M5 12L10 17L19 8"
+                    stroke="#7d7d7d"
+                    strokeWidth="0.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+            </svg>
+        </span>
+    );
+
+    const EarnedSmall = () => (
+        <span className='arrow-button'>
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M12 4V20M9 8.5H14.5C15.33 8.5 16 9.17 16 10C16 10.83 15.33 11.5 14.5 11.5H9C8.17 11.5 7.5 12.17 7.5 13C7.5 13.83 8.17 14.5 9 14.5H15"
+                    stroke="#7d7d7d"
+                    strokeWidth="0.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+            </svg>
+        </span>
+    );
+
     return (
         <>
             <div className='task-completion-container'>
                 <div className='task-completion-count'>
-                    <Earned />
+                    <EarnedSmall />
                     <span className='completed-count'>{totalReward} P</span>
                 </div>
                 <div className='task-completion-count'>
-                    <Completed />
+                    <CompletedSmall />
                     <span className='completed-count'>{completedCount}/{tasks.length}</span>
                 </div>
             </div>
