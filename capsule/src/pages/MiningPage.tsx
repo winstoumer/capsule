@@ -2,7 +2,6 @@ import './mining.scss';
 import React from 'react';
 import PageComponent from '../components/PageComponent/PageComponent';
 import { ActiveTime } from "../components/ActiveTime/ActiveTime";
-import StarryNightBackground from '../components/Background/StarryNightBackground';
 
 const SvgMatter = () => (
     <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
@@ -38,7 +37,6 @@ const MiningPage: React.FC = () => {
                 <SvgMatter />
                 <ActiveTime />
             </div>
-            <StarryNightBackground maxStars={14} />
         </PageComponent>
     );
 }

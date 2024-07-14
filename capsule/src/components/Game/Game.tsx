@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
 import { Link } from 'react-router-dom';
-import StarryNightBackground from '../Background/StarryNightBackground';
 import Button from '../Default/Button';
 
 interface GameProps {
@@ -229,7 +228,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 </button>
                             </div>
                         </div>
-                        <StarryNightBackground maxStars={14} />
                     </>
                 )}
                 {!gameStarted && showClaimButton && (
@@ -244,7 +242,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 <Button text="Buy x2" custom={true} onClick={handleClaimClick} />
                             </div>
                         </div>
-                        <StarryNightBackground maxStars={24} falling={true} />
                     </>
                 )}
             </div>
