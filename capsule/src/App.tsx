@@ -17,6 +17,19 @@ const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const handleClick = () => {
+    const contentElement = document.querySelector('.content');
+  
+    if (contentElement) {
+      contentElement.classList.add('slideDown');
+      setTimeout(() => {
+        navigate(-1);
+      }, 200);
+    } else {
+      navigate(-1);
+    }
+  };
+
   useEffect(() => {
     const scriptId = 'telegram-web-app-script';
     const existingScript = document.getElementById(scriptId);
@@ -33,7 +46,7 @@ const AppWrapper: React.FC = () => {
 
           const backButton = window.Telegram.WebApp.BackButton;
           backButton.onClick(() => {
-            navigate(-1);
+            handleClick();
           });
 
           if (location.pathname.startsWith('/mint/')) {
