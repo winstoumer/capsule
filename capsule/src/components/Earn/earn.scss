@@ -61,9 +61,12 @@
     font-weight: 800;
     display: flex;
     gap: 6px;
-    justify-content: left;
+    justify-content: space-between;
     width: 100%;
     align-items: center;
+    border-radius: 40px;
+    padding: 4px 14px;
+    border: 1px solid #252525;
 }
 
 .completed-count {
