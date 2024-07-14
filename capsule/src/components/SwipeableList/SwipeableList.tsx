@@ -94,7 +94,16 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
     };
 
     const handleClick = (link: string) => {
-        navigate(link);
+        const contentElement = document.querySelector('.content');
+
+        if (contentElement) {
+            contentElement.classList.add('slideDown');
+            setTimeout(() => {
+                navigate(link);
+            }, 200);
+        } else {
+            navigate(link);
+        }
     };
 
     return (
