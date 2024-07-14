@@ -13,7 +13,7 @@ export const Navigation: React.FC = () => {
       contentElement.classList.add('slideDown');
       setTimeout(() => {
         navigate(path);
-      }, 800); // Задержка должна соответствовать длительности анимации
+      }, 400); // Задержка должна соответствовать длительности анимации
     } else {
       navigate(path);
     }
@@ -28,7 +28,7 @@ export const Navigation: React.FC = () => {
         <div className="nav-b" onClick={() => handleNavigation('/frens')}>
           Frens
         </div>
-        <div className="nav-b color-nft" onClick={() => handleNavigation('/collections')}>
+        <div className="nav-b" onClick={() => handleNavigation('/collections')}>
           Nft
         </div>
       </div>
