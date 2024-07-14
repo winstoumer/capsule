@@ -91,6 +91,7 @@ export const Earn = () => {
     return (
         <>
             <EarnInfo totalReward={totalReward} icon="💸" />
+            <div className='list-count'>Completed: <span className='count-l'>0/6</span></div>
             <div className='tasks'>
                 {tasks.map(task => (
                     <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
