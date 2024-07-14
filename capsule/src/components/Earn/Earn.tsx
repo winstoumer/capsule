@@ -85,7 +85,7 @@ export const Earn = () => {
             >
                 <path
                     d="M5 12L10 17L19 8"
-                    stroke="white"
+                    stroke="#7d7d7d"
                     strokeWidth="0.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
@@ -105,7 +105,7 @@ export const Earn = () => {
             >
                 <path
                     d="M12 4V20M9 8.5H14.5C15.33 8.5 16 9.17 16 10C16 10.83 15.33 11.5 14.5 11.5H9C8.17 11.5 7.5 12.17 7.5 13C7.5 13.83 8.17 14.5 9 14.5H15"
-                    stroke="white"
+                    stroke="#7d7d7d"
                     strokeWidth="0.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
