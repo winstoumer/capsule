@@ -54,7 +54,7 @@ export const Referral = () => {
         <div className='referral-container'>
             <div className='task-completion-container'>
                 <div className='task-completion-count'>
-                    🤝:
+                    Frens:
                     <span className='completed-count'>{invitedCount || 0}</span>
                 </div>
                 <div className='task-completion-count'>
