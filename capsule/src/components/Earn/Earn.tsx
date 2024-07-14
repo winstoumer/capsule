@@ -17,7 +17,7 @@ export const Earn = () => {
     const [userData, setUserData] = useState<any>(null);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
-    const [totalReward, setTotalReward] = useState<number>(0);
+    //const [totalReward, setTotalReward] = useState<number>(0);
     const [completedCount, setCompletedCount] = useState<number>(0);
 
     const apiUrl = import.meta.env.VITE_API_URL;
@@ -34,13 +34,13 @@ export const Earn = () => {
         }
     }, [userData]);
 
-    useEffect(() => {
+    //useEffect(() => {
         // Calculate the total reward of completed tasks
-        const completedReward = tasks
-            .filter(task => !task.active || task.ready)
-            .reduce((sum, task) => sum + parseFloat(task.reward), 0);
-        setTotalReward(completedReward);
-    }, [tasks]);
+        //const completedReward = tasks
+            //.filter(task => !task.active || task.ready)
+            //.reduce((sum, task) => sum + parseFloat(task.reward), 0);
+        //setTotalReward(completedReward);
+    //}, [tasks]);
 
     useEffect(() => {
         // Calculate completed tasks count
@@ -94,55 +94,11 @@ export const Earn = () => {
         </span>
     );
 
-    const CompletedSmall = () => (
-        <span className='arrow-button'>
-            <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M5 12L10 17L19 8"
-                    stroke="#7d7d7d"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                />
-            </svg>
-        </span>
-    );
-
-    const EarnedSmall = () => (
-        <span className='arrow-button'>
-            <svg
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M12 4V20M9 8.5H14.5C15.33 8.5 16 9.17 16 10C16 10.83 15.33 11.5 14.5 11.5H9C8.17 11.5 7.5 12.17 7.5 13C7.5 13.83 8.17 14.5 9 14.5H15"
-                    stroke="#7d7d7d"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                />
-            </svg>
-        </span>
-    );
-
     return (
         <>
             <div className='task-completion-container'>
                 <div className='task-completion-count'>
-                    <EarnedSmall />
-                    <span className='completed-count'>{totalReward} P</span>
-                </div>
-                <div className='task-completion-count'>
-                    <CompletedSmall />
+                    Completed:
                     <span className='completed-count'>{completedCount}/{tasks.length}</span>
                 </div>
             </div>
