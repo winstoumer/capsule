@@ -43,6 +43,12 @@ export const Earn = () => {
         setTotalReward(completedReward);
     }, [tasks]);
 
+    useEffect(() => {
+        // Calculate completed tasks count
+        const completedTasks = tasks.filter(task => !task.active || task.ready);
+        setCompletedCount(completedTasks.length);
+    }, [tasks]);
+
     const fetchTasks = async (telegramUserId: string) => {
         try {
             const response = await axios.get(`${apiUrl}/api/task/${telegramUserId}`);
@@ -88,12 +94,6 @@ export const Earn = () => {
             </svg>
         </span>
     );
-
-    useEffect(() => {
-        // Calculate completed tasks count
-        const completedTasks = tasks.filter(task => !task.active || task.ready);
-        setCompletedCount(completedTasks.length);
-    }, [tasks]);
 
     return (
         <>
