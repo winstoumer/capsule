@@ -34,7 +34,7 @@ const nextArrow = (
   >
     <path
       d="M9 5L16 12L9 19"
-      stroke="white"
+      stroke="#CF00F8"
       strokeWidth="0.5"
       strokeLinecap="round"
       strokeLinejoin="round"
