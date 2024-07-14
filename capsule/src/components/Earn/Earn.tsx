@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
-import EarnInfo from '../EarnInfo/EarnInfo';
 import ButtonArrow from '../Default/ButtonArrow';
 //import Loading from '../Loading/Loading';
 
