@@ -59,7 +59,7 @@
     font-size: 20px;
     font-weight: 800;
     display: flex;
-    gap: 6px;
+    gap: 20px;
     justify-content: space-between;
     width: 100%;
     align-items: center;
@@ -68,7 +68,9 @@
 }
 
 .task-completion-count {
-
+    display: flex;
+    gap: 6px;
+    align-items: center;
 }
 
 .completed-count {
