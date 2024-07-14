@@ -36,7 +36,6 @@
   align-items: center;
   justify-content: center;
   border: 0;
-  border: 1px solid #430050;
   border-radius: 100%;
   cursor: pointer;
 
@@ -52,4 +51,12 @@
     width: 24px;
     height: 24px;
   }
+}
+
+.border-button {
+  border: 1px solid #131213;
+}
+
+.custom-border-button {
+  border: 1px solid #430050;
 }

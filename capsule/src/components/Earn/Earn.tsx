@@ -76,7 +76,7 @@ export const Earn = () => {
     }
 
     const Completed = () => (
-        <span className='arrow-button'>
+        <span className='arrow-button border-button'>
             <svg
                 width="24"
                 height="24"
