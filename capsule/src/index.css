@@ -112,7 +112,7 @@ body {
 }
 
 .slideDown {
-  animation: slideDown 0.4s forwards;
+  animation: slideDown 0.1s forwards;
 }
 
 @keyframes slideDown {
