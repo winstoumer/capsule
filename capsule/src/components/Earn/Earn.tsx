@@ -79,7 +79,7 @@ export const Earn = () => {
             >
                 <path
                     d="M5 12L10 17L19 8"
-                    stroke="white"
+                    stroke="#7d7d7d"
                     strokeWidth="0.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
