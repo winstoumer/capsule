@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
 import ButtonArrow from '../Default/ButtonArrow';
+import List from '../List/List';
 //import Loading from '../Loading/Loading';
 
 interface Task {
@@ -35,11 +36,11 @@ export const Earn = () => {
     }, [userData]);
 
     //useEffect(() => {
-        // Calculate the total reward of completed tasks
-        //const completedReward = tasks
-            //.filter(task => !task.active || task.ready)
-            //.reduce((sum, task) => sum + parseFloat(task.reward), 0);
-        //setTotalReward(completedReward);
+    // Calculate the total reward of completed tasks
+    //const completedReward = tasks
+    //.filter(task => !task.active || task.ready)
+    //.reduce((sum, task) => sum + parseFloat(task.reward), 0);
+    //setTotalReward(completedReward);
     //}, [tasks]);
 
     useEffect(() => {
@@ -102,7 +103,7 @@ export const Earn = () => {
                     <span className='completed-count'>{completedCount}/{tasks.length}</span>
                 </div>
             </div>
-            <div className='tasks'>
+            <List>
                 {tasks.map(task => (
                     <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
                         <div className='task-info'>
@@ -119,7 +120,7 @@ export const Earn = () => {
                         }
                     </div>
                 ))}
-            </div>
+            </List>
         </>
     );
 };

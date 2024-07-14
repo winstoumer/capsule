@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './referral.scss';
 //import Loading from '../Loading/Loading';
-import EarnInfo from '../EarnInfo/EarnInfo';
 import Button from '../Default/Button';
 
 export const Referral = () => {
@@ -53,8 +52,15 @@ export const Referral = () => {
 
     return (
         <div className='referral-container'>
-            <EarnInfo totalReward={invitedCount || 0} icon="🤝" />
-            <Button text='Copy invitation link' onClick={handleReferralLinkClick} />
+            <div className='task-completion-container'>
+                <div className='task-completion-count'>
+                    🤝:
+                    <span className='completed-count'>{invitedCount || 0}</span>
+                </div>
+                <div className='task-completion-count'>
+                    <Button text='Copy link' onClick={handleReferralLinkClick} />
+                </div>
+            </div>
         </div>
     );
 };
