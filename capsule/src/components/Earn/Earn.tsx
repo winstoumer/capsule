@@ -104,9 +104,7 @@ export const Earn = () => {
                         </div>
                         {!task.active || task.ready ?
                             <Completed /> :
-                            <div className='task-start'>
-                                <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
-                            </div>
+                            <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
                         }
                     </div>
                 ))}
