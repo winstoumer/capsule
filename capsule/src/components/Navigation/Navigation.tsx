@@ -13,7 +13,7 @@ export const Navigation: React.FC = () => {
       contentElement.classList.add('slideDown');
       setTimeout(() => {
         navigate(path);
-      }, 100); // Задержка должна соответствовать длительности анимации
+      }, 200); // Задержка должна соответствовать длительности анимации
     } else {
       navigate(path);
     }
