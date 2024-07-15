@@ -146,7 +146,7 @@ function App() {
             universalLink: "https://wallet.ton.org/ton-connect",
             jsBridgeKey: "tonwallet",
             bridgeUrl: "https://bridge.tonapi.io/bridge",
-            platforms: ["chrome", "android"]
+            platforms: ["chrome", "android", "ios"]
           },
           {
             appName: "nicegramWallet",
