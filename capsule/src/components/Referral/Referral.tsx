@@ -74,7 +74,7 @@ export const Referral = () => {
                             <stop offset="0%" style={{ stopColor: '#8d2efc', stopOpacity: 1 }}>
                                 <animate attributeName="stop-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
                             </stop>
-                            <stop offset="100%" style={{ stopColor: '#000000', stopOpacity: 1 }} />
+                            <stop offset="100%" style={{ stopColor: '#1c011f', stopOpacity: 1 }} />
                         </radialGradient>
                         <radialGradient id="meteorGlow1" cx="50%" cy="50%" r="50%">
                             <stop offset="0%" style={{ stopColor: '#00E4FF', stopOpacity: 1 }}>
