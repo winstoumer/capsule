@@ -14,6 +14,7 @@ type TelegramUserData = {
 export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [copyStatus, setCopyStatus] = useState('Copy address');
 
     const wallet = useTonWallet();
     const [tonConnectUi] = useTonConnectUI();
@@ -47,6 +48,22 @@ export const Header: React.FC = () => {
 
     const handleAddressClick = () => {
         setIsModalOpen(true);
+    };
+
+    const handleCopyAddress = () => {
+        if (userFriendlyAddress) {
+            navigator.clipboard.writeText(userFriendlyAddress)
+                .then(() => {
+                    setCopyStatus('Copied.');
+                    setTimeout(() => {
+                        setCopyStatus('Copy address');
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy address: ', err);
+                    // Можно добавить здесь обратную связь или уведомление об ошибке
+                });
+        }
     };
 
     const AddressComponent = () => {
@@ -94,7 +111,7 @@ export const Header: React.FC = () => {
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className='list-modal'>
                     <div className='item-modal'>
-                        <div className='copy'>Copy address</div>
+                        <div className='copy' onClick={handleCopyAddress}>{copyStatus}</div>
                     </div>
                     <div className='item-modal'>
                         <div className='disconnect' onClick={handleDisconnect}>Disconnect</div>
