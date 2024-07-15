@@ -64,7 +64,7 @@ export const Referral = () => {
                 </div>
             </div>
             <div className='referral-info'>
-                <svg width="100" height="100" viewBox="0 0 100 100">
+                <svg width="140" height="140" viewBox="0 0 140 140">
                     <circle id="moon" cx="50" cy="50" r="30" fill="#000000" />
                     <circle cx="50" cy="50" r="30" fill="url(#purpleGlow)">
                         <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite" />
