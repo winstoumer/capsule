@@ -56,7 +56,7 @@ const SvgMatter = (
       <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
     </circle>
     <circle cx="140" cy="140" r="40" fill="black" />
-    <text x="80" y="145" fill="white" opacity="1" font-size="58" font-weight="600">0.01</text>
+    <text x="86" y="145" fill="white" opacity="1" font-size="52" font-weight="600">0.01</text>
     <text x="108" y="180" fill="#00CDFF" opacity="1" font-size="28" font-weight="600">59m</text>
   </svg>
 );
