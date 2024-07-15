@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTonAddress, useTonWallet, useTonConnectUI } from "@tonconnect/ui-react";
 import './header.scss';
 import Button from '../Default/Button';
@@ -14,8 +14,6 @@ type TelegramUserData = {
 export const Header: React.FC = () => {
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalPosition, setModalPosition] = useState({ top: 0, left: 0, right: 0 });
-    const addressRef = useRef<HTMLDivElement>(null);
 
     const wallet = useTonWallet();
     const [tonConnectUi] = useTonConnectUI();
@@ -48,10 +46,6 @@ export const Header: React.FC = () => {
     };
 
     const handleAddressClick = () => {
-        if (addressRef.current) {
-            const rect = addressRef.current.getBoundingClientRect();
-            setModalPosition({ top: rect.bottom + window.scrollY, left: rect.left + window.scrollX, right: rect.right + window.scrollX });
-        }
         setIsModalOpen(true);
     };
 
@@ -62,7 +56,7 @@ export const Header: React.FC = () => {
 
         return (
             userFriendlyAddress && (
-                <div className='my-address' onClick={handleAddressClick} ref={addressRef}>
+                <div className='my-address' onClick={handleAddressClick}>
                     <span>{combinedAddress}</span>
                     <ArrowDown />
                 </div>
@@ -96,7 +90,7 @@ export const Header: React.FC = () => {
                     </React.Fragment>
                 </div>
             </div>
-            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} position={modalPosition}>
+            <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className='list-modal'>
                     <div className=''>
                         <div className=''>

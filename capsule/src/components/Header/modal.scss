@@ -16,10 +16,12 @@
     background: #191219bf;
     backdrop-filter: blur(20px);
     padding: 20px;
-    border-radius: 26px;
-    position: absolute;
-    width: 300px;
-    pointer-events: auto;
+    border-radius: 26px 26px 0 0;
+    width: 100%;
+    max-width: 100%;
+    pointer-events: auto; /* Allow interaction with the modal */
+    position: relative;
+    bottom: 0;
 }
 
 .modal-close {
