@@ -45,36 +45,6 @@ export const Header: React.FC = () => {
         );
     };
 
-    const Copy = () => {
-        return (
-            <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <rect x="4" y="4" width="14" height="14" rx="4" fill="transparent" stroke="white" stroke-width="0.5" />
-                <rect x="6" y="6" width="14" height="14" rx="4" fill="white" stroke="white" stroke-width="0.5" />
-            </svg>
-        );
-    };
-
-    const Disconnect = () => {
-        return (
-            <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <rect x="4" y="4" width="14" height="16" rx="4" fill="transparent" stroke="white" stroke-width="0.5" />
-                <path d="M20 12L12 12M12 12L16 8M12 12L16 16" stroke="white" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-        );
-    }
-
     const handleAddressClick = () => {
         setIsModalOpen(true);
     };
@@ -124,12 +94,10 @@ export const Header: React.FC = () => {
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className='list-modal'>
                     <div className='item-modal'>
-                        <Copy />
-                        <div className=''>Copy address</div>
+                        <div className='copy'>Copy address</div>
                     </div>
                     <div className='item-modal'>
-                        <Disconnect />
-                        <div className='' onClick={handleDisconnect}>Disconnect</div>
+                        <div className='disconnect' onClick={handleDisconnect}>Disconnect</div>
                     </div>
                 </div>
             </Modal>
