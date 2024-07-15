@@ -25,17 +25,40 @@ export const Header: React.FC = () => {
 
     const userFriendlyAddress = useTonAddress();
 
+    const ArrowDown = () => {
+        return (
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M5 9L12 16L19 9"
+                    stroke="#CF00F8"
+                    strokeWidth="0.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                />
+            </svg>
+        );
+    };
+
     const AddressComponent = () => {
-    
+
         const firstFour = userFriendlyAddress.slice(0, 4);
         const lastFour = userFriendlyAddress.slice(-4);
-    
+
         const combinedAddress = `${firstFour}...${lastFour}`;
-    
+
         return (
             userFriendlyAddress && (
                 <div className='my-address'>
                     <span>{combinedAddress}</span>
+                    <span>
+                        <ArrowDown />
+                    </span>
                 </div>
             )
         );
