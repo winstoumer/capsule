@@ -51,16 +51,26 @@ export const Referral = () => {
     };
 
     return (
-        <div className='referral-container'>
-            <div className='task-completion-container'>
-                <div className='task-completion-count'>
-                    Frens:
-                    <span className='completed-count'>{invitedCount || 0}</span>
-                </div>
-                <div className='task-completion-count'>
-                    <Button text='Get link' onClick={handleReferralLinkClick} />
+        <>
+            <div className='referral-container'>
+                <div className='task-completion-container'>
+                    <div className='task-completion-count'>
+                        Frens:
+                        <span className='completed-count'>{invitedCount || 0}</span>
+                    </div>
+                    <div className='task-completion-count'>
+                        <Button text='Get link' onClick={handleReferralLinkClick} />
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className='referral-info'>
+                <div className='referral-text'>
+                    For each invitee you receive 50 P.
+                </div>
+                <div className=''>
+                    <Button text='Copy invitation link' custom={true} onClick={handleReferralLinkClick} />
+                </div>
+            </div>
+        </>
     );
 };
