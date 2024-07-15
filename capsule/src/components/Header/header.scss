@@ -49,3 +49,17 @@ header {
     background: #191219bf;
     border-radius: 20px;
 }
+
+
+.list-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+    .list-modal div {
+        padding: 10px 0;
+        border-bottom: 0.5px solid gray;
+    }

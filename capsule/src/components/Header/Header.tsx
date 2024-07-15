@@ -70,6 +70,10 @@ export const Header: React.FC = () => {
         );
     }
 
+    const handleDisconnect = async () => {
+        await tonConnectUi.disconnect();
+    };
+
     return (
         <header>
             <div className='header-width'>
@@ -93,9 +97,17 @@ export const Header: React.FC = () => {
                 </div>
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} position={modalPosition}>
-                <div>
-                    <h2>Wallet Address</h2>
-                    <p>{userFriendlyAddress}</p>
+                <div className='list-modal'>
+                    <div className=''>
+                        <div className=''>
+                        </div>
+                        <div className=''>Copy address</div>
+                    </div>
+                    <div className=''>
+                        <div className=''>
+                        </div>
+                        <div className='' onClick={handleDisconnect}>Disconnect</div>
+                    </div>
                 </div>
             </Modal>
         </header>

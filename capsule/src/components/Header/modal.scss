@@ -13,9 +13,10 @@
 }
 
 .modal-content {
-    background: white;
+    background: #191219bf;
+    backdrop-filter: blur(20px);
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 26px;
     position: absolute;
     width: 300px;
     pointer-events: auto;
