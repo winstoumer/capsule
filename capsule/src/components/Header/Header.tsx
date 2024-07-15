@@ -92,12 +92,12 @@ export const Header: React.FC = () => {
             </div>
             <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
                 <div className='list-modal'>
-                    <div className=''>
+                    <div className='item-modal'>
                         <div className=''>
                         </div>
                         <div className=''>Copy address</div>
                     </div>
-                    <div className=''>
+                    <div className='item-modal'>
                         <div className=''>
                         </div>
                         <div className='' onClick={handleDisconnect}>Disconnect</div>
