@@ -50,7 +50,7 @@ export const Header: React.FC = () => {
     };
 
     const AddressComponent = () => {
-        const firstFour = userFriendlyAddress.slice(0, 5);
+        const firstFour = userFriendlyAddress.slice(0, 4);
         const lastFour = userFriendlyAddress.slice(-4);
         const combinedAddress = `${firstFour}...${lastFour}`;
 
