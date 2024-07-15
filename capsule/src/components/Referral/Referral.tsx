@@ -64,9 +64,6 @@ export const Referral = () => {
                 </div>
             </div>
             <div className='referral-info'>
-                <div className='referral-text'>
-                    For each invitee you receive 50 P.
-                </div>
                 <svg width="100" height="100" viewBox="0 0 100 100">
                     <circle id="moon" cx="50" cy="50" r="30" fill="#000000" />
                     <circle cx="50" cy="50" r="30" fill="url(#purpleGlow)">
@@ -126,6 +123,9 @@ export const Referral = () => {
                         <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="7s" repeatCount="indefinite" />
                     </circle>
                 </svg>
+                <div className='referral-text'>
+                    For each invitee you receive 50 P.
+                </div>
                 <div className=''>
                     <Button text='Copy invitation link' custom={true} onClick={handleReferralLinkClick} />
                 </div>
