@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
             >
                 <path
                     d="M5 9L12 16L19 9"
-                    stroke="#CF00F8"
+                    stroke="#430050"
                     strokeWidth="0.5"
                     strokeLinecap="round"
                     strokeLinejoin="round"
