@@ -65,5 +65,9 @@ header {
 }
 
 .item-modal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
     padding: 8px 0;
 }
