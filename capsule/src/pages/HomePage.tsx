@@ -24,6 +24,11 @@ const SvgLogo = (
       <animateTransform attributeName="transform" type="rotate" dur="4s" from="360 100 140" to="360 100 140" repeatCount="indefinite" />
     </circle>
     <circle cx="140" cy="140" r="46" fill="black" />
+    <text x="50" y="50" fill="#CF00F8" font-size="36" font-weight="600">2</text>
+    <text x="120" y="60" fill="#CF00F8" font-size="36" font-weight="600">2</text>
+    <text x="80" y="130" fill="#CF00F8" font-size="36" font-weight="600">2</text>
+    <text x="190" y="130" fill="#CF00F8" font-size="36" font-weight="600">2</text>
+    <text x="160" y="70" fill="#CF00F8" font-size="36" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text>
   </svg>
 );
 
