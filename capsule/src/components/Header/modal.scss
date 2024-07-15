@@ -13,13 +13,12 @@
 }
 
 .modal-content-a {
-    background: #191219f6;
-    padding: 20px;
+    background: #191219;
+    padding: 8px 20px;
     border-radius: 20px;
-    pointer-events: auto; /* Allow interaction with the modal */
+    pointer-events: auto;
     position: fixed;
     top: 60px;
-    left: 20px;
     right: 20px;
 }
 
