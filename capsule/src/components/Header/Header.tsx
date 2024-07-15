@@ -66,6 +66,7 @@ export const Header: React.FC = () => {
 
     const handleDisconnect = async () => {
         await tonConnectUi.disconnect();
+        setIsModalOpen(false);
     };
 
     return (
