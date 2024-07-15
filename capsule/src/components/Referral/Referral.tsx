@@ -64,6 +64,65 @@ export const Referral = () => {
                 </div>
             </div>
             <div className='referral-info'>
+                <svg width="100" height="100" viewBox="0 0 100 100">
+                    <circle id="moon" cx="50" cy="50" r="30" fill="#000000" />
+                    <circle cx="50" cy="50" r="30" fill="url(#purpleGlow)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="10s" repeatCount="indefinite" />
+                    </circle>
+                    <defs>
+                        <radialGradient id="purpleGlow" cx="70%" cy="10%" r="70%" fx="70%" fy="10%">
+                            <stop offset="0%" style={{ stopColor: '#8d2efc', stopOpacity: 1 }}>
+                                <animate attributeName="stop-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
+                            </stop>
+                            <stop offset="100%" style={{ stopColor: '#000000', stopOpacity: 1 }} />
+                        </radialGradient>
+                        <radialGradient id="meteorGlow1" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style={{ stopColor: '#00E4FF', stopOpacity: 1 }}>
+                                <animate attributeName="stop-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
+                            </stop>
+                            <stop offset="100%" style={{ stopColor: '#00000000', stopOpacity: 1 }} />
+                        </radialGradient>
+                        <radialGradient id="meteorGlow2" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style={{ stopColor: '#00E4FF', stopOpacity: 1 }}>
+                                <animate attributeName="stop-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
+                            </stop>
+                            <stop offset="100%" style={{ stopColor: '#00000000', stopOpacity: 1 }} />
+                        </radialGradient>
+                        <radialGradient id="meteorGlow3" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style={{ stopColor: '#7400FF', stopOpacity: 1 }}>
+                                <animate attributeName="stop-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
+                            </stop>
+                            <stop offset="100%" style={{ stopColor: '#00000000', stopOpacity: 1 }} />
+                        </radialGradient>
+                        <radialGradient id="meteorGlow4" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style={{ stopColor: '#1E90FF', stopOpacity: 1 }}>
+                                <animate attributeName="stop-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
+                            </stop>
+                            <stop offset="100%" style={{ stopColor: '#00000000', stopOpacity: 1 }} />
+                        </radialGradient>
+                        <radialGradient id="meteorGlow5" cx="50%" cy="50%" r="50%">
+                            <stop offset="0%" style={{ stopColor: '#ADFF2F', stopOpacity: 1 }}>
+                                <animate attributeName="stop-opacity" values="1;0.2;1" dur="3s" repeatCount="indefinite" />
+                            </stop>
+                            <stop offset="100%" style={{ stopColor: '#00000000', stopOpacity: 1 }} />
+                        </radialGradient>
+                    </defs>
+                    <circle cx="80" cy="50" r="13" fill="url(#meteorGlow1)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="6s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="70" cy="50" r="4" fill="url(#meteorGlow2)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="4s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="90" cy="50" r="10" fill="url(#meteorGlow3)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="60" cy="50" r="4" fill="url(#meteorGlow4)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="5s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="75" cy="50" r="20" fill="url(#meteorGlow5)">
+                        <animateTransform attributeName="transform" attributeType="XML" type="rotate" from="0 50 50" to="360 50 50" dur="7s" repeatCount="indefinite" />
+                    </circle>
+                </svg>
                 <div className='referral-text'>
                     For each invitee you receive 50 P.
                 </div>
