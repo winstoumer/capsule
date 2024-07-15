@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { TonConnectButton, useTonWallet, useTonConnectUI } from "@tonconnect/ui-react";
+import { useTonAddress, useTonWallet, useTonConnectUI } from "@tonconnect/ui-react";
 import './header.scss';
 import Button from '../Default/Button';
 
@@ -23,6 +23,20 @@ export const Header: React.FC = () => {
         }
     }, []);
 
+    const userFriendlyAddress = useTonAddress();
+    const rawAddress = useTonAddress(false);
+
+    const AddressComponent = () => {
+        return (
+            userFriendlyAddress && (
+                <div className='my-address'>
+                    <span>{userFriendlyAddress}</span>
+                    <span>{rawAddress}</span>
+                </div>
+            )
+        );
+    }
+
     return (
         <header>
             <div className='header-width'>
@@ -36,7 +50,7 @@ export const Header: React.FC = () => {
                 <div>
                     <React.Fragment>
                         {wallet ? (
-                            <TonConnectButton />
+                            <AddressComponent />
                         ) : (
                             <Button text='Connect wallet' custom={true} onClick={() => tonConnectUi.openModal()} />
                         )}

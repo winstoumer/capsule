@@ -31,3 +31,11 @@ header {
     padding-right: 16px;
     white-space: nowrap;
 }
+
+.my-address {
+    font-size: 18px;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
