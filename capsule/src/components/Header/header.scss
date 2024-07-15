@@ -33,6 +33,7 @@ header {
 }
 
 .my-address {
+    position: relative;
     color: #ffffff;
     font-size: 16px;
     font-weight: 500;
@@ -48,6 +49,7 @@ header {
     height: 40px;
     background: #191219bf;
     border-radius: 20px;
+    z-index: 101;
 }
 
 
