@@ -24,14 +24,18 @@ export const Header: React.FC = () => {
     }, []);
 
     const userFriendlyAddress = useTonAddress();
-    const rawAddress = useTonAddress(false);
 
     const AddressComponent = () => {
+    
+        const firstFour = userFriendlyAddress.slice(0, 4);
+        const lastFour = userFriendlyAddress.slice(-4);
+    
+        const combinedAddress = `${firstFour}...${lastFour}`;
+    
         return (
             userFriendlyAddress && (
                 <div className='my-address'>
-                    <span>{userFriendlyAddress}</span>
-                    <span>{rawAddress}</span>
+                    <span>{combinedAddress}</span>
                 </div>
             )
         );
