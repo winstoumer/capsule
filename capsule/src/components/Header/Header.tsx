@@ -56,9 +56,7 @@ export const Header: React.FC = () => {
             userFriendlyAddress && (
                 <div className='my-address'>
                     <span>{combinedAddress}</span>
-                    <span>
-                        <ArrowDown />
-                    </span>
+                    <ArrowDown />
                 </div>
             )
         );
