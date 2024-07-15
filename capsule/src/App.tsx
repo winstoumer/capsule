@@ -134,7 +134,7 @@ const AppWrapper: React.FC = () => {
 function App() {
   return (
     <TonConnectUIProvider
-      manifestUrl="https://panicky-patti-webapp-8887f7cc.koyeb.app/api/ton-json/tonconnect-manifest.json"
+      manifestUrl="https://capsule-server.onrender.com/api/ton-json/tonconnect-manifest.json"
       actionsConfiguration={{
         twaReturnUrl: 'https://t.me/bigmatter_bot/app',
       }}
