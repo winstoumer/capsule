@@ -71,10 +71,10 @@ export const Referral = () => {
                     </circle>
                     <defs>
                         <radialGradient id="purpleGlow" cx="70%" cy="10%" r="70%" fx="70%" fy="10%">
-                            <stop offset="0%" style={{ stopColor: '#8d2efc', stopOpacity: 1 }}>
+                            <stop offset="0%" style={{ stopColor: '#210622', stopOpacity: 1 }}>
                                 <animate attributeName="stop-opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
                             </stop>
-                            <stop offset="100%" style={{ stopColor: '#1c011f', stopOpacity: 1 }} />
+                            <stop offset="100%" style={{ stopColor: '#012027', stopOpacity: 1 }} />
                         </radialGradient>
                         <radialGradient id="meteorGlow1" cx="50%" cy="50%" r="50%">
                             <stop offset="0%" style={{ stopColor: '#00E4FF', stopOpacity: 1 }}>
