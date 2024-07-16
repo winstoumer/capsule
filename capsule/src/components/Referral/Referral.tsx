@@ -124,10 +124,10 @@ export const Referral = () => {
                     </circle>
                 </svg>
                 <div className='referral-text'>
-                    For each invitee you receive 50 P.
+                    For each invitee +50 P.
                 </div>
                 <div className=''>
-                    <Button text='Copy invitation link' custom={true} onClick={handleReferralLinkClick} />
+                    <Button text='Copy invitation link' onClick={handleReferralLinkClick} />
                 </div>
             </div>
         </>
