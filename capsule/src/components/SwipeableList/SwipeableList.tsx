@@ -108,14 +108,6 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
 
     return (
         <div className="swipeable-list-container">
-            <div className="indicators">
-                {items.map((_, index) => (
-                    <div
-                        key={index}
-                        className={`indicator ${index === activeIndex ? 'active-indicator' : ''}`}
-                    />
-                ))}
-            </div>
             <div
                 className="swipeable-list"
                 onTouchStart={handleTouchStart}
@@ -163,6 +155,14 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                 </div>
                 <div className="arrow arrow-right" onClick={slideNext}>
                     <NextArrow />
+                </div>
+                <div className="indicators">
+                    {items.map((_, index) => (
+                        <div
+                            key={index}
+                            className={`indicator ${index === activeIndex ? 'active-indicator' : ''}`}
+                        />
+                    ))}
                 </div>
             </div>
         </div>
