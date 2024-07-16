@@ -37,11 +37,15 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+    position: absolute;
+    bottom: 46px;
+    left: 0;
+    right: 0;
 }
 
 .indicator {
-    width: 20px;
-    height: 2px;
+    width: 5px;
+    height: 5px;
     border-radius: 10px;
     background-color: #2e3238;
 }
