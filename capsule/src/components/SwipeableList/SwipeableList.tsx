@@ -43,15 +43,15 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
         if (startX !== null && containerRef.current) {
             const touch = e.touches[0];
             const distX = touch.clientX - startX;
-            currentX = Math.min(0, Math.max(-slideWidth, distX));
+            currentX = Math.max(-slideWidth, Math.min(0, distX));
             containerRef.current.style.transform = `translateX(${currentX}px)`;
             deltaX = Math.sign(distX);
-
+    
             if (Math.abs(distX) > Math.abs(touch.clientY - startX!)) {
                 e.preventDefault();
             }
         }
-    };
+    };       
 
     const handleTouchEnd = () => {
         if (deltaX < 0) {
