@@ -29,3 +29,24 @@
         height: 24px;
     }
 }
+
+.indicators {
+    display: flex;
+    flex-direction: row;
+    gap: 14px;
+    justify-content: center;
+    align-items: center;
+}
+
+.indicator {
+    width: 10px;
+    height: 10px;
+    border-radius: 10px;
+    background-color: black;
+    border: 0.5px solid #1d1d1d;
+}
+
+.active-indicator {
+    background-color: #00CDFF;
+    border-radius: 0.5px solid transparent;
+}
