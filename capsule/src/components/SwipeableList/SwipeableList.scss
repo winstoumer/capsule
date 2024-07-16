@@ -36,13 +36,14 @@
     gap: 14px;
     justify-content: center;
     align-items: center;
+    padding: 10px;
 }
 
 .indicator {
     width: 20px;
     height: 2px;
     border-radius: 10px;
-    background-color: 2e3238;
+    background-color: #2e3238;
 }
 
 .active-indicator {
