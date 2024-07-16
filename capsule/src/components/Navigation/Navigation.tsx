@@ -48,9 +48,6 @@ export const Navigation: React.FC = () => {
           <FrensIcon />
           Frens
         </div>
-        <div className="nav-b" onClick={() => handleNavigation('/collections')}>
-          Nft
-        </div>
       </div>
     </div>
   );
