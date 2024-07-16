@@ -21,7 +21,7 @@ export const Navigation: React.FC = () => {
 
   const TaskIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="26" height="26">
-      <rect x="2" y="2" width="20" height="20" rx="3" ry="3" stroke="gray" stroke-width="1" fill="none" />
+      <rect x="2" y="2" width="20" height="20" rx="3" ry="3" stroke="#1D1D1D" stroke-width="1" fill="none" />
       <path d="M6 12l4 4 8-8" stroke="white" stroke-width="2" fill="none" />
     </svg>
   );
