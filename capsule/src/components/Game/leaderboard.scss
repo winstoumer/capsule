@@ -45,7 +45,13 @@
 }
 
 .reward-x2 {
-    border: 1px solid purple;
-    color: purple;
-    border-radius: 10px;
+    border: 0.5px solid #430050;
+    color: #CF00F8;
+    border-radius: 12px;
+    font-size: 14px;
+    padding: 0 10px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
