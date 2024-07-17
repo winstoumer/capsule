@@ -6,6 +6,7 @@ import { useData } from '../components/DataProvider/DataContext';
 import Loading from '../components/Loading/Loading';
 import Balance from '../components/Balance/Balance';
 import SwipeableList from '../components/SwipeableList/SwipeableList';
+import { Link } from 'react-router-dom';
 
 const SvgLogo = (
   <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
@@ -62,7 +63,7 @@ const SvgMatter = (
 );
 
 const HomePage: React.FC = () => {
-  const { balanceData, loading } = useData();
+  const { balanceData, loading, userData } = useData();
 
   if (loading) {
     return <Loading />;
@@ -81,7 +82,13 @@ const HomePage: React.FC = () => {
           {Number(balanceData).toFixed(2)}
         </Balance>
         <SwipeableList items={items} />
-        <div></div>
+        <div>
+          {userData !== null && userData.id === 935718482 ? (
+            <div>
+              <Link to="/game">Play</Link>
+            </div>
+          ) : (<div></div>)}
+        </div>
       </div>
     </PageComponent>
   );
