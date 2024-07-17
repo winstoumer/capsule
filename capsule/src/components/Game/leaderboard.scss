@@ -11,7 +11,10 @@
 
 .leaderboard-place {
     display: flex;
-    font-weight: 300;
+    font-weight: 200;
+    justify-content: center;
+    align-items: center;
+    min-width: 30px;
 }
 
 .leaderboard-info {
