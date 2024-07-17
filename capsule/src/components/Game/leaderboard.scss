@@ -1,3 +1,10 @@
+.leaderboard-item {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
 .leaderboard {
     position: relative;
     border-bottom: 0.5px solid #252525;
@@ -7,6 +14,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 20px;
+    width: 100%;
 }
 
 .leaderboard-place {
@@ -15,10 +23,10 @@
     font-weight: 200;
     justify-content: center;
     align-items: center;
-    min-width: 30px;
+    width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: black;
+    background: #191219;
 }
 
 .leaderboard-info {

@@ -40,31 +40,26 @@ export const LeaderBoard: React.FC = () => {
         }
     };
 
-    const getBackgroundColor = (place: number) => {
-        if (place === 1) return 'yellow';
-        if (place === 2) return 'gray';
-        if (place === 3) return 'brown';
-        return '';
-    };
-
     return (
         <List>
             {leaders.map((leader) => (
-                <div className='leaderboard' key={leader.place} style={{ backgroundColor: getBackgroundColor(leader.place) }}>
+                <div className='leaderboard-item' key={leader.place}>
                     <div className='leaderboard-place'>
                         {getMedal(leader.place) || leader.place}
                     </div>
-                    <div className='leaderboard-info'>
-                        <div className='leaderboard-name'>
-                            {leader.name}
+                    <div className='leaderboard'>
+                        <div className='leaderboard-info'>
+                            <div className='leaderboard-name'>
+                                {leader.name}
+                            </div>
+                            <div className='leaderboard-reward'>
+                                {leader.reward}
+                                {getX2(leader.place)}
+                            </div>
                         </div>
-                        <div className='leaderboard-reward'>
-                            {leader.reward}
-                            {getX2(leader.place)}
+                        <div className='leaderboard-points'>
+                            {leader.points}
                         </div>
-                    </div>
-                    <div className='leaderboard-points'>
-                        {leader.points}
                     </div>
                 </div>
             ))}
