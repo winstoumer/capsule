@@ -1,9 +1,7 @@
-.task {
+.leaderboard {
     position: relative;
     border-bottom: 0.5px solid #252525;
     padding: 12px 0;
-    /*padding-left: 1.1rem;
-    padding-right: 1.1rem;*/
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -11,7 +9,7 @@
     gap: 12px;
 }
 
-.task-watch {
+.leaderboard-watch {
     display: flex;
 }
 
@@ -21,17 +19,17 @@
     border-radius: 100%;
 }
 
-.task-info {
+.leaderboard-info {
     display: flex;
     flex-direction: column;
 }
 
-.task-name {
+.leaderboard-name {
     font-size: 16px;
     font-weight: 800;
 }
 
-.task-reward {
+.leaderboard-reward {
     color: #dddddd;
     font-size: 16px;
     font-weight: 600;

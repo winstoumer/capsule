@@ -13,6 +13,7 @@ import GamePage from './pages/GamePage';
 import BoostGamePage from './pages/BoostGamePage';
 import FrensPage from './pages/FrensPage';
 import StarryNightBackground from './components/Background/StarryNightBackground';
+import LeaderboardPage from './pages/LeaderBoardPage';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -74,6 +75,9 @@ const AppWrapper: React.FC = () => {
           else if (location.pathname.startsWith('/mining')) {
             backButton.show();
           }
+          else if (location.pathname.startsWith('/leaderboard')) {
+            backButton.show();
+          }
           else {
             backButton.hide();
           }
@@ -103,6 +107,9 @@ const AppWrapper: React.FC = () => {
         else if (location.pathname.startsWith('/mining')) {
           window.Telegram.WebApp.BackButton.show();
         }
+        else if (location.pathname.startsWith('/leaderboard')) {
+          window.Telegram.WebApp.BackButton.show();
+        }
         else {
           window.Telegram.WebApp.BackButton.hide();
         }
@@ -127,6 +134,7 @@ const AppWrapper: React.FC = () => {
       <Route path="/collections" element={<CollectionPage />} />
       <Route path="/mint/:id" element={<MintPageWithProviders />} />
       <Route path="/game" element={<GamePage />} />
+      <Route path="/leaderboard" element={<LeaderboardPage />} />
     </Routes>
   );
 };

@@ -169,9 +169,14 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             )}
             <div className="game">
                 {!gameStarted && !showClaimButton && (
-                    <button className="start-button default-button" onClick={handleStartClick}>
-                        Start
-                    </button>
+                    <div>
+                        <div>
+                            <Link to='/leaderboard'>Leaderboard</Link>
+                        </div>
+                        <button className="start-button default-button" onClick={handleStartClick}>
+                            Start
+                        </button>
+                    </div>
                 )}
                 {gameStarted && (
                     <>
