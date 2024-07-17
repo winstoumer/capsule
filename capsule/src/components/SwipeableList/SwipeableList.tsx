@@ -7,6 +7,7 @@ interface Item {
     logo: string | JSX.Element;
     buttonText: string;
     link: string;
+    comingSoon?: boolean;
 }
 
 interface SwipeableListProps {
@@ -28,7 +29,7 @@ const NextArrow = () => (
 const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const navigate = useNavigate();
-    const [activeIndex, setActiveIndex] = useState(0); // Состояние для отслеживания текущего активного элемента
+    const [activeIndex, setActiveIndex] = useState(0);
     let startX: number | null = null;
     let currentX = 0;
     let deltaX = 0;
@@ -72,7 +73,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                     containerRef.current.appendChild(containerRef.current.firstElementChild!);
                     containerRef.current.style.transition = 'none';
                     containerRef.current.style.transform = `translateX(0)`;
-                    setActiveIndex((prev) => (prev + 1) % items.length); // Обновляем индекс активного элемента
+                    setActiveIndex((prev) => (prev + 1) % items.length);
                 }
             }, 300);
         }
@@ -87,7 +88,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                 if (containerRef.current) {
                     containerRef.current.style.transition = 'transform 0.3s ease-in-out';
                     containerRef.current.style.transform = `translateX(0)`;
-                    setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1)); // Обновляем индекс активного элемента
+                    setActiveIndex((prev) => (prev === 0 ? items.length - 1 : prev - 1));
                 }
             }, 10);
         }
@@ -105,6 +106,10 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
             navigate(link);
         }
     };
+
+    const handleEmpty = () => {
+        return;
+    }
 
     return (
         <div className="swipeable-list-container">
@@ -149,7 +154,11 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                             ) : (
                                 <div className="item-logo">{item.logo}</div>
                             )}
-                            <Button text={item.buttonText} onClick={() => handleClick(item.link)} />
+                            {item.comingSoon ? (
+                                <Button text="Coming soon" onClick={() => handleEmpty()} />
+                            ) : (
+                                <Button text={item.buttonText} onClick={() => handleClick(item.link)} />
+                            )}
                         </div>
                     ))}
                 </div>
@@ -170,3 +179,4 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
 };
 
 export default SwipeableList;
+
