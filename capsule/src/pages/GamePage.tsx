@@ -6,7 +6,7 @@ import Game from '../components/Game/Game';
 const GamePage: React.FC = () => {
 
   return (
-    <PageComponent>
+    <PageComponent title='Collapsar'>
       <Game
         duration={30}
         coinsPerClick={1}
