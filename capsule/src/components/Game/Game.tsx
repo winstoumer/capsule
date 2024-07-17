@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Default/Button';
 
 interface GameProps {
@@ -21,8 +21,13 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [coinContainerClicked, setCoinContainerClicked] = useState<boolean>(false);
     const [progressBarColor, setProgressBarColor] = useState<string>('');
 
+    const navigate = useNavigate();
     const activeTouches = useRef<Set<number>>(new Set());
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const handleLink = (link: string) => {
+        navigate(link);
+    };
 
     const isWithinCircle = (x: number, y: number) => {
         const centerX = 140; // Адаптировано под размеры кнопки
@@ -169,13 +174,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             )}
             <div className="game">
                 {!gameStarted && !showClaimButton && (
-                    <div>
-                        <div>
-                            <Link to='/leaderboard'>Leaderboard</Link>
-                        </div>
-                        <button className="start-button default-button" onClick={handleStartClick}>
-                            Start
-                        </button>
+                    <div className='game-panel-container'>
+                        <Button text="Leaderboard" onClick={() => handleLink("/leaderboard")} />
+                        <Button text="Play" onClick={handleStartClick} />
                     </div>
                 )}
                 {gameStarted && (
