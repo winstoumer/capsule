@@ -12,6 +12,7 @@ interface Task {
     active: boolean;
     link: string;
     ready: boolean;
+    icon: string;
 }
 
 export const Earn = () => {
@@ -105,19 +106,24 @@ export const Earn = () => {
             </div>
             <List>
                 {tasks.map(task => (
-                    <div key={task.id} className={`task ${!task.active || task.ready ? 'task-completed' : ''}`}>
-                        <div className='task-info'>
-                            <div className='task-name'>
-                                {task.name}
-                            </div>
-                            <div className='task-reward'>
-                                +{task.reward} P
-                            </div>
+                    <div className={`task-item ${!task.active || task.ready ? 'task-completed' : ''}`} key={task.id}>
+                        <div className='task-watch'>
+                            <img src={task.icon} alt={task.icon} className='task-icon' />
                         </div>
-                        {!task.active || task.ready ?
-                            <Completed /> :
-                            <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
-                        }
+                        <div className='task'>
+                            <div className='task-info'>
+                                <div className='task-name'>
+                                    {task.name}
+                                </div>
+                                <div className='task-reward'>
+                                    +{task.reward} P
+                                </div>
+                            </div>
+                            {!task.active || task.ready ?
+                                <Completed /> :
+                                <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
+                            }
+                        </div>
                     </div>
                 ))}
             </List>
