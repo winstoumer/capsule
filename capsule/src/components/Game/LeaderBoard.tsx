@@ -31,10 +31,13 @@ export const LeaderBoard: React.FC = () => {
     };
 
     const getX2 = (place: number) => {
-        if (place === 1) return 'X2';
-        if (place === 2) return 'X2';
-        if (place === 3) return 'X2';
-        return '';
+        if (place === 1 || place === 2 || place === 3) {
+            return (
+                <>
+                    <span className='reward-x2'>X2</span>
+                </>
+            );
+        }
     };
 
     return (
@@ -50,7 +53,7 @@ export const LeaderBoard: React.FC = () => {
                         </div>
                         <div className='leaderboard-reward'>
                             {leader.reward}
-                            <span className='reward-x2'>{getX2(leader.place)}</span>
+                            {getX2(leader.place)}
                         </div>
                     </div>
                     <div className='leaderboard-points'>
