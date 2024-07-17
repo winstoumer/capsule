@@ -35,7 +35,7 @@ export const LeaderBoard: React.FC = () => {
             {leaders.map((leader) => (
                 <div className='leaderboard' key={leader.place}>
                     <div className='leaderboard-place'>
-                        {getMedal(leader.place)} {leader.place}
+                        {getMedal(leader.place)}
                     </div>
                     <div className='leaderboard-info'>
                         <div className='leaderboard-name'>
