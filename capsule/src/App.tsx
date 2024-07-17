@@ -13,7 +13,7 @@ import GamePage from './pages/GamePage';
 import BoostGamePage from './pages/BoostGamePage';
 import FrensPage from './pages/FrensPage';
 import StarryNightBackground from './components/Background/StarryNightBackground';
-import LeaderboardPage from './pages/LeaderBoardPage';
+import LeaderboardPage from './pages/LeaderboardPage';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
