@@ -176,7 +176,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                 {!gameStarted && !showClaimButton && (
                     <div className='game-panel-container'>
                         <Button text="Leaderboard" onClick={() => handleLink("/leaderboard")} />
-                        <Button text="Play" onClick={handleStartClick} />
+                        <Button text="Play" custom={true} onClick={handleStartClick} />
                     </div>
                 )}
                 {gameStarted && (
