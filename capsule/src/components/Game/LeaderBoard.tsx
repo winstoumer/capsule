@@ -50,8 +50,8 @@ export const LeaderBoard: React.FC = () => {
     return (
         <List>
             {leaders.map((leader) => (
-                <div className='leaderboard' key={leader.place}>
-                    <div className='leaderboard-place' style={{ backgroundColor: getBackgroundColor(leader.place) }}>
+                <div className='leaderboard' key={leader.place} style={{ backgroundColor: getBackgroundColor(leader.place) }}>
+                    <div className='leaderboard-place'>
                         {getMedal(leader.place) || leader.place}
                     </div>
                     <div className='leaderboard-info'>
