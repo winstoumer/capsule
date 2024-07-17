@@ -9,19 +9,14 @@
     gap: 12px;
 }
 
-.leaderboard-watch {
+.leaderboard-place {
     display: flex;
-}
-
-.task-image {
-    width: 70px;
-    height: 70px;
-    border-radius: 100%;
 }
 
 .leaderboard-info {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .leaderboard-name {
@@ -35,30 +30,6 @@
     font-weight: 600;
 }
 
-.task-completed {
-    opacity: 0.92;
-}
-
-.task-completion-container {
-    font-size: 22px;
-    font-weight: 800;
-    display: flex;
-    gap: 20px;
-    justify-content: space-between;
-    width: 100%;
-    align-items: center;
-    padding: 12px 0;
-    border-bottom: 0.5px solid #252525;
-}
-
-.task-completion-count {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-}
-
-.completed-count {
-    color: #dddddd;
-    font-size: 20px;
-    font-weight: 600;
+.leaderboard-points {
+    
 }
