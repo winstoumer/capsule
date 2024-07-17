@@ -30,6 +30,13 @@ export const LeaderBoard: React.FC = () => {
         return '';
     };
 
+    const getBackgroundColor = (place: number) => {
+        if (place === 1) return 'yellow';
+        if (place === 2) return 'gray';
+        if (place === 3) return 'brown';
+        return '';
+    };
+
     const getX2 = (place: number) => {
         if (place === 1 || place === 2 || place === 3) {
             return (
@@ -44,7 +51,7 @@ export const LeaderBoard: React.FC = () => {
         <List>
             {leaders.map((leader) => (
                 <div className='leaderboard-item' key={leader.place}>
-                    <div className='leaderboard-place'>
+                    <div className='leaderboard-place' style={{ backgroundColor: getBackgroundColor(leader.place) }}>
                         {getMedal(leader.place) || leader.place}
                     </div>
                     <div className='leaderboard'>
