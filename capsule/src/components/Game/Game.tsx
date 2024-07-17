@@ -161,28 +161,28 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     return (
         <>
             {gameStarted && (
-                <>
-                    <div className='page-title'>
-                        Collapsar
+                <div className='panel-wrapper'>
+                    <div className='nav-wrapper'>
+                        <Link to="/boostgame" className='n-ic'>🚀</Link>
                     </div>
-                    <div className='panel-wrapper'>
-                        <div className='nav-wrapper'>
-                            <Link to="/boostgame" className='n-ic'>🚀</Link>
-                        </div>
-                        <div className="progress-bar-wrapper">
-                            <div className={`progress-bar-container ${progressBarColor}`}>
-                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
-                            </div>
+                    <div className="progress-bar-wrapper">
+                        <div className={`progress-bar-container ${progressBarColor}`}>
+                            <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
                         </div>
                     </div>
-                </>
+                </div>
             )}
             <div className="game">
                 {!gameStarted && !showClaimButton && (
-                    <div className='game-panel-container'>
-                        <Button text="Play" custom={true} onClick={handleStartClick} />
-                        <Button text="Leaderboard" onClick={() => handleLink("/leaderboard")} />
-                    </div>
+                    <>
+                        <div className='page-title'>
+                            Collapsar
+                        </div>
+                        <div className='game-panel-container'>
+                            <Button text="Play" custom={true} onClick={handleStartClick} />
+                            <Button text="Leaderboard" onClick={() => handleLink("/leaderboard")} />
+                        </div>
+                    </>
                 )}
                 {gameStarted && (
                     <>
