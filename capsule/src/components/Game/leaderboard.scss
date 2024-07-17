@@ -6,11 +6,12 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    gap: 12px;
+    gap: 20px;
 }
 
 .leaderboard-place {
     display: flex;
+    font-weight: 300;
 }
 
 .leaderboard-info {
@@ -31,5 +32,6 @@
 }
 
 .leaderboard-points {
-    
+    font-size: 20px;
+    font-weight: 600;
 }
