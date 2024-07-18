@@ -29,9 +29,10 @@
 }
 
 .arrow-button {
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #191219;
   border-radius: 50%;
-  padding: 0.5rem;
+  width: 36px;
+  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,9 +55,9 @@
 }
 
 .border-button {
-  border: 1px solid #131213;
+  border: 1px solid #191219;
 }
 
 .custom-border-button {
-  border: 1px solid #430050;
+  border: 1px solid #191219;
 }
