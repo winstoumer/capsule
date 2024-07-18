@@ -17,7 +17,7 @@ const previousArrow = (
     <path
       d="M15 19L8 12L15 5"
       stroke="white"
-      strokeWidth="0.5"
+      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -35,7 +35,7 @@ const nextArrow = (
     <path
       d="M9 5L16 12L9 19"
       stroke="#CF00F8"
-      strokeWidth="0.5"
+      strokeWidth="1"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
