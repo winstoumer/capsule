@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
 import ButtonArrow from '../Default/ButtonArrow';
-import List from '../List/List';
+import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
 import Loading from '../Loading/Loading';
 
 interface Task {
@@ -105,28 +105,26 @@ export const Earn = () => {
                 </div>
             </div>
             <List>
-                {tasks.map(task => (
-                    <div className='item-conatiner' key={task.id}>
-                        <div className='item-wrapper-icon'>
+                {tasks.map((task) => (
+                    <Item key={task.id}>
+                        <Icon>
                             <img src={task.icon} alt={task.icon} className='item-icon' />
-                        </div>
+                        </Icon>
                         <div className='item-wrapper'>
                             <div className='item-center-container'>
-                                <div className='item-title'>
-                                    {task.name}
-                                </div>
-                                <div className='item-subtitle'>
+                                <Title>{task.name}</Title>
+                                <Subtitle>
                                     <span>+{task.reward} P</span>
-                                </div>
+                                </Subtitle>
                             </div>
-                            <div className='item-right-container'>
+                            <Right>
                                 {!task.active || task.ready ?
                                     <Completed /> :
                                     <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
                                 }
-                            </div>
+                            </Right>
                         </div>
-                    </div>
+                    </Item>
                 ))}
             </List>
         </>

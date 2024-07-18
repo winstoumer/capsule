@@ -1,5 +1,5 @@
 import React from 'react';
-import List from '../List/List';
+import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
 import './leaderboard.scss';
 
 interface Leader {
@@ -43,25 +43,19 @@ export const LeaderBoard: React.FC = () => {
     return (
         <List>
             {leaders.map((leader) => (
-                <div className='item-conatiner' key={leader.place}>
-                    <div className='item-wrapper-icon'>
-                        {getMedal(leader.place) || leader.place}
-                    </div>
+                <Item key={leader.place}>
+                    <Icon>{getMedal(leader.place) || leader.place}</Icon>
                     <div className='item-wrapper'>
                         <div className='item-center-container'>
-                            <div className='item-title'>
-                                {leader.name}
-                            </div>
-                            <div className='item-subtitle'>
+                            <Title>{leader.name}</Title>
+                            <Subtitle>
                                 {leader.reward}
                                 {getX2(leader.place)}
-                            </div>
+                            </Subtitle>
                         </div>
-                        <div className='item-right-container'>
-                            {leader.points}
-                        </div>
+                        <Right>{leader.points}</Right>
                     </div>
-                </div>
+                </Item>
             ))}
         </List>
     );
