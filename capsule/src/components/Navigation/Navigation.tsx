@@ -27,14 +27,14 @@ export const Navigation: React.FC = () => {
   };
 
   const TaskIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
       <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#1d1d1d" stroke-width="1" fill="none" />
       <path d="M6 12l4 4 8-8" stroke="white" stroke-width="2" fill="none" />
     </svg>
   );
 
   const FrensIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
       <symbol id="icon-person" viewBox="0 0 24 24">
         <circle cx="12" cy="8" r="4" fill="white" />
         <path d="M7,13 Q12,16 17,13" stroke="white" stroke-width="2" fill="none" />
@@ -45,7 +45,7 @@ export const Navigation: React.FC = () => {
   );
 
   const LeaderboardIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
       <symbol id="icon-leaderboard" viewBox="0 0 24 24">
         <rect x="3" y="8" width="3" height="7" fill="white" />
         <rect x="8" y="4" width="3" height="11" fill="white" />
