@@ -5,72 +5,57 @@
     background-color: #000000ba;
     border-radius: 26px;
     margin-bottom: 40px;
-}
 
-.items .item-conatiner {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-}
-
-.item-conatiner .item-wrapper {
-    position: relative;
-    border-bottom: 0.5px solid #252525;
-    padding: 12px 0;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-}
-
-.item-wrapper-icon {
-    background-color: #191219;
-    font-size: 18px;
-    font-weight: 200;
-    min-width: 36px;
-    min-height: 36px;
-    max-width: 36px;
-    max-height: 36px;
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.item-wrapper-icon .item-icon {
-    width: 100%;
-    border-radius: 50%;
-}
-
-.item-center-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.item-center-container .item-title {
-    font-size: 16px;
-    font-weight: 800;
-}
-
-.item-center-container .item-subtitle {
-    color: #dddddd;
-    font-size: 16px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.item-right-container {
-    color: #dddddd;
-    font-size: 20px;
-    font-weight: 600;
-    display: flex;
+    .item-container {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 12px 0;
+        border-bottom: 0.5px solid #252525;
+        
+        .item-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+            
+            .item-icon {
+                width: 36px;
+                height: 36px;
+                border-radius: 50%;
+            }
+            
+            .item-center-container {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                
+                .item-title {
+                    font-size: 16px;
+                    font-weight: 800;
+                }
+                
+                .item-subtitle {
+                    color: #dddddd;
+                    font-size: 16px;
+                    font-weight: 600;
+                    display: flex;
+                    align-items: center;
+                    gap: 10px;
+                }
+            }
+            
+            .item-right-container {
+                color: #dddddd;
+                font-size: 20px;
+                font-weight: 600;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
 }
