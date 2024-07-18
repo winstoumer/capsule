@@ -43,11 +43,11 @@ export const LeaderBoard: React.FC = () => {
     return (
         <List>
             {leaders.map((leader) => (
-                <div className='leaderboard-item' key={leader.place}>
-                    <div className='leaderboard-place'>
+                <div className='list-item' key={leader.place}>
+                    <div className='item-container-icon'>
                         {getMedal(leader.place) || leader.place}
                     </div>
-                    <div className='leaderboard'>
+                    <div className='item-content'>
                         <div className='leaderboard-info'>
                             <div className='leaderboard-name'>
                                 {leader.name}

@@ -6,3 +6,44 @@
     border-radius: 26px;
     margin-bottom: 40px;
 }
+
+.items .list-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.list-item .item-content {
+    position: relative;
+    border-bottom: 0.5px solid #252525;
+    padding: 12px 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+}
+
+.item-container-icon {
+    background-color: #191219;
+    font-size: 18px;
+    font-weight: 200;
+    min-width: 36px;
+    min-height: 36px;
+    max-width: 36px;
+    max-height: 36px;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.item-container-icon .item-icon {
+    width: 100%;
+    border-radius: 50%;
+}

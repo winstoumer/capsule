@@ -106,11 +106,11 @@ export const Earn = () => {
             </div>
             <List>
                 {tasks.map(task => (
-                    <div className={`task-item ${!task.active || task.ready ? 'task-completed' : ''}`} key={task.id}>
-                        <div className='task-watch'>
-                            <img src={task.icon} alt={task.icon} className='task-icon' />
+                    <div className='list-item' key={task.id}>
+                        <div className='item-container-icon'>
+                            <img src={task.icon} alt={task.icon} className='item-icon' />
                         </div>
-                        <div className='task'>
+                        <div className='item-content'>
                             <div className='task-info'>
                                 <div className='task-name'>
                                     {task.name}
