@@ -106,23 +106,25 @@ export const Earn = () => {
             </div>
             <List>
                 {tasks.map(task => (
-                    <div className='list-item' key={task.id}>
-                        <div className='item-container-icon'>
+                    <div className='item-conatiner' key={task.id}>
+                        <div className='item-wrapper-icon'>
                             <img src={task.icon} alt={task.icon} className='item-icon' />
                         </div>
-                        <div className='item-content'>
-                            <div className='task-info'>
-                                <div className='task-name'>
+                        <div className='item-wrapper'>
+                            <div className='item-center-container'>
+                                <div className='item-title'>
                                     {task.name}
                                 </div>
-                                <div className='task-reward'>
-                                    +{task.reward} P
+                                <div className='item-subtitle'>
+                                    <span>+{task.reward} P</span>
                                 </div>
                             </div>
-                            {!task.active || task.ready ?
-                                <Completed /> :
-                                <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
-                            }
+                            <div className='item-right-container'>
+                                {!task.active || task.ready ?
+                                    <Completed /> :
+                                    <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
+                                }
+                            </div>
                         </div>
                     </div>
                 ))}
