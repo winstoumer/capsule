@@ -68,7 +68,7 @@ export const Earn = () => {
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
             fetchTasks(userData.id.toString());
         } catch (error) {
-            console.error('Ошибка при отправке запроса:', error);
+            console.error('Error:', error);
         }
     };
 
