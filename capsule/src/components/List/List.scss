@@ -15,7 +15,7 @@
     gap: 20px;
 }
 
-.item-conatiner .item-wrapper {
+.items .item-conatiner .item-wrapper {
     position: relative;
     border-bottom: 0.5px solid #252525;
     padding: 12px 0;
@@ -48,18 +48,18 @@
     border-radius: 50%;
 }
 
-.item-center-container {
+.items .item-conatiner .item-wrapper .item-center-container {
     display: flex;
     flex-direction: column;
     width: 100%;
 }
 
-.item-center-container .item-title {
+.items .item-conatiner .item-wrapper .item-center-container .item-title {
     font-size: 16px;
     font-weight: 800;
 }
 
-.item-center-container .item-subtitle {
+.items .item-conatiner .item-wrapper .item-center-container .item-subtitle {
     color: #dddddd;
     font-size: 16px;
     font-weight: 600;
