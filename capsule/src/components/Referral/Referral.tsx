@@ -127,9 +127,6 @@ export const Referral = () => {
             </div>
             <div className='referral-info'>
                 <FrensSvg />
-                <div className='referral-text'>
-                    For each invitee +50 P.
-                </div>
                 <div className=''>
                     <Button text='Copy invitation link' onClick={handleReferralLinkClick} />
                 </div>

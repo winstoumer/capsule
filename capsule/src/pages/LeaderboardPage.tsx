@@ -7,7 +7,7 @@ const LeaderboardPage: React.FC = () => {
 
   return (
     <PageComponent title='Leaderboard'>
-      <div className='leaderboard-text'>
+      <div className='subtitle'>
         Updated every 7 days.
       </div>
       <LeaderBoard />

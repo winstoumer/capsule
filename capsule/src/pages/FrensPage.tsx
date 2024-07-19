@@ -7,6 +7,9 @@ import PageComponent from '../components/PageComponent/PageComponent';
 const FrensPage: React.FC = () => {
     return (
         <PageComponent title='Frens'>
+            <div className='subtitle'>
+                For each invitee +50 P.
+            </div>
             <Referral />
         </PageComponent>
     );
