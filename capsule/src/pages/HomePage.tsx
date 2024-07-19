@@ -70,8 +70,8 @@ const HomePage: React.FC = () => {
   }
 
   const items = [
-    { logo: SvgLogo, buttonText: 'OPEN', link: '/mining', comingSoon: true },
-    { logo: SvgMatter, buttonText: 'OPEN', link: '/mining', comingSoon: false }
+    { logo: SvgLogo, buttonText: 'Open', link: '/mining', comingSoon: true },
+    { logo: SvgMatter, buttonText: 'Open', link: '/mining', comingSoon: false }
   ];
 
   return (
