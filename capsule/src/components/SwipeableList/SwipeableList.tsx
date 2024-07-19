@@ -155,7 +155,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                                 <div className="item-logo">{item.logo}</div>
                             )}
                             {item.comingSoon ? (
-                                <Button text="Coming soon" onClick={() => handleEmpty()} />
+                                <Button text="COMING SOON" onClick={() => handleEmpty()} />
                             ) : (
                                 <Button text={item.buttonText} onClick={() => handleClick(item.link)} />
                             )}
