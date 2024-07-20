@@ -1,31 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './fallingObject.scss'; // Импорт стилей
 
 interface FallingObjectProps {
     onCatch: () => void;
     position: { top: number; left: number };
-    onEnd: () => void;
+    falling: boolean;
 }
 
-const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, onEnd }) => {
-    const [top, setTop] = useState(position.top);
+const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
-
-    useEffect(() => {
-        const fallInterval = setInterval(() => {
-            setTop(prevTop => {
-                const newTop = prevTop + 1;
-                if (newTop >= 100) { // Когда объект достигнет нижней границы контейнера
-                    clearInterval(fallInterval);
-                    setIsCaught(true);
-                    onEnd();
-                }
-                return newTop;
-            });
-        }, 50);
-
-        return () => clearInterval(fallInterval);
-    }, [onEnd]);
 
     const handleClick = () => {
         if (!isCaught) {
@@ -34,12 +17,12 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, onEnd 
         }
     };
 
-    if (isCaught) return null;
+    if (isCaught || !falling) return null;
 
     return (
         <div
             className="falling-object"
-            style={{ top: `${top}%`, left: `${position.left}%` }}
+            style={{ top: `${position.top}%`, left: `${position.left}%` }}
             onClick={handleClick}
         >
             +10

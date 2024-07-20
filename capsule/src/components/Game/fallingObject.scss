@@ -1,23 +1,27 @@
+.falling-objects-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+
 .falling-object {
     position: absolute;
-    width: 50px; // Ширина падающего объекта
-    height: 50px; // Высота падающего объекта
-    background-color: rgb(187, 0, 78); // Цвет падающего объекта, можете изменить на любой другой
-    border-radius: 50%; // Делает объект круглыми
+    width: 50px;
+    height: 50px;
+    background-color: #ff5722;
+    color: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem; // Размер текста внутри объекта
-    color: white; // Цвет текста внутри объекта
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Добавление тени для более выразительного вида
-    cursor: pointer; // Изменяет курсор при наведении на объект
-    transition: transform 0.2s ease; // Плавная анимация при нажатии
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 
     &:hover {
-        transform: scale(1.2); // Увеличение объекта при наведении
-    }
-
-    &.caught {
-        display: none; // Скрывает объект, когда он пойман
+        background-color: #ff3d00;
     }
 }
