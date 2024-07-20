@@ -17,7 +17,8 @@
     animation: appear 0.1s forwards; // Анимация появления
 
     &.caught {
-        transform: scale(0.1);
+        transform: scale(0.2);
+        opacity: 0;
         top: 100%;
     }
 }
