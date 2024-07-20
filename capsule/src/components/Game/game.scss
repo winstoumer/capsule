@@ -210,13 +210,13 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem; // Размер текста внутри объекта
+    font-size: 18px; // Размер текста внутри объекта
     color: white; // Цвет текста внутри объекта
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Добавление тени для более выразительного вида
-    transition: transform 0.2s ease, top 0.5s ease;
+    transition: transform 0.2s ease, top 0.4s ease;
     cursor: pointer;
     transform: scale(0); // Начальный размер объекта (невидимый)
-    animation: appear 0.5s forwards; // Анимация появления
+    animation: appear 0.1s forwards; // Анимация появления
 
     &.caught {
         transform: scale(0.1);
@@ -227,10 +227,8 @@
 @keyframes appear {
     0% {
         transform: scale(0);
-        top: 0%;
     }
     100% {
         transform: scale(1);
-        top: 100%;
     }
 }
