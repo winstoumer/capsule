@@ -12,8 +12,6 @@ const GamePage: React.FC = () => {
         coinsPerClick={1}
         maxTouches={5}
         multiplier={true}
-        maxFallingObjects={1}
-        maxTotalFallingObjects={5}
       />
     </PageComponent>
   );
