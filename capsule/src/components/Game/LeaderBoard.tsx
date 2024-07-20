@@ -24,9 +24,9 @@ const leaders: Leader[] = [
 
 export const LeaderBoard: React.FC = () => {
     const getMedal = (place: number) => {
-        if (place === 1) return <img src="/1_place.png" className='item-icon' alt="Gold Medal" />;
-        if (place === 2) return <img src="/2_place.png" className='item-icon' alt="Silver Medal" />;
-        if (place === 3) return <img src="/3_place.png" className='item-icon' alt="Bronze Medal" />;
+        if (place === 1) return <span>1</span>;
+        if (place === 2) return <span>2</span>;
+        if (place === 3) return <span>3</span>;
         return place;
     };
 
