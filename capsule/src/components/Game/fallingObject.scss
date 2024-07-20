@@ -1,13 +1,14 @@
 .falling-object {
     position: absolute;
-    width: 50px; // Ширина падающего объекта
-    height: 50px; // Высота падающего объекта
+    width: 36px; // Ширина падающего объекта
+    height: 36px; // Высота падающего объекта
     background-color: rgb(187, 0, 78); // Цвет падающего объекта, можете изменить на любой другой
     border-radius: 50%; // Делает объект круглыми
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 18px; // Размер текста внутри объекта
+    font-size: 16px; // Размер текста внутри объекта
+    font-weight: 600;
     color: white; // Цвет текста внутри объекта
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Добавление тени для более выразительного вида
     transition: transform 0.2s ease, top 0.5s ease;
