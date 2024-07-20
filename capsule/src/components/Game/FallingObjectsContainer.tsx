@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import FallingObject from './FallingObject';
-import './fallingObjectsContainer.scss'; // Импорт стилей
 
 const MAX_OBJECTS = 5; // Максимальное количество объектов за 30 секунд
 const MAX_SIMULTANEOUS_OBJECTS = 2; // Максимум 2 объекта одновременно
