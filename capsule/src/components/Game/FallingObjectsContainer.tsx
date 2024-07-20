@@ -1,40 +1,56 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import FallingObject from './FallingObject';
 
-interface FallingObjectsContainerProps {
-    duration: number;
-    maxFallingObjects: number;
-    maxTotalFallingObjects: number;
-    onCatch: () => void;
-}
+const FallingObjectsContainer: React.FC = () => {
+    const [objects, setObjects] = useState<{ id: number; top: number; left: number }[]>([]);
+    const [startTime] = useState(Date.now());
 
-const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ duration, maxFallingObjects, maxTotalFallingObjects, onCatch }) => {
-    const [fallingObjects, setFallingObjects] = useState<JSX.Element[]>([]);
-    const [totalCreated, setTotalCreated] = useState<number>(0);
+    const addObject = useCallback(() => {
+        if (objects.length < 5) { // Максимум 5 объектов
+            const newObject = {
+                id: Date.now(), // Уникальный ID для каждого объекта
+                top: 0,
+                left: Math.random() * 100
+            };
+            setObjects(prevObjects => [...prevObjects, newObject]);
+        }
+    }, [objects]);
 
     useEffect(() => {
-        let intervalId: NodeJS.Timeout | null = null;
-
-        if (totalCreated < maxTotalFallingObjects) {
-            const interval = duration * 1000 / maxTotalFallingObjects;
-            intervalId = setInterval(() => {
-                if (fallingObjects.length < maxFallingObjects && totalCreated < maxTotalFallingObjects) {
-                    setFallingObjects(prev => [
-                        ...prev,
-                        <FallingObject key={totalCreated} onCatch={onCatch} />
-                    ]);
-                    setTotalCreated(prev => prev + 1);
-                    console.log(`Creating new falling object. Total created: ${totalCreated + 1}`);
+        const intervalId = setInterval(() => {
+            if (Date.now() - startTime < 30000) { // Ограничение времени в 30 секунд
+                if (objects.filter(obj => obj.top < 100).length < 2) { // Максимум 2 падающих объекта одновременно
+                    addObject();
                 }
-            }, interval);
-        }
+            } else {
+                clearInterval(intervalId);
+            }
+        }, 1000);
 
-        return () => {
-            if (intervalId) clearInterval(intervalId);
-        };
-    }, [duration, maxFallingObjects, maxTotalFallingObjects, totalCreated, onCatch, fallingObjects.length]);
+        return () => clearInterval(intervalId);
+    }, [objects, startTime, addObject]);
 
-    return <>{fallingObjects}</>;
+    const handleCatch = () => {
+        console.log("Object caught!");
+    };
+
+    const handleObjectEnd = (id: number) => {
+        setObjects(prevObjects => prevObjects.filter(obj => obj.id !== id));
+    };
+
+    return (
+        <div className="falling-objects-container">
+            {objects.map(obj => (
+                <FallingObject
+                    key={obj.id}
+                    onCatch={handleCatch}
+                    position={{ top: obj.top, left: obj.left }}
+                    onEnd={() => handleObjectEnd(obj.id)}
+                />
+            ))}
+        </div>
+    );
 };
 
 export default FallingObjectsContainer;
+

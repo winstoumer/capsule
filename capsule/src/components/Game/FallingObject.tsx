@@ -1,42 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import './fallingObject.scss';
+import React, { useEffect, useState } from 'react';
+import './fallingObject.scss'
 
 interface FallingObjectProps {
     onCatch: () => void;
+    position: { top: number; left: number };
+    onEnd: () => void;
 }
 
-const FallingObject: React.FC<FallingObjectProps> = ({ onCatch }) => {
-    const [position, setPosition] = useState({ top: 0, left: Math.random() * 100 });
-    const [isCaught, setIsCaught] = useState(false);
+const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, onEnd }) => {
+    const [top, setTop] = useState(position.top);
 
     useEffect(() => {
         const fallInterval = setInterval(() => {
-            setPosition(prev => {
-                const newTop = prev.top + 1;
+            setTop(prevTop => {
+                const newTop = prevTop + 1;
                 if (newTop >= 100) {
                     clearInterval(fallInterval);
-                    setIsCaught(true);
+                    onEnd(); // Notify parent that this object has fallen
+                    return newTop; // Ensure the position is at the bottom
                 }
-                return { ...prev, top: newTop };
+                return newTop;
             });
         }, 50);
 
         return () => clearInterval(fallInterval);
-    }, []);
+    }, [onEnd]);
 
     const handleClick = () => {
-        setIsCaught(true);
         onCatch();
+        setTop(100); // Move object out of view when caught
     };
-
-    if (isCaught) return null;
-
-    console.log('FallingObject rendered at position:', position); // Debug information
 
     return (
         <div
             className="falling-object"
-            style={{ top: `${position.top}%`, left: `${position.left}%` }}
+            style={{ top: `${top}%`, left: `${position.left}%` }}
             onClick={handleClick}
         >
             +10

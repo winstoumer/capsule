@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Default/Button';
+import FallingObjectsContainer from './FallingObjectsContainer';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -9,42 +10,6 @@ interface GameProps {
     maxTouches: number; // Максимальное количество точек касания
     multiplier: boolean; // Флаг для отображения и использования мультипликатора x2
 }
-
-const FallingObject: React.FC<{ onCatch: () => void }> = ({ onCatch }) => {
-    const [position, setPosition] = useState({ top: 0, left: Math.random() * 100 });
-    const [isCaught, setIsCaught] = useState(false);
-
-    useEffect(() => {
-        const fallInterval = setInterval(() => {
-            setPosition((prev) => {
-                const newTop = prev.top + 1;
-                if (newTop >= 100) {
-                    clearInterval(fallInterval);
-                }
-                return { ...prev, top: newTop };
-            });
-        }, 50);
-
-        return () => clearInterval(fallInterval);
-    }, []);
-
-    const handleClick = () => {
-        setIsCaught(true);
-        onCatch();
-    };
-
-    if (isCaught) return null;
-
-    return (
-        <div
-            className="falling-object"
-            style={{ top: `${position.top}%`, left: `${position.left}%` }}
-            onClick={handleClick}
-        >
-            +10
-        </div>
-    );
-};
 
 const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
     const [coins, setCoins] = useState<number>(0);
@@ -56,7 +21,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [circleScale, setCircleScale] = useState<boolean>(false);
     const [coinContainerClicked, setCoinContainerClicked] = useState<boolean>(false);
     const [progressBarColor, setProgressBarColor] = useState<string>('');
-    const [fallingObjects, setFallingObjects] = useState<JSX.Element[]>([]);
 
     const navigate = useNavigate();
     const activeTouches = useRef<Set<number>>(new Set());
@@ -166,13 +130,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setClicks([]);
     };
 
-    const spawnFallingObject = () => {
-        setFallingObjects((prev) => [
-            ...prev,
-            <FallingObject key={Math.random()} onCatch={() => setCoins(prevCoins => prevCoins + 10)} />
-        ]);
-    };
-
     useEffect(() => {
         let timer: NodeJS.Timeout | null = null;
 
@@ -201,18 +158,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             if (timer) clearTimeout(timer);
         };
     }, [gameStarted, timeLeft, duration]);
-
-    useEffect(() => {
-        if (gameStarted) {
-            const fallingObjectIntervals = Array.from({ length: 5 }, () => 
-                setTimeout(spawnFallingObject, Math.random() * duration * 1000)
-            );
-
-            return () => {
-                fallingObjectIntervals.forEach(clearTimeout);
-            };
-        }
-    }, [gameStarted, duration]);
 
     return (
         <>
@@ -290,7 +235,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         </div>
                                     ))}
                                 </button>
-                                {fallingObjects}
+                                <FallingObjectsContainer />
                             </div>
                         </div>
                     </>
