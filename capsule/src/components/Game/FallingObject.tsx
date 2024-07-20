@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './fallingObject.scss';
 
 interface FallingObjectProps {
@@ -17,14 +17,25 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, fallin
         }
     };
 
-    if (isCaught || !falling) return null;
+    useEffect(() => {
+        if (isCaught) {
+            // Запускаем падение вниз через 200ms после уменьшения
+            const fallTimeout = setTimeout(() => {
+                setIsCaught(false);
+            }, 200);
+
+            return () => clearTimeout(fallTimeout);
+        }
+    }, [isCaught]);
+
+    if (!falling && !isCaught) return null;
 
     return (
         <div
-            className="falling-object"
+            className={`falling-object ${isCaught ? 'caught' : ''}`}
             style={{ top: `${position.top}%`, left: `${position.left}%` }}
             onClick={handleCatch}
-            onTouchStart={handleCatch} // Добавляем обработку сенсорного экрана
+            onTouchStart={handleCatch}
         >
             +10
         </div>

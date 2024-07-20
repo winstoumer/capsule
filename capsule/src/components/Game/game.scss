@@ -207,14 +207,11 @@
     font-size: 1.5rem; // Размер текста внутри объекта
     color: white; // Цвет текста внутри объекта
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Добавление тени для более выразительного вида
-    cursor: pointer; // Изменяет курсор при наведении на объект
-    transition: transform 0.2s ease; // Плавная анимация при нажатии
-
-    &:hover {
-        transform: scale(1.2); // Увеличение объекта при наведении
-    }
+    transition: transform 0.2s ease, top 0.5s ease;
+    cursor: pointer;
 
     &.caught {
-        display: none; // Скрывает объект, когда он пойман
+        transform: scale(0.1);
+        top: 100%;
     }
 }
