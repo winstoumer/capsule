@@ -71,7 +71,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     }, [onCatch]);
 
     return (
-        <div className="falling-objects-container">
+        <>
             {objects.map(obj => (
                 <FallingObject
                     key={obj.id}
@@ -80,7 +80,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     falling={obj.falling}
                 />
             ))}
-        </div>
+        </>
     );
 };
 
