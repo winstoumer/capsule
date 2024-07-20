@@ -13,7 +13,8 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ durat
     const [totalCreated, setTotalCreated] = useState<number>(0);
 
     useEffect(() => {
-        const interval = duration * 1000 / maxTotalFallingObjects; // Интервал между созданиями новых объектов
+        const interval = (duration * 1000) / maxTotalFallingObjects; // Интервал между созданиями новых объектов
+        console.log(`Interval set to: ${interval}ms`); // Добавим вывод в консоль
 
         const intervalId = setInterval(() => {
             if (fallingObjects.length < maxFallingObjects && totalCreated < maxTotalFallingObjects) {
@@ -22,11 +23,12 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ durat
                     <FallingObject key={Math.random()} onCatch={onCatch} />
                 ]);
                 setTotalCreated((prev) => prev + 1);
+                console.log(`Creating new falling object. Total created: ${totalCreated + 1}`); // Добавим вывод в консоль
             }
         }, interval);
 
         return () => clearInterval(intervalId);
-    }, [duration, maxFallingObjects, maxTotalFallingObjects, totalCreated, onCatch]);
+    }, [duration, maxFallingObjects, maxTotalFallingObjects, totalCreated, onCatch, fallingObjects.length]);
 
     return <>{fallingObjects}</>;
 };
