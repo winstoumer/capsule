@@ -4,33 +4,46 @@ import FallingObject from './FallingObject';
 const MAX_OBJECTS = 5; // Максимальное количество объектов за 30 секунд
 const MAX_SIMULTANEOUS_OBJECTS = 2; // Максимум 2 объекта одновременно
 const FALL_INTERVAL = 50; // Интервал падения объекта в миллисекундах
+const TOTAL_DURATION = 30 * 1000; // 30 секунд в миллисекундах
 
 interface FallingObjectsContainerProps {
     onCatch: (coins: number) => void;
 }
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
-    const [objects, setObjects] = useState<{ id: number; top: number; left: number; falling: boolean }[]>([]);
-    const [activeCount, setActiveCount] = useState<number>(0);
+    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean }[]>([]);
 
     useEffect(() => {
-        // Инициализируем 5 объектов
+        // Инициализируем 5 объектов с уникальными временными метками для начала падения
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => ({
             id: index,
             top: 0,
             left: Math.random() * 100,
+            startTime: Math.random() * TOTAL_DURATION,
             falling: false
         }));
         setObjects(initialObjects);
     }, []);
 
     useEffect(() => {
-        const startFalling = (index: number) => {
-            setObjects(prevObjects =>
-                prevObjects.map((obj, i) => (i === index ? { ...obj, falling: true } : obj))
-            );
-        };
+        const fallTimes = objects.map(obj => obj.startTime).sort((a, b) => a - b);
 
+        fallTimes.forEach((time, index) => {
+            setTimeout(() => {
+                setObjects(prevObjects => {
+                    const newObjects = [...prevObjects];
+                    const currentlyFalling = newObjects.filter(obj => obj.falling).length;
+
+                    if (currentlyFalling < MAX_SIMULTANEOUS_OBJECTS) {
+                        newObjects[index].falling = true;
+                    }
+                    return newObjects;
+                });
+            }, time);
+        });
+    }, [objects]);
+
+    useEffect(() => {
         const intervalId = setInterval(() => {
             setObjects(prevObjects => 
                 prevObjects.map(obj => {
@@ -38,29 +51,18 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                         return { ...obj, top: obj.top + 1 };
                     }
                     if (obj.top >= 100 && obj.falling) {
-                        setActiveCount(prev => prev - 1);
                         return { ...obj, falling: false };
                     }
                     return obj;
                 })
             );
-
-            // Запускаем объекты поочередно
-            if (activeCount < MAX_SIMULTANEOUS_OBJECTS) {
-                const nextObjectIndex = objects.findIndex(obj => !obj.falling && obj.top === 0);
-                if (nextObjectIndex !== -1) {
-                    startFalling(nextObjectIndex);
-                    setActiveCount(prev => prev + 1);
-                }
-            }
         }, FALL_INTERVAL);
 
         return () => clearInterval(intervalId);
-    }, [objects, activeCount]);
+    }, []);
 
     const handleObjectCatch = (id: number) => {
         setObjects(prevObjects => prevObjects.map(obj => (obj.id === id ? { ...obj, falling: false, top: 100 } : obj)));
-        setActiveCount(prev => prev - 1);
         onCatch(10); // Передаем количество монет в родительский компонент
     };
 

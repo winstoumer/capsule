@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import './fallingObject.scss'; // Импорт стилей
+import React, { useState } from 'react';
+import './fallingObject.scss';
 
 interface FallingObjectProps {
     onCatch: () => void;
