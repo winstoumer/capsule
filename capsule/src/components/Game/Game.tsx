@@ -159,6 +159,10 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         };
     }, [gameStarted, timeLeft, duration]);
 
+    const handleObjectCatch = (coinsToAdd: number) => {
+        setCoins(prevCoins => prevCoins + coinsToAdd);
+    };
+
     return (
         <>
             {gameStarted && (
@@ -235,7 +239,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         </div>
                                     ))}
                                 </button>
-                                <FallingObjectsContainer />
+                                <FallingObjectsContainer onCatch={handleObjectCatch} />
                             </div>
                         </div>
                     </>

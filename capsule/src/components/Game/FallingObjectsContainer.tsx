@@ -1,12 +1,20 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import FallingObject from './FallingObject';
 
-const FallingObjectsContainer: React.FC = () => {
+const MAX_OBJECTS = 5; // Максимальное количество объектов за 30 секунд
+const MAX_SIMULTANEOUS_OBJECTS = 2; // Максимум 2 объекта одновременно
+const GAME_DURATION_MS = 30000; // 30 секунд
+
+interface FallingObjectsContainerProps {
+    onCatch: (coins: number) => void;
+}
+
+const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
     const [objects, setObjects] = useState<{ id: number; top: number; left: number }[]>([]);
     const [startTime] = useState(Date.now());
 
     const addObject = useCallback(() => {
-        if (objects.length < 5) { // Максимум 5 объектов
+        if (objects.length < MAX_OBJECTS) { // Проверка на общее количество объектов
             const newObject = {
                 id: Date.now(), // Уникальный ID для каждого объекта
                 top: 0,
@@ -18,8 +26,8 @@ const FallingObjectsContainer: React.FC = () => {
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            if (Date.now() - startTime < 30000) { // Ограничение времени в 30 секунд
-                if (objects.filter(obj => obj.top < 100).length < 2) { // Максимум 2 падающих объекта одновременно
+            if (Date.now() - startTime < GAME_DURATION_MS) { // Проверка на время игры
+                if (objects.filter(obj => obj.top < 100).length < MAX_SIMULTANEOUS_OBJECTS) { // Проверка на количество падающих объектов
                     addObject();
                 }
             } else {
@@ -30,12 +38,9 @@ const FallingObjectsContainer: React.FC = () => {
         return () => clearInterval(intervalId);
     }, [objects, startTime, addObject]);
 
-    const handleCatch = () => {
-        console.log("Object caught!");
-    };
-
-    const handleObjectEnd = (id: number) => {
+    const handleObjectCatch = (id: number, coins: number) => {
         setObjects(prevObjects => prevObjects.filter(obj => obj.id !== id));
+        onCatch(coins); // Передаем количество монет в родительский компонент
     };
 
     return (
@@ -43,9 +48,9 @@ const FallingObjectsContainer: React.FC = () => {
             {objects.map(obj => (
                 <FallingObject
                     key={obj.id}
-                    onCatch={handleCatch}
+                    onCatch={() => handleObjectCatch(obj.id, 10)} // Пример: передаем 10 монет при каждом пойманном объекте
                     position={{ top: obj.top, left: obj.left }}
-                    onEnd={() => handleObjectEnd(obj.id)}
+                    onEnd={() => handleObjectCatch(obj.id, 0)} // Если нужно что-то сделать, когда объект падает
                 />
             ))}
         </div>
@@ -53,4 +58,3 @@ const FallingObjectsContainer: React.FC = () => {
 };
 
 export default FallingObjectsContainer;
-
