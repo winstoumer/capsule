@@ -15,6 +15,7 @@
     transition: background-color 0.3s ease;
 
     &:hover {
+        scale: 0.1;
         background-color: #ff3d00;
     }
 }
