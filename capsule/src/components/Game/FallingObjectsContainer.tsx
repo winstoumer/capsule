@@ -63,7 +63,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
 
     const handleObjectCatch = (id: number) => {
         setObjects(prevObjects => prevObjects.map(obj => (obj.id === id ? { ...obj, falling: false, top: 100 } : obj)));
-        onCatch(10); // Передаем количество монет в родительский компонент
+        onCatch(50); // Передаем количество монет в родительский компонент
     };
 
     return (

@@ -37,7 +37,7 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, fallin
             onClick={handleCatch}
             onTouchStart={handleCatch}
         >
-            +10
+            +50
         </div>
     );
 };
