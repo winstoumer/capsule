@@ -17,9 +17,17 @@
     animation: appear 0.1s forwards; // Анимация появления
 
     &.caught {
-        transform: scale(0.2);
-        opacity: 0;
         top: 100%;
+        animation: hideBonus 0.1s forwards;
+    }
+}
+
+@keyframes hideBonus {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
     }
 }
 
