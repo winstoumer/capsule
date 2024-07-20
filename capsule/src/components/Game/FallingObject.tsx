@@ -11,7 +11,7 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch }) => {
 
     useEffect(() => {
         const fallInterval = setInterval(() => {
-            setPosition((prev) => {
+            setPosition(prev => {
                 const newTop = prev.top + 1;
                 if (newTop >= 100) {
                     clearInterval(fallInterval);
@@ -29,6 +29,8 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch }) => {
     };
 
     if (isCaught) return null;
+
+    console.log('FallingObject rendered'); // Добавить отладочную информацию
 
     return (
         <div

@@ -237,11 +237,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         </div>
                                     ))}
                                 </button>
-                                <FallingObjectsContainer 
-                                    duration={duration} 
+                                <FallingObjectsContainer
+                                    duration={duration}
                                     maxFallingObjects={maxFallingObjects}
                                     maxTotalFallingObjects={maxTotalFallingObjects}
-                                    onCatch={() => setCoins(prevCoins => prevCoins + 10)} 
+                                    onCatch={() => setCoins(prevCoins => prevCoins + 10)}
                                 />
                             </div>
                         </div>
