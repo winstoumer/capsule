@@ -10,7 +10,7 @@ interface FallingObjectProps {
 const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
 
-    const handleClick = () => {
+    const handleCatch = () => {
         if (!isCaught) {
             setIsCaught(true);
             onCatch();
@@ -23,7 +23,8 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, fallin
         <div
             className="falling-object"
             style={{ top: `${position.top}%`, left: `${position.left}%` }}
-            onClick={handleClick}
+            onClick={handleCatch}
+            onTouchStart={handleCatch} // Добавляем обработку сенсорного экрана
         >
             +10
         </div>
