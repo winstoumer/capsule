@@ -42,3 +42,4 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 });
 
 export default FallingObject;
+

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import FallingObject from './FallingObject';
 
-const MAX_OBJECTS = 15; // Максимальное количество объектов за 30 секунд
-const MAX_SIMULTANEOUS_OBJECTS = 2; // Максимум 2 объекта одновременно
-const FALL_INTERVAL = 50; // Интервал падения объекта в миллисекундах
-const TOTAL_DURATION = 30 * 1000; // 30 секунд в миллисекундах
+const MAX_OBJECTS = 15;
+const MAX_SIMULTANEOUS_OBJECTS = 2;
+const FALL_INTERVAL = 50;
+const TOTAL_DURATION = 30 * 1000;
 
 interface FallingObjectsContainerProps {
     onCatch: (coins: number) => void;
@@ -12,9 +12,8 @@ interface FallingObjectsContainerProps {
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
     const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean }[]>([]);
-
+    
     useEffect(() => {
-        // Инициализируем 5 объектов с уникальными временными метками для начала падения
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => ({
             id: index,
             top: 0,
@@ -25,46 +24,51 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
         setObjects(initialObjects);
     }, []);
 
-    useEffect(() => {
-        const fallTimes = objects.map(obj => obj.startTime).sort((a, b) => a - b);
-    
-        fallTimes.forEach((time, index) => {
+    const startFallingObjects = useCallback(() => {
+        const sortedObjects = [...objects].sort((a, b) => a.startTime - b.startTime);
+        sortedObjects.forEach(obj => {
             setTimeout(() => {
                 setObjects(prevObjects => {
-                    const newObjects = [...prevObjects];
-                    const currentlyFalling = newObjects.filter(obj => obj.falling).length;
-    
-                    if (currentlyFalling < MAX_SIMULTANEOUS_OBJECTS) {
-                        newObjects[index].falling = true;
+                    const fallingObjects = prevObjects.filter(o => o.falling).length;
+                    if (fallingObjects < MAX_SIMULTANEOUS_OBJECTS) {
+                        return prevObjects.map(o =>
+                            o.id === obj.id ? { ...o, falling: true } : o
+                        );
                     }
-                    return newObjects;
+                    return prevObjects;
                 });
-            }, time);
+            }, obj.startTime);
         });
-    }, [objects]);    
+    }, [objects]);
+
+    useEffect(() => {
+        startFallingObjects();
+    }, [startFallingObjects]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            setObjects(prevObjects => 
-                prevObjects.map(obj => {
-                    if (obj.falling && obj.top < 100) {
-                        return { ...obj, top: obj.top + 1 };
-                    }
-                    if (obj.top >= 100 && obj.falling) {
-                        return { ...obj, falling: false };
-                    }
-                    return obj;
-                })
-            );
+            setObjects(prevObjects => prevObjects.map(obj => {
+                if (obj.falling && obj.top < 100) {
+                    return { ...obj, top: obj.top + 1 };
+                }
+                if (obj.top >= 100 && obj.falling) {
+                    return { ...obj, falling: false };
+                }
+                return obj;
+            }));
         }, FALL_INTERVAL);
 
         return () => clearInterval(intervalId);
     }, []);
 
-    const handleObjectCatch = (id: number) => {
-        setObjects(prevObjects => prevObjects.map(obj => (obj.id === id ? { ...obj, falling: false, top: 100 } : obj)));
-        onCatch(50); // Передаем количество монет в родительский компонент
-    };
+    const handleObjectCatch = useCallback((id: number) => {
+        setObjects(prevObjects =>
+            prevObjects.map(obj =>
+                obj.id === id ? { ...obj, falling: false, top: 100 } : obj
+            )
+        );
+        onCatch(50);
+    }, [onCatch]);
 
     return (
         <div className="falling-objects-container">
