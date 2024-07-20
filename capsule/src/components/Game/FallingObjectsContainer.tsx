@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import FallingObject from './FallingObject';
 
-const MAX_OBJECTS = 30; // Максимальное количество объектов за 30 секунд
-const MAX_SIMULTANEOUS_OBJECTS = 2; // Максимум 2 объекта одновременно
+const MAX_OBJECTS = 8; // Максимальное количество объектов за 30 секунд
+const MAX_SIMULTANEOUS_OBJECTS = 1; // Максимум 2 объекта одновременно
 const FALL_INTERVAL = 50; // Интервал падения объекта в миллисекундах
 const TOTAL_DURATION = 30 * 1000; // 30 секунд в миллисекундах
 
