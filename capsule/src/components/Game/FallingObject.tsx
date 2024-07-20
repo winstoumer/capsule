@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import './fallingObject.scss';
 
 interface FallingObjectProps {
@@ -7,7 +7,7 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
-const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, falling }) => {
+const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
 
     const handleCatch = () => {
@@ -19,7 +19,6 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, fallin
 
     useEffect(() => {
         if (isCaught) {
-            // Запускаем падение вниз через 200ms после уменьшения
             const fallTimeout = setTimeout(() => {
                 setIsCaught(false);
             }, 200);
@@ -40,6 +39,6 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, fallin
             +50
         </div>
     );
-};
+});
 
 export default FallingObject;

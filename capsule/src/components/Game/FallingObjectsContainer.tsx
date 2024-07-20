@@ -27,13 +27,13 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
 
     useEffect(() => {
         const fallTimes = objects.map(obj => obj.startTime).sort((a, b) => a - b);
-
+    
         fallTimes.forEach((time, index) => {
             setTimeout(() => {
                 setObjects(prevObjects => {
                     const newObjects = [...prevObjects];
                     const currentlyFalling = newObjects.filter(obj => obj.falling).length;
-
+    
                     if (currentlyFalling < MAX_SIMULTANEOUS_OBJECTS) {
                         newObjects[index].falling = true;
                     }
@@ -41,7 +41,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 });
             }, time);
         });
-    }, [objects]);
+    }, [objects]);    
 
     useEffect(() => {
         const intervalId = setInterval(() => {
