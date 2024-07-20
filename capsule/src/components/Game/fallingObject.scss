@@ -10,7 +10,7 @@
     font-size: 18px; // Размер текста внутри объекта
     color: white; // Цвет текста внутри объекта
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); // Добавление тени для более выразительного вида
-    transition: transform 0.2s ease, top 0.3s ease;
+    transition: transform 0.2s ease, top 0.5s ease;
     cursor: pointer;
     transform: scale(0); // Начальный размер объекта (невидимый)
     animation: appear 0.1s forwards; // Анимация появления
@@ -28,6 +28,6 @@
     }
     100% {
         transform: scale(1);
-        opacity: 1;
+        opacity: 0;
     }
 }
