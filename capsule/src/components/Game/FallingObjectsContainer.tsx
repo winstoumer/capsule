@@ -5,6 +5,7 @@ const MAX_OBJECTS = 15;
 const MAX_SIMULTANEOUS_OBJECTS = 2;
 const FALL_INTERVAL = 40;
 const TOTAL_DURATION = 30 * 1000;
+const EDGE_PADDING = 20; // Отступ от краев экрана в пикселях
 
 interface FallingObjectsContainerProps {
     onCatch: (coins: number) => void;
@@ -12,15 +13,19 @@ interface FallingObjectsContainerProps {
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
     const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean }[]>([]);
-    
+
     useEffect(() => {
-        const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => ({
-            id: index,
-            top: 0,
-            left: Math.random() * 100,
-            startTime: Math.random() * TOTAL_DURATION,
-            falling: false
-        }));
+        const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
+            const minLeft = EDGE_PADDING / window.innerWidth * 100;
+            const maxLeft = 100 - (EDGE_PADDING / window.innerWidth * 100);
+            return {
+                id: index,
+                top: 0,
+                left: Math.random() * (maxLeft - minLeft) + minLeft,
+                startTime: Math.random() * TOTAL_DURATION,
+                falling: false
+            };
+        });
         setObjects(initialObjects);
     }, []);
 
