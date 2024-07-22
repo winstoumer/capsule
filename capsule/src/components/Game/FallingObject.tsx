@@ -10,7 +10,7 @@ interface FallingObjectProps {
 const FloatingNumber: React.FC<{ position: { x: number; y: number } }> = ({ position }) => {
     return (
         <div
-            className="floating-number"
+            className="floating-number-bonus"
             style={{ top: `${position.y}px`, left: `${position.x}px` }}
         >
             +50
