@@ -31,12 +31,14 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 
     return (
         <div
-            className={`falling-object ${isCaught ? 'caught' : ''}`}
+            className={`planet ${isCaught ? 'caught' : ''}`}
             style={{ top: `${position.top}%`, left: `${position.left}%` }}
             onClick={handleCatch}
             onTouchStart={handleCatch}
         >
-            +50
+            <div className='glow'>
+
+            </div>
         </div>
     );
 });
