@@ -14,20 +14,11 @@
     transition: transform 0.2s ease, top 0.5s ease;
     cursor: pointer;
     transform: scale(0); // Начальный размер объекта (невидимый)
-    animation: appear 0.1s forwards, rotate 2s linear infinite;
+    animation: appear 0.1s forwards;
     border: 2px solid transparent;
 
     &.caught {
         animation: hideBonus 0.3s forwards;
-    }
-}
-
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(0deg);
     }
 }
 
@@ -59,6 +50,7 @@
     animation: floatUpAndAbsorb 1s ease-out forwards;
     pointer-events: none;
     will-change: transform;
+    z-index: 1000;
 }
 
 @keyframes floatUpAndAbsorb {
