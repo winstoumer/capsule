@@ -193,7 +193,7 @@ function App() {
         <Router>
           <AppWrapper />
         </Router>
-        <StarryNightBackground maxStars={14} />
+        <StarryNightBackground maxStars={28} />
       </CurrentTimeProvider>
     </TonConnectUIProvider>
   );
