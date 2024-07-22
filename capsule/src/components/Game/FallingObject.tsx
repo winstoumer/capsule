@@ -11,18 +11,39 @@ interface FloatingNumberProps {
     id: number;
     x: number;
     y: number;
+    onAnimationEnd: () => void;
 }
 
-const FloatingNumber: React.FC<FloatingNumberProps> = ({ x, y }) => (
-    <div className="floating-number-bonus" style={{ top: y, left: x }}>
-        +50
-    </div>
-);
+const FloatingNumber: React.FC<FloatingNumberProps> = ({ id, x, y, onAnimationEnd }) => {
+    useEffect(() => {
+        // Clean up when animation ends
+        const element = document.querySelector(`.floating-number-bonus[data-id='${id}']`);
+        const handleAnimationEnd = () => {
+            onAnimationEnd();
+        };
+
+        element?.addEventListener('animationend', handleAnimationEnd);
+
+        return () => {
+            element?.removeEventListener('animationend', handleAnimationEnd);
+        };
+    }, [id, onAnimationEnd]);
+
+    return (
+        <div
+            className="floating-number-bonus"
+            style={{ top: y, left: x }}
+            data-id={id} // Use data attribute to identify this element
+        >
+            +50
+        </div>
+    );
+};
 
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [floatingNumbers, setFloatingNumbers] = useState<FloatingNumberProps[]>([]);
-    const [isRemoved, setIsRemoved] = useState(false);
+    const [shouldRemove, setShouldRemove] = useState(false);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
@@ -32,12 +53,12 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            const newFloatingNumber: FloatingNumberProps = { id: Date.now(), x: clickX, y: clickY };
+            const newFloatingNumber: FloatingNumberProps = { id: Date.now(), x: clickX, y: clickY, onAnimationEnd: () => {} };
             setFloatingNumbers(prev => [...prev, newFloatingNumber]);
 
             // Mark the object for removal after the floating number animation
             setTimeout(() => {
-                setIsRemoved(true);
+                setShouldRemove(true);
             }, 3000); // Ensure this matches the duration of the floating number animation
         }
     }, [isCaught, onCatch]);
@@ -53,21 +74,25 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     }, [isCaught]);
 
     useEffect(() => {
-        if (isRemoved) {
-            // Ensure floating numbers have finished animating
+        if (shouldRemove) {
+            // Clean up floating numbers when they have finished animating
             const cleanupTimeout = setTimeout(() => {
                 setFloatingNumbers([]);
             }, 3000); // Ensure this matches the duration of the floating number animation
 
             return () => clearTimeout(cleanupTimeout);
         }
-    }, [isRemoved]);
+    }, [shouldRemove]);
 
-    if (!falling && !isCaught && !isRemoved) return null;
+    const handleFloatingNumberAnimationEnd = (id: number) => {
+        setFloatingNumbers(prev => prev.filter(fn => fn.id !== id));
+    };
+
+    if (!falling && !isCaught && !shouldRemove) return null;
 
     return (
         <>
-            {!isRemoved && (
+            {!shouldRemove && (
                 <div
                     className={`falling-object ${isCaught ? 'caught' : ''}`}
                     style={{ top: `${position.top}%`, left: `${position.left}%` }}
@@ -78,7 +103,13 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 </div>
             )}
             {floatingNumbers.map(fn => (
-                <FloatingNumber key={fn.id} id={fn.id} x={fn.x} y={fn.y} />
+                <FloatingNumber
+                    key={fn.id}
+                    id={fn.id}
+                    x={fn.x}
+                    y={fn.y}
+                    onAnimationEnd={() => handleFloatingNumberAnimationEnd(fn.id)}
+                />
             ))}
         </>
     );
