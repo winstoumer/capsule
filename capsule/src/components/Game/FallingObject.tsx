@@ -12,7 +12,7 @@ interface FloatingNumberProps {
 }
 
 const FloatingNumber: React.FC<FloatingNumberProps> = ({ position }) => (
-    <div className="floating-number" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
+    <div className="floating-number-bonus" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
         +50
     </div>
 );
