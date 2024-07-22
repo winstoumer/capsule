@@ -22,6 +22,7 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ x, y }) => (
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [floatingNumbers, setFloatingNumbers] = useState<FloatingNumberProps[]>([]);
+    const [shouldRemove, setShouldRemove] = useState(false);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
@@ -34,9 +35,10 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const newFloatingNumber: FloatingNumberProps = { id: Date.now(), x: clickX, y: clickY };
             setFloatingNumbers(prev => [...prev, newFloatingNumber]);
 
+            // Mark the object for removal after the floating number animation
             setTimeout(() => {
-                setFloatingNumbers(prev => prev.filter(fn => fn.id !== newFloatingNumber.id));
-            }, 1000); // Remove the floating number after 1 second
+                setShouldRemove(true);
+            }, 1000); // Match this time with the floating number animation duration
         }
     }, [isCaught, onCatch]);
 
@@ -50,7 +52,18 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
         }
     }, [isCaught]);
 
-    if (!falling && !isCaught) return null;
+    useEffect(() => {
+        if (shouldRemove) {
+            // Clean up floating numbers when they have finished animating
+            const cleanupTimeout = setTimeout(() => {
+                setFloatingNumbers([]);
+            }, 1000); // Match this time with the floating number animation duration
+
+            return () => clearTimeout(cleanupTimeout);
+        }
+    }, [shouldRemove]);
+
+    if (!falling && !isCaught && !shouldRemove) return null;
 
     return (
         <>
@@ -59,7 +72,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 style={{ top: `${position.top}%`, left: `${position.left}%` }}
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
-            />
+            >+50</div>
             {floatingNumbers.map(fn => (
                 <FloatingNumber key={fn.id} id={fn.id} x={fn.x} y={fn.y} />
             ))}
