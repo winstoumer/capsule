@@ -2,7 +2,8 @@
     position: absolute;
     width: 40px; // Ширина падающего объекта
     height: 40px; // Высота падающего объекта
-    background-color: #bb004e; // Цвет падающего объекта, можете изменить на любой другой
+    // background-color: #bb004e; // Цвет падающего объекта, можете изменить на любой другой
+    background: radial-gradient(circle at 30% 30%, #ff4f81, #bb004e);
     border-radius: 50%;
     display: flex;
     align-items: center;

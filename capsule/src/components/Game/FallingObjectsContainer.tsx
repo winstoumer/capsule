@@ -17,7 +17,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     useEffect(() => {
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
             const minLeft = (EDGE_PADDING / window.innerWidth) * 100;
-            const maxLeft = 100 - ((EDGE_PADDING + 30) / window.innerWidth) * 100;
+            const maxLeft = 100 - ((EDGE_PADDING + 40) / window.innerWidth) * 100;
             return {
                 id: index,
                 top: 0,
