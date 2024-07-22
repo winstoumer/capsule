@@ -5,7 +5,7 @@ const MAX_OBJECTS = 15;
 const MAX_SIMULTANEOUS_OBJECTS = 2;
 const FALL_INTERVAL = 40;
 const TOTAL_DURATION = 30 * 1000;
-const EDGE_PADDING = 20; // Отступ от краев экрана в пикселях
+const EDGE_PADDING = 20;
 
 interface FallingObjectsContainerProps {
     onCatch: (coins: number) => void;
