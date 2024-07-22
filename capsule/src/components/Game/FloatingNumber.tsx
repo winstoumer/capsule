@@ -2,13 +2,13 @@ import React, { useEffect, useRef } from 'react';
 import './floatingNumber.scss';
 
 interface FloatingNumberProps {
-    id: number;
+    id: number; // Still keep `id` for internal use in `onAnimationEnd`
     x: number;
     y: number;
     onAnimationEnd: () => void;
 }
 
-const FloatingNumber: React.FC<FloatingNumberProps> = ({ id, x, y, onAnimationEnd }) => {
+const FloatingNumber: React.FC<FloatingNumberProps> = ({ x, y, onAnimationEnd }) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -29,9 +29,8 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ id, x, y, onAnimationEn
     return (
         <div
             className="floating-number-bonus"
-            style={{ top: y, left: x }}
+            style={{ top: y, left: x, position: 'absolute' }} // Ensure it's absolutely positioned
             ref={ref}
-            data-id={id}
         >
             +50
         </div>

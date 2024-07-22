@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import FloatingNumber from './FloatingNumber';
 import './fallingObject.scss';
 
@@ -8,22 +8,22 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
-const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, falling }) => {
+const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [floatingNumbers, setFloatingNumbers] = useState<{ id: number; x: number; y: number }[]>([]);
-    
+
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
             setIsCaught(true);
             onCatch();
-            
+
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
             const newFloatingNumber = { id: Date.now(), x: clickX, y: clickY };
             setFloatingNumbers(prev => [...prev, newFloatingNumber]);
 
-            // Remove floating number after animation
+            // Use the animation duration (e.g., 3000 ms) to remove the number
             setTimeout(() => {
                 setFloatingNumbers(prev => prev.filter(fn => fn.id !== newFloatingNumber.id));
             }, 3000); // Match this with CSS animation duration
@@ -66,6 +66,6 @@ const FallingObject: React.FC<FallingObjectProps> = ({ onCatch, position, fallin
             ))}
         </>
     );
-};
+});
 
 export default FallingObject;
