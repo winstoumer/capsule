@@ -58,6 +58,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     return { ...obj, top: obj.top + 1.2 };
                 }
                 if (obj.top >= 100 && obj.falling) {
+                    onCatch(50); // Добавлено здесь, чтобы обеспечить вызов при падении
                     return { ...obj, falling: false };
                 }
                 return obj;
@@ -65,12 +66,11 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
         }, FALL_INTERVAL);
 
         return () => clearInterval(intervalId);
-    }, [caughtObjects]);
+    }, [caughtObjects, onCatch]);
 
     const handleObjectCatch = useCallback((id: number) => {
         setCaughtObjects(prev => new Set(prev).add(id)); // Добавляем объект в пойманные
-        onCatch(50);
-    }, [onCatch]);
+    }, []);
 
     return (
         <>
