@@ -15,6 +15,7 @@
     cursor: pointer;
     transform: scale(0); // Начальный размер объекта (невидимый)
     animation: appear 0.1s forwards, rotate 2s linear infinite;
+    border: 3px solid transparent;
 
     &.caught {
         animation: hideBonus 0.3s forwards;
