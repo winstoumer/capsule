@@ -11,7 +11,7 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ position }) => {
     useEffect(() => {
         const timer = setTimeout(() => {
             setIsVisible(false);
-        }, 3000); // Remove the floating number after 3 seconds
+        }, 3000);
 
         return () => clearTimeout(timer);
     }, []);
