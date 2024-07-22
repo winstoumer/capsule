@@ -23,7 +23,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const newFloatingNumber = { id: Date.now(), x: clickX, y: clickY };
             setFloatingNumbers(prev => [...prev, newFloatingNumber]);
 
-            // Wait for the animation to end before removing the number
+            // Use the animation duration (e.g., 3000 ms) to remove the number
             setTimeout(() => {
                 setFloatingNumbers(prev => prev.filter(fn => fn.id !== newFloatingNumber.id));
             }, 3000); // Match this with CSS animation duration
@@ -59,6 +59,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                     x={fn.x}
                     y={fn.y}
                     onAnimationEnd={() => {
+                        // Floating number animation end handler
                         setFloatingNumbers(prev => prev.filter(fnItem => fnItem.id !== fn.id));
                     }}
                 />

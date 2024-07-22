@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import './floatingNumber.scss';
 
 interface FloatingNumberProps {
@@ -9,21 +9,28 @@ interface FloatingNumberProps {
 }
 
 const FloatingNumber: React.FC<FloatingNumberProps> = ({ id, x, y, onAnimationEnd }) => {
+    const ref = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
-        const element = document.querySelector(`.floating-number-bonus[data-id='${id}']`);
-        const handleAnimationEnd = () => onAnimationEnd();
+        const element = ref.current;
+        if (element) {
+            const handleAnimationEnd = () => {
+                onAnimationEnd();
+            };
 
-        element?.addEventListener('animationend', handleAnimationEnd);
+            element.addEventListener('animationend', handleAnimationEnd);
 
-        return () => {
-            element?.removeEventListener('animationend', handleAnimationEnd);
-        };
-    }, [id, onAnimationEnd]);
+            return () => {
+                element.removeEventListener('animationend', handleAnimationEnd);
+            };
+        }
+    }, [onAnimationEnd]);
 
     return (
         <div
             className="floating-number-bonus"
             style={{ top: y, left: x }}
+            ref={ref}
             data-id={id}
         >
             +50
