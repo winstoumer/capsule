@@ -12,7 +12,7 @@ interface FallingObjectsContainerProps {
 }
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
-    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean }[]>([]);
+    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean }[]>([]);
 
     useEffect(() => {
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
@@ -23,7 +23,8 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 top: 0,
                 left: Math.random() * (maxLeft - minLeft) + minLeft,
                 startTime: Math.random() * TOTAL_DURATION,
-                falling: false
+                falling: false,
+                caught: false
             };
         });
         setObjects(initialObjects);
@@ -53,7 +54,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     useEffect(() => {
         const intervalId = setInterval(() => {
             setObjects(prevObjects => prevObjects.map(obj => {
-                if (obj.falling && obj.top < 100) {
+                if (obj.falling && !obj.caught && obj.top < 100) {
                     return { ...obj, top: obj.top + 1.2 };
                 }
                 if (obj.top >= 100 && obj.falling) {
@@ -69,7 +70,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     const handleObjectCatch = useCallback((id: number) => {
         setObjects(prevObjects =>
             prevObjects.map(obj =>
-                obj.id === id ? { ...obj, falling: false, top: 100 } : obj
+                obj.id === id ? { ...obj, falling: false, caught: true } : obj
             )
         );
         onCatch(50);
