@@ -1,4 +1,5 @@
 import React, { useState, useEffect, memo, useCallback } from 'react';
+import FloatingNumber from './FloatingNumber';
 import './fallingObject.scss';
 
 interface FallingObjectProps {
@@ -7,19 +8,9 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
-interface FloatingNumberProps {
-    position: { x: number; y: number };
-}
-
-const FloatingNumber: React.FC<FloatingNumberProps> = ({ position }) => (
-    <div className="floating-number" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
-        +50
-    </div>
-);
-
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
-    const [floatingNumbers, setFloatingNumbers] = useState<FloatingNumberProps[]>([]);
+    const [floatingNumbers, setFloatingNumbers] = useState<{ id: number; position: { x: number; y: number } }[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
@@ -31,14 +22,14 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 
             setFloatingNumbers((prev) => [
                 ...prev,
-                { position: { x: clickX, y: clickY } }
+                { id: Date.now(), position: { x: clickX, y: clickY } }
             ]);
-
-            setTimeout(() => {
-                setFloatingNumbers((prev) => prev.slice(1));
-            }, 1000); // Remove the floating number after 1 second
         }
     }, [isCaught, onCatch]);
+
+    const removeFloatingNumber = useCallback((id: number) => {
+        setFloatingNumbers((prev) => prev.filter(fn => fn.id !== id));
+    }, []);
 
     useEffect(() => {
         if (isCaught) {
@@ -59,9 +50,9 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 style={{ top: `${position.top}%`, left: `${position.left}%` }}
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
-            />
-            {floatingNumbers.map((fn, index) => (
-                <FloatingNumber key={index} position={fn.position} />
+            >+50</div>
+            {floatingNumbers.map((fn) => (
+                <FloatingNumber key={fn.id} position={fn.position} onRemove={() => removeFloatingNumber(fn.id)} />
             ))}
         </>
     );

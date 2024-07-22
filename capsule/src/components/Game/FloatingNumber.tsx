@@ -1,40 +1,25 @@
-import React, { useEffect, useRef } from 'react';
-import './floatingNumber.scss';
+import React, { useEffect } from 'react';
+import './fallingObject.scss';
 
 interface FloatingNumberProps {
-    id: number; // Still keep `id` for internal use in `onAnimationEnd`
-    x: number;
-    y: number;
-    onAnimationEnd: () => void;
+    position: { x: number; y: number };
+    onRemove: () => void;
 }
 
-const FloatingNumber: React.FC<FloatingNumberProps> = ({ x, y, onAnimationEnd }) => {
-    const ref = useRef<HTMLDivElement>(null);
-
+const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, onRemove }) => {
     useEffect(() => {
-        const element = ref.current;
-        if (element) {
-            const handleAnimationEnd = () => {
-                onAnimationEnd();
-            };
+        const timer = setTimeout(() => {
+            onRemove();
+        }, 3000); // Убираем элемент через 3 секунды
 
-            element.addEventListener('animationend', handleAnimationEnd);
-
-            return () => {
-                element.removeEventListener('animationend', handleAnimationEnd);
-            };
-        }
-    }, [onAnimationEnd]);
+        return () => clearTimeout(timer);
+    }, [onRemove]);
 
     return (
-        <div
-            className="floating-number-bonus"
-            style={{ top: y, left: x, position: 'absolute' }} // Ensure it's absolutely positioned
-            ref={ref}
-        >
+        <div className="floating-number" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
             +50
         </div>
     );
 };
 
-export default FloatingNumber;
+export default React.memo(FloatingNumber);
