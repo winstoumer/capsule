@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from 'react';
+import React, { useState, useEffect, memo, useCallback } from 'react';
 import './fallingObject.scss';
 
 interface FallingObjectProps {
@@ -7,32 +7,38 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
-const FloatingNumber: React.FC<{ position: { x: number; y: number } }> = ({ position }) => {
-    return (
-        <div
-            className="floating-number"
-            style={{ top: `${position.y}px`, left: `${position.x}px` }}
-        >
-            +50
-        </div>
-    );
-};
+interface FloatingNumberProps {
+    position: { x: number; y: number };
+}
+
+const FloatingNumber: React.FC<FloatingNumberProps> = ({ position }) => (
+    <div className="floating-number" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
+        +50
+    </div>
+);
 
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
-    const [showFloatingNumber, setShowFloatingNumber] = useState(false);
-    const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null);
+    const [floatingNumbers, setFloatingNumbers] = useState<FloatingNumberProps[]>([]);
 
-    const handleCatch = (e: React.MouseEvent | React.TouchEvent) => {
+    const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
             setIsCaught(true);
-            setShowFloatingNumber(true);
-            const { clientX, clientY } = 'touches' in e ? e.touches[0] : e;
-            setClickPosition({ x: clientX, y: clientY });
             onCatch();
-            setTimeout(() => setShowFloatingNumber(false), 1000);
+
+            const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
+            const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
+
+            setFloatingNumbers((prev) => [
+                ...prev,
+                { position: { x: clickX, y: clickY } }
+            ]);
+
+            setTimeout(() => {
+                setFloatingNumbers((prev) => prev.slice(1));
+            }, 1000);
         }
-    };
+    }, [isCaught, onCatch]);
 
     useEffect(() => {
         if (isCaught) {
@@ -47,16 +53,17 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     if (!falling && !isCaught) return null;
 
     return (
-        <div
-            className={`falling-object ${isCaught ? 'caught' : ''}`}
-            style={{ top: `${position.top}%`, left: `${position.left}%` }}
-            onClick={handleCatch}
-            onTouchStart={handleCatch}
-        >
-            {isCaught && clickPosition && showFloatingNumber && (
-                <FloatingNumber position={clickPosition} />
-            )}
-        </div>
+        <>
+            <div
+                className={`falling-object ${isCaught ? 'caught' : ''}`}
+                style={{ top: `${position.top}%`, left: `${position.left}%` }}
+                onMouseDown={handleCatch}
+                onTouchStart={handleCatch}
+            />
+            {floatingNumbers.map((fn, index) => (
+                <FloatingNumber key={index} position={fn.position} />
+            ))}
+        </>
     );
 });
 
