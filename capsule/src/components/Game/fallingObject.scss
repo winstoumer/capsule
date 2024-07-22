@@ -59,7 +59,12 @@
     border-radius: 50%;
     box-shadow: 0 0 10px #ff4f81, 0 0 14px #ff4f81, 0 0 16px #ff4f81, 0 0 20px #ff4f81;
     animation: shine 3s infinite;
+
+    &.caught {
+        animation: hideBonus 0.3s forwards;
+    }
 }
+
 .glow {
     position: absolute;
     top: 50%;
@@ -71,6 +76,7 @@
     transform: translate(-50%, -50%);
     animation: pulse 3s infinite;
 }
+
 @keyframes shine {
     0% {
         box-shadow: 0 0 14px #ff4f81, 0 0 18px #ff4f81, 0 0 20px #ff4f81, 0 0 30px #ff4f81;
@@ -82,6 +88,7 @@
         box-shadow: 0 0 14px #ff4f81, 0 0 18px #ff4f81, 0 0 20px #ff4f81, 0 0 30px #ff4f81;
     }
 }
+
 @keyframes pulse {
     0% {
         transform: translate(-50%, -50%) scale(1);
