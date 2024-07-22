@@ -44,15 +44,17 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     if (!falling && !isCaught) return null;
 
     return (
-        <div
-            className={`falling-object ${isCaught ? 'caught' : ''}`}
-            style={{ top: `${position.top}%`, left: `${position.left}%` }}
-            onClick={handleCatch}
-            onTouchStart={handleCatch}
-        >
-            +50
+        <>
+            <div
+                className={`falling-object ${isCaught ? 'caught' : ''}`}
+                style={{ top: `${position.top}%`, left: `${position.left}%` }}
+                onClick={handleCatch}
+                onTouchStart={handleCatch}
+            >
+                +50
+            </div>
             {showFloatingNumber && <FloatingNumber position={position} />}
-        </div>
+        </>
     );
 });
 
