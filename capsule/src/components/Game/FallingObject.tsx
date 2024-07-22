@@ -10,7 +10,7 @@ interface FallingObjectProps {
 const FloatingNumber: React.FC<{ position: { x: number; y: number } }> = ({ position }) => {
     return (
         <div
-            className="floating-number-bonus"
+            className="floating-number"
             style={{ top: `${position.y}px`, left: `${position.x}px` }}
         >
             +50
@@ -53,8 +53,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             onClick={handleCatch}
             onTouchStart={handleCatch}
         >
-            +50
-            {showFloatingNumber && clickPosition && (
+            {isCaught && clickPosition && showFloatingNumber && (
                 <FloatingNumber position={clickPosition} />
             )}
         </div>
