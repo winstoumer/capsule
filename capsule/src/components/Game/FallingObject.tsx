@@ -38,7 +38,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             // Mark the object for removal after the floating number animation
             setTimeout(() => {
                 setShouldRemove(true);
-            }, 1000); // Match this time with the floating number animation duration
+            }, 3000); // Match this time with the floating number animation duration
         }
     }, [isCaught, onCatch]);
 
@@ -56,8 +56,8 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
         if (shouldRemove) {
             // Clean up floating numbers when they have finished animating
             const cleanupTimeout = setTimeout(() => {
-                setFloatingNumbers([]);
-            }, 1000); // Match this time with the floating number animation duration
+                setFloatingNumbers(prev => prev.filter(fn => !fn.id));
+            }, 3000); // Match this time with the floating number animation duration
 
             return () => clearTimeout(cleanupTimeout);
         }
@@ -72,7 +72,9 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 style={{ top: `${position.top}%`, left: `${position.left}%` }}
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
-            >+50</div>
+            >
+                +50
+            </div>
             {floatingNumbers.map(fn => (
                 <FloatingNumber key={fn.id} id={fn.id} x={fn.x} y={fn.y} />
             ))}
