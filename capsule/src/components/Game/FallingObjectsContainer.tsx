@@ -25,7 +25,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 startTime: Math.random() * TOTAL_DURATION,
                 falling: false,
                 caught: false,
-                disabled: false // Initialize as not disabled
+                disabled: false
             };
         });
         setObjects(initialObjects);
@@ -85,7 +85,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     onCatch={() => handleObjectCatch(obj.id)}
                     position={{ top: obj.top, left: obj.left }}
                     falling={obj.falling}
-                    disabled={obj.disabled} // Pass the disabled prop
+                    disabled={obj.disabled} // Передаем проп disabled
                 />
             ))}
         </>
