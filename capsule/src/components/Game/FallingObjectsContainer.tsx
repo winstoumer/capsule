@@ -12,7 +12,7 @@ interface FallingObjectsContainerProps {
 }
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
-    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean }[]>([]);
+    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean; disabled: boolean }[]>([]);
 
     useEffect(() => {
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
@@ -24,7 +24,8 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 left: Math.random() * (maxLeft - minLeft) + minLeft,
                 startTime: Math.random() * TOTAL_DURATION,
                 falling: false,
-                caught: false
+                caught: false,
+                disabled: false // Initialize as not disabled
             };
         });
         setObjects(initialObjects);
@@ -70,7 +71,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     const handleObjectCatch = useCallback((id: number) => {
         setObjects(prevObjects =>
             prevObjects.map(obj =>
-                obj.id === id ? { ...obj, falling: false, caught: true } : obj
+                obj.id === id ? { ...obj, falling: false, caught: true, disabled: true } : obj
             )
         );
         onCatch(50);
@@ -84,6 +85,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     onCatch={() => handleObjectCatch(obj.id)}
                     position={{ top: obj.top, left: obj.left }}
                     falling={obj.falling}
+                    disabled={obj.disabled} // Pass the disabled prop
                 />
             ))}
         </>

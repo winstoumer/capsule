@@ -5,14 +5,15 @@ interface FallingObjectProps {
     onCatch: () => void;
     position: { top: number; left: number };
     falling: boolean;
+    disabled: boolean; // New prop to indicate if the object is disabled
 }
 
-const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
+const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling, disabled }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [floatingNumbers, setFloatingNumbers] = useState<{ x: number; y: number }[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-        if (!isCaught) {
+        if (!isCaught && !disabled) { // Check if the object is not caught and not disabled
             setIsCaught(true);
             onCatch();
 
@@ -21,7 +22,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 
             setFloatingNumbers([...floatingNumbers, { x: clickX, y: clickY }]);
         }
-    }, [isCaught, onCatch, floatingNumbers]);
+    }, [isCaught, disabled, onCatch, floatingNumbers]);
 
     useEffect(() => {
         if (isCaught) {
