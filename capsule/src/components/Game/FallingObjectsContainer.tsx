@@ -13,24 +13,23 @@ interface FallingObjectsContainerProps {
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
     const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean; disabled: boolean }[]>([]);
+    
+    // Функция для создания новых объектов
+    const createNewObjects = (count: number) => {
+        const minLeft = (EDGE_PADDING / window.innerWidth) * 100;
+        const maxLeft = 100 - ((EDGE_PADDING + 40) / window.innerWidth) * 100;
+        return Array.from({ length: count }, (_, index) => ({
+            id: objects.length + index,
+            top: 0,
+            left: Math.random() * (maxLeft - minLeft) + minLeft,
+            startTime: Math.random() * TOTAL_DURATION,
+            falling: true,
+            caught: false,
+            disabled: false
+        }));
+    };
 
-    useEffect(() => {
-        const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
-            const minLeft = (EDGE_PADDING / window.innerWidth) * 100;
-            const maxLeft = 100 - ((EDGE_PADDING + 40) / window.innerWidth) * 100;
-            return {
-                id: index,
-                top: 0,
-                left: Math.random() * (maxLeft - minLeft) + minLeft,
-                startTime: Math.random() * TOTAL_DURATION,
-                falling: false,
-                caught: false,
-                disabled: false
-            };
-        });
-        setObjects(initialObjects);
-    }, []);
-
+    // Запускаем объекты через начальное время
     const startFallingObjects = useCallback(() => {
         const sortedObjects = [...objects].sort((a, b) => a.startTime - b.startTime);
         sortedObjects.forEach(obj => {
@@ -49,40 +48,30 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     }, [objects]);
 
     useEffect(() => {
+        // Инициализация объектов
+        const initialObjects = createNewObjects(MAX_OBJECTS);
+        setObjects(initialObjects);
         startFallingObjects();
     }, [startFallingObjects]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
             setObjects(prevObjects => {
+                // Обновляем состояние объектов
                 const updatedObjects = prevObjects.map(obj => {
-                    // Обновляем только те объекты, которые падают и не пойманы
                     if (obj.falling && !obj.caught && !obj.disabled && obj.top < 100) {
                         return { ...obj, top: obj.top + 1.2 };
                     }
-                    // Если объект достиг нижней границы, останавливаем его падение
                     if (obj.top >= 100 && obj.falling) {
                         return { ...obj, falling: false };
                     }
                     return obj;
                 });
 
-                // Проверяем количество падающих объектов и добавляем новые, если нужно
+                // Запускаем новые объекты, если текущие объекты меньше допустимого количества
                 const fallingObjects = updatedObjects.filter(o => o.falling && !o.caught).length;
                 if (fallingObjects < MAX_SIMULTANEOUS_OBJECTS) {
-                    const newObjects = Array.from({ length: MAX_SIMULTANEOUS_OBJECTS - fallingObjects }, (_, index) => {
-                        const minLeft = (EDGE_PADDING / window.innerWidth) * 100;
-                        const maxLeft = 100 - ((EDGE_PADDING + 40) / window.innerWidth) * 100;
-                        return {
-                            id: objects.length + index,
-                            top: 0,
-                            left: Math.random() * (maxLeft - minLeft) + minLeft,
-                            startTime: Math.random() * TOTAL_DURATION,
-                            falling: true,
-                            caught: false,
-                            disabled: false
-                        };
-                    });
+                    const newObjects = createNewObjects(MAX_SIMULTANEOUS_OBJECTS - fallingObjects);
                     return [...updatedObjects, ...newObjects];
                 }
 
