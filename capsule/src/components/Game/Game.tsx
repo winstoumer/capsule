@@ -65,6 +65,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         }
 
         setCoins(prevCoins => prevCoins + totalCoins);
+        setSumCoins(prevCoins => prevCoins + totalCoins);
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
         setNextId(prevId => prevId + touchCount);
 
@@ -103,7 +104,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             const newClick = { id: nextId, x, y };
 
             setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
-            setSumCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1))
+            setSumCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1));
             setClicks(prevClicks => [...prevClicks, newClick]);
             setNextId(prevId => prevId + 1);
 
