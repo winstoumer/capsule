@@ -11,8 +11,17 @@ interface FallingObjectsContainerProps {
     onCatch: (coins: number) => void;
 }
 
+interface FallingObjectType {
+    id: number;
+    top: number;
+    left: number;
+    startTime: number;
+    falling: boolean;
+    remove?: boolean; // Свойство remove является необязательным
+}
+
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
-    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean }[]>([]);
+    const [objects, setObjects] = useState<FallingObjectType[]>([]);
 
     useEffect(() => {
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
@@ -57,10 +66,11 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     return { ...obj, top: obj.top + 1.2 };
                 }
                 if (obj.top >= 100 && obj.falling) {
-                    return { ...obj, falling: false };
+                    // Пометить объект как не падающий и подготовить к удалению
+                    return { ...obj, falling: false, top: 100, remove: true };
                 }
                 return obj;
-            }));
+            }).filter(obj => !obj.remove)); // Удалить объекты, помеченные для удаления
         }, FALL_INTERVAL);
 
         return () => clearInterval(intervalId);
@@ -69,8 +79,8 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     const handleObjectCatch = useCallback((id: number) => {
         setObjects(prevObjects =>
             prevObjects.map(obj =>
-                obj.id === id ? { ...obj, falling: false, top: 100 } : obj
-            )
+                obj.id === id ? { ...obj, falling: false, top: 100, remove: true } : obj
+            ).filter(obj => !obj.remove) // Удалить объекты, помеченные для удаления
         );
         onCatch(50);
     }, [onCatch]);
