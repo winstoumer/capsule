@@ -1,5 +1,4 @@
 import React, { useState, useEffect, memo, useCallback } from 'react';
-import FloatingNumber from './FloatingNumber';
 import './fallingObject.scss';
 
 interface FallingObjectProps {
@@ -8,9 +7,19 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
+interface FloatingNumberProps {
+    position: { x: number; y: number };
+}
+
+const FloatingNumber: React.FC<FloatingNumberProps> = ({ position }) => (
+    <div className="floating-number" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
+        +50
+    </div>
+);
+
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
-    const [floatingNumbers, setFloatingNumbers] = useState<{ id: number; x: number; y: number }[]>([]);
+    const [floatingNumbers, setFloatingNumbers] = useState<FloatingNumberProps[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
@@ -20,13 +29,14 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            const newFloatingNumber = { id: Date.now(), x: clickX, y: clickY };
-            setFloatingNumbers(prev => [...prev, newFloatingNumber]);
+            setFloatingNumbers((prev) => [
+                ...prev,
+                { position: { x: clickX, y: clickY } }
+            ]);
 
-            // Use the animation duration (e.g., 3000 ms) to remove the number
             setTimeout(() => {
-                setFloatingNumbers(prev => prev.filter(fn => fn.id !== newFloatingNumber.id));
-            }, 3000); // Match this with CSS animation duration
+                setFloatingNumbers((prev) => prev.slice(1));
+            }, 1000); // Remove the floating number after 1 second
         }
     }, [isCaught, onCatch]);
 
@@ -40,32 +50,22 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
         }
     }, [isCaught]);
 
+    if (!falling && !isCaught) return null;
+
     return (
         <>
-            {!falling && !isCaught ? null : (
-                <div
-                    className={`falling-object ${isCaught ? 'caught' : ''}`}
-                    style={{ top: `${position.top}%`, left: `${position.left}%` }}
-                    onMouseDown={handleCatch}
-                    onTouchStart={handleCatch}
-                >
-                    +50
-                </div>
-            )}
-            {floatingNumbers.map(fn => (
-                <FloatingNumber
-                    key={fn.id}
-                    id={fn.id}
-                    x={fn.x}
-                    y={fn.y}
-                    onAnimationEnd={() => {
-                        // Floating number animation end handler
-                        setFloatingNumbers(prev => prev.filter(fnItem => fnItem.id !== fn.id));
-                    }}
-                />
+            <div
+                className={`falling-object ${isCaught ? 'caught' : ''}`}
+                style={{ top: `${position.top}%`, left: `${position.left}%` }}
+                onMouseDown={handleCatch}
+                onTouchStart={handleCatch}
+            />
+            {floatingNumbers.map((fn, index) => (
+                <FloatingNumber key={index} position={fn.position} />
             ))}
         </>
     );
 });
 
 export default FallingObject;
+

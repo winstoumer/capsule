@@ -13,7 +13,6 @@ interface FallingObjectsContainerProps {
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
     const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean }[]>([]);
-    const [caughtObjects, setCaughtObjects] = useState<Set<number>>(new Set());
 
     useEffect(() => {
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
@@ -58,19 +57,23 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     return { ...obj, top: obj.top + 1.2 };
                 }
                 if (obj.top >= 100 && obj.falling) {
-                    onCatch(50); // Добавлено здесь, чтобы обеспечить вызов при падении
                     return { ...obj, falling: false };
                 }
                 return obj;
-            }).filter(obj => !caughtObjects.has(obj.id))); // Удаление пойманных объектов
+            }));
         }, FALL_INTERVAL);
 
         return () => clearInterval(intervalId);
-    }, [caughtObjects, onCatch]);
+    }, []);
 
     const handleObjectCatch = useCallback((id: number) => {
-        setCaughtObjects(prev => new Set(prev).add(id)); // Добавляем объект в пойманные
-    }, []);
+        setObjects(prevObjects =>
+            prevObjects.map(obj =>
+                obj.id === id ? { ...obj, falling: false, top: 100 } : obj
+            )
+        );
+        onCatch(50);
+    }, [onCatch]);
 
     return (
         <>
