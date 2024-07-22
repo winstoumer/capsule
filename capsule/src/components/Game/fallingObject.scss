@@ -52,13 +52,17 @@
 }
 
 .planet {
-    position: relative;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 10px;
     height: 10px;
     background: radial-gradient(circle at 30% 30%, #ff4f81, #bb004e);
     border-radius: 50%;
     box-shadow: 0 0 10px #ff4f81, 0 0 14px #ff4f81, 0 0 16px #ff4f81, 0 0 20px #ff4f81;
     animation: shine 3s infinite;
+    cursor: pointer;
 
     &.caught {
         animation: hideBonus 0.3s forwards;
