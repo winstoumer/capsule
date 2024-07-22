@@ -15,11 +15,25 @@
     gap: 30px;
 }
 
+.farm-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+}
+
 .farm-container {
     display: flex;
     justify-content: space-between;
     gap: 40px;
     align-items: center;
+}
+
+.count-coins {
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
 }
 
 .coins-container {

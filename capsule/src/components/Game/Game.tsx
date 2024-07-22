@@ -13,6 +13,8 @@ interface GameProps {
 
 const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
     const [coins, setCoins] = useState<number>(0);
+    const [bonusCoins, setBonusCoins] = useState<number>(0);
+    const [sumCoins, setSumCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
     const [nextId, setNextId] = useState<number>(0);
     const [gameStarted, setGameStarted] = useState<boolean>(false);
@@ -101,6 +103,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             const newClick = { id: nextId, x, y };
 
             setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
+            setSumCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1))
             setClicks(prevClicks => [...prevClicks, newClick]);
             setNextId(prevId => prevId + 1);
 
@@ -127,6 +130,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setGameStarted(false);
         setShowClaimButton(false);
         setCoins(0);
+        setBonusCoins(0);
+        setSumCoins(0);
         setClicks([]);
     };
 
@@ -160,7 +165,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     }, [gameStarted, timeLeft, duration]);
 
     const handleObjectCatch = (coinsToAdd: number) => {
-        setCoins(prevCoins => prevCoins + coinsToAdd);
+        setBonusCoins(prevCoins => prevCoins + coinsToAdd * (multiplier ? 2 : 1));
+        setSumCoins(prevCoins => prevCoins + coinsToAdd * (multiplier ? 2 : 1));
     };
 
     return (
@@ -188,12 +194,18 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                 )}
                 {gameStarted && (
                     <>
-                        <div className='farm-container'>
-                            <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
-                                <div className="coins">{coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
-                                {multiplier && <div className="multiplier">x2</div>}
+                        <div className='farm-panel'>
+                            <div className='farm-container'>
+                                <div className='count-coins'>{bonusCoins}</div>
+                                <div className='count-coins'>{coins}</div>
                             </div>
-                            <div className="time-left">{timeLeft}s</div>
+                            <div className='farm-container'>
+                                <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
+                                    <div className="coins">{sumCoins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                    {multiplier && <div className="multiplier">x2</div>}
+                                </div>
+                                <div className="time-left">{timeLeft}s</div>
+                            </div>
                         </div>
                         <div className="clicks-wrapper">
                             <div className="button-game-container">
