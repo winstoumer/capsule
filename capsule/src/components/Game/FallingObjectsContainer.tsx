@@ -3,7 +3,7 @@ import FallingObject from './FallingObject';
 
 const MAX_OBJECTS = 15;
 const MAX_SIMULTANEOUS_OBJECTS = 2;
-const FALL_INTERVAL = 50;
+const FALL_INTERVAL = 40;
 const TOTAL_DURATION = 30 * 1000;
 
 interface FallingObjectsContainerProps {
@@ -49,7 +49,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
         const intervalId = setInterval(() => {
             setObjects(prevObjects => prevObjects.map(obj => {
                 if (obj.falling && obj.top < 100) {
-                    return { ...obj, top: obj.top + 1 };
+                    return { ...obj, top: obj.top + 1.2 };
                 }
                 if (obj.top >= 100 && obj.falling) {
                     return { ...obj, falling: false };
