@@ -38,7 +38,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     return (
         <>
             <div
-                className={`falling-object ${isCaught ? 'caught' : ''} ${falling ? 'falling' : ''}`}
+                className={`falling-object ${isCaught ? 'caught' : ''}`}
                 style={{ top: `${position.top}%`, left: `${position.left}%` }}
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
