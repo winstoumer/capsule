@@ -36,7 +36,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
         sortedObjects.forEach(obj => {
             setTimeout(() => {
                 setObjects(prevObjects => {
-                    const fallingObjects = prevObjects.filter(o => o.falling).length;
+                    const fallingObjects = prevObjects.filter(o => o.falling && !o.caught).length;
                     if (fallingObjects < MAX_SIMULTANEOUS_OBJECTS) {
                         return prevObjects.map(o =>
                             o.id === obj.id ? { ...o, falling: true } : o
@@ -54,19 +54,44 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
 
     useEffect(() => {
         const intervalId = setInterval(() => {
-            setObjects(prevObjects => prevObjects.map(obj => {
-                if (obj.falling && !obj.caught && !obj.disabled && obj.top < 100) {
-                    return { ...obj, top: obj.top + 1.2 };
+            setObjects(prevObjects => {
+                const updatedObjects = prevObjects.map(obj => {
+                    // Обновляем только те объекты, которые падают и не пойманы
+                    if (obj.falling && !obj.caught && !obj.disabled && obj.top < 100) {
+                        return { ...obj, top: obj.top + 1.2 };
+                    }
+                    // Если объект достиг нижней границы, останавливаем его падение
+                    if (obj.top >= 100 && obj.falling) {
+                        return { ...obj, falling: false };
+                    }
+                    return obj;
+                });
+
+                // Проверяем количество падающих объектов и добавляем новые, если нужно
+                const fallingObjects = updatedObjects.filter(o => o.falling && !o.caught).length;
+                if (fallingObjects < MAX_SIMULTANEOUS_OBJECTS) {
+                    const newObjects = Array.from({ length: MAX_SIMULTANEOUS_OBJECTS - fallingObjects }, (_, index) => {
+                        const minLeft = (EDGE_PADDING / window.innerWidth) * 100;
+                        const maxLeft = 100 - ((EDGE_PADDING + 40) / window.innerWidth) * 100;
+                        return {
+                            id: objects.length + index,
+                            top: 0,
+                            left: Math.random() * (maxLeft - minLeft) + minLeft,
+                            startTime: Math.random() * TOTAL_DURATION,
+                            falling: true,
+                            caught: false,
+                            disabled: false
+                        };
+                    });
+                    return [...updatedObjects, ...newObjects];
                 }
-                if (obj.top >= 100 && obj.falling) {
-                    return { ...obj, falling: false };
-                }
-                return obj;
-            }));
+
+                return updatedObjects;
+            });
         }, FALL_INTERVAL);
 
         return () => clearInterval(intervalId);
-    }, []);
+    }, [objects]);
 
     const handleObjectCatch = useCallback((id: number) => {
         setObjects(prevObjects =>
