@@ -7,11 +7,11 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
-const FloatingNumber: React.FC<{ position: { top: number; left: number } }> = ({ position }) => {
+const FloatingNumber: React.FC<{ position: { x: number; y: number } }> = ({ position }) => {
     return (
         <div
             className="floating-number"
-            style={{ top: `${position.top}%`, left: `${position.left}%` }}
+            style={{ top: `${position.y}px`, left: `${position.x}px` }}
         >
             +50
         </div>
@@ -21,11 +21,14 @@ const FloatingNumber: React.FC<{ position: { top: number; left: number } }> = ({
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [showFloatingNumber, setShowFloatingNumber] = useState(false);
+    const [clickPosition, setClickPosition] = useState<{ x: number; y: number } | null>(null);
 
-    const handleCatch = () => {
+    const handleCatch = (e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
             setIsCaught(true);
             setShowFloatingNumber(true);
+            const { clientX, clientY } = 'touches' in e ? e.touches[0] : e;
+            setClickPosition({ x: clientX, y: clientY });
             onCatch();
             setTimeout(() => setShowFloatingNumber(false), 1000);
         }
@@ -44,20 +47,21 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     if (!falling && !isCaught) return null;
 
     return (
-        <>
-            <div
-                className={`falling-object ${isCaught ? 'caught' : ''}`}
-                style={{ top: `${position.top}%`, left: `${position.left}%` }}
-                onClick={handleCatch}
-                onTouchStart={handleCatch}
-            >
-                +50
-            </div>
-            {showFloatingNumber && <FloatingNumber position={position} />}
-        </>
+        <div
+            className={`falling-object ${isCaught ? 'caught' : ''}`}
+            style={{ top: `${position.top}%`, left: `${position.left}%` }}
+            onClick={handleCatch}
+            onTouchStart={handleCatch}
+        >
+            +50
+            {showFloatingNumber && clickPosition && (
+                <FloatingNumber position={clickPosition} />
+            )}
+        </div>
     );
 });
 
 export default FallingObject;
+
 
 
