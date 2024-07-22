@@ -1,6 +1,6 @@
 import React, { useState, useEffect, memo, useCallback } from 'react';
 import FloatingNumber from './FloatingNumber';
-import './fallingObject.scss'; // Убедитесь, что стиль для `floating-number-bonus` есть в этом файле
+import './fallingObject.scss';
 
 interface FallingObjectProps {
     onCatch: () => void;
@@ -8,16 +8,9 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
-interface FloatingNumberProps {
-    id: number;
-    x: number;
-    y: number;
-    onAnimationEnd: () => void;
-}
-
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
-    const [floatingNumbers, setFloatingNumbers] = useState<FloatingNumberProps[]>([]);
+    const [floatingNumbers, setFloatingNumbers] = useState<{ id: number; x: number; y: number }[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
@@ -27,13 +20,13 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            const newFloatingNumber: FloatingNumberProps = { id: Date.now(), x: clickX, y: clickY, onAnimationEnd: () => {} };
+            const newFloatingNumber = { id: Date.now(), x: clickX, y: clickY };
             setFloatingNumbers(prev => [...prev, newFloatingNumber]);
 
-            // Устанавливаем таймер для удаления объекта после анимации
+            // Wait for the animation to end before removing the number
             setTimeout(() => {
                 setFloatingNumbers(prev => prev.filter(fn => fn.id !== newFloatingNumber.id));
-            }, 3000); // Длительность анимации
+            }, 3000); // Match this with CSS animation duration
         }
     }, [isCaught, onCatch]);
 

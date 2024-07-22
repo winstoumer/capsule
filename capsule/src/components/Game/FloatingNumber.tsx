@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import './floatingNumber.scss'; // Добавьте свой файл стилей, если еще не добавлен
+import './floatingNumber.scss';
 
 interface FloatingNumberProps {
     id: number;
@@ -11,9 +11,7 @@ interface FloatingNumberProps {
 const FloatingNumber: React.FC<FloatingNumberProps> = ({ id, x, y, onAnimationEnd }) => {
     useEffect(() => {
         const element = document.querySelector(`.floating-number-bonus[data-id='${id}']`);
-        const handleAnimationEnd = () => {
-            onAnimationEnd();
-        };
+        const handleAnimationEnd = () => onAnimationEnd();
 
         element?.addEventListener('animationend', handleAnimationEnd);
 
