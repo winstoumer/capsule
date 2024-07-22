@@ -1,25 +1,25 @@
 .falling-object {
     position: absolute;
-    width: 40px; // Ширина падающего объекта
-    height: 40px; // Высота падающего объекта
-    background-color: #bb004e; // Цвет падающего объекта, можете изменить на любой другой
+    width: 40px; // Ширина объекта
+    height: 40px; // Высота объекта
+    background-color: #bb004e; // Цвет объекта
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 14px;
     font-weight: 800;
-    color: #FFBCD8; // Цвет текста внутри объекта
+    color: #FFBCD8;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     transition: transform 0.2s ease, top 0.5s ease;
     cursor: pointer;
     transform: scale(0); // Начальный размер объекта (невидимый)
     animation: appear 0.1s forwards;
     border: 2px solid transparent;
+}
 
-    &.caught {
-        animation: hideBonus 0.3s forwards;
-    }
+.falling-object.caught {
+    animation: hideBonus 0.3s forwards;
 }
 
 @keyframes hideBonus {

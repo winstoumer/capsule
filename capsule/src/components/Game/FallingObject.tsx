@@ -15,7 +15,7 @@ interface FloatingNumberProps {
 
 const FloatingNumber: React.FC<FloatingNumberProps> = ({ x, y }) => (
     <div className="floating-number-bonus" style={{ top: y, left: x }}>
-        50
+        +50
     </div>
 );
 
@@ -54,7 +54,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 
     useEffect(() => {
         if (shouldRemove) {
-            // Clean up floating numbers when they have finished animating
+            // Clean up floating numbers after their animation
             const cleanupTimeout = setTimeout(() => {
                 setFloatingNumbers(prev => prev.filter(fn => !fn.id));
             }, 3000); // Match this time with the floating number animation duration
@@ -67,14 +67,16 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 
     return (
         <>
-            <div
-                className={`falling-object ${isCaught ? 'caught' : ''}`}
-                style={{ top: `${position.top}%`, left: `${position.left}%` }}
-                onMouseDown={handleCatch}
-                onTouchStart={handleCatch}
-            >
-                +50
-            </div>
+            {!shouldRemove && (
+                <div
+                    className={`falling-object ${isCaught ? 'caught' : ''}`}
+                    style={{ top: `${position.top}%`, left: `${position.left}%` }}
+                    onMouseDown={handleCatch}
+                    onTouchStart={handleCatch}
+                >
+                    +50
+                </div>
+            )}
             {floatingNumbers.map(fn => (
                 <FloatingNumber key={fn.id} id={fn.id} x={fn.x} y={fn.y} />
             ))}
