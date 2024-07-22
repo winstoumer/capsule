@@ -197,8 +197,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     <>
                         <div className='farm-panel'>
                             <div className='farm-container'>
-                                <div className='count-coins'>{bonusCoins}</div>
-                                <div className='count-coins'>{coins}</div>
+                                <div className='count-coins'>Bonus: {bonusCoins}</div>
                             </div>
                             <div className='farm-container'>
                                 <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
