@@ -1,7 +1,7 @@
 .falling-object {
     position: absolute;
-    width: 36px; // Ширина падающего объекта
-    height: 36px; // Высота падающего объекта
+    width: 40px; // Ширина падающего объекта
+    height: 40px; // Высота падающего объекта
     background-color: #bb004e; // Цвет падающего объекта, можете изменить на любой другой
     border-radius: 50%;
     display: flex;
@@ -15,7 +15,7 @@
     cursor: pointer;
     transform: scale(0); // Начальный размер объекта (невидимый)
     animation: appear 0.1s forwards, rotate 2s linear infinite;
-    border: 3px solid transparent;
+    border: 2px solid transparent;
 
     &.caught {
         animation: hideBonus 0.3s forwards;
