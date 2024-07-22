@@ -8,11 +8,13 @@ interface FallingObjectProps {
 }
 
 interface FloatingNumberProps {
-    position: { x: number; y: number };
+    id: number;
+    x: number;
+    y: number;
 }
 
-const FloatingNumber: React.FC<FloatingNumberProps> = ({ position }) => (
-    <div className="floating-number-bonus" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
+const FloatingNumber: React.FC<FloatingNumberProps> = ({ x, y }) => (
+    <div className="floating-number" style={{ top: y, left: x }}>
         +50
     </div>
 );
@@ -29,14 +31,12 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            setFloatingNumbers((prev) => [
-                ...prev,
-                { position: { x: clickX, y: clickY } }
-            ]);
+            const newFloatingNumber: FloatingNumberProps = { id: Date.now(), x: clickX, y: clickY };
+            setFloatingNumbers((prev) => [...prev, newFloatingNumber]);
 
             setTimeout(() => {
-                setFloatingNumbers((prev) => prev.slice(1));
-            }, 1000);
+                setFloatingNumbers((prev) => prev.filter(fn => fn.id !== newFloatingNumber.id));
+            }, 1000); // Remove the floating number after 1 second
         }
     }, [isCaught, onCatch]);
 
@@ -60,8 +60,8 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
             />
-            {floatingNumbers.map((fn, index) => (
-                <FloatingNumber key={index} position={fn.position} />
+            {floatingNumbers.map((fn) => (
+                <FloatingNumber key={fn.id} id={fn.id} x={fn.x} y={fn.y} />
             ))}
         </>
     );
