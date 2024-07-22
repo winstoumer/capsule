@@ -7,13 +7,27 @@ interface FallingObjectProps {
     falling: boolean;
 }
 
+const FloatingNumber: React.FC<{ position: { top: number; left: number } }> = ({ position }) => {
+    return (
+        <div
+            className="floating-number"
+            style={{ top: `${position.top}%`, left: `${position.left}%` }}
+        >
+            +50
+        </div>
+    );
+};
+
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
+    const [showFloatingNumber, setShowFloatingNumber] = useState(false);
 
     const handleCatch = () => {
         if (!isCaught) {
             setIsCaught(true);
+            setShowFloatingNumber(true);
             onCatch();
+            setTimeout(() => setShowFloatingNumber(false), 1000);
         }
     };
 
@@ -37,9 +51,11 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             onTouchStart={handleCatch}
         >
             +50
+            {showFloatingNumber && <FloatingNumber position={position} />}
         </div>
     );
 });
 
 export default FallingObject;
+
 

@@ -93,7 +93,7 @@
     color: #CF00F8;
     animation: floatUpAndAbsorb 1s ease-out forwards;
     pointer-events: none;
-    will-change: transform; /* Оптимизация анимации */
+    will-change: transform;
 }
 
 @keyframes floatUpAndAbsorb {
