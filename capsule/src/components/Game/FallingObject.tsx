@@ -22,7 +22,7 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ x, y }) => (
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [floatingNumbers, setFloatingNumbers] = useState<FloatingNumberProps[]>([]);
-    const [shouldRemove, setShouldRemove] = useState(false);
+    const [isRemoved, setIsRemoved] = useState(false);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
@@ -37,8 +37,8 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 
             // Mark the object for removal after the floating number animation
             setTimeout(() => {
-                setShouldRemove(true);
-            }, 3000); // Match this time with the floating number animation duration
+                setIsRemoved(true);
+            }, 3000); // Ensure this matches the duration of the floating number animation
         }
     }, [isCaught, onCatch]);
 
@@ -53,21 +53,21 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     }, [isCaught]);
 
     useEffect(() => {
-        if (shouldRemove) {
-            // Clean up floating numbers after their animation
+        if (isRemoved) {
+            // Ensure floating numbers have finished animating
             const cleanupTimeout = setTimeout(() => {
-                setFloatingNumbers(prev => prev.filter(fn => !fn.id));
-            }, 3000); // Match this time with the floating number animation duration
+                setFloatingNumbers([]);
+            }, 3000); // Ensure this matches the duration of the floating number animation
 
             return () => clearTimeout(cleanupTimeout);
         }
-    }, [shouldRemove]);
+    }, [isRemoved]);
 
-    if (!falling && !isCaught && !shouldRemove) return null;
+    if (!falling && !isCaught && !isRemoved) return null;
 
     return (
         <>
-            {!shouldRemove && (
+            {!isRemoved && (
                 <div
                     className={`falling-object ${isCaught ? 'caught' : ''}`}
                     style={{ top: `${position.top}%`, left: `${position.left}%` }}
