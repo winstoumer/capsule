@@ -1,6 +1,5 @@
 import React, { useState, useEffect, memo, useCallback } from 'react';
 import FloatingNumber from './FloatingNumber';
-import './fallingObject.scss';
 
 interface FallingObjectProps {
     onCatch: () => void;
@@ -10,7 +9,7 @@ interface FallingObjectProps {
 
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
     const [isCaught, setIsCaught] = useState(false);
-    const [floatingNumbers, setFloatingNumbers] = useState<{ id: number; position: { x: number; y: number } }[]>([]);
+    const [floatingNumbers, setFloatingNumbers] = useState<{ x: number; y: number }[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught) {
@@ -20,16 +19,9 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            setFloatingNumbers((prev) => [
-                ...prev,
-                { id: Date.now(), position: { x: clickX, y: clickY } }
-            ]);
+            setFloatingNumbers([...floatingNumbers, { x: clickX, y: clickY }]);
         }
-    }, [isCaught, onCatch]);
-
-    const removeFloatingNumber = useCallback((id: number) => {
-        setFloatingNumbers((prev) => prev.filter(fn => fn.id !== id));
-    }, []);
+    }, [isCaught, onCatch, floatingNumbers]);
 
     useEffect(() => {
         if (isCaught) {
@@ -51,12 +43,11 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
             >+50</div>
-            {floatingNumbers.map((fn) => (
-                <FloatingNumber key={fn.id} position={fn.position} onRemove={() => removeFloatingNumber(fn.id)} />
+            {floatingNumbers.map((position, index) => (
+                <FloatingNumber key={index} position={position} />
             ))}
         </>
     );
 });
 
 export default FallingObject;
-

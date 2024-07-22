@@ -1,19 +1,22 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './fallingObject.scss';
 
 interface FloatingNumberProps {
     position: { x: number; y: number };
-    onRemove: () => void;
 }
 
-const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, onRemove }) => {
+const FloatingNumber: React.FC<FloatingNumberProps> = ({ position }) => {
+    const [isVisible, setIsVisible] = useState(true);
+
     useEffect(() => {
         const timer = setTimeout(() => {
-            onRemove();
-        }, 3000); // Убираем элемент через 3 секунды
+            setIsVisible(false);
+        }, 3000); // Remove the floating number after 3 seconds
 
         return () => clearTimeout(timer);
-    }, [onRemove]);
+    }, []);
+
+    if (!isVisible) return null;
 
     return (
         <div className="floating-number" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
@@ -22,4 +25,4 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, onRemove }) =
     );
 };
 
-export default React.memo(FloatingNumber);
+export default FloatingNumber;
