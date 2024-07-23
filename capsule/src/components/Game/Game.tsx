@@ -270,7 +270,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                 {!gameStarted && showClaimButton && (
                     <>
                         <div className='rewards'>
-                            <div className='rewards-title'>Congratulations</div>
+                            <div className='rewards-title'>Reward</div>
                             <div className='rewards-coins'>
                                 {rewardCoins.toLocaleString(undefined)}
                                 <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>Score: <span className='purple-color'>{scoreCoins}</span></div>
