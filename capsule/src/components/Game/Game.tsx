@@ -239,6 +239,10 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         </circle>
                                         {/* Черный круг внутри сияющего эффекта */}
                                         <circle cx="140" cy="140" r="54" fill="black" />
+                                        <circle cx="140" cy="140" r="70" fill="url(#glowGradient)">
+                                            <animate attributeName="r" dur="1s" values="70; 90; 70" repeatCount="indefinite" />
+                                            <animate attributeName="opacity" dur="3s" values="0.5; 0.8; 0.5" repeatCount="indefinite" />
+                                        </circle>
                                     </svg>
                                     {/* Конец SVG кода */}
                                     {clicks.map((click) => (
