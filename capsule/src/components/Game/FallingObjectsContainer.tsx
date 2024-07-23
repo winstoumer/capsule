@@ -87,7 +87,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     obj.id === id ? { ...obj, falling: false } : obj
                 )
             );
-        }, 3000); // match the duration of the floating number animation
+        }, 2000); // match the duration of the floating number animation
     }, [onCatch]);
 
     return (
