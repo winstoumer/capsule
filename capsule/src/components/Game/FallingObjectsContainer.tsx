@@ -31,24 +31,27 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     }, []);
 
     const startFallingObjects = useCallback(() => {
-        const sortedObjects = [...objects].sort((a, b) => a.startTime - b.startTime);
-        sortedObjects.forEach(obj => {
-            setTimeout(() => {
-                setObjects(prevObjects => {
-                    const fallingObjects = prevObjects.filter(o => o.falling).length;
-                    if (fallingObjects < MAX_SIMULTANEOUS_OBJECTS) {
-                        return prevObjects.map(o =>
-                            o.id === obj.id ? { ...o, falling: true } : o
-                        );
-                    }
-                    return prevObjects;
-                });
-            }, obj.startTime);
+        setObjects(prevObjects => {
+            const fallingObjects = prevObjects.filter(o => o.falling && !o.caught).length;
+            const availableToFall = prevObjects.filter(o => !o.falling && !o.caught && o.startTime <= performance.now());
+
+            let toUpdate = [...prevObjects];
+            availableToFall.slice(0, MAX_SIMULTANEOUS_OBJECTS - fallingObjects).forEach(obj => {
+                toUpdate = toUpdate.map(o =>
+                    o.id === obj.id ? { ...o, falling: true } : o
+                );
+            });
+
+            return toUpdate;
         });
-    }, [objects]);
+    }, []);
 
     useEffect(() => {
-        startFallingObjects();
+        const intervalId = setInterval(() => {
+            startFallingObjects();
+        }, 100);
+
+        return () => clearInterval(intervalId);
     }, [startFallingObjects]);
 
     useEffect(() => {
