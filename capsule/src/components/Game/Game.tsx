@@ -210,7 +210,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 <div className="time-left">{timeLeft}s</div>
                             </div>
                             <div className='farm-container'>
-                                <div className='count-coins'>score: {scoreCoins}</div>
+                                <div className='count-coins'>Score: <span className='purple-color'>{scoreCoins}</span></div>
                             </div>
                         </div>
                         <div className="clicks-wrapper">
