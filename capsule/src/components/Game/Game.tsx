@@ -3,6 +3,7 @@ import './game.scss';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Default/Button';
 import FallingObjectsContainer from './FallingObjectsContainer';
+import axios from 'axios';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -12,6 +13,8 @@ interface GameProps {
 }
 
 const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
+    const [userData, setUserData] = useState<any>(null);
+
     const [coins, setCoins] = useState<number>(0);
     const [bonusCoins, setBonusCoins] = useState<number>(0);
     const [rewardCoins, setRewardCoins] = useState<number>(0);
@@ -28,6 +31,14 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const navigate = useNavigate();
     const activeTouches = useRef<Set<number>>(new Set());
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const apiUrl = import.meta.env.VITE_API_URL;
+
+    useEffect(() => {
+        if (window.Telegram && window.Telegram.WebApp) {
+            setUserData(window.Telegram.WebApp.initDataUnsafe?.user);
+        }
+    }, []);
 
     const handleLink = (link: string) => {
         navigate(link);
@@ -130,14 +141,21 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setTimeLeft(duration); // Установите начальное время из пропса
     };
 
-    const handleClaimClick = () => {
-        setGameStarted(false);
-        setShowClaimButton(false);
-        setCoins(0);
-        setBonusCoins(0);
-        setRewardCoins(0);
-        setScoreCoins(0);
-        setClicks([]);
+    const handleClaimClick = async (coins: number) => {
+        try {
+            await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        finally {
+            setGameStarted(false);
+            setShowClaimButton(false);
+            setCoins(0);
+            setBonusCoins(0);
+            setRewardCoins(0);
+            setScoreCoins(0);
+            setClicks([]);
+        }
     };
 
     useEffect(() => {
@@ -276,7 +294,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>Score: <span className='purple-color'>{scoreCoins}</span></div>
                             </div>
                             <div className='rewards-actions'>
-                                <Button text="Claim" custom={true} onClick={handleClaimClick} />
+                                <Button text="Claim" custom={true} onClick={() => handleClaimClick(rewardCoins)} />
                             </div>
                         </div>
                     </>
