@@ -19,7 +19,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
         startTime: number;
         falling: boolean;
         caught: boolean;
-        appearanceTime: number; // Time when the object starts falling
+        appearanceTime: number;
         bonusPoints?: number; // Points to display when caught
     }[]>([]);
     const [startTime, setStartTime] = useState<number>(0);
@@ -35,7 +35,8 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 startTime: Math.random() * TOTAL_DURATION,
                 falling: false,
                 caught: false,
-                appearanceTime: 0
+                appearanceTime: 0,
+                bonusPoints: 0 // Initialize bonusPoints
             };
         });
         setObjects(initialObjects);
@@ -115,7 +116,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     position={{ top: obj.top, left: obj.left }}
                     falling={obj.falling}
                     caught={obj.caught}
-                    bonusPoints={obj.bonusPoints}
+                    bonusPoints={obj.bonusPoints} // Pass bonusPoints
                 />
             ))}
         </>
