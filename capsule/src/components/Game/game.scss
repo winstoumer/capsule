@@ -34,6 +34,7 @@
     font-size: 18px;
     font-weight: 800;
     color: white;
+    transition: transform 0.4s; /* Для анимации увеличения */
 }
 
 .coins-container {
@@ -62,6 +63,10 @@
 }
 
 .multiplier.scaled {
+    transform: scale(1.1); /* Увеличение на 10% */
+}
+
+.count-coins.scaled {
     transform: scale(1.1); /* Увеличение на 10% */
 }
 

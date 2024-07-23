@@ -173,6 +173,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setBonusCoins(prevCoins => prevCoins + coinsToAdd * (multiplier ? 2 : 1));
         setRewardCoins(prevCoins => prevCoins + coinsToAdd * (multiplier ? 2 : 1));
         setScoreCoins(prevCoins => prevCoins + coinsToAdd);
+
+        setCoinContainerClicked(true);
+        setTimeout(() => {
+            setCoinContainerClicked(false);
+        }, 400);
     };
 
     return (
@@ -180,7 +185,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             {gameStarted && (
                 <div className='panel-wrapper'>
                     <div className='nav-wrapper'>
-                    {coins}{bonusCoins}
+                        {coins}{bonusCoins}
                         <Link to="/boostgame" className='n-ic'>🚀</Link>
                     </div>
                     <div className="progress-bar-wrapper">
@@ -210,7 +215,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 <div className="time-left">{timeLeft}s</div>
                             </div>
                             <div className='farm-container'>
-                                <div className='count-coins'>Score: <span className='purple-color'>{scoreCoins}</span></div>
+                                <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>Score: <span className='purple-color'>{scoreCoins}</span></div>
                             </div>
                         </div>
                         <div className="clicks-wrapper">
