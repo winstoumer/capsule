@@ -6,11 +6,12 @@ interface FallingObjectProps {
     position: { top: number; left: number };
     falling: boolean;
     caught: boolean;
+    bonusPoints?: number; // Added bonusPoints prop
 }
 
-const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling, caught }) => {
+const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling, caught, bonusPoints }) => {
     const [isCaught, setIsCaught] = useState(false);
-    const [floatingNumbers, setFloatingNumbers] = useState<{ x: number; y: number }[]>([]);
+    const [floatingNumbers, setFloatingNumbers] = useState<{ x: number; y: number; points: number }[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught && !caught) {
@@ -20,9 +21,9 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            setFloatingNumbers([...floatingNumbers, { x: clickX, y: clickY }]);
+            setFloatingNumbers([...floatingNumbers, { x: clickX, y: clickY, points: bonusPoints || 0 }]);
         }
-    }, [isCaught, onCatch, floatingNumbers, caught]);
+    }, [isCaught, onCatch, floatingNumbers, caught, bonusPoints]);
 
     useEffect(() => {
         if (isCaught) {
@@ -44,10 +45,10 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
             >
-                50
+                
             </div>
-            {floatingNumbers.map((position, index) => (
-                <FloatingNumber key={index} position={position} />
+            {floatingNumbers.map((num, index) => (
+                <FloatingNumber key={index} position={{ x: num.x, y: num.y }} points={num.points} />
             ))}
         </>
     );

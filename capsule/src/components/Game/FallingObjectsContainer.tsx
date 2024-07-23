@@ -8,11 +8,11 @@ const TOTAL_DURATION = 30 * 1000;
 const EDGE_PADDING = 20;
 
 interface FallingObjectsContainerProps {
-    onCatch: (coins: number) => void;
+    onCatch: (points: number) => void;
 }
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
-    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean }[]>([]);
+    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean; appearanceTime: number; bonusPoints?: number }[]>([]);
     const [startTime, setStartTime] = useState<number>(0);
 
     useEffect(() => {
@@ -25,7 +25,8 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 left: Math.random() * (maxLeft - minLeft) + minLeft,
                 startTime: Math.random() * TOTAL_DURATION,
                 falling: false,
-                caught: false
+                caught: false,
+                appearanceTime: 0
             };
         });
         setObjects(initialObjects);
@@ -41,7 +42,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
             let toUpdate = [...prevObjects];
             availableToFall.slice(0, MAX_SIMULTANEOUS_OBJECTS - fallingObjects).forEach(obj => {
                 toUpdate = toUpdate.map(o =>
-                    o.id === obj.id ? { ...o, falling: true } : o
+                    o.id === obj.id ? { ...o, falling: true, appearanceTime: performance.now() } : o
                 );
             });
 
@@ -74,20 +75,24 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     }, []);
 
     const handleObjectCatch = useCallback((id: number) => {
-        setObjects(prevObjects =>
-            prevObjects.map(obj =>
-                obj.id === id ? { ...obj, caught: true } : obj
-            )
-        );
-        onCatch(50);
-        // Delay setting the falling to false to allow the floating number animation to complete
-        setTimeout(() => {
-            setObjects(prevObjects =>
-                prevObjects.map(obj =>
-                    obj.id === id ? { ...obj, falling: false } : obj
-                )
-            );
-        }, 2000); // match the duration of the floating number animation
+        setObjects(prevObjects => {
+            const updatedObjects = prevObjects.map(obj => obj.id === id ? { ...obj, caught: true } : obj);
+            const caughtObject = updatedObjects.find(obj => obj.id === id);
+            if (caughtObject) {
+                const currentTime = performance.now();
+                const elapsedTime = (currentTime - caughtObject.appearanceTime) / 1000; // convert to seconds
+                let bonusPoints = 12; // Default points if caught after 3 seconds
+                if (elapsedTime <= 1) bonusPoints = 6;
+                else if (elapsedTime <= 2) bonusPoints = 10;
+
+                onCatch(50 + bonusPoints); // Add the bonus points
+                // Pass the bonus points to the floating numbers
+                setObjects(prevObjects => prevObjects.map(obj =>
+                    obj.id === id ? { ...obj, bonusPoints } : obj
+                ));
+            }
+            return updatedObjects;
+        });
     }, [onCatch]);
 
     return (
@@ -99,6 +104,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     position={{ top: obj.top, left: obj.left }}
                     falling={obj.falling}
                     caught={obj.caught}
+                    bonusPoints={obj.bonusPoints}
                 />
             ))}
         </>
