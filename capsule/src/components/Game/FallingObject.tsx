@@ -7,10 +7,10 @@ interface FallingObjectProps {
     position: { top: number; left: number };
     falling: boolean;
     caught: boolean;
-    bonusPoints?: number;
+    bonusPoints?: number; // Bonus points should be optional
 }
 
-const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling, caught, bonusPoints }) => {
+const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling, caught, bonusPoints = 0 }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [floatingNumbers, setFloatingNumbers] = useState<{ top: number; left: number; points: number }[]>([]);
 
@@ -22,7 +22,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            setFloatingNumbers([...floatingNumbers, { top: clickY, left: clickX, points: bonusPoints || 0 }]);
+            setFloatingNumbers([...floatingNumbers, { top: clickY, left: clickX, points: bonusPoints }]);
         }
     }, [isCaught, onCatch, floatingNumbers, caught, bonusPoints]);
 
@@ -56,4 +56,3 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 });
 
 export default FallingObject;
-

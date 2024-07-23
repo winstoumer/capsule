@@ -113,7 +113,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 <FallingObject
                     key={obj.id}
                     onCatch={() => handleObjectCatch(obj.id)}
-                    position={{ top: obj.top, left: obj.left }} // Ensure correct prop name
+                    position={{ top: obj.top, left: obj.left }}
                     falling={obj.falling}
                     caught={obj.caught}
                     bonusPoints={obj.bonusPoints} // Pass bonusPoints to FallingObject

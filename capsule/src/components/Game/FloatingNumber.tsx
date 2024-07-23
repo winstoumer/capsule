@@ -3,8 +3,8 @@ import React, { useEffect, useState } from 'react';
 import './fallingObject.scss';
 
 interface FloatingNumberProps {
-    position: { top: number; left: number }; // Change to top and left
-    points: number;
+    position: { top: number; left: number };
+    points: number; // Ensure points are used
 }
 
 const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, points }) => {
@@ -22,7 +22,7 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, points }) => 
 
     return (
         <div className="floating-number-bonus" style={{ top: `${position.top}px`, left: `${position.left}px` }}>
-            {points}
+            +{points} {/* Display the points */}
         </div>
     );
 };
