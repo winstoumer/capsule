@@ -12,7 +12,16 @@ interface FallingObjectsContainerProps {
 }
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
-    const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean; appearanceTime: number; bonusPoints?: number }[]>([]);
+    const [objects, setObjects] = useState<{
+        id: number;
+        top: number;
+        left: number;
+        startTime: number;
+        falling: boolean;
+        caught: boolean;
+        appearanceTime: number; // Time when the object starts falling
+        bonusPoints?: number; // Points to display when caught
+    }[]>([]);
     const [startTime, setStartTime] = useState<number>(0);
 
     useEffect(() => {

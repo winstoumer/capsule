@@ -21,7 +21,7 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, points }) => 
 
     return (
         <div className="floating-number-bonus" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
-            {points}
+            +{points}
         </div>
     );
 };
