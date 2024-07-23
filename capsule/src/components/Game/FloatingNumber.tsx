@@ -19,6 +19,8 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, points }) => 
 
     if (!isVisible) return null;
 
+    console.log(`FloatingNumber at (${position.x}, ${position.y}), points: ${points}`); // Debug
+
     return (
         <div className="floating-number-bonus" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
             +{points}

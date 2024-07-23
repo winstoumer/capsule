@@ -94,6 +94,8 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 if (elapsedTime <= 1) bonusPoints = 6;
                 else if (elapsedTime <= 2) bonusPoints = 10;
 
+                console.log(`Caught object ID ${id}, elapsedTime: ${elapsedTime}, bonusPoints: ${bonusPoints}`); // Debug
+
                 onCatch(50 + bonusPoints); // Add the bonus points
                 // Pass the bonus points to the floating numbers
                 setObjects(prevObjects => prevObjects.map(obj =>

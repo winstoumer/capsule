@@ -21,6 +21,8 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
+            console.log(`Handling catch at (${clickX}, ${clickY}), bonusPoints: ${bonusPoints}`); // Debug
+
             setFloatingNumbers([...floatingNumbers, { x: clickX, y: clickY, points: bonusPoints || 0 }]);
         }
     }, [isCaught, onCatch, floatingNumbers, caught, bonusPoints]);
