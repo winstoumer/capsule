@@ -44,7 +44,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
             >
-                +50
+                50
             </div>
             {floatingNumbers.map((position, index) => (
                 <FloatingNumber key={index} position={position} />
