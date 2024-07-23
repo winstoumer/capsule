@@ -66,7 +66,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         }
 
         setCoins(prevCoins => prevCoins + totalCoins);
-        setScoreCoins(prevCoins => prevCoins + totalCoins);
+        setScoreCoins(prevCoins => prevCoins + totalCoins / (multiplier ? 2 : 1));
         setRewardCoins(prevCoins => prevCoins + totalCoins);
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
         setNextId(prevId => prevId + touchCount);
