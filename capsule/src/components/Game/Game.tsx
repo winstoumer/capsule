@@ -272,7 +272,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         <div className='rewards'>
                             <div className='rewards-title'>Congratulations</div>
                             <div className='rewards-coins'>
-                                {rewardCoins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                {rewardCoins.toLocaleString(undefined)}
                                 <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>Score: <span className='purple-color'>{scoreCoins}</span></div>
                             </div>
                             <div className='rewards-actions'>
