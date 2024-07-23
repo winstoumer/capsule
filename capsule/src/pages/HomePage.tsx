@@ -79,7 +79,9 @@ const HomePage: React.FC = () => {
       <Header />
       <div className='general'>
         <Balance>
-          {Number(balanceData.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }))}
+          {balanceData !== null && balanceData !== undefined
+            ? balanceData.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
+            : "0"}
         </Balance>
         <SwipeableList items={items} />
         <div>
