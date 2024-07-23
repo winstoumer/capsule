@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../Default/Button';
 import FallingObjectsContainer from './FallingObjectsContainer';
 import axios from 'axios';
+import PortalGuard from './PortalGuard';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -199,7 +200,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     };
 
     return (
-        <>
+        <PortalGuard>
             {gameStarted && (
                 <div className='panel-wrapper'>
                     <div className='nav-wrapper'>
@@ -300,7 +301,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     </>
                 )}
             </div>
-        </>
+        </PortalGuard>
     );
 };
 
