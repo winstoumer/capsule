@@ -13,6 +13,7 @@ interface FallingObjectsContainerProps {
 
 const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCatch }) => {
     const [objects, setObjects] = useState<{ id: number; top: number; left: number; startTime: number; falling: boolean; caught: boolean }[]>([]);
+    const [startTime, setStartTime] = useState<number>(0);
 
     useEffect(() => {
         const initialObjects = Array.from({ length: MAX_OBJECTS }, (_, index) => {
@@ -28,12 +29,14 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
             };
         });
         setObjects(initialObjects);
+        setStartTime(performance.now());
     }, []);
 
     const startFallingObjects = useCallback(() => {
         setObjects(prevObjects => {
+            const currentTime = performance.now() - startTime;
             const fallingObjects = prevObjects.filter(o => o.falling && !o.caught).length;
-            const availableToFall = prevObjects.filter(o => !o.falling && !o.caught && o.startTime <= performance.now());
+            const availableToFall = prevObjects.filter(o => !o.falling && !o.caught && o.startTime <= currentTime);
 
             let toUpdate = [...prevObjects];
             availableToFall.slice(0, MAX_SIMULTANEOUS_OBJECTS - fallingObjects).forEach(obj => {
@@ -44,7 +47,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
 
             return toUpdate;
         });
-    }, []);
+    }, [startTime]);
 
     useEffect(() => {
         const intervalId = setInterval(() => {
