@@ -39,7 +39,7 @@ const PortalGuard: React.FC<PortalGuardProps> = ({ children }) => {
   }, []);
 
   if (error) {
-    return <div></div>;
+    return <div className='portal-closed subtitle'>Portal is disabled.</div>;
   }
 
   if (isPortalOpen === null) {
