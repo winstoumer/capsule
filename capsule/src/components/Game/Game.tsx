@@ -203,14 +203,14 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     <>
                         <div className='farm-panel'>
                             <div className='farm-container'>
-                                <div className='count-coins'>Score: {scoreCoins}</div>
-                            </div>
-                            <div className='farm-container'>
                                 <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
                                     <div className="coins">{rewardCoins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                                     {multiplier && <div className="multiplier">x2</div>}
                                 </div>
                                 <div className="time-left">{timeLeft}s</div>
+                            </div>
+                            <div className='farm-container'>
+                                <div className='count-coins'>score: {scoreCoins}</div>
                             </div>
                         </div>
                         <div className="clicks-wrapper">
