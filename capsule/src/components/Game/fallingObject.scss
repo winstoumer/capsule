@@ -19,7 +19,8 @@
 }
 
 .falling-object.caught {
-    transform: none; /* Disable any transformation to stop movement */
+    transform: none;
+    animation: hideBonus 1s forwards;
 }
 
 @keyframes hideBonus {
@@ -28,7 +29,7 @@
         opacity: 1;
     }
     100% {
-        transform: scale(3);
+        transform: scale(0);
         opacity: 0;
     }
 }
