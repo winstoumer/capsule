@@ -1,3 +1,4 @@
+// FallingObjectsContainer.tsx
 import React, { useState, useEffect, useCallback } from 'react';
 import FallingObject from './FallingObject';
 
@@ -20,7 +21,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
         falling: boolean;
         caught: boolean;
         appearanceTime: number;
-        bonusPoints?: number; // Points to display when caught
+        bonusPoints?: number;
     }[]>([]);
     const [startTime, setStartTime] = useState<number>(0);
 
@@ -36,7 +37,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 falling: false,
                 caught: false,
                 appearanceTime: 0,
-                bonusPoints: 0 // Initialize bonusPoints
+                bonusPoints: 0
             };
         });
         setObjects(initialObjects);
@@ -86,23 +87,22 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
 
     const handleObjectCatch = useCallback((id: number) => {
         setObjects(prevObjects => {
-            const updatedObjects = prevObjects.map(obj => obj.id === id ? { ...obj, caught: true } : obj);
-            const caughtObject = updatedObjects.find(obj => obj.id === id);
-            if (caughtObject) {
-                const currentTime = performance.now();
-                const elapsedTime = (currentTime - caughtObject.appearanceTime) / 1000; // convert to seconds
-                let bonusPoints = 12; // Default points if caught after 3 seconds
-                if (elapsedTime <= 1) bonusPoints = 6;
-                else if (elapsedTime <= 2) bonusPoints = 10;
+            const currentTime = performance.now();
+            const updatedObjects = prevObjects.map(obj => {
+                if (obj.id === id) {
+                    const elapsedTime = (currentTime - obj.appearanceTime) / 1000; // in seconds
+                    let bonusPoints = 12; // Default bonus points
+                    if (elapsedTime <= 1) bonusPoints = 6;
+                    else if (elapsedTime <= 2) bonusPoints = 10;
 
-                console.log(`Caught object ID ${id}, elapsedTime: ${elapsedTime}, bonusPoints: ${bonusPoints}`); // Debug
+                    console.log(`Caught object ID ${id}, elapsedTime: ${elapsedTime}, bonusPoints: ${bonusPoints}`); // Debug
 
-                onCatch(50 + bonusPoints); // Add the bonus points
-                // Pass the bonus points to the floating numbers
-                return updatedObjects.map(obj =>
-                    obj.id === id ? { ...obj, bonusPoints } : obj
-                );
-            }
+                    onCatch(50 + bonusPoints); // Notify parent component of catch with bonus points
+                    return { ...obj, caught: true, bonusPoints };
+                }
+                return obj;
+            });
+
             return updatedObjects;
         });
     }, [onCatch]);
@@ -113,10 +113,10 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                 <FallingObject
                     key={obj.id}
                     onCatch={() => handleObjectCatch(obj.id)}
-                    position={{ top: obj.top, left: obj.left }}
+                    position={{ top: obj.top, left: obj.left }} // Ensure correct prop name
                     falling={obj.falling}
                     caught={obj.caught}
-                    bonusPoints={obj.bonusPoints} // Pass bonusPoints
+                    bonusPoints={obj.bonusPoints} // Pass bonusPoints to FallingObject
                 />
             ))}
         </>

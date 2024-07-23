@@ -1,9 +1,10 @@
+// FloatingNumber.tsx
 import React, { useEffect, useState } from 'react';
 import './fallingObject.scss';
 
 interface FloatingNumberProps {
-    position: { x: number; y: number };
-    points: number; // Accept points as a prop
+    position: { top: number; left: number }; // Change to top and left
+    points: number;
 }
 
 const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, points }) => {
@@ -19,10 +20,8 @@ const FloatingNumber: React.FC<FloatingNumberProps> = ({ position, points }) => 
 
     if (!isVisible) return null;
 
-    console.log(`FloatingNumber at (${position.x}, ${position.y}), points: ${points}`); // Debug
-
     return (
-        <div className="floating-number-bonus" style={{ top: `${position.y}px`, left: `${position.x}px` }}>
+        <div className="floating-number-bonus" style={{ top: `${position.top}px`, left: `${position.left}px` }}>
             {points}
         </div>
     );

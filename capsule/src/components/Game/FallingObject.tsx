@@ -1,3 +1,4 @@
+// FallingObject.tsx
 import React, { useState, useEffect, memo, useCallback } from 'react';
 import FloatingNumber from './FloatingNumber';
 
@@ -6,12 +7,12 @@ interface FallingObjectProps {
     position: { top: number; left: number };
     falling: boolean;
     caught: boolean;
-    bonusPoints?: number; // Added bonusPoints prop
+    bonusPoints?: number;
 }
 
 const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling, caught, bonusPoints }) => {
     const [isCaught, setIsCaught] = useState(false);
-    const [floatingNumbers, setFloatingNumbers] = useState<{ x: number; y: number; points: number }[]>([]);
+    const [floatingNumbers, setFloatingNumbers] = useState<{ top: number; left: number; points: number }[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
         if (!isCaught && !caught) {
@@ -21,9 +22,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;
             const clickY = 'clientY' in e ? e.clientY : e.touches[0].clientY;
 
-            console.log(`Handling catch at (${clickX}, ${clickY}), bonusPoints: ${bonusPoints}`); // Debug
-
-            setFloatingNumbers([...floatingNumbers, { x: clickX, y: clickY, points: bonusPoints || 0 }]);
+            setFloatingNumbers([...floatingNumbers, { top: clickY, left: clickX, points: bonusPoints || 0 }]);
         }
     }, [isCaught, onCatch, floatingNumbers, caught, bonusPoints]);
 
@@ -50,10 +49,11 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
                 50
             </div>
             {floatingNumbers.map((num, index) => (
-                <FloatingNumber key={index} position={{ x: num.x, y: num.y }} points={num.points} />
+                <FloatingNumber key={index} position={{ top: num.top, left: num.left }} points={num.points} />
             ))}
         </>
     );
 });
 
 export default FallingObject;
+
