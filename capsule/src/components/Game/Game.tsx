@@ -180,6 +180,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             {gameStarted && (
                 <div className='panel-wrapper'>
                     <div className='nav-wrapper'>
+                    {coins}{bonusCoins}
                         <Link to="/boostgame" className='n-ic'>🚀</Link>
                     </div>
                     <div className="progress-bar-wrapper">
@@ -202,9 +203,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     <>
                         <div className='farm-panel'>
                             <div className='farm-container'>
-                                <div className='count-coins'>Bonus: {bonusCoins}</div>
-                                <div className='count-coins'>Coins: {coins}</div>
-                                <div className='count-coins'>Bonus: {scoreCoins}</div>
+                                <div className='count-coins'>Score: {scoreCoins}</div>
                             </div>
                             <div className='farm-container'>
                                 <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
