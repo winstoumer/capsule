@@ -226,6 +226,11 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                                 <stop offset="70%" style={{ stopColor: 'transparent', stopOpacity: 0.5 }} />
                                                 <stop offset="100%" style={{ stopColor: 'transparent', stopOpacity: 0 }} />
                                             </radialGradient>
+                                            <radialGradient id="glowGradient2" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                                <stop offset="0%" style={{ stopColor: '#191219', stopOpacity: 1 }} />
+                                                <stop offset="70%" style={{ stopColor: 'transparent', stopOpacity: 0.5 }} />
+                                                <stop offset="100%" style={{ stopColor: 'transparent', stopOpacity: 0 }} />
+                                            </radialGradient>
                                         </defs>
                                         {/* Фон */}
                                         <rect width="100%" height="100%" fill="transparent" />
@@ -239,7 +244,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         </circle>
                                         {/* Черный круг внутри сияющего эффекта */}
                                         <circle cx="140" cy="140" r="54" fill="black" />
-                                        <circle cx="140" cy="140" r="70" fill="url(#glowGradient)">
+                                        <circle cx="140" cy="140" r="70" fill="url(#glowGradient2)">
                                             <animate attributeName="r" dur="1s" values="70; 90; 70" repeatCount="indefinite" />
                                             <animate attributeName="opacity" dur="3s" values="0.5; 0.8; 0.5" repeatCount="indefinite" />
                                         </circle>
