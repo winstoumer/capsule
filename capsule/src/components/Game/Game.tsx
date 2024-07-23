@@ -14,7 +14,8 @@ interface GameProps {
 const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multiplier }) => {
     const [coins, setCoins] = useState<number>(0);
     const [bonusCoins, setBonusCoins] = useState<number>(0);
-    const [sumCoins, setSumCoins] = useState<number>(0);
+    const [rewardCoins, setRewardCoins] = useState<number>(0);
+    const [scoreCoins, setScoreCoins] = useState<number>(0);
     const [clicks, setClicks] = useState<{ id: number; x: number; y: number }[]>([]);
     const [nextId, setNextId] = useState<number>(0);
     const [gameStarted, setGameStarted] = useState<boolean>(false);
@@ -65,7 +66,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         }
 
         setCoins(prevCoins => prevCoins + totalCoins);
-        setSumCoins(prevCoins => prevCoins + totalCoins);
+        setScoreCoins(prevCoins => prevCoins + totalCoins);
+        setRewardCoins(prevCoins => prevCoins + totalCoins);
         setClicks(prevClicks => [...prevClicks, ...newClicks]);
         setNextId(prevId => prevId + touchCount);
 
@@ -104,7 +106,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             const newClick = { id: nextId, x, y };
 
             setCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1)); // Умножаем на 2, если multiplier === true
-            setSumCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1));
+            setRewardCoins(prevCoins => prevCoins + coinsPerClick * (multiplier ? 2 : 1));
+            setScoreCoins(prevCoins => prevCoins + coinsPerClick);
             setClicks(prevClicks => [...prevClicks, newClick]);
             setNextId(prevId => prevId + 1);
 
@@ -132,7 +135,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setShowClaimButton(false);
         setCoins(0);
         setBonusCoins(0);
-        setSumCoins(0);
+        setRewardCoins(0);
+        setScoreCoins(0);
         setClicks([]);
     };
 
@@ -167,7 +171,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 
     const handleObjectCatch = (coinsToAdd: number) => {
         setBonusCoins(prevCoins => prevCoins + coinsToAdd * (multiplier ? 2 : 1));
-        setSumCoins(prevCoins => prevCoins + coinsToAdd * (multiplier ? 2 : 1));
+        setRewardCoins(prevCoins => prevCoins + coinsToAdd * (multiplier ? 2 : 1));
+        setScoreCoins(prevCoins => prevCoins + coinsToAdd);
     };
 
     return (
@@ -198,10 +203,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         <div className='farm-panel'>
                             <div className='farm-container'>
                                 <div className='count-coins'>Bonus: {bonusCoins}</div>
+                                <div className='count-coins'>Coins: {coins}</div>
+                                <div className='count-coins'>Bonus: {scoreCoins}</div>
                             </div>
                             <div className='farm-container'>
                                 <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
-                                    <div className="coins">{sumCoins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+                                    <div className="coins">{rewardCoins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
                                     {multiplier && <div className="multiplier">x2</div>}
                                 </div>
                                 <div className="time-left">{timeLeft}s</div>
@@ -261,7 +268,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                         <div className='rewards'>
                             <div className='rewards-title'>Congratulations</div>
                             <div className='rewards-coins'>
-                                {coins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                                {rewardCoins.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                             </div>
                             <div className='rewards-actions'>
                                 <Button text="Buy x2" custom={true} onClick={handleClaimClick} />
