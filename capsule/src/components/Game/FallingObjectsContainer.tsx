@@ -98,9 +98,9 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
 
                 onCatch(50 + bonusPoints); // Add the bonus points
                 // Pass the bonus points to the floating numbers
-                setObjects(prevObjects => prevObjects.map(obj =>
+                return updatedObjects.map(obj =>
                     obj.id === id ? { ...obj, bonusPoints } : obj
-                ));
+                );
             }
             return updatedObjects;
         });
