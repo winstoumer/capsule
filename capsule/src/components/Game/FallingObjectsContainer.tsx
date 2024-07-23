@@ -76,10 +76,18 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
     const handleObjectCatch = useCallback((id: number) => {
         setObjects(prevObjects =>
             prevObjects.map(obj =>
-                obj.id === id ? { ...obj, falling: false, caught: true } : obj
+                obj.id === id ? { ...obj, caught: true } : obj
             )
         );
         onCatch(50);
+        // Delay setting the falling to false to allow the floating number animation to complete
+        setTimeout(() => {
+            setObjects(prevObjects =>
+                prevObjects.map(obj =>
+                    obj.id === id ? { ...obj, falling: false } : obj
+                )
+            );
+        }, 3000); // match the duration of the floating number animation
     }, [onCatch]);
 
     return (
@@ -90,6 +98,7 @@ const FallingObjectsContainer: React.FC<FallingObjectsContainerProps> = ({ onCat
                     onCatch={() => handleObjectCatch(obj.id)}
                     position={{ top: obj.top, left: obj.left }}
                     falling={obj.falling}
+                    caught={obj.caught}
                 />
             ))}
         </>

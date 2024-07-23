@@ -5,9 +5,10 @@ interface FallingObjectProps {
     onCatch: () => void;
     position: { top: number; left: number };
     falling: boolean;
+    caught: boolean;
 }
 
-const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling }) => {
+const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, falling, caught }) => {
     const [isCaught, setIsCaught] = useState(false);
     const [floatingNumbers, setFloatingNumbers] = useState<{ x: number; y: number }[]>([]);
 
@@ -38,7 +39,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     return (
         <>
             <div
-                className={`falling-object ${isCaught ? 'caught' : ''}`}
+                className={`falling-object ${caught ? 'caught' : ''}`}
                 style={{ top: `${position.top}%`, left: `${position.left}%` }}
                 onMouseDown={handleCatch}
                 onTouchStart={handleCatch}
