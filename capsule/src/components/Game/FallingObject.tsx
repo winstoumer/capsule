@@ -13,7 +13,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
     const [floatingNumbers, setFloatingNumbers] = useState<{ x: number; y: number }[]>([]);
 
     const handleCatch = useCallback((e: React.MouseEvent | React.TouchEvent) => {
-        if (!isCaught) {
+        if (!isCaught && !caught) {
             setIsCaught(true);
             onCatch();
 
@@ -22,7 +22,7 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
 
             setFloatingNumbers([...floatingNumbers, { x: clickX, y: clickY }]);
         }
-    }, [isCaught, onCatch, floatingNumbers]);
+    }, [isCaught, onCatch, floatingNumbers, caught]);
 
     useEffect(() => {
         if (isCaught) {
