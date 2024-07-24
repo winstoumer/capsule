@@ -14,18 +14,19 @@ header {
 .header-profile {
     font-size: 22px;
     font-weight: 600;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: left;
+    gap: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2px;
 }
 
 .name {
-    font-size: 22px;
-    font-weight: 600;
+    font-size: 20px;
+    font-weight: 500;
 }
 
 .username {
@@ -39,6 +40,9 @@ header {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .my-address {
