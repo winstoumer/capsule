@@ -83,6 +83,7 @@ const HomePage: React.FC = () => {
             : "0"}
         </Balance>
         <SwipeableList items={items} />
+        <div></div>
       </div>
     </PageComponent>
   );
