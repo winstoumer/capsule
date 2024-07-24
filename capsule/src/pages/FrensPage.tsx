@@ -8,7 +8,7 @@ const FrensPage: React.FC = () => {
     return (
         <PageComponent title='Frens'>
             <div className='subtitle'>
-                For each invitee +50 P.
+                For each invitee +500 P.
             </div>
             <Referral />
         </PageComponent>
