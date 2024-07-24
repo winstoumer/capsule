@@ -1,12 +1,12 @@
 import React from 'react';
-import './Button.scss'; // Import the SCSS styles
+import './Button.scss';
 
 interface ButtonProps {
   onClick?: () => void; // Make onClick optional
   background?: string;
   text: string | JSX.Element;
   custom?: boolean;
-  disabled?: boolean; // New prop for disabling the button invisibly
+  disabled?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
