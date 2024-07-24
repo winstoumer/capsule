@@ -21,7 +21,7 @@ const AppWrapper: React.FC = () => {
 
   const handleClick = () => {
     const contentElement = document.querySelector('.content');
-  
+
     if (contentElement) {
       contentElement.classList.add('slideDown');
       setTimeout(() => {
@@ -160,7 +160,7 @@ function App() {
             universalLink: "https://wallet.ton.org/ton-connect",
             jsBridgeKey: "tonwallet",
             bridgeUrl: "https://bridge.tonapi.io/bridge",
-            platforms: ["chrome", "android", "ios"]
+            platforms: ["chrome", "android"]
           },
           {
             appName: "nicegramWallet",
@@ -183,6 +183,32 @@ function App() {
             platforms: ["chrome", "safari", "ios", "android"],
             universalLink: "https://app.binance.com/cedefi/ton-connect"
           },
+          {
+            appName: "okxTonWallet2",
+            name: "New OKX Wallet",
+            imageUrl: "https://static.okx.com/cdn/assets/imgs/247/58E63FEA47A2B7D7.png",
+            aboutUrl: "https://www.okx.com/web3",
+            universalLink: "https://www.okx.com/ul/uYJPB0",
+            bridgeUrl: "https://www.okx.com/tonbridge/discover/rpc/bridge",
+            jsBridgeKey: "okxTonWallet",
+            platforms: ["chrome", "safari", "firefox", "ios", "android"]
+          },
+          {
+            appName: "okxTonWalletTr2",
+            name: "New OKX TR Wallet",
+            imageUrl: "https://static.okx.com/cdn/assets/imgs/247/587A8296F0BB640F.png",
+            aboutUrl: "https://tr.okx.com/web3",
+            universalLink: "https://tr.okx.com/ul/uYJPB0?entityId=5",
+            jsBridgeKey: "okxTonWallet",
+            bridgeUrl: "https://www.okx.com/tonbridge/discover/rpc/bridge",
+            platforms: [
+              "chrome",
+              "safari",
+              "firefox",
+              "ios",
+              "android"
+            ]
+          }
         ]
       }}
       actionsConfiguration={{
