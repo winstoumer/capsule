@@ -92,7 +92,7 @@ export const Header: React.FC = () => {
                 <div className="header-profile">
                     {userData ? (
                         <>
-                            <span>{userData.first_name}</span>
+                            <span className='name'>{userData.first_name}</span>
                             <span className='username'>{userData.username}</span>
                         </>
                     ) : (
