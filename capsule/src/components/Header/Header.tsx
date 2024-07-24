@@ -89,9 +89,12 @@ export const Header: React.FC = () => {
     return (
         <header>
             <div className='header-width'>
-                <div className="first-name">
+                <div className="header-profile">
                     {userData ? (
-                        <>{userData.first_name}</>
+                        <>
+                            <span>{userData.first_name}</span>
+                            <span className='username'>{userData.username}</span>
+                        </>
                     ) : (
                         <span></span>
                     )}
