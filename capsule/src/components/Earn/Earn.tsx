@@ -8,7 +8,7 @@ import Loading from '../Loading/Loading';
 interface Task {
     id: number;
     name: string;
-    reward: string;
+    reward: number;
     active: boolean;
     link: string;
     ready: boolean;
@@ -114,7 +114,7 @@ export const Earn = () => {
                             <div className='item-center-container'>
                                 <Title>{task.name}</Title>
                                 <Subtitle>
-                                    <span>+{task.reward} P</span>
+                                    <span>+{task.reward.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} P</span>
                                 </Subtitle>
                             </div>
                             <Right>
