@@ -29,6 +29,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [coinContainerClicked, setCoinContainerClicked] = useState<boolean>(false);
     const [progressBarColor, setProgressBarColor] = useState<string>('');
 
+    const [isClaimDisabled, setClaimDisabled] = useState(false);
+
     //const navigate = useNavigate();
     const activeTouches = useRef<Set<number>>(new Set());
     const buttonRef = useRef<HTMLButtonElement>(null);
@@ -143,6 +145,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     };
 
     const handleClaimClick = async (coins: number) => {
+        setClaimDisabled(true);
         try {
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
         } catch (error) {
@@ -293,7 +296,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>Score: <span className='purple-color'>{scoreCoins}</span></div>
                             </div>
                             <div className='rewards-actions'>
-                                <Button text="Claim" custom={true} onClick={() => handleClaimClick(rewardCoins)} />
+                                <Button text="Claim" custom={true} onClick={() => handleClaimClick(rewardCoins)} disabled={isClaimDisabled} />
                             </div>
                         </div>
                     </>
