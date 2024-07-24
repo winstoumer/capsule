@@ -26,10 +26,10 @@ const FallingObject: React.FC<FallingObjectProps> = memo(({ onCatch, position, f
             } else if (fallDuration <= 2) {
                 additionalScore = 6;
             } else if (fallDuration <= 3) {
-                additionalScore = 3;
+                additionalScore = 2;
             }
 
-            const totalScore = 50 + additionalScore;
+            const totalScore = 30 + additionalScore;
             onCatch(totalScore);
 
             const clickX = 'clientX' in e ? e.clientX : e.touches[0].clientX;

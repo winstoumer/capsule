@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './game.scss';
-import { Link, useNavigate } from 'react-router-dom';
+//import { useNavigate } from 'react-router-dom';
 import Button from '../Default/Button';
 import FallingObjectsContainer from './FallingObjectsContainer';
 import axios from 'axios';
@@ -29,7 +29,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const [coinContainerClicked, setCoinContainerClicked] = useState<boolean>(false);
     const [progressBarColor, setProgressBarColor] = useState<string>('');
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const activeTouches = useRef<Set<number>>(new Set());
     const buttonRef = useRef<HTMLButtonElement>(null);
 
@@ -41,9 +41,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         }
     }, []);
 
-    const handleLink = (link: string) => {
-        navigate(link);
-    };
+    //const handleLink = (link: string) => {
+    //    navigate(link);
+    //};
 
     const isWithinCircle = (x: number, y: number) => {
         const centerX = 140; // Адаптировано под размеры кнопки
@@ -205,7 +205,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                 <div className='panel-wrapper'>
                     <div className='nav-wrapper'>
                         {coins}{bonusCoins}
-                        <Link to="/boostgame" className='n-ic'>🚀</Link>
                     </div>
                     <div className="progress-bar-wrapper">
                         <div className={`progress-bar-container ${progressBarColor}`}>
@@ -219,7 +218,6 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     <>
                         <div className='game-panel-container'>
                             <Button text="Play" custom={true} onClick={handleStartClick} />
-                            <Button text="Leaderboard" onClick={() => handleLink("/leaderboard")} />
                         </div>
                     </>
                 )}

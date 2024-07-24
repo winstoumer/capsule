@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import FallingObject from './FallingObject';
 
-const MAX_OBJECTS = 15;
+const MAX_OBJECTS = 18;
 const MAX_SIMULTANEOUS_OBJECTS = 2;
 const FALL_INTERVAL = 40;
 const TOTAL_DURATION = 30 * 1000;
