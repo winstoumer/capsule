@@ -74,30 +74,31 @@ body {
 
 /* end scroll */
 
-.default-page {
-  width: 100%;
-  height: 100%;
-}
-
 /* Content with animation */
 .content {
+  padding-left: 15px;
+  padding-right: 15px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  height: 100%;
-  padding: 0 15px;
-  z-index: 1;
-  /* Начальные стили для анимации */
-  opacity: 0;
   transform: translateY(30px);
   animation: slideUp 0.8s forwards;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  z-index: 1;
 }
 
 /* Определение анимации */
 @keyframes slideUp {
-  to {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
     opacity: 1;
     transform: translateY(0);
   }
@@ -108,12 +109,22 @@ body {
 }
 
 @keyframes slideDown {
-  to {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  100% {
     opacity: 0;
     transform: translateY(30px);
   }
 }
 /* End Content with animation */
+
+.default-page {
+  width: 100%;
+  height: 100%;
+}
 
 /* buttons */
 button {
