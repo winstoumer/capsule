@@ -17,6 +17,9 @@
   -webkit-user-select: none;
   -ms-user-select: none;
 
+  /* Colors */
+  --night-purple: #191219;
+
   --general-color-blue: #4c2efc;
   --general-color-darkblue: #05002c;
 
