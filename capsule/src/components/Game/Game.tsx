@@ -5,6 +5,7 @@ import Button from '../Default/Button';
 import FallingObjectsContainer from './FallingObjectsContainer';
 import axios from 'axios';
 import { usePortal } from '../PortalContext/PortalContext';
+import PortalGuard from './PortalGuard';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -208,108 +209,106 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
 
     return (
         <>
-            {isOpen && (
-                <>
-                    {gameStarted && (
-                        <div className='panel-wrapper'>
-                            <div className='nav-wrapper'>
-                                {coins}{bonusCoins}
-                            </div>
-                            <div className="progress-bar-wrapper">
-                                <div className={`progress-bar-container ${progressBarColor}`}>
-                                    <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
-                                </div>
+            <PortalGuard>
+                {gameStarted && (
+                    <div className='panel-wrapper'>
+                        <div className='nav-wrapper'>
+                            {coins}{bonusCoins}
+                        </div>
+                        <div className="progress-bar-wrapper">
+                            <div className={`progress-bar-container ${progressBarColor}`}>
+                                <div className="progress-bar" style={{ width: `${(timeLeft / duration) * 100}%` }} />
                             </div>
                         </div>
+                    </div>
+                )}
+                <div className="game">
+                    {!gameStarted && !showClaimButton && (
+                        <div className='game-panel-container'>
+                            <Button text="Play" custom={true} onClick={handleStartClick} />
+                        </div>
                     )}
-                    <div className="game">
-                        {!gameStarted && !showClaimButton && (
-                            <div className='game-panel-container'>
-                                <Button text="Play" custom={true} onClick={handleStartClick} />
-                            </div>
-                        )}
-                        {gameStarted && (
-                            <>
-                                <div className='farm-panel'>
-                                    <div className='farm-container'>
-                                        <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
-                                            <div className="coins">{rewardCoins.toLocaleString(undefined)}</div>
-                                            {multiplier && <div className="multiplier">x2</div>}
-                                        </div>
-                                        <div className="time-left">{timeLeft}s</div>
+                    {gameStarted && (
+                        <>
+                            <div className='farm-panel'>
+                                <div className='farm-container'>
+                                    <div className={`coins-container ${coinContainerClicked ? 'scaled' : ''}`}>
+                                        <div className="coins">{rewardCoins.toLocaleString(undefined)}</div>
+                                        {multiplier && <div className="multiplier">x2</div>}
                                     </div>
-                                    <div className='farm-container'>
-                                        <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>
-                                            Score: <span className='purple-color'>{scoreCoins}</span>
-                                        </div>
-                                    </div>
+                                    <div className="time-left">{timeLeft}s</div>
                                 </div>
-                                <div className="clicks-wrapper">
-                                    <div className="button-game-container">
-                                        <button
-                                            ref={buttonRef}
-                                            className={`button-game ${circleScale ? 'scaled' : ''}`}
-                                            onMouseDown={handleButtonClick}
-                                            onTouchStart={handleTouchStart}
-                                            onTouchEnd={handleTouchEnd}
-                                            style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
-                                        >
-                                            {/* Ваш SVG код здесь */}
-                                            <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
-                                                <defs>
-                                                    {/* Градиент для сияющего эффекта */}
-                                                    <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                                                        <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
-                                                        <stop offset="70%" style={{ stopColor: 'transparent', stopOpacity: 0.5 }} />
-                                                        <stop offset="100%" style={{ stopColor: 'transparent', stopOpacity: 0 }} />
-                                                    </radialGradient>
-                                                </defs>
-                                                {/* Фон */}
-                                                <rect width="100%" height="100%" fill="transparent" />
-                                                {/* Черная дыра */}
-                                                <circle cx="140" cy="140" r="70" fill="black" />
-                                                {/* Анимированное сияние */}
-                                                <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
-                                                    <animate attributeName="r" dur="10s" values="220; 220; 220" repeatCount="indefinite" />
-                                                    <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
-                                                    <animateTransform attributeName="transform" type="rotate" dur="4s" from="360 100 140" to="360 100 140" repeatCount="indefinite" />
-                                                </circle>
-                                                {/* Черный круг внутри сияющего эффекта */}
-                                                <circle cx="140" cy="140" r="54" fill="black" />
-                                            </svg>
-                                            {/* Конец SVG кода */}
-                                            {clicks.map((click) => (
-                                                <div
-                                                    key={click.id}
-                                                    className="floating-number"
-                                                    style={{ left: click.x, top: click.y }}
-                                                >
-                                                    {coinsPerClick * (multiplier ? 2 : 1)}
-                                                </div>
-                                            ))}
-                                        </button>
-                                        <FallingObjectsContainer onCatch={handleObjectCatch} />
-                                    </div>
-                                </div>
-                            </>
-                        )}
-                        {!gameStarted && showClaimButton && (
-                            <div className='rewards'>
-                                <div className='rewards-title'>Reward</div>
-                                <div className='rewards-coins'>
-                                    {rewardCoins.toLocaleString(undefined)}
+                                <div className='farm-container'>
                                     <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>
                                         Score: <span className='purple-color'>{scoreCoins}</span>
                                     </div>
                                 </div>
-                                <div className='rewards-actions'>
-                                    <Button text="Claim" custom={true} onClick={() => handleClaimClick(rewardCoins)} disabled={isClaimDisabled} />
+                            </div>
+                            <div className="clicks-wrapper">
+                                <div className="button-game-container">
+                                    <button
+                                        ref={buttonRef}
+                                        className={`button-game ${circleScale ? 'scaled' : ''}`}
+                                        onMouseDown={handleButtonClick}
+                                        onTouchStart={handleTouchStart}
+                                        onTouchEnd={handleTouchEnd}
+                                        style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
+                                    >
+                                        {/* Ваш SVG код здесь */}
+                                        <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+                                            <defs>
+                                                {/* Градиент для сияющего эффекта */}
+                                                <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+                                                    <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
+                                                    <stop offset="70%" style={{ stopColor: 'transparent', stopOpacity: 0.5 }} />
+                                                    <stop offset="100%" style={{ stopColor: 'transparent', stopOpacity: 0 }} />
+                                                </radialGradient>
+                                            </defs>
+                                            {/* Фон */}
+                                            <rect width="100%" height="100%" fill="transparent" />
+                                            {/* Черная дыра */}
+                                            <circle cx="140" cy="140" r="70" fill="black" />
+                                            {/* Анимированное сияние */}
+                                            <circle cx="140" cy="140" r="140" fill="url(#glowGradient)">
+                                                <animate attributeName="r" dur="10s" values="220; 220; 220" repeatCount="indefinite" />
+                                                <animate attributeName="opacity" dur="2s" values="1; 0.5; 1" repeatCount="indefinite" />
+                                                <animateTransform attributeName="transform" type="rotate" dur="4s" from="360 100 140" to="360 100 140" repeatCount="indefinite" />
+                                            </circle>
+                                            {/* Черный круг внутри сияющего эффекта */}
+                                            <circle cx="140" cy="140" r="54" fill="black" />
+                                        </svg>
+                                        {/* Конец SVG кода */}
+                                        {clicks.map((click) => (
+                                            <div
+                                                key={click.id}
+                                                className="floating-number"
+                                                style={{ left: click.x, top: click.y }}
+                                            >
+                                                {coinsPerClick * (multiplier ? 2 : 1)}
+                                            </div>
+                                        ))}
+                                    </button>
+                                    <FallingObjectsContainer onCatch={handleObjectCatch} />
                                 </div>
                             </div>
-                        )}
-                    </div>
-                </>
-            )}
+                        </>
+                    )}
+                    {!gameStarted && showClaimButton && (
+                        <div className='rewards'>
+                            <div className='rewards-title'>Reward</div>
+                            <div className='rewards-coins'>
+                                {rewardCoins.toLocaleString(undefined)}
+                                <div className={`count-coins ${coinContainerClicked ? 'scaled' : ''}`}>
+                                    Score: <span className='purple-color'>{scoreCoins}</span>
+                                </div>
+                            </div>
+                            <div className='rewards-actions'>
+                                <Button text="Claim" custom={true} onClick={() => handleClaimClick(rewardCoins)} disabled={isClaimDisabled} />
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </PortalGuard>
         </>
     );
 };
