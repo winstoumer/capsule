@@ -11,7 +11,7 @@ interface ButtonProps {
 
 const Button: React.FC<ButtonProps> = ({
   onClick,
-  background = 'var(--night-purple)',
+  background = 'transparent',
   text,
   custom = false,
   disabled = false // Default to false
