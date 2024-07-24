@@ -19,9 +19,8 @@
 
   /* Colors */
   --night-purple: #191219;
+  --neon-purple: #CF00F8;
 
-  --general-color-blue: #4c2efc;
-  --general-color-darkblue: #05002c;
 
   --color-text-info: #4a5054;
 }
@@ -48,7 +47,7 @@ body {
 }
 
 .purple-color {
-  color: #CF00F8;
+  color: var(--neon-purple);
 }
 
 /* scroll */
@@ -75,21 +74,12 @@ body {
 
 /* end scroll */
 
-/* colors */
-.color-yellow {
-  color: yellow;
+.default-page {
+  width: 100%;
+  height: 100%;
 }
 
-.color-purple {
-  color: purple;
-}
-
-.color-blue {
-  color: var(--general-color-blue);
-}
-
-/* end colors */
-
+/* Content with animation */
 .content {
   position: relative;
   display: flex;
@@ -97,8 +87,7 @@ body {
   justify-content: space-between;
   align-items: center;
   height: 100%;
-  padding-left: 15px;
-  padding-right: 15px;
+  padding: 0 15px;
   z-index: 1;
   /* Начальные стили для анимации */
   opacity: 0;
@@ -108,12 +97,7 @@ body {
 
 /* Определение анимации */
 @keyframes slideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  100% {
+  to {
     opacity: 1;
     transform: translateY(0);
   }
@@ -124,28 +108,22 @@ body {
 }
 
 @keyframes slideDown {
-  0% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  100% {
+  to {
     opacity: 0;
     transform: translateY(30px);
   }
 }
-
-.default-page {
-  width: 100%;
-  height: 100%;
-}
+/* End Content with animation */
 
 /* buttons */
 button {
   font-family: inherit;
   cursor: pointer;
+  background-color: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 0;
 }
-
 /* end buttons */
 
 @media (prefers-color-scheme: light) {
@@ -155,10 +133,6 @@ button {
   }
 
   a:hover {
-    color: var(--general-color-blue);
-  }
-
-  button {
-    background-color: #f9f9f9;
+    color: var(--neon-purple);
   }
 }
