@@ -143,6 +143,8 @@ button {
   :root {
     color: white;
     background-color: black;
+    
+    --night--blue: #121619;
   }
 
   a:hover {
