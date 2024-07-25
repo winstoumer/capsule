@@ -125,7 +125,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                     maxWidth: '100vw',
                 }}
             >
-                <div className="arrow arrow-left" onClick={slidePrev}>
+                <div className="arrow arrow-left border-button" onClick={slidePrev}>
                     <PreviousArrow />
                 </div>
                 <div
@@ -162,7 +162,7 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                         </div>
                     ))}
                 </div>
-                <div className="arrow arrow-right" onClick={slideNext}>
+                <div className="arrow arrow-right border-button" onClick={slideNext}>
                     <NextArrow />
                 </div>
                 <div className="indicators">
