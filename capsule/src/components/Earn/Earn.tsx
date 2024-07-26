@@ -42,6 +42,10 @@ export const Earn = () => {
     }, [userData]);
 
     useEffect(() => {
+        console.log("Updated invitedCount:", invitedCount);
+    }, [invitedCount]);
+
+    useEffect(() => {
         const completedTasks = tasks.filter(task => !task.active || task.ready);
         setCompletedCount(completedTasks.length);
     }, [tasks]);
