@@ -6,6 +6,7 @@ import { useData } from '../components/DataProvider/DataContext';
 import Loading from '../components/Loading/Loading';
 import Balance from '../components/Balance/Balance';
 import SwipeableList from '../components/SwipeableList/SwipeableList';
+import NumericValue from '../components/Default/NumericValue';
 
 const SvgLogo = (
   <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
@@ -78,9 +79,7 @@ const HomePage: React.FC = () => {
       <Header />
       <div className='general'>
         <Balance>
-          {balanceData !== null && balanceData !== undefined
-            ? balanceData.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: 0 })
-            : "0"}
+          <NumericValue value={balanceData} />
         </Balance>
         <SwipeableList items={items} />
         <div></div>
