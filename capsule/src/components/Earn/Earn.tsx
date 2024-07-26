@@ -78,6 +78,16 @@ export const Earn = () => {
         }
     };
 
+    useEffect(() => {
+        if (userData && userData.id) {
+            const fetchData = async () => {
+                await fetchInvitedCount(userData.id.toString());
+                await fetchTasks(userData.id.toString());
+            };
+            fetchData();
+        }
+    }, [userData]);
+
     const fetchInvitedCount = async (telegramUserId: string) => {
         try {
             const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
