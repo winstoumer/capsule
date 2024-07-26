@@ -5,6 +5,7 @@ import ButtonArrow from '../Default/ButtonArrow';
 import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
 import Loading from '../Loading/Loading';
 import Progress from './Progress';
+import NumericValue from '../Default/NumericValue';
 
 interface Task {
     id: number;
@@ -147,6 +148,7 @@ export const Earn = () => {
                                         current_progress={task.current_progress}
                                     />
                                     <span>
+                                        <NumericValue value={task.reward} />
                                         +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'} P
                                     </span>
                                 </Subtitle>
