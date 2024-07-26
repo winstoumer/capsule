@@ -19,10 +19,11 @@ export const Earn = () => {
     const [userData, setUserData] = useState<any>(null);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
-    //const [totalReward, setTotalReward] = useState<number>(0);
     const [completedCount, setCompletedCount] = useState<number>(0);
+    const [invitedCount, setInvitedCount] = useState<number>(0);
 
     const apiUrl = import.meta.env.VITE_API_URL;
+    const INVITE_TASK_ID = 9; // The ID of the "Invite Friends" task
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -33,19 +34,11 @@ export const Earn = () => {
     useEffect(() => {
         if (userData && userData.id) {
             fetchTasks(userData.id.toString());
+            fetchInvitedCount(userData.id.toString());
         }
     }, [userData]);
 
-    //useEffect(() => {
-    // Calculate the total reward of completed tasks
-    //const completedReward = tasks
-    //.filter(task => !task.active || task.ready)
-    //.reduce((sum, task) => sum + parseFloat(task.reward), 0);
-    //setTotalReward(completedReward);
-    //}, [tasks]);
-
     useEffect(() => {
-        // Calculate completed tasks count
         const completedTasks = tasks.filter(task => !task.active || task.ready);
         setCompletedCount(completedTasks.length);
     }, [tasks]);
@@ -53,17 +46,59 @@ export const Earn = () => {
     const fetchTasks = async (telegramUserId: string) => {
         try {
             const response = await axios.get(`${apiUrl}/api/task/${telegramUserId}`);
-            setTasks(response.data);
+            const data = response.data;
+
+            // Modify or add the "Invite Friends" task based on the invite count
+            const inviteTaskIndex = data.findIndex((task: Task) => task.id === INVITE_TASK_ID);
+            const inviteTask = {
+                id: INVITE_TASK_ID,
+                name: `Invite ${invitedCount}/5 frens`,
+                reward: 50000,
+                active: invitedCount < 5,
+                link: "/frens", // replace with the actual link
+                ready: invitedCount >= 5,
+                icon: "https://i.ibb.co/QQjFnL4/Untitled.png", // replace with the actual icon path
+            };
+
+            if (inviteTaskIndex !== -1) {
+                data[inviteTaskIndex] = inviteTask;
+            } else {
+                data.push(inviteTask);
+            }
+
+            setTasks(data);
         } catch (error) {
-            console.error('Ошибка при загрузке списка задач:', error);
+            console.error('Error fetching tasks:', error);
         } finally {
             setLoading(false);
         }
     };
 
-    const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
-        window.location.href = taskLink;
+    const fetchInvitedCount = async (telegramUserId: string) => {
         try {
+            const response = await axios.get(`${apiUrl}/api/referral/${telegramUserId}`);
+            if (!response.data) {
+                throw new Error('Error fetching invited count');
+            }
+            setInvitedCount(response.data.invitedCount);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
+        // Special case for the "Invite Friends" task
+        if (taskId === INVITE_TASK_ID && invitedCount < 5) {
+            console.log('You need to invite more friends to complete this task.');
+            return; // Prevent marking the task as complete
+        }
+    
+        // Redirect to the task link (if applicable)
+        window.location.href = taskLink;
+    
+        try {
+            // Only mark the task as complete if the task is not "Invite Friends"
+            // or if it is, then it must have invitedCount >= 5
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
             fetchTasks(userData.id.toString());
@@ -71,6 +106,7 @@ export const Earn = () => {
             console.error('Error:', error);
         }
     };
+    
 
     if (loading) {
         return <Loading />;
@@ -96,6 +132,13 @@ export const Earn = () => {
         </span>
     );
 
+    // Sort tasks, placing completed tasks at the end
+    const sortedTasks = tasks.sort((a, b) => {
+        const isACompleted = !a.active || a.ready;
+        const isBCompleted = !b.active || b.ready;
+        return isACompleted === isBCompleted ? 0 : isACompleted ? 1 : -1;
+    });
+
     return (
         <>
             <div className='task-completion-container'>
@@ -105,10 +148,10 @@ export const Earn = () => {
                 </div>
             </div>
             <List>
-                {tasks.map((task) => (
+                {sortedTasks.map((task) => (
                     <Item key={task.id}>
                         <Icon>
-                            <img src={task.icon} alt={task.icon} className='item-icon' />
+                            <img src={task.icon} alt={task.name} className='item-icon' />
                         </Icon>
                         <div className='item-wrapper'>
                             <div className='item-center-container'>
