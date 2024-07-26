@@ -20,7 +20,7 @@ export const Earn = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
     const [completedCount, setCompletedCount] = useState<number>(0);
-    const [invitedCount, setInvitedCount] = useState<number>(0);
+    const [invitedCount, setInvitedCount] = useState<number | null>(null);
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const INVITE_TASK_ID = 9; // The ID of the "Invite Friends" task
@@ -53,20 +53,23 @@ export const Earn = () => {
 
             // Modify or add the "Invite Friends" task based on the invite count
             const inviteTaskIndex = data.findIndex((task: Task) => task.id === INVITE_TASK_ID);
-            const inviteTask = {
-                id: INVITE_TASK_ID,
-                name: `Invite ${invitedCount}/5 frens`,
-                reward: 50000, // Ensure reward is a valid number
-                active: invitedCount < 5,
-                ready: invitedCount >= 5,
-                link: "/frens",
-                icon: "https://i.ibb.co/QQjFnL4/Untitled.png", // Replace with actual icon path
-            };
+            if (invitedCount !== null) {
+                const inviteTask = {
+                    id: INVITE_TASK_ID,
+                    name: `Invite ${invitedCount || 0}/5 frens`,
+                    reward: 50000, // Ensure reward is a valid number
+                    active: invitedCount < 5,
+                    ready: invitedCount >= 5,
+                    link: "/frens",
+                    icon: "https://i.ibb.co/QQjFnL4/Untitled.png", // Replace with actual icon path
+                };
 
-            if (inviteTaskIndex !== -1) {
-                data[inviteTaskIndex] = inviteTask;
-            } else {
-                data.push(inviteTask);
+
+                if (inviteTaskIndex !== -1) {
+                    data[inviteTaskIndex] = inviteTask;
+                } else {
+                    data.push(inviteTask);
+                }
             }
 
             setTasks(data);
@@ -77,22 +80,24 @@ export const Earn = () => {
         }
     };
 
-
     const fetchInvitedCount = async (telegramUserId: string) => {
         try {
-            const response = await axios.get(`${apiUrl}/api/referral/${telegramUserId}`);
-            if (!response.data) {
-                throw new Error('Error fetching invited count');
+            const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Error');
             }
-            setInvitedCount(response.data.invitedCount);
+            const data = await response.json();
+            setInvitedCount(data.invitedCount);
         } catch (error) {
             console.error(error);
+        } finally {
+            setLoading(false);
         }
     };
 
     const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
         // Special case for the "Invite Friends" task
-        if (taskId === INVITE_TASK_ID && invitedCount < 5) {
+        if (invitedCount !== null && taskId === INVITE_TASK_ID && invitedCount < 5) {
             console.log('You need to invite more friends to complete this task.');
             return; // Prevent marking the task as complete
         }
