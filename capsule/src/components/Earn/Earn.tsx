@@ -53,8 +53,11 @@ export const Earn = () => {
             const inviteTask = {
                 id: INVITE_TASK_ID,
                 name: `Invite ${invitedCount}/5 frens`,
+                reward: 50000,
                 active: invitedCount < 5,
                 ready: invitedCount >= 5,
+                link: "/frens",
+                icon: "https://i.ibb.co/QQjFnL4/Untitled.png",
             };
 
             if (inviteTaskIndex !== -1) {
