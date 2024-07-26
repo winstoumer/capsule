@@ -14,8 +14,8 @@ interface Task {
     link: string;
     ready: boolean;
     icon: string;
-    required_progress?: number | null; // Added this field
-    current_progress?: number | null; // Added this field
+    required_progress?: number; // Optional, might be null or 0 in the database
+    current_progress?: number; // Optional, to track current progress
 }
 
 export const Earn = () => {
@@ -51,32 +51,13 @@ export const Earn = () => {
                         console.error('Invalid invited count value:', data.invitedCount);
                     }
 
-                    // Fetch tasks only after invited count is updated
+                    // Fetch tasks
                     const tasksResponse = await axios.get(`${apiUrl}/api/task/${userData.id}`);
                     const fetchedTasks = tasksResponse.data.map((task: Task) => ({
                         ...task,
                         reward: Number(task.reward) || 0,
+                        current_progress: task.id === INVITE_TASK_ID ? count : undefined, // Set progress only for the invite task
                     }));
-
-                    // Modify or add the "Invite Friends" task based on the invite count
-                    const inviteTaskIndex = fetchedTasks.findIndex((task: Task) => task.id === INVITE_TASK_ID);
-                    const inviteTask = {
-                        id: INVITE_TASK_ID,
-                        name: `Invite 5 frens`,
-                        reward: 50000,
-                        active: count < 5,
-                        ready: count >= 5,
-                        link: "/frens",
-                        icon: "https://i.ibb.co/QQjFnL4/Untitled.png",
-                        required_progress: 5, // Required progress for the invite task
-                        current_progress: count, // Current progress based on invited count
-                    };
-
-                    if (inviteTaskIndex !== -1) {
-                        fetchedTasks[inviteTaskIndex] = inviteTask;
-                    } else {
-                        fetchedTasks.push(inviteTask);
-                    }
 
                     setTasks(fetchedTasks);
                     setLoading(false);
