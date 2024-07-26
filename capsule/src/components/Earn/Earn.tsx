@@ -35,7 +35,6 @@ export const Earn = () => {
         if (userData && userData.id) {
             const fetchData = async () => {
                 await fetchInvitedCount(userData.id.toString());
-                await fetchTasks(userData.id.toString());
             };
             fetchData();
         }
@@ -48,6 +47,7 @@ export const Earn = () => {
                 throw new Error('Error fetching invited count');
             }
             const data = await response.json();
+            console.log('API data:', data); // Log the API response data
             const count = Number(data.invitedCount); // Convert to number
             if (!isNaN(count)) {
                 setInvitedCount(count);
@@ -56,18 +56,15 @@ export const Earn = () => {
             }
         } catch (error) {
             console.error('Error:', error);
-        } finally {
-            setLoading(false);
         }
     };
 
     useEffect(() => {
-        console.log("Updated invitedCount:", invitedCount);
+        console.log("Updated invitedCount:", invitedCount); // Log invitedCount changes
+        if (userData && userData.id) {
+            fetchTasks(userData.id.toString());
+        }
     }, [invitedCount]);
-    
-    useEffect(() => {
-        console.log("Updated tasks:", tasks);
-    }, [tasks]);
 
     useEffect(() => {
         const completedTasks = tasks.filter(task => !task.active || task.ready);
@@ -82,11 +79,13 @@ export const Earn = () => {
                 reward: Number(task.reward) || 0, // Ensure reward is a number
             }));
 
+            console.log('Tasks data before processing:', data); // Log the fetched tasks
+
             // Modify or add the "Invite Friends" task based on the invite count
             const inviteTaskIndex = data.findIndex((task: Task) => task.id === INVITE_TASK_ID);
             const inviteTask = {
                 id: INVITE_TASK_ID,
-                name: `Invite ${invitedCount}/5 frens`, // Use the correct invitedCount
+                name: `Invite ${invitedCount}/5 frens`,
                 reward: 50000,
                 active: invitedCount < 5,
                 ready: invitedCount >= 5,
@@ -99,6 +98,8 @@ export const Earn = () => {
             } else {
                 data.push(inviteTask);
             }
+
+            console.log('Tasks data after processing:', data); // Log the modified tasks
 
             setTasks(data);
         } catch (error) {
@@ -128,7 +129,6 @@ export const Earn = () => {
             console.error('Error:', error);
         }
     };
-
 
     if (loading) {
         return <Loading />;
