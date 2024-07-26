@@ -1,5 +1,5 @@
 import 'react';
-import './icon.scss';
+import './iconType.scss';
 
 // Определяем типы для поддерживаемых иконок
 type IconType = 'arrow-left' | 'arrow-right' | 'checkmark';
@@ -31,7 +31,7 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
     switch (type) {
         case 'arrow-left':
             return (
-                <span className='icon'>
+                <span className='icon-type'>
                     <svg
                         viewBox="0 0 24 24"
                         {...commonProps}
@@ -48,7 +48,7 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
             );
         case 'arrow-right':
             return (
-                <span className='icon'>
+                <span className='icon-type'>
                     <svg
                         viewBox="0 0 24 24"
                         {...commonProps}
@@ -65,7 +65,7 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
             );
         case 'checkmark':
             return (
-                <span className='icon'>
+                <span className='icon-type'>
                     <svg
                         viewBox="0 0 24 24"
                         {...commonProps}
