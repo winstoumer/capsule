@@ -180,7 +180,7 @@ export const Earn = () => {
                                 <Title>{task.name}</Title>
                                 <Subtitle>
                                     <span>
-                                        +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'} P
+                                        +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'}
                                     </span>
                                 </Subtitle>
                             </div>
