@@ -46,18 +46,21 @@ export const Earn = () => {
     const fetchTasks = async (telegramUserId: string) => {
         try {
             const response = await axios.get(`${apiUrl}/api/task/${telegramUserId}`);
-            const data = response.data;
+            const data = response.data.map((task: Task) => ({
+                ...task,
+                reward: Number(task.reward) || 0, // Ensure reward is a number
+            }));
 
             // Modify or add the "Invite Friends" task based on the invite count
             const inviteTaskIndex = data.findIndex((task: Task) => task.id === INVITE_TASK_ID);
             const inviteTask = {
                 id: INVITE_TASK_ID,
                 name: `Invite ${invitedCount}/5 frens`,
-                reward: 50000,
+                reward: 50000, // Ensure reward is a valid number
                 active: invitedCount < 5,
                 ready: invitedCount >= 5,
                 link: "/frens",
-                icon: "https://i.ibb.co/QQjFnL4/Untitled.png",
+                icon: "https://i.ibb.co/QQjFnL4/Untitled.png", // Replace with actual icon path
             };
 
             if (inviteTaskIndex !== -1) {
@@ -73,6 +76,7 @@ export const Earn = () => {
             setLoading(false);
         }
     };
+
 
     const fetchInvitedCount = async (telegramUserId: string) => {
         try {
@@ -92,10 +96,10 @@ export const Earn = () => {
             console.log('You need to invite more friends to complete this task.');
             return; // Prevent marking the task as complete
         }
-    
+
         // Redirect to the task link (if applicable)
         window.location.href = taskLink;
-    
+
         try {
             // Only mark the task as complete if the task is not "Invite Friends"
             // or if it is, then it must have invitedCount >= 5
@@ -106,7 +110,7 @@ export const Earn = () => {
             console.error('Error:', error);
         }
     };
-    
+
 
     if (loading) {
         return <Loading />;
@@ -157,7 +161,9 @@ export const Earn = () => {
                             <div className='item-center-container'>
                                 <Title>{task.name}</Title>
                                 <Subtitle>
-                                    <span>+{typeof task.reward === 'number' ? task.reward.toLocaleString(undefined) : 'N/A'} P</span>
+                                    <span>
+                                        +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'} P
+                                    </span>
                                 </Subtitle>
                             </div>
                             <Right>
