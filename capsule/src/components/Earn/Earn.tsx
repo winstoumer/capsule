@@ -154,7 +154,7 @@ export const Earn = () => {
                             <div className='item-center-container'>
                                 <Title>{task.name}</Title>
                                 <Subtitle>
-                                    <span>+{Number(task.reward.toLocaleString(undefined))} P</span>
+                                    <span>+{typeof task.reward === 'number' ? task.reward.toLocaleString(undefined) : 'N/A'} P</span>
                                 </Subtitle>
                             </div>
                             <Right>
