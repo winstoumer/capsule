@@ -13,7 +13,7 @@ const Progress: React.FC<ProgressProps> = ({ required_progress, current_progress
         <>
             {showProgress && (
                 <span className="progress-text">
-                    {current_progress ?? 0}/{required_progress}
+                    {current_progress ?? 0}/{required_progress},
                 </span>
             )}
         </>
