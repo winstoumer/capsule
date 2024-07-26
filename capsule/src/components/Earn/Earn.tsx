@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
-import ButtonArrow from '../Default/ButtonArrow';
 import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
 import Loading from '../Loading/Loading';
 import Progress from './Progress';
 import NumericValue from '../Default/NumericValue';
+import IconType from '../Default/IconType';
 
 interface Task {
     id: number;
@@ -98,26 +98,6 @@ export const Earn = () => {
         return <Loading />;
     }
 
-    const Completed = () => (
-        <span className='arrow-button border-button'>
-            <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M5 12L10 17L19 8"
-                    stroke="white"
-                    strokeWidth="0.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                />
-            </svg>
-        </span>
-    );
-
     // Sort tasks, placing completed tasks at the end
     const sortedTasks = tasks.sort((a, b) => {
         const isACompleted = !a.active || a.ready;
@@ -154,8 +134,8 @@ export const Earn = () => {
                             </div>
                             <Right>
                                 {!task.active || task.ready ?
-                                    <Completed /> :
-                                    <ButtonArrow arrowType='next' onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
+                                    <IconType type='checkmark' size={20} strokeColor='white' /> :
+                                    <IconType type='arrow-right' size={20} onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
                                 }
                             </Right>
                         </div>
