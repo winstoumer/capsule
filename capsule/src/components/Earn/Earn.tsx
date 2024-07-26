@@ -41,20 +41,21 @@ export const Earn = () => {
         }
     }, [userData]);
 
-    useEffect(() => {
-        console.log("Updated invitedCount:", invitedCount);
-    }, [invitedCount]);
-
     const fetchInvitedCount = async (telegramUserId: string) => {
         try {
             const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
             if (!response.ok) {
-                throw new Error('Error');
+                throw new Error('Error fetching invited count');
             }
             const data = await response.json();
-            setInvitedCount(data.invitedCount);
+            const count = Number(data.invitedCount); // Convert to number
+            if (!isNaN(count)) {
+                setInvitedCount(count);
+            } else {
+                console.error('Invalid invited count value:', data.invitedCount);
+            }
         } catch (error) {
-            console.error(error);
+            console.error('Error:', error);
         } finally {
             setLoading(false);
         }
@@ -75,22 +76,21 @@ export const Earn = () => {
 
             // Modify or add the "Invite Friends" task based on the invite count
             const inviteTaskIndex = data.findIndex((task: Task) => task.id === INVITE_TASK_ID);
-                const inviteTask = {
-                    id: INVITE_TASK_ID,
-                    name: `Invite ${invitedCount}/5 frens`,
-                    reward: 50000, // Ensure reward is a valid number
-                    active: invitedCount < 5,
-                    ready: invitedCount >= 5,
-                    link: "/frens",
-                    icon: "https://i.ibb.co/QQjFnL4/Untitled.png", // Replace with actual icon path
-                };
+            const inviteTask = {
+                id: INVITE_TASK_ID,
+                name: `Invite ${invitedCount}/5 frens`, // Use the correct invitedCount
+                reward: 50000,
+                active: invitedCount < 5,
+                ready: invitedCount >= 5,
+                link: "/frens",
+                icon: "https://i.ibb.co/QQjFnL4/Untitled.png", // Replace with actual icon path
+            };
 
-
-                if (inviteTaskIndex !== -1) {
-                    data[inviteTaskIndex] = inviteTask;
-                } else {
-                    data.push(inviteTask);
-                }
+            if (inviteTaskIndex !== -1) {
+                data[inviteTaskIndex] = inviteTask;
+            } else {
+                data.push(inviteTask);
+            }
 
             setTasks(data);
         } catch (error) {
