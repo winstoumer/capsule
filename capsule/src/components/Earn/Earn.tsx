@@ -20,7 +20,7 @@ export const Earn = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
     const [completedCount, setCompletedCount] = useState<number>(0);
-    const [invitedCount, setInvitedCount] = useState<number | null>(null);
+    const [invitedCount, setInvitedCount] = useState<number>(0);
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const INVITE_TASK_ID = 9; // The ID of the "Invite Friends" task
@@ -53,10 +53,9 @@ export const Earn = () => {
 
             // Modify or add the "Invite Friends" task based on the invite count
             const inviteTaskIndex = data.findIndex((task: Task) => task.id === INVITE_TASK_ID);
-            if (invitedCount !== null) {
                 const inviteTask = {
                     id: INVITE_TASK_ID,
-                    name: `Invite ${invitedCount || 0}/5 frens`,
+                    name: `Invite ${invitedCount}/5 frens`,
                     reward: 50000, // Ensure reward is a valid number
                     active: invitedCount < 5,
                     ready: invitedCount >= 5,
@@ -70,7 +69,6 @@ export const Earn = () => {
                 } else {
                     data.push(inviteTask);
                 }
-            }
 
             setTasks(data);
         } catch (error) {
