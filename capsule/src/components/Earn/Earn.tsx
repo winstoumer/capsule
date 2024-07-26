@@ -4,6 +4,7 @@ import './earn.scss';
 import ButtonArrow from '../Default/ButtonArrow';
 import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
 import Loading from '../Loading/Loading';
+import Progress from './Progress';
 
 interface Task {
     id: number;
@@ -13,6 +14,8 @@ interface Task {
     link: string;
     ready: boolean;
     icon: string;
+    required_progress?: number | null; // Added this field
+    current_progress?: number | null; // Added this field
 }
 
 export const Earn = () => {
@@ -59,12 +62,14 @@ export const Earn = () => {
                     const inviteTaskIndex = fetchedTasks.findIndex((task: Task) => task.id === INVITE_TASK_ID);
                     const inviteTask = {
                         id: INVITE_TASK_ID,
-                        name: `Invite ${count}/5 frens`,
+                        name: `Invite 5 frens`,
                         reward: 50000,
                         active: count < 5,
                         ready: count >= 5,
                         link: "/frens",
                         icon: "https://i.ibb.co/QQjFnL4/Untitled.png",
+                        required_progress: 5, // Required progress for the invite task
+                        current_progress: count, // Current progress based on invited count
                     };
 
                     if (inviteTaskIndex !== -1) {
@@ -156,6 +161,10 @@ export const Earn = () => {
                             <div className='item-center-container'>
                                 <Title>{task.name}</Title>
                                 <Subtitle>
+                                    <Progress
+                                        required_progress={task.required_progress}
+                                        current_progress={task.current_progress}
+                                    />
                                     <span>
                                         +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'} P
                                     </span>
