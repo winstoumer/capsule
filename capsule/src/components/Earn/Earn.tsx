@@ -33,8 +33,11 @@ export const Earn = () => {
 
     useEffect(() => {
         if (userData && userData.id) {
-            fetchTasks(userData.id.toString());
-            fetchInvitedCount(userData.id.toString());
+            const fetchData = async () => {
+                await fetchInvitedCount(userData.id.toString());
+                await fetchTasks(userData.id.toString());
+            };
+            fetchData();
         }
     }, [userData]);
 
@@ -77,16 +80,6 @@ export const Earn = () => {
             setLoading(false);
         }
     };
-
-    useEffect(() => {
-        if (userData && userData.id) {
-            const fetchData = async () => {
-                await fetchInvitedCount(userData.id.toString());
-                await fetchTasks(userData.id.toString());
-            };
-            fetchData();
-        }
-    }, [userData]);
 
     const fetchInvitedCount = async (telegramUserId: string) => {
         try {
