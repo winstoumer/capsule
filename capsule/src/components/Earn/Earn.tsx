@@ -23,7 +23,7 @@ export const Earn = () => {
     const [invitedCount, setInvitedCount] = useState<number>(0);
 
     const apiUrl = import.meta.env.VITE_API_URL;
-    const INVITE_TASK_ID = 9; // The ID of the "Invite Friends" task
+    const INVITE_TASK_ID = 9;
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -32,99 +32,76 @@ export const Earn = () => {
     }, []);
 
     useEffect(() => {
-        if (userData && userData.id) {
-            const fetchData = async () => {
-                await fetchInvitedCount(userData.id.toString());
-            };
-            fetchData();
-        }
+        const fetchData = async () => {
+            if (userData && userData.id) {
+                try {
+                    // Fetch invited count
+                    const response = await fetch(`${apiUrl}/api/referral/${userData.id}`);
+                    if (!response.ok) {
+                        throw new Error('Error fetching invited count');
+                    }
+                    const data = await response.json();
+                    const count = Number(data.invitedCount);
+                    if (!isNaN(count)) {
+                        setInvitedCount(count);
+                    } else {
+                        console.error('Invalid invited count value:', data.invitedCount);
+                    }
+
+                    // Fetch tasks only after invited count is updated
+                    const tasksResponse = await axios.get(`${apiUrl}/api/task/${userData.id}`);
+                    const fetchedTasks = tasksResponse.data.map((task: Task) => ({
+                        ...task,
+                        reward: Number(task.reward) || 0,
+                    }));
+
+                    // Modify or add the "Invite Friends" task based on the invite count
+                    const inviteTaskIndex = fetchedTasks.findIndex((task: Task) => task.id === INVITE_TASK_ID);
+                    const inviteTask = {
+                        id: INVITE_TASK_ID,
+                        name: `Invite ${count}/5 frens`,
+                        reward: 50000,
+                        active: count < 5,
+                        ready: count >= 5,
+                        link: "/frens",
+                        icon: "https://i.ibb.co/QQjFnL4/Untitled.png",
+                    };
+
+                    if (inviteTaskIndex !== -1) {
+                        fetchedTasks[inviteTaskIndex] = inviteTask;
+                    } else {
+                        fetchedTasks.push(inviteTask);
+                    }
+
+                    setTasks(fetchedTasks);
+                    setLoading(false);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                }
+            }
+        };
+
+        fetchData();
     }, [userData]);
-
-    const fetchInvitedCount = async (telegramUserId: string) => {
-        try {
-            const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
-            if (!response.ok) {
-                throw new Error('Error fetching invited count');
-            }
-            const data = await response.json();
-            console.log('API data:', data); // Log the API response data
-            const count = Number(data.invitedCount); // Convert to number
-            if (!isNaN(count)) {
-                setInvitedCount(count);
-            } else {
-                console.error('Invalid invited count value:', data.invitedCount);
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    };
-
-    useEffect(() => {
-        console.log("Updated invitedCount:", invitedCount); // Log invitedCount changes
-        if (userData && userData.id) {
-            fetchTasks(userData.id.toString());
-        }
-    }, [invitedCount]);
 
     useEffect(() => {
         const completedTasks = tasks.filter(task => !task.active || task.ready);
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
-    const fetchTasks = async (telegramUserId: string) => {
-        try {
-            const response = await axios.get(`${apiUrl}/api/task/${telegramUserId}`);
-            const data = response.data.map((task: Task) => ({
-                ...task,
-                reward: Number(task.reward) || 0, // Ensure reward is a number
-            }));
-
-            console.log('Tasks data before processing:', data); // Log the fetched tasks
-
-            // Modify or add the "Invite Friends" task based on the invite count
-            const inviteTaskIndex = data.findIndex((task: Task) => task.id === INVITE_TASK_ID);
-            const inviteTask = {
-                id: INVITE_TASK_ID,
-                name: `Invite ${invitedCount}/5 frens`,
-                reward: 50000,
-                active: invitedCount < 5,
-                ready: invitedCount >= 5,
-                link: "/frens",
-                icon: "https://i.ibb.co/QQjFnL4/Untitled.png", // Replace with actual icon path
-            };
-
-            if (inviteTaskIndex !== -1) {
-                data[inviteTaskIndex] = inviteTask;
-            } else {
-                data.push(inviteTask);
-            }
-
-            console.log('Tasks data after processing:', data); // Log the modified tasks
-
-            setTasks(data);
-        } catch (error) {
-            console.error('Error fetching tasks:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
-        // Special case for the "Invite Friends" task
-        if (invitedCount !== null && taskId === INVITE_TASK_ID && invitedCount < 5) {
+        if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             console.log('You need to invite more friends to complete this task.');
-            return; // Prevent marking the task as complete
+            return;
         }
 
-        // Redirect to the task link (if applicable)
         window.location.href = taskLink;
 
         try {
-            // Only mark the task as complete if the task is not "Invite Friends"
-            // or if it is, then it must have invitedCount >= 5
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
-            fetchTasks(userData.id.toString());
+            const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
+            setTasks(updatedTasks.data);
         } catch (error) {
             console.error('Error:', error);
         }
@@ -180,7 +157,7 @@ export const Earn = () => {
                                 <Title>{task.name}</Title>
                                 <Subtitle>
                                     <span>
-                                        +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'}
+                                        +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'} P
                                     </span>
                                 </Subtitle>
                             </div>
