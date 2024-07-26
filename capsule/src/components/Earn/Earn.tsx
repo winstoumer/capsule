@@ -147,7 +147,9 @@ export const Earn = () => {
                                         required_progress={task.required_progress}
                                         current_progress={task.current_progress}
                                     />
-                                    + <NumericValue value={task.reward} decimalPlaces={2} />
+                                    <span>
+                                        +<NumericValue value={task.reward} decimalPlaces={2} />
+                                    </span>
                                 </Subtitle>
                             </div>
                             <Right>
