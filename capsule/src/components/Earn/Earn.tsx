@@ -147,10 +147,7 @@ export const Earn = () => {
                                         required_progress={task.required_progress}
                                         current_progress={task.current_progress}
                                     />
-                                    <span>
-                                        <NumericValue value={task.reward} />
-                                        +{typeof task.reward === 'number' && !isNaN(task.reward) ? task.reward.toLocaleString(undefined) : 'N/A'} P
-                                    </span>
+                                    + <NumericValue value={task.reward} decimalPlaces={2} />
                                 </Subtitle>
                             </div>
                             <Right>

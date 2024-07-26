@@ -14,7 +14,7 @@ const NumericValue: React.FC<NumericValueProps> = ({ value, decimalPlaces = 0 })
     }
 
     return (
-        <>{formattedValue}</>
+        <span>{formattedValue}</span>
     );
 };
 
