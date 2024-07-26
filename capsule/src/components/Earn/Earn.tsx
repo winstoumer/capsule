@@ -45,6 +45,21 @@ export const Earn = () => {
         console.log("Updated invitedCount:", invitedCount);
     }, [invitedCount]);
 
+    const fetchInvitedCount = async (telegramUserId: string) => {
+        try {
+            const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
+            if (!response.ok) {
+                throw new Error('Error');
+            }
+            const data = await response.json();
+            setInvitedCount(data.invitedCount);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
         const completedTasks = tasks.filter(task => !task.active || task.ready);
         setCompletedCount(completedTasks.length);
@@ -80,21 +95,6 @@ export const Earn = () => {
             setTasks(data);
         } catch (error) {
             console.error('Error fetching tasks:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const fetchInvitedCount = async (telegramUserId: string) => {
-        try {
-            const response = await fetch(`${apiUrl}/api/referral/${telegramUserId}`);
-            if (!response.ok) {
-                throw new Error('Error');
-            }
-            const data = await response.json();
-            setInvitedCount(data.invitedCount);
-        } catch (error) {
-            console.error(error);
         } finally {
             setLoading(false);
         }
