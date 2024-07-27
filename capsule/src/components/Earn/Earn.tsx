@@ -80,7 +80,8 @@ export const Earn = () => {
 
     const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
-            addNotification('You need to invite more friends to complete this task.', 'info');
+            const frens = 5 - invitedCount;
+            addNotification(`Missing ${frens} frens.`, 'info');
             return;
         }
 
@@ -91,7 +92,7 @@ export const Earn = () => {
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
-            addNotification('Task completed successfully!', 'success');
+            addNotification(`You got ${taskReward}!`, 'success');
         } catch (error) {
             addNotification('Error completing the task.', 'error');
         }
