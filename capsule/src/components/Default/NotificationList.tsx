@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './notification.scss';
+import IconType from './IconType'; // Убедитесь, что путь корректен
 
 // Интерфейс для уведомления
 export interface Notification {
@@ -26,10 +27,25 @@ const NotificationList: React.FC<NotificationProps> = ({ notifications, onRemove
     };
   }, [notifications, onRemove]);
 
+  // Функция для выбора типа иконки в зависимости от типа уведомления
+  const getIconType = (type: 'success' | 'error' | 'info'): 'checkmark' | 'arrow-left' | 'arrow-right' => {
+    switch (type) {
+      case 'success':
+        return 'checkmark';
+      case 'error':
+        return 'arrow-left'; // Или заменить на подходящую иконку
+      case 'info':
+        return 'arrow-right'; // Или заменить на подходящую иконку
+      default:
+        return 'checkmark'; // Установите иконку по умолчанию
+    }
+  };
+
   return (
     <div className="notification-container">
       {notifications.map(notification => (
-        <div key={notification.id} className={`notification ${notification.type}`}>
+        <div key={notification.id} className='notification'>
+          <IconType type={getIconType(notification.type)} strokeColor='white' />
           <span className="notification-text">{notification.message}</span>
         </div>
       ))}
