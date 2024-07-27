@@ -89,12 +89,12 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
-                            d="M12 3v12" // Вертикальная линия
+                            d="M12 8v4"
                             {...pathProps}
                             strokeLinecap="round"
                         />
                         <path
-                            d="M12 18h0" // Горизонтальная линия
+                            d="M12 14v2"
                             {...pathProps}
                             strokeLinecap="round"
                         />
@@ -110,12 +110,12 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
-                            d="M12 5v14" // Вертикальная линия
+                            d="M12 16h0"
                             {...pathProps}
                             strokeLinecap="round"
                         />
                         <path
-                            d="M12 11h0" // Точка
+                            d="M12 8v4"
                             {...pathProps}
                             strokeLinecap="round"
                         />
