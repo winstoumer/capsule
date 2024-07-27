@@ -122,17 +122,13 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
             return (
                 <span className='icon-type'>
                     <svg
+                        viewBox="0 0 24 24"
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
                     >
-                        <symbol id="icon-leaderboard" viewBox="0 0 24 24">
-                            <rect x="3" y="8" width="3" height="7" fill="white" />
-                            <rect x="8" y="4" width="3" height="11" fill="white" />
-                            <rect x="13" y="6" width="3" height="9" fill="white" />
-                        </symbol>
-                        <use href="#icon-leaderboard" x="0" y="0" width="24" height="24" />
-                        <use href="#icon-leaderboard" x="5" y="5" width="24" height="24" />
+                        <rect x="5" y="14" width="4" height="6" fill="{strokeColor}" />
+                        <rect x="10" y="10" width="4" height="10" fill="{strokeColor}" />
+                        <rect x="15" y="6" width="4" height="14" fill="{strokeColor}" />
                     </svg>
                 </span>
             );
