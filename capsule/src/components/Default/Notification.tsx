@@ -20,7 +20,7 @@ const Notification: React.FC<NotificationProps> = ({ notifications, onClose }) =
     <div className="notification-container">
       {notifications.map((notification) => (
         <div key={notification.id} className={`notification ${notification.type}`}>
-          <p>{notification.message}</p>
+          <span className='notification-text'>{notification.message}</span>
           <button onClick={() => onClose(notification.id)}>Close</button>
         </div>
       ))}
