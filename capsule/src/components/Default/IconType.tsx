@@ -88,16 +88,8 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path
-                            d="M12 8v4"
-                            {...pathProps}
-                            strokeLinecap="round"
-                        />
-                        <path
-                            d="M12 14v2"
-                            {...pathProps}
-                            strokeLinecap="round"
-                        />
+                        <line x1="12" y1="8" x2="12" y2="16" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+                        <line x1="12" y1="16" x2="12" y2="8" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
                     </svg>
                 </span>
             );
@@ -109,16 +101,8 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <path
-                            d="M12 16h0"
-                            {...pathProps}
-                            strokeLinecap="round"
-                        />
-                        <path
-                            d="M12 8v4"
-                            {...pathProps}
-                            strokeLinecap="round"
-                        />
+                        <line x1="12" y1="8" x2="12" y2="12" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+                        <line x1="12" y1="16" x2="12" y2="16" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
                     </svg>
                 </span>
             );
