@@ -142,7 +142,7 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                     >
                         <symbol id="icon-person" viewBox="0 0 24 24">
                             <circle cx="12" cy="9" r="3" fill="white" />
-                            <path d="M9,12 Q12,15 15,12" stroke="white" stroke-width="1" fill="none" />
+                            <path d="M8,12 Q12,16 16,12" stroke="white" stroke-width="1" fill="none" />
                         </symbol>
                         <use href="#icon-person" x="-3" y="-1" width="24" height="24" />
                         <use href="#icon-person" x="3" y="5" width="24" height="24" />
