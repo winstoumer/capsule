@@ -131,8 +131,8 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                             <rect x="8" y="4" width="3" height="11" fill="white" />
                             <rect x="13" y="6" width="3" height="9" fill="white" />
                         </symbol>
-                        <use href="#icon-leaderboard" x="0" y="0" width="20" height="20" />
-                        <use href="#icon-leaderboard" x="5" y="5" width="20" height="20" />
+                        <use href="#icon-leaderboard" x="0" y="0" width="24" height="24" />
+                        <use href="#icon-leaderboard" x="5" y="5" width="24" height="24" />
                     </svg>
                 </span>
             );
@@ -148,8 +148,8 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                             <circle cx="12" cy="8" r="4" fill="white" />
                             <path d="M7,13 Q12,16 17,13" stroke="white" stroke-width="2" fill="none" />
                         </symbol>
-                        <use href="#icon-person" x="-5" y="-2" width="20" height="20" />
-                        <use href="#icon-person" x="5" y="7" width="20" height="20" />
+                        <use href="#icon-person" x="-5" y="-2" width="24" height="24" />
+                        <use href="#icon-person" x="5" y="7" width="24" height="24" />
                     </svg>
                 </span>
             );
