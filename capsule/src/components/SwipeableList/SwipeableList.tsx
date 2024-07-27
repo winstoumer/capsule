@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Default/Button';
 import './SwipeableList.scss';
+import IconType from '../Default/IconType';
 
 interface Item {
     logo: string | JSX.Element;
@@ -13,18 +14,6 @@ interface Item {
 interface SwipeableListProps {
     items: Item[];
 }
-
-const PreviousArrow = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M15 19L8 12L15 5" stroke="#CF00F8" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
-
-const NextArrow = () => (
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M9 5L16 12L9 19" stroke="#CF00F8" strokeWidth="0.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-);
 
 const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -125,8 +114,8 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                     maxWidth: '100vw',
                 }}
             >
-                <div className="arrow arrow-left border-button" onClick={slidePrev}>
-                    <PreviousArrow />
+                <div className="arrow arrow-left">
+                    <IconType type='arrow-left' onClick={slidePrev} />
                 </div>
                 <div
                     ref={containerRef}
@@ -162,8 +151,8 @@ const SwipeableList: React.FC<SwipeableListProps> = ({ items }) => {
                         </div>
                     ))}
                 </div>
-                <div className="arrow arrow-right border-button" onClick={slideNext}>
-                    <NextArrow />
+                <div className="arrow arrow-right">
+                    <IconType type='arrow-right' onClick={slideNext} />
                 </div>
                 <div className="indicators">
                     {items.map((_, index) => (

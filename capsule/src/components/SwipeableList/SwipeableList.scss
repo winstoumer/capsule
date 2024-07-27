@@ -8,12 +8,6 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    padding: 0.5rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
 
     &.arrow-left {
@@ -23,19 +17,6 @@
     &.arrow-right {
         right: 0.5rem;
     }
-
-    svg {
-        width: 24px;
-        height: 24px;
-    }
-}
-
-.border-button {
-    border: 1px solid #191219;
-}
-
-.custom-border-button {
-    border: 1px solid #191219;
 }
 
 .indicators {
