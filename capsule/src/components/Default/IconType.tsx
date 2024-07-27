@@ -89,12 +89,17 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         <path
-                            d="M12 8v4"
+                            d="M12 2L2 22h20L12 2z" // Треугольник (восклицательный знак)
+                            {...pathProps}
+                            fill="none" // Заполнение треугольника
+                        />
+                        <path
+                            d="M12 16v-4"
                             {...pathProps}
                             strokeLinecap="round"
                         />
                         <path
-                            d="M12 14v2"
+                            d="M12 14h0"
                             {...pathProps}
                             strokeLinecap="round"
                         />
@@ -109,6 +114,11 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
                     >
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" // Окружность
+                            {...pathProps}
+                            fill="none" // Оставляем без заполнения
+                        />
                         <path
                             d="M12 16h0"
                             {...pathProps}
