@@ -126,9 +126,9 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <rect x="5" y="14" width="4" height="6" fill="{strokeColor}" />
-                        <rect x="10" y="10" width="4" height="10" fill="{strokeColor}" />
-                        <rect x="15" y="6" width="4" height="14" fill="{strokeColor}" />
+                        <rect x="5" y="14" width="4" height="6" fill="white" />
+                        <rect x="10" y="10" width="4" height="10" fill="white" />
+                        <rect x="15" y="6" width="4" height="14" fill="white" />
                     </svg>
                 </span>
             );
