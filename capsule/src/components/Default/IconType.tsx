@@ -88,9 +88,8 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <circle cx="12" cy="12" r="10" stroke={strokeColor} strokeWidth="2" fill="none" />
-                        <line x1="12" y1="8" x2="12" y2="16" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
-                        <line x1="12" y1="16" x2="12" y2="8" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+                        <line x1="12" y1="8" x2="12" y2="16" stroke={strokeColor} strokeWidth="0.5" strokeLinecap="round" />
+                        <line x1="12" y1="16" x2="12" y2="8" stroke={strokeColor} strokeWidth="0.5" strokeLinecap="round" />
                     </svg>
                 </span>
             );
@@ -102,9 +101,8 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <circle cx="12" cy="12" r="10" stroke={strokeColor} strokeWidth="2" fill="none" />
-                        <line x1="12" y1="8" x2="12" y2="12" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
-                        <line x1="12" y1="16" x2="12" y2="16" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+                        <line x1="12" y1="8" x2="12" y2="12" stroke={strokeColor} strokeWidth="0.5" strokeLinecap="round" />
+                        <line x1="12" y1="16" x2="12" y2="16" stroke={strokeColor} strokeWidth="0.5" strokeLinecap="round" />
                     </svg>
                 </span>
             );
