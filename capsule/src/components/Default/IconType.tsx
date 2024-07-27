@@ -2,7 +2,7 @@ import React from 'react';
 import './iconType.scss';
 
 // Определяем типы для поддерживаемых иконок
-type IconType = 'arrow-left' | 'arrow-right' | 'checkmark' | 'error' | 'info';
+type IconType = 'arrow-left' | 'arrow-right' | 'checkmark' | 'error' | 'info' | 'task';
 
 // Определяем пропсы компонента иконок
 interface IconProps extends React.SVGProps<SVGSVGElement> {
@@ -103,6 +103,17 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                     >
                         <line x1="12" y1="8" x2="12" y2="12" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
                         <line x1="12" y1="16" x2="12" y2="16" stroke={strokeColor} strokeWidth="2" strokeLinecap="round" />
+                    </svg>
+                </span>
+            );
+        case 'task':
+            return (
+                <span className='icon-type'>
+                    <svg
+                        viewBox="0 0 24 24"
+                        {...commonProps}
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M6 12l4 4 8-8" stroke={strokeColor} stroke-width="2" fill="none" />
                     </svg>
                 </span>
             );

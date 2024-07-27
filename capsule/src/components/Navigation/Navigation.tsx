@@ -2,6 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './navigation.scss';
+import IconType from '../Default/IconType';
 
 interface TelegramUserData {
   id: number;
@@ -26,12 +27,12 @@ export const Navigation: React.FC = () => {
     }
   };
 
-  const TaskIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#1d1d1d" stroke-width="1" fill="none" />
-      <path d="M6 12l4 4 8-8" stroke="white" stroke-width="2" fill="none" />
-    </svg>
-  );
+  //const TaskIcon = () => (
+    //<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
+      //<rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#1d1d1d" stroke-width="1" fill="none" />
+      //<path d="M6 12l4 4 8-8" stroke="white" stroke-width="2" fill="none" />
+    //</svg>
+  //);
 
   const FrensIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="28" height="28">
@@ -67,7 +68,7 @@ export const Navigation: React.FC = () => {
     <div className='bottom-navigation'>
       <div className='navigation'>
         <div className="nav-b" onClick={() => handleNavigation('/earn')}>
-          <TaskIcon />
+          <IconType type='task' strokeColor='white' />
           Tasks
         </div>
         {userData !== null && userData.id === 935718482 ? (
