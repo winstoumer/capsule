@@ -63,7 +63,6 @@ export const Earn = () => {
                     }));
 
                     setTasks(fetchedTasks);
-                    setTasks(tasksResponse.data);
                     setLoading(false);
                 } catch (error) {
                     console.error('Error fetching data:', error);
