@@ -28,16 +28,16 @@ const NotificationList: React.FC<NotificationProps> = ({ notifications, onRemove
   }, [notifications, onRemove]);
 
   // Функция для выбора типа иконки в зависимости от типа уведомления
-  const getIconType = (type: 'success' | 'error' | 'info'): 'checkmark' | 'arrow-left' | 'arrow-right' => {
+  const getIconType = (type: 'success' | 'error' | 'info'): 'checkmark' | 'error' | 'info' => {
     switch (type) {
       case 'success':
         return 'checkmark';
       case 'error':
-        return 'arrow-left'; // Или заменить на подходящую иконку
+        return 'error';
       case 'info':
-        return 'arrow-right'; // Или заменить на подходящую иконку
+        return 'info';
       default:
-        return 'checkmark'; // Установите иконку по умолчанию
+        return 'checkmark';
     }
   };
 
