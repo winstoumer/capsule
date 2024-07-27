@@ -2,7 +2,7 @@ import React from 'react';
 import './iconType.scss';
 
 // Определяем типы для поддерживаемых иконок
-type IconType = 'arrow-left' | 'arrow-right' | 'checkmark' | 'error' | 'info' | 'task';
+type IconType = 'arrow-left' | 'arrow-right' | 'checkmark' | 'error' | 'info' | 'task' | 'leaderboard' | 'frens';
 
 // Определяем пропсы компонента иконок
 interface IconProps extends React.SVGProps<SVGSVGElement> {
@@ -112,8 +112,44 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                     <svg
                         viewBox="0 0 24 24"
                         {...commonProps}
-                        xmlns="http://www.w3.org/2000/svg">
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
                         <path d="M6 12l4 4 8-8" stroke={strokeColor} stroke-width="2" fill="none" />
+                    </svg>
+                </span>
+            );
+        case 'leaderboard':
+            return (
+                <span className='icon-type'>
+                    <svg
+                        {...commonProps}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                    >
+                        <symbol id="icon-leaderboard" viewBox="0 0 24 24">
+                            <rect x="3" y="8" width="3" height="7" fill="white" />
+                            <rect x="8" y="4" width="3" height="11" fill="white" />
+                            <rect x="13" y="6" width="3" height="9" fill="white" />
+                        </symbol>
+                        <use href="#icon-leaderboard" x="0" y="0" width="20" height="20" />
+                        <use href="#icon-leaderboard" x="5" y="5" width="20" height="20" />
+                    </svg>
+                </span>
+            );
+        case 'frens':
+            return (
+                <span className='icon-type'>
+                    <svg
+                        {...commonProps}
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                    >
+                        <symbol id="icon-person" viewBox="0 0 24 24">
+                            <circle cx="12" cy="8" r="4" fill="white" />
+                            <path d="M7,13 Q12,16 17,13" stroke="white" stroke-width="2" fill="none" />
+                        </symbol>
+                        <use href="#icon-person" x="-5" y="-2" width="20" height="20" />
+                        <use href="#icon-person" x="5" y="7" width="20" height="20" />
                     </svg>
                 </span>
             );
