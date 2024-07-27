@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './notification.scss';
 
 // Интерфейс для уведомления
@@ -11,17 +11,26 @@ export interface Notification {
 // Пропсы для компонента уведомлений
 interface NotificationProps {
   notifications: Notification[];
-  onClose: (id: number) => void;
+  onRemove: (id: number) => void;
 }
 
 // Компонент уведомлений
-const Notification: React.FC<NotificationProps> = ({ notifications, onClose }) => {
+const NotificationList: React.FC<NotificationProps> = ({ notifications, onRemove }) => {
+  useEffect(() => {
+    const timerIds = notifications.map(notification =>
+      setTimeout(() => onRemove(notification.id), 3000)
+    );
+
+    return () => {
+      timerIds.forEach(clearTimeout);
+    };
+  }, [notifications, onRemove]);
+
   return (
     <div className="notification-container">
-      {notifications.map((notification) => (
+      {notifications.map(notification => (
         <div key={notification.id} className={`notification ${notification.type}`}>
-          <span className='notification-text'>{notification.message}</span>
-          <button onClick={() => onClose(notification.id)}>Close</button>
+          <span className="notification-text">{notification.message}</span>
         </div>
       ))}
     </div>
@@ -29,7 +38,7 @@ const Notification: React.FC<NotificationProps> = ({ notifications, onClose }) =
 };
 
 // Хук для управления уведомлениями
-export const useNotifications = () => {
+const useNotifications = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
 
   // Функция для добавления уведомления
@@ -39,15 +48,15 @@ export const useNotifications = () => {
       message,
       type
     };
-    setNotifications((prevNotifications) => [...prevNotifications, newNotification]);
+    setNotifications(prevNotifications => [...prevNotifications, newNotification]);
   };
 
   // Функция для удаления уведомления
   const removeNotification = (id: number) => {
-    setNotifications((prevNotifications) => prevNotifications.filter(n => n.id !== id));
+    setNotifications(prevNotifications => prevNotifications.filter(n => n.id !== id));
   };
 
   return { notifications, addNotification, removeNotification };
 };
 
-export default Notification;
+export { NotificationList, useNotifications };

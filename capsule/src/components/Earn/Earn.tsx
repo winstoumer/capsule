@@ -6,7 +6,7 @@ import Loading from '../Loading/Loading';
 import Progress from './Progress';
 import NumericValue from '../Default/NumericValue';
 import IconType from '../Default/IconType';
-import Notification, { useNotifications } from '../Default/Notification';
+import { NotificationList, useNotifications } from '../Default/NotificationList';
 
 interface Task {
     id: number;
@@ -146,7 +146,7 @@ export const Earn = () => {
                     </Item>
                 ))}
             </List>
-            <Notification notifications={notifications} onClose={removeNotification} />
+            <NotificationList notifications={notifications} onRemove={removeNotification} />
         </>
     );
 };
