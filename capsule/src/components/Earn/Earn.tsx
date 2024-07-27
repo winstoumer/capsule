@@ -62,7 +62,7 @@ export const Earn = () => {
                         current_progress: task.id === INVITE_TASK_ID ? count : undefined, // Set progress only for the invite task
                     }));
 
-                    setTasks(fetchedTasks);
+                    setTasks(fetchedTasks.data);
                     setLoading(false);
                 } catch (error) {
                     console.error('Error fetching data:', error);
