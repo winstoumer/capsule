@@ -6,6 +6,7 @@ import Loading from '../Loading/Loading';
 import Progress from './Progress';
 import NumericValue from '../Default/NumericValue';
 import IconType from '../Default/IconType';
+import Notification, { useNotifications } from '../Default/Notification';
 
 interface Task {
     id: number;
@@ -20,6 +21,7 @@ interface Task {
 }
 
 export const Earn = () => {
+    const { notifications, addNotification, removeNotification } = useNotifications();
     const [userData, setUserData] = useState<any>(null);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
@@ -78,7 +80,7 @@ export const Earn = () => {
 
     const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
-            console.log('You need to invite more friends to complete this task.');
+            addNotification('You need to invite more friends to complete this task.', 'info');
             return;
         }
 
@@ -89,8 +91,9 @@ export const Earn = () => {
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
+            addNotification('Task completed successfully!', 'success');
         } catch (error) {
-            console.error('Error:', error);
+            addNotification('Error completing the task.', 'error');
         }
     };
 
@@ -142,6 +145,7 @@ export const Earn = () => {
                     </Item>
                 ))}
             </List>
+            <Notification notifications={notifications} onClose={removeNotification} />
         </>
     );
 };
