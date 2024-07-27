@@ -141,11 +141,11 @@ const IconType: React.FC<IconProps> = ({ type, size = 24, strokeColor = '#CF00F8
                         viewBox="0 0 24 24"
                     >
                         <symbol id="icon-person" viewBox="0 0 24 24">
-                            <circle cx="12" cy="8" r="4" fill="white" />
-                            <path d="M7,13 Q12,16 17,13" stroke="white" stroke-width="2" fill="none" />
+                            <circle cx="12" cy="9" r="3" fill="white" />
+                            <path d="M9,12 Q12,15 15,12" stroke="white" stroke-width="1" fill="none" />
                         </symbol>
-                        <use href="#icon-person" x="-5" y="-2" width="24" height="24" />
-                        <use href="#icon-person" x="5" y="7" width="24" height="24" />
+                        <use href="#icon-person" x="-3" y="-1" width="24" height="24" />
+                        <use href="#icon-person" x="3" y="5" width="24" height="24" />
                     </svg>
                 </span>
             );
