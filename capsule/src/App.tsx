@@ -14,6 +14,7 @@ import BoostGamePage from './pages/BoostGamePage';
 import FrensPage from './pages/FrensPage';
 import StarryNightBackground from './components/Background/StarryNightBackground';
 import LeaderboardPage from './pages/LeaderboardPage';
+import NotificationList from './components/Default/NotificationList';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
@@ -220,6 +221,7 @@ function App() {
           <AppWrapper />
         </Router>
         <StarryNightBackground maxStars={28} />
+        <NotificationList />
       </CurrentTimeProvider>
     </TonConnectUIProvider>
   );

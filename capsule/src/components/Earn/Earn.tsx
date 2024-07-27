@@ -6,7 +6,7 @@ import Loading from '../Loading/Loading';
 import Progress from './Progress';
 import NumericValue from '../Default/NumericValue';
 import IconType from '../Default/IconType';
-import { NotificationList, useNotifications } from '../Default/NotificationList';
+import { useNotifications } from '../Providers/NotificationContext';
 
 interface Task {
     id: number;
@@ -21,7 +21,7 @@ interface Task {
 }
 
 export const Earn = () => {
-    const { notifications, addNotification, removeNotification } = useNotifications();
+    const { addNotification } = useNotifications();
     const [userData, setUserData] = useState<any>(null);
     const [tasks, setTasks] = useState<Task[]>([]);
     const [loading, setLoading] = useState(true);
@@ -146,7 +146,6 @@ export const Earn = () => {
                     </Item>
                 ))}
             </List>
-            <NotificationList notifications={notifications} onRemove={removeNotification} />
         </>
     );
 };
