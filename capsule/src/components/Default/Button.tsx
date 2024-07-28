@@ -1,5 +1,6 @@
 import React from 'react';
 import './Button.scss';
+import IconType from './IconType';
 
 interface ButtonProps {
   onClick?: () => void; // Make onClick optional
@@ -7,6 +8,7 @@ interface ButtonProps {
   text: string | JSX.Element;
   custom?: boolean;
   disabled?: boolean;
+  icon?: IconType;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,7 +16,8 @@ const Button: React.FC<ButtonProps> = ({
   background = 'transparent',
   text,
   custom = false,
-  disabled = false // Default to false
+  disabled = false, // Default to false
+  icon
 }) => {
   const buttonStyle: React.CSSProperties = {
     backgroundColor: background,
@@ -29,6 +32,7 @@ const Button: React.FC<ButtonProps> = ({
       style={buttonStyle}
       onClick={handleClick}
     >
+      {icon && <IconType type={icon} />}
       {typeof text === 'string' ? text : <span dangerouslySetInnerHTML={{ __html: text }} />}
     </button>
   );
