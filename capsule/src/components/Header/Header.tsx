@@ -110,8 +110,8 @@ export const Header: React.FC = () => {
                         ) : (
                             <Button
                                 icon='connect'
-                                iconSize={24}
-                                sizeFill={24}
+                                iconSize={28}
+                                sizeFill={28}
                                 text='Connect'
                                 custom={false}
                                 onClick={() => tonConnectUi.openModal()}
