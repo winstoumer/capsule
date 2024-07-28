@@ -1,6 +1,5 @@
 .icon-type {
     background-color: transparent;
-    border: 1px solid #191219;
     border-radius: 50%;
     width: 36px;
     height: 36px;
@@ -15,4 +14,8 @@
         width: 20px;
         height: 20px;
     }
+}
+
+.icon-border {
+    border: 1px solid #191219;
 }

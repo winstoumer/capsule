@@ -9,6 +9,8 @@ interface ButtonProps {
   custom?: boolean;
   disabled?: boolean;
   icon?: IconType;
+  iconSize?: number;
+  iconBorder?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -17,7 +19,9 @@ const Button: React.FC<ButtonProps> = ({
   text,
   custom = false,
   disabled = false, // Default to false
-  icon
+  icon,
+  iconSize,
+  iconBorder = false
 }) => {
   const buttonStyle: React.CSSProperties = {
     backgroundColor: background,
@@ -32,7 +36,7 @@ const Button: React.FC<ButtonProps> = ({
       style={buttonStyle}
       onClick={handleClick}
     >
-      {icon && <IconType type={icon} />}
+      {icon && <IconType type={icon} size={iconSize} border={iconBorder} />}
       {typeof text === 'string' ? text : <span dangerouslySetInnerHTML={{ __html: text }} />}
     </button>
   );
