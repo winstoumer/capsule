@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTonAddress, useTonWallet, useTonConnectUI } from "@tonconnect/ui-react";
+import { useNotifications } from '../Providers/NotificationContext';
 import './header.scss';
 import Button from '../Default/Button';
 import Modal from './Modal';
@@ -12,6 +13,7 @@ type TelegramUserData = {
 };
 
 export const Header: React.FC = () => {
+    const { addNotification } = useNotifications();
     const [userData, setUserData] = useState<TelegramUserData | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [copyStatus, setCopyStatus] = useState('Copy address');
@@ -54,14 +56,14 @@ export const Header: React.FC = () => {
         if (userFriendlyAddress) {
             navigator.clipboard.writeText(userFriendlyAddress)
                 .then(() => {
-                    setCopyStatus('Copied.');
+                    addNotification(`Copied!`, 'success');
+                    setCopyStatus('Copied!');
                     setTimeout(() => {
                         setCopyStatus('Copy address');
                     }, 2000);
                 })
                 .catch(err => {
                     console.error('Failed to copy address: ', err);
-                    // Можно добавить здесь обратную связь или уведомление об ошибке
                 });
         }
     };
