@@ -16,7 +16,7 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 // Компонент иконок
-const IconType: React.FC<IconProps> = ({ type, size = 24, sizeFill = 36, strokeColor = '#CF00F8', border = true, color = 'none', onClick, ...props }) => {
+const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, strokeColor = '#CF00F8', border = true, color = 'none', onClick, ...props }) => {
     const commonProps = {
         width: size,
         height: size,
