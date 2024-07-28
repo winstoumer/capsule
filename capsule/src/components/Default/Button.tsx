@@ -3,14 +3,16 @@ import './Button.scss';
 import IconType from './IconType';
 
 interface ButtonProps {
-  onClick?: () => void; // Make onClick optional
+  onClick?: () => void;
   background?: string;
   text: string | JSX.Element;
   custom?: boolean;
   disabled?: boolean;
+  // Icon Props
   icon?: IconType;
   iconSize?: number;
   iconBorder?: boolean;
+  sizeFill: number;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,10 +20,12 @@ const Button: React.FC<ButtonProps> = ({
   background = 'transparent',
   text,
   custom = false,
-  disabled = false, // Default to false
+  disabled = false,
+  // Icon Props
   icon,
   iconSize,
-  iconBorder = false
+  iconBorder = false,
+  sizeFill,
 }) => {
   const buttonStyle: React.CSSProperties = {
     backgroundColor: background,
@@ -36,7 +40,7 @@ const Button: React.FC<ButtonProps> = ({
       style={buttonStyle}
       onClick={handleClick}
     >
-      {icon && <IconType type={icon} size={iconSize} border={iconBorder} />}
+      {icon && <IconType type={icon} size={iconSize} border={iconBorder} sizeFill={sizeFill} />}
       {typeof text === 'string' ? text : <span dangerouslySetInnerHTML={{ __html: text }} />}
     </button>
   );
