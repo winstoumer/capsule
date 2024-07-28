@@ -106,7 +106,13 @@ export const Header: React.FC = () => {
                                 <AddressComponent />
                             </div>
                         ) : (
-                            <Button icon='connect' iconSize={24} text='Connect' custom={true} onClick={() => tonConnectUi.openModal()} />
+                            <Button
+                                icon='connect'
+                                iconSize={24}
+                                text='Connect'
+                                custom={false}
+                                onClick={() => tonConnectUi.openModal()}
+                            />
                         )}
                     </React.Fragment>
                 </div>
