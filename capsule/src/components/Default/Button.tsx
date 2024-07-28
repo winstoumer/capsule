@@ -12,7 +12,7 @@ interface ButtonProps {
   icon?: IconType;
   iconSize?: number;
   iconBorder?: boolean;
-  sizeFill: number;
+  sizeFill?: number;
 }
 
 const Button: React.FC<ButtonProps> = ({
