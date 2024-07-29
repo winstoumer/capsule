@@ -14,8 +14,8 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
     border?: boolean;
     background?: string;
     sizeFill?: number | string;
-    onClick?: () => void;
     disabled?: boolean; // Поддержка обработчика клика
+    onClick?: () => void;
 }
 
 // Компонент иконок
@@ -28,8 +28,8 @@ const IconType: React.FC<IconProps> = ({
     strokeWidth = 0.5,
     border = true,
     color = 'none',
-    onClick,
     disabled = false,
+    onClick,
     ...props }) => {
 
     const handleClick = () => {

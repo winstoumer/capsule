@@ -172,8 +172,8 @@ export const Earn = () => {
                                             strokeWidth={2}
                                             border={false}
                                             background='#65445A'
-                                            onClick={() => claimReward(task.id, Number(task.reward))}
                                             disabled={clickDisabled}
+                                            onClick={() => claimReward(task.id, Number(task.reward))}
                                         /> :
                                         <IconType
                                             type='checkmark'
@@ -188,8 +188,8 @@ export const Earn = () => {
                                         strokeWidth={2}
                                         border={false}
                                         background='#191219'
+                                        disabled={clickDisabled}
                                         onClick={() => handleClick(task.id, task.link)}
-                                        
                                     />
                                 }
                             </Right>
