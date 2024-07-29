@@ -11,12 +11,13 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
     color?: string; // Поддержка цвета
     strokeColor?: string;
     border?: boolean;
+    background?: string;
     sizeFill?: number | string;
     onClick?: React.MouseEventHandler<SVGSVGElement>; // Поддержка обработчика клика
 }
 
 // Компонент иконок
-const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, strokeColor = '#CF00F8', border = true, color = 'none', onClick, ...props }) => {
+const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, background = 'transparent', strokeColor = '#CF00F8', border = true, color = 'none', onClick, ...props }) => {
     const commonProps = {
         width: size,
         height: size,
@@ -33,6 +34,7 @@ const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, strokeC
     const style = {
         width: typeof sizeFill === 'number' ? `${sizeFill}px` : sizeFill,
         height: typeof sizeFill === 'number' ? `${sizeFill}px` : sizeFill,
+        background: `${background}`,
     };
 
     const css = border ? "icon-type icon-border" : "icon-type";
