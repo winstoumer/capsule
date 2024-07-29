@@ -82,7 +82,6 @@ const HomePage: React.FC = () => {
           <NumericValue value={balanceData} />
         </Balance>
         <SwipeableList items={items} />
-        <div></div>
       </div>
     </PageComponent>
   );
