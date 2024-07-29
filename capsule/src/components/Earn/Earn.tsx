@@ -18,6 +18,8 @@ interface Task {
     icon: string;
     required_progress?: number; // Optional, might be null or 0 in the database
     current_progress?: number; // Optional, to track current progress
+    is_completed?: boolean; // Указывает, что задача выполнена
+    is_reward_claimed?: boolean;
 }
 
 export const Earn = () => {
@@ -81,7 +83,7 @@ export const Earn = () => {
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
-    const handleClick = async (taskId: number, taskLink: string, taskReward: number) => {
+    const handleClick = async (taskId: number, taskLink: string) => {
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             const frens = 5 - invitedCount;
             addNotification(`Missing ${frens} frens.`, 'info');
@@ -92,13 +94,13 @@ export const Earn = () => {
 
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
-            await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
+            //await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
 
             // Fetch updated tasks after completion
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
 
-            addNotification(`You got ${taskReward}!`, 'success');
+            //addNotification(`You got ${taskReward}!`, 'success');
         } catch (error) {
             addNotification('Error completing the task.', 'error');
         }
@@ -107,6 +109,19 @@ export const Earn = () => {
     if (loading) {
         return <Loading />;
     }
+
+    const claimReward = async (taskId: number, taskReward: number) => {
+        try {
+            await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/claim`);
+            addNotification(`You got ${taskReward}!`, 'success');
+
+            // Обновляем задачи после получения награды
+            const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
+            setTasks(updatedTasks.data);
+        } catch (error) {
+            addNotification('Ошибка при получении награды.', 'error');
+        }
+    };
 
     // Sort tasks, placing completed tasks at the end
     const sortedTasks = tasks.sort((a, b) => {
@@ -145,7 +160,9 @@ export const Earn = () => {
                             <Right>
                                 {!task.active || task.ready ?
                                     <IconType type='checkmark' size={20} strokeColor='white' /> :
-                                    <IconType type='arrow-right' size={20} onClick={() => handleClick(task.id, task.link, Number(task.reward))} />
+                                    task.is_completed && !task.is_reward_claimed ?
+                                        <IconType type='checkmark' size={20} strokeColor='green' onClick={() => claimReward(task.id, Number(task.reward))} /> :
+                                        <IconType type='arrow-right' size={20} onClick={() => handleClick(task.id, task.link)} />
                                 }
                             </Right>
                         </div>
