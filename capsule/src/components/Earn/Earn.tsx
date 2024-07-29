@@ -96,7 +96,6 @@ export const Earn = () => {
 
             // Fetch updated tasks after completion
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
-            console.log("Updated tasks:", updatedTasks.data); // Debugging log
             setTasks(updatedTasks.data);
 
             addNotification(`You got ${taskReward}!`, 'success');
