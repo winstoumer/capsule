@@ -135,9 +135,9 @@ const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, strokeC
                         {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
                     >
-                        <rect x="6" y="13" width="2" height="5" fill="white" />
-                        <rect x="11" y="6" width="2" height="12" fill="white" />
-                        <rect x="16" y="11" width="2" height="7" fill="white" />
+                        <rect x="6" y="12" width="2" height="5" fill="white" />
+                        <rect x="11" y="7" width="2" height="10" fill="white" />
+                        <rect x="16" y="10" width="2" height="7" fill="white" />
                     </svg>
                 </span>
             );
