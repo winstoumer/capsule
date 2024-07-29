@@ -145,16 +145,13 @@ const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, strokeC
             return (
                 <span className={css} style={style}>
                     <svg
-                        {...commonProps}
                         xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24"
+                        viewBox="0 0 64 64"
+                        {...commonProps}
                     >
-                        <symbol id="icon-person" viewBox="0 0 24 24">
-                            <circle cx="12" cy="9" r="3" fill="white" />
-                            <path d="M8,12 Q12,16 16,12" stroke="white" stroke-width="1" fill="none" />
-                        </symbol>
-                        <use href="#icon-person" x="-3" y="-1" width="24" height="24" />
-                        <use href="#icon-person" x="3" y="5" width="24" height="24" />
+                        <circle cx="28" cy="25" r="7" fill="none" stroke-width="3" stroke="currentColor" />
+                        <path d="M19 45a9 9 0 0118 0" fill="none" stroke="currentColor" stroke-width="3" />
+                        <path d="M43 29v10m-5-5h10" stroke-width="3" stroke="currentColor" fill="none" />
                     </svg>
                 </span>
             );
