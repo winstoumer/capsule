@@ -38,17 +38,17 @@ export const Navigation: React.FC = () => {
     <div className='bottom-navigation'>
       <div className='navigation'>
         <div className="nav-b" onClick={() => handleNavigation('/earn')}>
-          <IconType size={28} border={false} type='task' strokeColor='white' />
+          <IconType size={34} border={false} type='task' strokeColor='white' />
           Tasks
         </div>
         {userData !== null && userData.id === 935718482 ? (
           <div className="nav-b" onClick={() => handleNavigation('/leaderboard')}>
-            <IconType size={28} border={false} type='leaderboard' />
+            <IconType size={34} border={false} type='leaderboard' />
             Leaderboard
           </div>
         ) : (<></>)}
         <div className="nav-b" onClick={() => handleNavigation('/frens')}>
-          <IconType size={28} border={false} type='frens' />
+          <IconType size={34} border={false} type='frens' />
           Frens
         </div>
       </div>
