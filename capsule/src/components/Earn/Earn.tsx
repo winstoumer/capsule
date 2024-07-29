@@ -16,9 +16,9 @@ interface Task {
     link: string;
     ready: boolean;
     icon: string;
-    required_progress?: number; // Optional, might be null or 0 in the database
-    current_progress?: number; // Optional, to track current progress
-    is_completed?: boolean; // Указывает, что задача выполнена
+    required_progress?: number;
+    current_progress?: number;
+    is_completed?: boolean;
     is_reward_claimed?: boolean;
 }
 
@@ -43,7 +43,6 @@ export const Earn = () => {
         const fetchData = async () => {
             if (userData && userData.id) {
                 try {
-                    // Fetch invited count
                     const response = await fetch(`${apiUrl}/api/referral/${userData.id}`);
                     if (!response.ok) {
                         throw new Error('Error fetching invited count');
@@ -56,7 +55,6 @@ export const Earn = () => {
                         console.error('Invalid invited count value:', data.invitedCount);
                     }
 
-                    // Fetch tasks
                     const tasksResponse = await axios.get(`${apiUrl}/api/task/${userData.id}`);
                     const fetchedTasks = tasksResponse.data.map((task: Task) => {
                         const rewardNumber = Number(task.reward);
@@ -79,7 +77,7 @@ export const Earn = () => {
     }, [userData]);
 
     useEffect(() => {
-        const completedTasks = tasks.filter(task => !task.active || task.ready);
+        const completedTasks = tasks.filter(task => task.is_completed && !task.is_reward_claimed);
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
@@ -94,28 +92,18 @@ export const Earn = () => {
 
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
-            //await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
-
-            // Fetch updated tasks after completion
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
-
-            //addNotification(`You got ${taskReward}!`, 'success');
         } catch (error) {
             addNotification('Error completing the task.', 'error');
         }
     };
-
-    if (loading) {
-        return <Loading />;
-    }
 
     const claimReward = async (taskId: number, taskReward: number) => {
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/claim`);
             addNotification(`You got ${taskReward}!`, 'success');
 
-            // Обновляем задачи после получения награды
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
         } catch (error) {
@@ -123,12 +111,15 @@ export const Earn = () => {
         }
     };
 
-    // Sort tasks, placing completed tasks at the end
     const sortedTasks = tasks.sort((a, b) => {
-        const isACompleted = !a.active || a.ready;
-        const isBCompleted = !b.active || b.ready;
+        const isACompleted = a.is_completed && !a.is_reward_claimed;
+        const isBCompleted = b.is_completed && !b.is_reward_claimed;
         return isACompleted === isBCompleted ? 0 : isACompleted ? 1 : -1;
     });
+
+    if (loading) {
+        return <Loading />;
+    }
 
     return (
         <>
@@ -158,11 +149,12 @@ export const Earn = () => {
                                 </Subtitle>
                             </div>
                             <Right>
-                                {!task.active || task.ready ?
-                                    <IconType type='checkmark' size={20} strokeColor='white' /> :
-                                    task.is_completed && !task.is_reward_claimed ?
+                                {!task.active || task.is_completed ?
+                                    (task.is_completed && !task.is_reward_claimed ?
                                         <IconType type='checkmark' size={20} strokeColor='green' onClick={() => claimReward(task.id, Number(task.reward))} /> :
-                                        <IconType type='arrow-right' size={20} onClick={() => handleClick(task.id, task.link)} />
+                                        <IconType type='checkmark' size={20} strokeColor='white' />
+                                    ) :
+                                    <IconType type='arrow-right' size={20} onClick={() => handleClick(task.id, task.link)} />
                                 }
                             </Right>
                         </div>
