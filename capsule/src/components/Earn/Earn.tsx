@@ -7,6 +7,7 @@ import Progress from './Progress';
 import NumericValue from '../Default/NumericValue';
 import IconType from '../Default/IconType';
 import { useNotifications } from '../Providers/NotificationContext';
+import React from 'react';
 
 interface Task {
     id: number;
@@ -34,6 +35,8 @@ export const Earn = () => {
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const INVITE_TASK_ID = 9;
+
+    const MemoizedIconType = React.memo(IconType);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -169,7 +172,7 @@ export const Earn = () => {
                             <Right>
                                 {!task.active || task.is_completed ?
                                     (task.is_completed && !task.is_reward_claimed ?
-                                        <IconType
+                                        <MemoizedIconType
                                             type='checkmark'
                                             size={20}
                                             strokeColor='black'
@@ -186,7 +189,7 @@ export const Earn = () => {
                                             strokeWidth={1}
                                         />
                                     ) :
-                                    <IconType
+                                    <MemoizedIconType
                                         type='arrow-right'
                                         size={20}
                                         strokeWidth={2}
