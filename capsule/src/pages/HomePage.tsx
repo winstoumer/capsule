@@ -9,7 +9,7 @@ import SwipeableList from '../components/SwipeableList/SwipeableList';
 import NumericValue from '../components/Default/NumericValue';
 
 const SvgLogo = (
-  <svg width="260" height="260" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
     <defs>
       <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
         <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
@@ -35,7 +35,7 @@ const SvgLogo = (
 );
 
 const SvgMatter = (
-  <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
     <defs>
       <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
         <stop offset="0%" style={{ stopColor: '#00CDFF', stopOpacity: 1 }} />
