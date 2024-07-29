@@ -170,7 +170,9 @@ export const Earn = () => {
                                     <IconType
                                         type='arrow-right'
                                         size={20}
-                                        strokeWidth={1}
+                                        strokeWidth={2}
+                                        border={false}
+                                        background='#191219'
                                         onClick={() => handleClick(task.id, task.link)}
                                     />
                                 }
