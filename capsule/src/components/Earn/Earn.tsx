@@ -56,11 +56,15 @@ export const Earn = () => {
 
                     // Fetch tasks
                     const tasksResponse = await axios.get(`${apiUrl}/api/task/${userData.id}`);
-                    const fetchedTasks = tasksResponse.data.map((task: Task) => ({
-                        ...task,
-                        reward: Number(task.reward) || 0,
-                        current_progress: task.id === INVITE_TASK_ID ? count : undefined, // Set progress only for the invite task
-                    }));
+                    const fetchedTasks = tasksResponse.data.map((task: Task) => {
+                        const rewardNumber = Number(task.reward);
+                        console.log(`Task ID: ${task.id}, Reward: ${task.reward}, Converted: ${rewardNumber}`);
+                        return {
+                            ...task,
+                            reward: rewardNumber || 0, // Ensure reward is a number, default to 0 if conversion fails
+                            current_progress: task.id === INVITE_TASK_ID ? count : undefined,
+                        };
+                    });
 
                     setTasks(fetchedTasks);
                     setLoading(false);
@@ -90,12 +94,12 @@ export const Earn = () => {
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
-    
+
             // Fetch updated tasks after completion
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             console.log("Updated tasks:", updatedTasks.data); // Debugging log
             setTasks(updatedTasks.data);
-    
+
             addNotification(`You got ${taskReward}!`, 'success');
         } catch (error) {
             addNotification('Error completing the task.', 'error');
