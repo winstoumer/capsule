@@ -149,9 +149,9 @@ const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, strokeC
                         viewBox="0 0 64 64"
                         {...commonProps}
                     >
-                        <circle cx="28" cy="25" r="7" fill="none" stroke-width="4" stroke="currentColor" />
+                        <circle cx="28" cy="25" r="5" fill="none" stroke-width="4" stroke="currentColor" />
                         <path d="M19 45a9 9 0 0118 0" fill="none" stroke="currentColor" stroke-width="4" />
-                        <path d="M43 29v10m-5-5h10" stroke-width="4" stroke="currentColor" fill="none" />
+                        <path d="M43 29v10m-5-5h10" stroke-width="2" stroke="currentColor" fill="none" />
                     </svg>
                 </span>
             );
