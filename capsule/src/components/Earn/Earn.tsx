@@ -90,8 +90,12 @@ export const Earn = () => {
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: taskReward });
+    
+            // Fetch updated tasks after completion
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
+            console.log("Updated tasks:", updatedTasks.data); // Debugging log
             setTasks(updatedTasks.data);
+    
             addNotification(`You got ${taskReward}!`, 'success');
         } catch (error) {
             addNotification('Error completing the task.', 'error');

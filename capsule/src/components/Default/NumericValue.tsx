@@ -13,6 +13,8 @@ const NumericValue: React.FC<NumericValueProps> = ({ value, decimalPlaces = 0 })
       minimumFractionDigits: decimalPlaces,
       maximumFractionDigits: decimalPlaces
     });
+  } else {
+    console.warn('Invalid value for NumericValue:', value); // Warning for unexpected value types
   }
 
   return (
