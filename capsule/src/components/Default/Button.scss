@@ -5,7 +5,7 @@
   background-color: transparent;
   height: 40px;
   min-height: 40px;
-  padding: 0 20px;
+  padding: 0 16px;
   border-radius: 28px;
   border: 1px solid var(--night-purple);
   display: flex;
@@ -13,7 +13,7 @@
   white-space: nowrap;
   text-align: center;
   justify-content: center;
-  gap: 6px;
+  gap: 10px;
 
   &:hover {
     opacity: 1;
