@@ -58,10 +58,9 @@ export const Earn = () => {
                     const tasksResponse = await axios.get(`${apiUrl}/api/task/${userData.id}`);
                     const fetchedTasks = tasksResponse.data.map((task: Task) => {
                         const rewardNumber = Number(task.reward);
-                        console.log(`Task ID: ${task.id}, Reward: ${task.reward}, Converted: ${rewardNumber}`);
                         return {
                             ...task,
-                            reward: rewardNumber || 0, // Ensure reward is a number, default to 0 if conversion fails
+                            reward: !isNaN(rewardNumber) ? rewardNumber : 0,
                             current_progress: task.id === INVITE_TASK_ID ? count : undefined,
                         };
                     });
