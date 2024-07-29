@@ -186,7 +186,6 @@ export const Earn = () => {
                                             size={20}
                                             strokeColor='white'
                                             strokeWidth={1}
-                                            disabled={clickDisabled}
                                         />
                                     ) :
                                     <IconType
