@@ -85,16 +85,19 @@ export const Earn = () => {
 
     const handleClick = async (taskId: number, taskLink: string) => {
         if (clickDisabled) return;
-
+    
+        console.log("Click handler called");
+    
         setClickDisabled(true);
-
+    
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             const frens = 5 - invitedCount;
+            console.log(`Missing ${frens} frens. Notification should appear once`);
             addNotification(`Missing ${frens} frens.`, 'info');
             setClickDisabled(false);
             return;
         }
-
+    
         try {
             window.location.href = taskLink;
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
@@ -103,9 +106,10 @@ export const Earn = () => {
         } catch (error) {
             addNotification('Error completing the task.', 'error');
         } finally {
-            setClickDisabled(false); // Разблокируем клики
+            console.log("Resetting clickDisabled");
+            setClickDisabled(false);
         }
-    };
+    };    
 
     const claimReward = async (taskId: number, taskReward: number) => {
         if (clickDisabled) return;
