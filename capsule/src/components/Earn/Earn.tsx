@@ -30,6 +30,8 @@ export const Earn = () => {
     const [completedCount, setCompletedCount] = useState<number>(0);
     const [invitedCount, setInvitedCount] = useState<number>(0);
 
+    const [clickDisabled, setClickDisabled] = useState(false);
+
     const apiUrl = import.meta.env.VITE_API_URL;
     const INVITE_TASK_ID = 9;
 
@@ -82,24 +84,34 @@ export const Earn = () => {
     }, [tasks]);
 
     const handleClick = async (taskId: number, taskLink: string) => {
+        if (clickDisabled) return;
+
+        setClickDisabled(true);
+
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             const frens = 5 - invitedCount;
             addNotification(`Missing ${frens} frens.`, 'info');
+            setClickDisabled(false);
             return;
         }
 
-        window.location.href = taskLink;
-
         try {
+            window.location.href = taskLink;
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
         } catch (error) {
             addNotification('Error completing the task.', 'error');
+        } finally {
+            setClickDisabled(false); // Разблокируем клики
         }
     };
 
     const claimReward = async (taskId: number, taskReward: number) => {
+        if (clickDisabled) return;
+
+        setClickDisabled(true);
+
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/claim`);
             addNotification(`You got ${taskReward}!`, 'success');
@@ -108,6 +120,8 @@ export const Earn = () => {
             setTasks(updatedTasks.data);
         } catch (error) {
             addNotification('Ошибка при получении награды.', 'error');
+        } finally {
+            setClickDisabled(false); // Разблокируем клики
         }
     };
 
@@ -159,12 +173,14 @@ export const Earn = () => {
                                             border={false}
                                             background='#65445A'
                                             onClick={() => claimReward(task.id, Number(task.reward))}
+                                            disabled={clickDisabled}
                                         /> :
                                         <IconType
                                             type='checkmark'
                                             size={20}
                                             strokeColor='white'
                                             strokeWidth={1}
+                                            disabled={clickDisabled}
                                         />
                                     ) :
                                     <IconType
@@ -174,6 +190,7 @@ export const Earn = () => {
                                         border={false}
                                         background='#191219'
                                         onClick={() => handleClick(task.id, task.link)}
+                                        disabled={clickDisabled}
                                     />
                                 }
                             </Right>
