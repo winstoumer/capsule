@@ -155,6 +155,7 @@ export const Earn = () => {
                                             type='checkmark'
                                             size={20}
                                             strokeColor='black'
+                                            strokeWidth={1}
                                             border={false}
                                             background='#7EDC58'
                                             onClick={() => claimReward(task.id, Number(task.reward))}
@@ -163,11 +164,13 @@ export const Earn = () => {
                                             type='checkmark'
                                             size={20}
                                             strokeColor='white'
+                                            strokeWidth={1}
                                         />
                                     ) :
                                     <IconType
                                         type='arrow-right'
                                         size={20}
+                                        strokeWidth={1}
                                         onClick={() => handleClick(task.id, task.link)}
                                     />
                                 }

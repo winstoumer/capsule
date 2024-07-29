@@ -10,6 +10,7 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
     size?: number | string; // Поддержка размера иконки
     color?: string; // Поддержка цвета
     strokeColor?: string;
+    strokeWidth?: number;
     border?: boolean;
     background?: string;
     sizeFill?: number | string;
@@ -17,7 +18,18 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 // Компонент иконок
-const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, background = 'transparent', strokeColor = '#CF00F8', border = true, color = 'none', onClick, ...props }) => {
+const IconType: React.FC<IconProps> = ({
+    type,
+    size = 20,
+    sizeFill = 36,
+    background = 'transparent',
+    strokeColor = '#CF00F8',
+    strokeWidth = 0.5,
+    border = true,
+    color = 'none',
+    onClick,
+    ...props }) => {
+
     const commonProps = {
         width: size,
         height: size,
@@ -28,7 +40,7 @@ const IconType: React.FC<IconProps> = ({ type, size = 20, sizeFill = 36, backgro
 
     const pathProps = {
         stroke: strokeColor,
-        strokeWidth: 0.5
+        strokeWidth: strokeWidth,
     };
 
     const style = {
