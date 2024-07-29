@@ -34,6 +34,7 @@ const IconType: React.FC<IconProps> = ({
 
     const handleClick = () => {
         if (!disabled && onClick) {
+            console.log("Icon clicked"); // Для отладки
             onClick();
         }
     };

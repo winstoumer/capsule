@@ -180,7 +180,6 @@ export const Earn = () => {
                                             size={20}
                                             strokeColor='white'
                                             strokeWidth={1}
-                                            disabled={clickDisabled}
                                         />
                                     ) :
                                     <IconType
@@ -190,7 +189,7 @@ export const Earn = () => {
                                         border={false}
                                         background='#191219'
                                         onClick={() => handleClick(task.id, task.link)}
-                                        disabled={clickDisabled}
+                                        
                                     />
                                 }
                             </Right>
