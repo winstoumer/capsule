@@ -180,26 +180,15 @@ export const Earn = () => {
                                     />
                                 ) : !task.active || task.is_completed ? (
                                     task.is_completed && !task.is_reward_claimed ? (
-                                        rewardClaimingTaskId === task.id ? (
-                                            <IconType
-                                                type='checkmark'
-                                                size={20}
-                                                strokeColor='black'
-                                                strokeWidth={2}
-                                                border={false}
-                                                background='#65445A'
-                                                onClick={() => claimReward(task.id, Number(task.reward))}
-                                            />
-                                        ) : (
-                                            <IconType
-                                                type='checkmark'
-                                                size={20}
-                                                strokeColor='black'
-                                                strokeWidth={2}
-                                                border={false}
-                                                background='#65445A'
-                                            />
-                                        )
+                                        <IconType
+                                            type='checkmark'
+                                            size={20}
+                                            strokeColor='black'
+                                            strokeWidth={2}
+                                            border={false}
+                                            background='#65445A'
+                                            onClick={() => claimReward(task.id, Number(task.reward))}
+                                        />
                                     ) : (
                                         <IconType
                                             type='checkmark'
