@@ -80,7 +80,7 @@ export const Earn = () => {
     }, [userData]);
 
     useEffect(() => {
-        const completedTasks = tasks.filter(task => task.is_completed && !task.is_reward_claimed);
+        const completedTasks = tasks.filter(task => task.is_completed);
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
