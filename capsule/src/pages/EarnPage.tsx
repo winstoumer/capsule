@@ -6,7 +6,7 @@ import PageComponent from '../components/PageComponent/PageComponent';
 
 const EarnPage: React.FC = () => {
     return (
-        <PageComponent title='Tasks' padding={false}>
+        <PageComponent title='Tasks' padding={true}>
             <Earn />
         </PageComponent>
     );
