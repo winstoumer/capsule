@@ -4,6 +4,7 @@
     width: 100%;
     background-color: #0000000b;
     margin-bottom: 40px;
+    padding-left: 15px;
 
     .item-container {
         display: flex;
@@ -36,6 +37,7 @@
             position: relative;
             border-bottom: 0.5px solid #252525;
             padding: 10px 0;
+            padding-right: 15px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
