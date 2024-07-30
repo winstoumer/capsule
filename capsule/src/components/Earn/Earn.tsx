@@ -31,6 +31,7 @@ export const Earn = () => {
     const [invitedCount, setInvitedCount] = useState<number>(0);
 
     const [loadingTaskId, setLoadingTaskId] = useState<number | null>(null);
+    const [rewardClaimingTaskId, setRewardClaimingTaskId] = useState<number | null>(null);
 
     const apiUrl = import.meta.env.VITE_API_URL;
     const INVITE_TASK_ID = 9;
@@ -106,10 +107,11 @@ export const Earn = () => {
 
     const claimReward = async (taskId: number, taskReward: number) => {
         // Prevent multiple claims for the same task
-        const task = tasks.find(t => t.id === taskId);
-        if (task && task.is_reward_claimed) {
+        if (rewardClaimingTaskId !== null) {
             return;
         }
+
+        setRewardClaimingTaskId(taskId);
 
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/claim`);
@@ -119,6 +121,8 @@ export const Earn = () => {
             setTasks(updatedTasks.data);
         } catch (error) {
             addNotification('Try later.', 'error');
+        } finally {
+            setRewardClaimingTaskId(null);
         }
     };
 
@@ -176,15 +180,26 @@ export const Earn = () => {
                                     />
                                 ) : !task.active || task.is_completed ? (
                                     task.is_completed && !task.is_reward_claimed ? (
-                                        <IconType
-                                            type='checkmark'
-                                            size={20}
-                                            strokeColor='black'
-                                            strokeWidth={2}
-                                            border={false}
-                                            background='#65445A'
-                                            onClick={() => claimReward(task.id, Number(task.reward))}
-                                        />
+                                        rewardClaimingTaskId === task.id ? (
+                                            <IconType
+                                                type='checkmark'
+                                                size={20}
+                                                strokeColor='black'
+                                                strokeWidth={2}
+                                                border={false}
+                                                background='#65445A'
+                                            />
+                                        ) : (
+                                            <IconType
+                                                type='checkmark'
+                                                size={20}
+                                                strokeColor='black'
+                                                strokeWidth={2}
+                                                border={false}
+                                                background='#65445A'
+                                                onClick={() => claimReward(task.id, Number(task.reward))}
+                                            />
+                                        )
                                     ) : (
                                         <IconType
                                             type='checkmark'
