@@ -78,8 +78,6 @@ body {
 
 /* Content with animation */
 .content {
-  padding-left: 15px;
-  padding-right: 15px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -143,7 +141,7 @@ button {
   :root {
     color: white;
     background-color: black;
-    
+
     --night--blue: #121619;
   }
 
