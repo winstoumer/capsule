@@ -94,7 +94,7 @@ export const Earn = () => {
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
         } catch (error) {
-            addNotification('Error completing the task.', 'error');
+            addNotification('Try later.', 'error');
         }
     };
 
@@ -106,7 +106,7 @@ export const Earn = () => {
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
         } catch (error) {
-            addNotification('Ошибка при получении награды.', 'error');
+            addNotification('Try later.', 'error');
         }
     };
 
