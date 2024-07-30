@@ -115,7 +115,7 @@ export const Earn = () => {
 
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/claim`);
-            addNotification(`You got ${taskReward}!`, 'success');
+            addNotification(`You got ${taskReward} 🎉`, 'success');
 
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
