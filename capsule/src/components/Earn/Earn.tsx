@@ -188,6 +188,7 @@ export const Earn = () => {
                                                 strokeWidth={2}
                                                 border={false}
                                                 background='#65445A'
+                                                onClick={() => claimReward(task.id, Number(task.reward))}
                                             />
                                         ) : (
                                             <IconType
@@ -197,7 +198,6 @@ export const Earn = () => {
                                                 strokeWidth={2}
                                                 border={false}
                                                 background='#65445A'
-                                                onClick={() => claimReward(task.id, Number(task.reward))}
                                             />
                                         )
                                     ) : (
