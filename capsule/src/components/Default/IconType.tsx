@@ -190,9 +190,9 @@ const IconType: React.FC<IconProps> = ({
                         <circle
                             cx="12"
                             cy="12"
-                            r="6"
+                            r="8"
                             stroke="#CF00F8"
-                            strokeWidth="4"
+                            strokeWidth="2"
                             fill="none"
                             strokeLinecap="round"
                             strokeLinejoin="round"
