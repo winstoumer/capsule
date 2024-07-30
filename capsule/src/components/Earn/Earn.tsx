@@ -105,6 +105,12 @@ export const Earn = () => {
     };
 
     const claimReward = async (taskId: number, taskReward: number) => {
+        // Prevent multiple claims for the same task
+        const task = tasks.find(t => t.id === taskId);
+        if (task && task.is_reward_claimed) {
+            return;
+        }
+
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/claim`);
             addNotification(`You got ${taskReward}!`, 'success');
@@ -117,9 +123,15 @@ export const Earn = () => {
     };
 
     const sortedTasks = tasks.sort((a, b) => {
-        const isACompleted = a.is_completed && !a.is_reward_claimed;
-        const isBCompleted = b.is_completed && !b.is_reward_claimed;
-        return isACompleted === isBCompleted ? 0 : isACompleted ? 1 : -1;
+        // Приоритеты: невыполненные (0), выполненные без награды (1), выполненные с наградой (2)
+        const getTaskPriority = (task: Task) => {
+            if (!task.is_completed) return 0;
+            if (task.is_completed && !task.is_reward_claimed) return 1;
+            if (task.is_completed && task.is_reward_claimed) return 2;
+            return 3; // на случай непредвиденных ситуаций
+        };
+
+        return getTaskPriority(a) - getTaskPriority(b);
     });
 
     if (loading) {
