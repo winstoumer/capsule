@@ -114,7 +114,7 @@ export const Earn = () => {
         } finally {
             setClickDisabled(false);
         }
-    }, [clickDisabled, invitedCount, userData.id, apiUrl, addNotification]);
+    }, [clickDisabled, addNotification]);
 
     const claimReward = async (taskId: number, taskReward: number) => {
         if (clickDisabled) return;
