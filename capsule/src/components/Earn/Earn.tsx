@@ -87,21 +87,24 @@ export const Earn = () => {
     }, [tasks]);
 
     const handleClick = async (taskId: number, taskLink: string) => {
-        if (clickDisabled) return;
+        console.log('HandleClick invoked');
     
-        console.log("Click handler called");
+        if (clickDisabled) return;
     
         setClickDisabled(true);
     
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             const frens = 5 - invitedCount;
-            console.log(`Missing ${frens} frens. Notification should appear once`);
-            addNotification(`Missing ${frens} frens.`, 'info');
+            setTimeout(() => {
+                console.log(`Notification should appear once: Missing ${frens} frens`);
+                addNotification(`Missing ${frens} frens.`, 'info');
+            }, 0);
             setClickDisabled(false);
             return;
         }
     
         try {
+            console.log(`Navigating to ${taskLink}`);
             window.location.href = taskLink;
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
@@ -109,10 +112,9 @@ export const Earn = () => {
         } catch (error) {
             addNotification('Error completing the task.', 'error');
         } finally {
-            console.log("Resetting clickDisabled");
             setClickDisabled(false);
         }
-    };    
+    };      
 
     const claimReward = async (taskId: number, taskReward: number) => {
         if (clickDisabled) return;
