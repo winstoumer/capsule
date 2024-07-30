@@ -30,6 +30,8 @@ export const Earn = () => {
     const [completedCount, setCompletedCount] = useState<number>(0);
     const [invitedCount, setInvitedCount] = useState<number>(0);
 
+    const [loadingTaskId, setLoadingTaskId] = useState<number | null>(null);
+
     const apiUrl = import.meta.env.VITE_API_URL;
     const INVITE_TASK_ID = 9;
 
@@ -88,6 +90,8 @@ export const Earn = () => {
             return;
         }
 
+        setLoadingTaskId(taskId);
+
         try {
             window.location.href = taskLink;
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
@@ -95,6 +99,8 @@ export const Earn = () => {
             setTasks(updatedTasks.data);
         } catch (error) {
             addNotification('Try later.', 'error');
+        } finally {
+            setLoadingTaskId(null);
         }
     };
 
@@ -148,8 +154,16 @@ export const Earn = () => {
                                 </Subtitle>
                             </div>
                             <Right>
-                                {!task.active || task.is_completed ?
-                                    (task.is_completed && !task.is_reward_claimed ?
+                                {loadingTaskId === task.id ? (
+                                    <IconType
+                                        type='loading'
+                                        size={20}
+                                        strokeWidth={2}
+                                        border={false}
+                                        background='#191219'
+                                    />
+                                ) : !task.active || task.is_completed ? (
+                                    task.is_completed && !task.is_reward_claimed ? (
                                         <IconType
                                             type='checkmark'
                                             size={20}
@@ -158,14 +172,16 @@ export const Earn = () => {
                                             border={false}
                                             background='#65445A'
                                             onClick={() => claimReward(task.id, Number(task.reward))}
-                                        /> :
+                                        />
+                                    ) : (
                                         <IconType
                                             type='checkmark'
                                             size={20}
                                             strokeColor='white'
                                             strokeWidth={1}
                                         />
-                                    ) :
+                                    )
+                                ) : (
                                     <IconType
                                         type='arrow-right'
                                         size={20}
@@ -174,7 +190,7 @@ export const Earn = () => {
                                         background='#191219'
                                         onClick={() => handleClick(task.id, task.link)}
                                     />
-                                }
+                                )}
                             </Right>
                         </div>
                     </Item>
