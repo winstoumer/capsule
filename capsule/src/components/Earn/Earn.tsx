@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './earn.scss';
 import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
@@ -86,7 +86,7 @@ export const Earn = () => {
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
-    const handleClick = async (taskId: number, taskLink: string) => {
+    const handleClick = useCallback(async (taskId: number, taskLink: string) => {
         console.log('HandleClick invoked');
     
         if (clickDisabled) return;
@@ -114,7 +114,7 @@ export const Earn = () => {
         } finally {
             setClickDisabled(false);
         }
-    };      
+    }, [clickDisabled, invitedCount, userData.id, apiUrl, addNotification]);
 
     const claimReward = async (taskId: number, taskReward: number) => {
         if (clickDisabled) return;

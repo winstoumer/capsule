@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './iconType.scss';
 
 // Определяем типы для поддерживаемых иконок
@@ -19,7 +19,7 @@ interface IconProps extends React.SVGProps<SVGSVGElement> {
 }
 
 // Компонент иконок
-const IconType: React.FC<IconProps> = ({
+const IconType = React.memo(({
     type,
     size = 20,
     sizeFill = 36,
@@ -28,16 +28,16 @@ const IconType: React.FC<IconProps> = ({
     strokeWidth = 0.5,
     border = true,
     color = 'none',
-    disabled = false,
     onClick,
-    ...props }) => {
-
-    const handleClick = () => {
+    disabled = false,
+    ...props
+}: IconProps) => {
+    const handleClick = useCallback(() => {
         if (!disabled && onClick) {
-            console.log("Icon clicked"); // Для отладки
+            console.log("IconType clicked");
             onClick();
         }
-    };
+    }, [disabled, onClick]);
 
     const commonProps = {
         width: size,
@@ -163,6 +163,6 @@ const IconType: React.FC<IconProps> = ({
             )}
         </span>
     )
-};
+});
 
 export default IconType;
