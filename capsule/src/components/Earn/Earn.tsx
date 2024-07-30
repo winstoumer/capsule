@@ -194,7 +194,7 @@ export const Earn = () => {
                                             type='checkmark'
                                             size={20}
                                             strokeColor='white'
-                                            strokeWidth={1}
+                                            strokeWidth={2}
                                         />
                                     )
                                 ) : (
