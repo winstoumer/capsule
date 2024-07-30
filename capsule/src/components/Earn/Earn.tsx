@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import './earn.scss';
 import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
@@ -7,7 +7,6 @@ import Progress from './Progress';
 import NumericValue from '../Default/NumericValue';
 import IconType from '../Default/IconType';
 import { useNotifications } from '../Providers/NotificationContext';
-import React from 'react';
 
 interface Task {
     id: number;
@@ -31,12 +30,8 @@ export const Earn = () => {
     const [completedCount, setCompletedCount] = useState<number>(0);
     const [invitedCount, setInvitedCount] = useState<number>(0);
 
-    const [clickDisabled, setClickDisabled] = useState(false);
-
     const apiUrl = import.meta.env.VITE_API_URL;
     const INVITE_TASK_ID = 9;
-
-    const MemoizedIconType = React.memo(IconType);
 
     useEffect(() => {
         if (window.Telegram && window.Telegram.WebApp) {
@@ -86,41 +81,24 @@ export const Earn = () => {
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
-    const handleClick = useCallback(async (taskId: number, taskLink: string) => {
-        console.log('HandleClick invoked');
-    
-        if (clickDisabled) return;
-    
-        setClickDisabled(true);
-    
+    const handleClick = async (taskId: number, taskLink: string) => {
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             const frens = 5 - invitedCount;
-            setTimeout(() => {
-                console.log(`Notification should appear once: Missing ${frens} frens`);
-                addNotification(`Missing ${frens} frens.`, 'info');
-            }, 0);
-            setClickDisabled(false);
+            addNotification(`Missing ${frens} frens.`, 'info');
             return;
         }
-    
+
         try {
-            console.log(`Navigating to ${taskLink}`);
             window.location.href = taskLink;
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
         } catch (error) {
             addNotification('Error completing the task.', 'error');
-        } finally {
-            setClickDisabled(false);
         }
-    }, [clickDisabled, addNotification]);
+    };
 
     const claimReward = async (taskId: number, taskReward: number) => {
-        if (clickDisabled) return;
-
-        setClickDisabled(true);
-
         try {
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/claim`);
             addNotification(`You got ${taskReward}!`, 'success');
@@ -129,8 +107,6 @@ export const Earn = () => {
             setTasks(updatedTasks.data);
         } catch (error) {
             addNotification('Ошибка при получении награды.', 'error');
-        } finally {
-            setClickDisabled(false); // Разблокируем клики
         }
     };
 
@@ -174,14 +150,13 @@ export const Earn = () => {
                             <Right>
                                 {!task.active || task.is_completed ?
                                     (task.is_completed && !task.is_reward_claimed ?
-                                        <MemoizedIconType
+                                        <IconType
                                             type='checkmark'
                                             size={20}
                                             strokeColor='black'
                                             strokeWidth={2}
                                             border={false}
                                             background='#65445A'
-                                            disabled={clickDisabled}
                                             onClick={() => claimReward(task.id, Number(task.reward))}
                                         /> :
                                         <IconType
@@ -191,13 +166,12 @@ export const Earn = () => {
                                             strokeWidth={1}
                                         />
                                     ) :
-                                    <MemoizedIconType
+                                    <IconType
                                         type='arrow-right'
                                         size={20}
                                         strokeWidth={2}
                                         border={false}
                                         background='#191219'
-                                        disabled={clickDisabled}
                                         onClick={() => handleClick(task.id, task.link)}
                                     />
                                 }
