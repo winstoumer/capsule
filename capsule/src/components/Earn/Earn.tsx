@@ -184,7 +184,7 @@ export const Earn = () => {
                                             <IconType
                                                 type='checkmark'
                                                 size={20}
-                                                strokeColor='black'
+                                                strokeColor='white'
                                                 strokeWidth={2}
                                                 border={false}
                                                 background='transparent'

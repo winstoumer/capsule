@@ -24,7 +24,7 @@
 
 .claim-reward {
     display: inline-block;
-    /* Это необходимо, чтобы элемент можно было анимировать */
+    border-radius: 50%;
     box-shadow: 0 0 20px #354335;
     animation: bounce 2s ease-in-out infinite;
 }
