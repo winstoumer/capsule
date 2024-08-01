@@ -187,7 +187,7 @@ export const Earn = () => {
                                                 strokeColor='black'
                                                 strokeWidth={2}
                                                 border={false}
-                                                background='#6d932c'
+                                                background='transparent'
                                                 onClick={() => claimReward(task.id, Number(task.reward))}
                                             />
                                         </span>
