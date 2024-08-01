@@ -180,15 +180,17 @@ export const Earn = () => {
                                     />
                                 ) : !task.active || task.is_completed ? (
                                     task.is_completed && !task.is_reward_claimed ? (
-                                        <IconType
-                                            type='checkmark'
-                                            size={20}
-                                            strokeColor='black'
-                                            strokeWidth={2}
-                                            border={false}
-                                            background='#65445A'
-                                            onClick={() => claimReward(task.id, Number(task.reward))}
-                                        />
+                                        <span className='claim-reward'>
+                                            <IconType
+                                                type='checkmark'
+                                                size={20}
+                                                strokeColor='black'
+                                                strokeWidth={2}
+                                                border={false}
+                                                background='#6d932c'
+                                                onClick={() => claimReward(task.id, Number(task.reward))}
+                                            />
+                                        </span>
                                     ) : (
                                         <IconType
                                             type='checkmark'
