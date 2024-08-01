@@ -21,6 +21,31 @@
     font-weight: 600;
 }
 
+
 .claim-reward {
+    display: inline-block;
+    /* Это необходимо, чтобы элемент можно было анимировать */
     box-shadow: 0 0 20px #354335;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+        /* Начальное и конечное положение */
+    }
+
+    40% {
+        transform: translateY(-10px);
+        /* Подъем на 30px */
+    }
+
+    60% {
+        transform: translateY(-5px);
+        /* Слегка уменьшаем высоту перед окончательным падением */
+    }
 }
