@@ -6,10 +6,10 @@ import { LeaderBoard } from '../components/Game/LeaderBoard';
 const LeaderboardPage: React.FC = () => {
 
   return (
-    <PageComponent title='Leaderboard'>
-      <div className='subtitle'>
-        Updated every 7 days.
-      </div>
+    <PageComponent
+      title='Leaderboard'
+      subtitle='Updated every 7 days.'
+    >
       <LeaderBoard />
     </PageComponent>
   );

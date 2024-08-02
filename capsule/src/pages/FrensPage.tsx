@@ -6,10 +6,10 @@ import PageComponent from '../components/PageComponent/PageComponent';
 
 const FrensPage: React.FC = () => {
     return (
-        <PageComponent title='Frens'>
-            <div className='subtitle'>
-                For each invitee +500 P.
-            </div>
+        <PageComponent
+            title='Frens'
+            subtitle='For each invitee +500 P.'
+        >
             <Referral />
         </PageComponent>
     );
