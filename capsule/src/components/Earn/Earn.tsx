@@ -21,7 +21,6 @@ interface Task {
     current_progress?: number;
     is_completed?: boolean;
     is_reward_claimed?: boolean;
-    link_protocol: string;
 }
 
 export const Earn = () => {
@@ -86,7 +85,7 @@ export const Earn = () => {
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
-    const handleClick = async (taskId: number, taskLink: string, taskLinkProtocol: string) => {
+    const handleClick = async (taskId: number, taskLink: string) => {
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             const frens = 5 - invitedCount;
             addNotification(`Missing ${frens} frens.`, 'info');
@@ -96,7 +95,7 @@ export const Earn = () => {
         setLoadingTaskId(taskId);
 
         try {
-            openLink(taskLink, taskLinkProtocol);
+            openLink(taskLink);
 
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
@@ -209,7 +208,7 @@ export const Earn = () => {
                                         strokeWidth={2}
                                         border={false}
                                         background='#191219'
-                                        onClick={() => handleClick(task.id, task.link, task.link_protocol)}
+                                        onClick={() => handleClick(task.id, task.link)}
                                     />
                                 )}
                             </Right>
