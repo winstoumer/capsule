@@ -4,7 +4,7 @@ import { Navigation } from '../Navigation/Navigation';
 
 interface PageComponentProps {
   children: ReactNode;
-  padding?: boolean; 
+  padding?: boolean;
   title?: string;
   subtitle?: string;
   navigation?: boolean;
@@ -29,8 +29,12 @@ const PageComponent: React.FC<PageComponentProps> = ({
 
   return (
     <div className={containerClass} style={containerStyle}>
-      {title && <div className='page-title'>{title}</div>}
-      {subtitle && <div className='page-subtitle'>{subtitle}</div>}
+      {(title || subtitle) && (
+        <div className='page-title-container'>
+          {title && <div className='page-title'>{title}</div>}
+          {subtitle && <div className='page-subtitle'>{subtitle}</div>}
+        </div>
+      )}
       {children}
       {navigation && <Navigation />}
     </div>
