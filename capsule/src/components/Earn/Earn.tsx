@@ -7,6 +7,7 @@ import Progress from './Progress';
 import NumericValue from '../Default/NumericValue';
 import IconType from '../Default/IconType';
 import { useNotifications } from '../Providers/NotificationContext';
+import { openLink } from '../utils/openLink';
 
 interface Task {
     id: number;
@@ -20,6 +21,7 @@ interface Task {
     current_progress?: number;
     is_completed?: boolean;
     is_reward_claimed?: boolean;
+    link_protocol: string;
 }
 
 export const Earn = () => {
@@ -84,7 +86,7 @@ export const Earn = () => {
         setCompletedCount(completedTasks.length);
     }, [tasks]);
 
-    const handleClick = async (taskId: number, taskLink: string) => {
+    const handleClick = async (taskId: number, taskLink: string, taskLinkProtocol: string) => {
         if (taskId === INVITE_TASK_ID && invitedCount < 5) {
             const frens = 5 - invitedCount;
             addNotification(`Missing ${frens} frens.`, 'info');
@@ -94,7 +96,8 @@ export const Earn = () => {
         setLoadingTaskId(taskId);
 
         try {
-            window.location.href = taskLink;
+            openLink(taskLink, taskLinkProtocol);
+
             await axios.post(`${apiUrl}/api/task/${userData.id}/${taskId}/complete`);
             const updatedTasks = await axios.get(`${apiUrl}/api/task/${userData.id}`);
             setTasks(updatedTasks.data);
@@ -206,7 +209,7 @@ export const Earn = () => {
                                         strokeWidth={2}
                                         border={false}
                                         background='#191219'
-                                        onClick={() => handleClick(task.id, task.link)}
+                                        onClick={() => handleClick(task.id, task.link, task.link_protocol)}
                                     />
                                 )}
                             </Right>
