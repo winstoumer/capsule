@@ -21,12 +21,14 @@
     font-weight: 600;
 }
 
-
 .claim-reward {
     display: inline-block;
     border-radius: 50%;
-    box-shadow: 0 0 20px #003106;
     animation: bounce 2s ease-in-out infinite;
+    width: 36px; /* Задаем ширину для элемента */
+    height: 36px; /* Задаем высоту для элемента */
+    box-shadow: 0 0 20px #003106;
+    position: relative;
 }
 
 @keyframes bounce {
@@ -36,16 +38,40 @@
     80%,
     100% {
         transform: translateY(0);
-        /* Начальное и конечное положение */
     }
-
     40% {
         transform: translateY(-10px);
-        /* Подъем на 30px */
     }
-
     60% {
         transform: translateY(-5px);
-        /* Слегка уменьшаем высоту перед окончательным падением */
     }
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltiptext {
+    font-size: 14px;
+    font-weight: 600;
+    visibility: hidden;
+    width: 60px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%; /* Позиционируем подсказку выше элемента */
+    left: 50%;
+    margin-left: -30px; /* Смещаем подсказку влево на половину её ширины */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

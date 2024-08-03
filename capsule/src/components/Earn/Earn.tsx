@@ -182,17 +182,20 @@ export const Earn = () => {
                                     />
                                 ) : !task.active || task.is_completed ? (
                                     task.is_completed && !task.is_reward_claimed ? (
-                                        <span className='claim-reward'>
-                                            <IconType
-                                                type='checkmark'
-                                                size={20}
-                                                strokeColor='white'
-                                                strokeWidth={2}
-                                                border={false}
-                                                background='transparent'
-                                                onClick={() => claimReward(task.id, Number(task.reward))}
-                                            />
-                                        </span>
+                                        <div className='tooltip'>
+                                            <span className='tooltiptext'>Claim</span>
+                                            <span className='claim-reward'>
+                                                <IconType
+                                                    type='checkmark'
+                                                    size={20}
+                                                    strokeColor='white'
+                                                    strokeWidth={2}
+                                                    border={false}
+                                                    background='transparent'
+                                                    onClick={() => claimReward(task.id, Number(task.reward))}
+                                                />
+                                            </span>
+                                        </div>
                                     ) : (
                                         <IconType
                                             type='checkmark'
