@@ -1,8 +1,6 @@
-import { useNavigate } from 'react-router-dom';
+import { NavigateFunction } from 'react-router-dom';
 
-const navigate = useNavigate();
-
-export const navigationForward = (path: string) => {
+export const navigationForward = (navigate: NavigateFunction, path: string) => {
     const contentElement = document.querySelector('.content');
 
     if (contentElement) {
