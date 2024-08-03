@@ -12,3 +12,16 @@ export const navigationForward = (navigate: NavigateFunction, path: string) => {
         navigate(path);
     }
 };
+
+export const navigationBack = (navigate: NavigateFunction) => {
+    const contentElement = document.querySelector('.content');
+
+    if (contentElement) {
+        contentElement.classList.add('slideDown');
+        setTimeout(() => {
+            navigate(-1);
+        }, 200);
+    } else {
+        navigate(-1);
+    }
+};

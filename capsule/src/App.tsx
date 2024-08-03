@@ -15,23 +15,11 @@ import FrensPage from './pages/FrensPage';
 import StarryNightBackground from './components/Background/StarryNightBackground';
 import LeaderboardPage from './pages/LeaderboardPage';
 import NotificationList from './components/Default/NotificationList';
+import { navigationBack } from './components/utils/handleNavigation';
 
 const AppWrapper: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
-  const handleClick = () => {
-    const contentElement = document.querySelector('.content');
-
-    if (contentElement) {
-      contentElement.classList.add('slideDown');
-      setTimeout(() => {
-        navigate(-1);
-      }, 200);
-    } else {
-      navigate(-1);
-    }
-  };
 
   useEffect(() => {
     const scriptId = 'telegram-web-app-script';
@@ -49,7 +37,7 @@ const AppWrapper: React.FC = () => {
 
           const backButton = window.Telegram.WebApp.BackButton;
           backButton.onClick(() => {
-            handleClick();
+            navigationBack(navigate);
           });
 
           if (location.pathname.startsWith('/game')) {
