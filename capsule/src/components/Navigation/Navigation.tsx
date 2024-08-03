@@ -7,7 +7,6 @@ import { navigationForward } from '../utils/handleNavigation';
 
 interface TelegramUserData {
   id: number;
-  first_name: string;
 }
 
 export const Navigation: React.FC = () => {
@@ -42,4 +41,3 @@ export const Navigation: React.FC = () => {
     </div>
   );
 };
-
