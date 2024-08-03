@@ -1,8 +1,8 @@
 // navigation.tsx
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import './navigation.scss';
 import IconType from '../Default/IconType';
+import { navigationForward } from '../utils/handleNavigation';
 
 interface TelegramUserData {
   id: number;
@@ -10,22 +10,8 @@ interface TelegramUserData {
 }
 
 export const Navigation: React.FC = () => {
-  const navigate = useNavigate();
 
   const [userData, setUserData] = useState<TelegramUserData | null>(null);
-
-  const handleNavigation = (path: string) => {
-    const contentElement = document.querySelector('.content');
-
-    if (contentElement) {
-      contentElement.classList.add('slideDown');
-      setTimeout(() => {
-        navigate(path);
-      }, 200); // Задержка должна соответствовать длительности анимации
-    } else {
-      navigate(path);
-    }
-  };
 
   useEffect(() => {
     if (window.Telegram && window.Telegram.WebApp) {
@@ -37,17 +23,17 @@ export const Navigation: React.FC = () => {
   return (
     <div className='bottom-navigation'>
       <div className='navigation'>
-        <div className="nav-b" onClick={() => handleNavigation('/earn')}>
+        <div className="nav-b" onClick={() => navigationForward('/earn')}>
           <IconType size={34} border={false} type='task' strokeColor='white' />
           Tasks
         </div>
         {userData !== null && userData.id === 935718482 ? (
-          <div className="nav-b" onClick={() => handleNavigation('/leaderboard')}>
+          <div className="nav-b" onClick={() => navigationForward('/leaderboard')}>
             <IconType size={34} border={false} type='leaderboard' />
             Leaderboard
           </div>
         ) : (<></>)}
-        <div className="nav-b" onClick={() => handleNavigation('/frens')}>
+        <div className="nav-b" onClick={() => navigationForward('/frens')}>
           <IconType size={34} border={false} type='frens' />
           Frens
         </div>
