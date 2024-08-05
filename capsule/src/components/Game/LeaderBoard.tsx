@@ -1,6 +1,7 @@
 import React from 'react';
 import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
 import './leaderboard.scss';
+import NumericValue from 'components/Default/NumericValue';
 
 interface Leader {
     place: number;
@@ -10,16 +11,16 @@ interface Leader {
 }
 
 const leaders: Leader[] = [
-    { place: 1, name: 'Alice', reward: '+300000 P', points: 1500 },
-    { place: 2, name: 'Bob', reward: '+200000 P', points: 1400 },
-    { place: 3, name: 'Charlie', reward: '+100000 P', points: 1300 },
-    { place: 4, name: 'David', reward: '+50000 P', points: 1200 },
-    { place: 5, name: 'Eve', reward: '+10000 P', points: 1100 },
-    { place: 6, name: 'Frank', reward: '+10000 P', points: 1000 },
-    { place: 7, name: 'Grace', reward: '+10000 P', points: 900 },
-    { place: 8, name: 'Hank', reward: '+10000 P', points: 800 },
-    { place: 9, name: 'Ivy', reward: '+10000 P', points: 700 },
-    { place: 10, name: 'Jack', reward: '+10000 P', points: 600 },
+    { place: 1, name: 'Alice', reward: '300000', points: 1500 },
+    { place: 2, name: 'Bob', reward: '200000', points: 1400 },
+    { place: 3, name: 'Charlie', reward: '100000', points: 1300 },
+    { place: 4, name: 'David', reward: '50000', points: 1200 },
+    { place: 5, name: 'Eve', reward: '10000', points: 1100 },
+    { place: 6, name: 'Frank', reward: '10000', points: 1000 },
+    { place: 7, name: 'Grace', reward: '10000', points: 900 },
+    { place: 8, name: 'Hank', reward: '10000', points: 800 },
+    { place: 9, name: 'Ivy', reward: '10000', points: 700 },
+    { place: 10, name: 'Jack', reward: '10000', points: 600 },
 ];
 
 export const LeaderBoard: React.FC = () => {
@@ -67,7 +68,7 @@ export const LeaderBoard: React.FC = () => {
                         <div className='item-center-container'>
                             <Title>{leader.name}</Title>
                             <Subtitle>
-                                {leader.reward}
+                                +<NumericValue value={leader.reward} />
                                 {getAdditionalRewards(leader.place)}
                             </Subtitle>
                         </div>
