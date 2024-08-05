@@ -30,13 +30,31 @@ export const LeaderBoard: React.FC = () => {
         return place;
     };
 
-    const getX2 = (place: number) => {
-        if (place === 1 || place === 2 || place === 3) {
-            return (
-                <>
-                    <span className='reward-x2'>X2</span>
-                </>
-            );
+    const getAdditionalRewards = (place: number) => {
+        switch (place) {
+            case 1:
+                return (
+                    <>
+                        <span className='additional-reward'>X2</span>
+                        <span className='additional-reward'>30TON</span>
+                    </>
+                );
+            case 2:
+                return (
+                    <>
+                        <span className='additional-reward'>X2</span>
+                        <span className='additional-reward'>20TON</span>
+                    </>
+                );
+            case 3:
+                return (
+                    <>
+                        <span className='additional-reward'>X2</span>
+                        <span className='additional-reward'>10TON</span>
+                    </>
+                );
+            default:
+                return null;
         }
     };
 
@@ -50,7 +68,7 @@ export const LeaderBoard: React.FC = () => {
                             <Title>{leader.name}</Title>
                             <Subtitle>
                                 {leader.reward}
-                                {getX2(leader.place)}
+                                {getAdditionalRewards(leader.place)}
                             </Subtitle>
                         </div>
                         <Right>{leader.points}</Right>
