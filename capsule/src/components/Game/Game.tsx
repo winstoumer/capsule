@@ -151,7 +151,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         try {
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
             // Обновление или вставка баллов
-            await axios.post(`${apiUrl}/api/leaderboard/upsert-points`, { telegramId: userData.id, points });
+            await axios.post(`${apiUrl}/api/leaderboard/leaderboard-update`, { telegram_id: userData.id, points });
         } catch (error) {
             console.error('Error:', error);
         }
