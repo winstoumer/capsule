@@ -8,7 +8,7 @@ const LeaderboardPage: React.FC = () => {
   return (
     <PageComponent
       title='Leaderboard'
-      subtitle='Updated every 7 days.'
+      subtitle='Updated every 30 days.'
     >
       <LeaderBoard />
     </PageComponent>
