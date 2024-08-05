@@ -146,10 +146,12 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         setTimeLeft(duration); // Установите начальное время из пропса
     };
 
-    const handleClaimClick = async (coins: number) => {
+    const handleClaimClick = async (coins: number, points: number) => {
         setClaimDisabled(true);
         try {
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
+            // Обновление или вставка баллов
+            await axios.post(`${apiUrl}/api/leaderboard/upsert-points`, { telegram_id: userData.id, points });
         } catch (error) {
             console.error('Error:', error);
         }
@@ -303,7 +305,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                 </div>
                             </div>
                             <div className='rewards-actions'>
-                                <Button text="Claim" custom={true} onClick={() => handleClaimClick(rewardCoins)} disabled={isClaimDisabled} />
+                                <Button text="Claim" custom={true} onClick={() => handleClaimClick(rewardCoins, scoreCoins)} disabled={isClaimDisabled} />
                             </div>
                         </div>
                     )}
