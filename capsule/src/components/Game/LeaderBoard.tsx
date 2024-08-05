@@ -48,7 +48,7 @@ export const LeaderBoard: React.FC = () => {
 
     // Функция для получения награды в формате строки
     const formatRewards = (rewards: Reward[]) => {
-        if (!rewards) return 'No rewards';
+        if (!rewards) return '';
 
         const coinsReward = rewards.find(reward => reward.type === 'coins');
         const additionalRewards = rewards.filter(reward => reward.type !== 'coins');
