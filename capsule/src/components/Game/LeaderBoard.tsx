@@ -14,7 +14,7 @@ interface Leader {
     points: number;
     event_id: number;
     place?: number;
-    reward?: Reward[]; // Обновлено для массива наград
+    reward?: Reward[];
 }
 
 export const LeaderBoard: React.FC = () => {
@@ -37,37 +37,13 @@ export const LeaderBoard: React.FC = () => {
         };
 
         fetchLeaders();
-    }, [apiUrl, eventId]);
+    }, [eventId]);
 
     const getMedal = (place: number) => {
         if (place === 1) return <span className="medal gold">1</span>;
         if (place === 2) return <span className="medal silver">2</span>;
         if (place === 3) return <span className="medal bronze">3</span>;
         return <span>{place}</span>;
-    };
-
-    const formatRewards = (rewards: Reward[] | undefined) => {
-        if (!rewards) return '';
-
-        const coinsReward = rewards.find(reward => reward.type === 'coins');
-        const additionalRewards = rewards.filter(reward => reward.type !== 'coins');
-
-        return (
-            <>
-                {coinsReward && (
-                    <span className='coins-reward'>
-                        +<NumericValue value={coinsReward.value} />
-                    </span>
-                )}
-                {additionalRewards.length > 0 && (
-                    <span className='additional-reward'>
-                        {additionalRewards.map((reward, index) => (
-                            <span key={index}>{reward.value}</span>
-                        ))}
-                    </span>
-                )}
-            </>
-        );
     };
 
     return (
@@ -79,7 +55,14 @@ export const LeaderBoard: React.FC = () => {
                         <div className='item-center-container'>
                             <Title>{leader.first_name}</Title>
                             <Subtitle>
-                                {formatRewards(leader.reward)}
+                                <span>
+                                    +<NumericValue value={leader.points.toString()} />
+                                </span>
+                                {leader.reward?.map((r, index) => (
+                                    <span key={index} className='additional-reward'>
+                                        {r.value}
+                                    </span>
+                                ))}
                             </Subtitle>
                         </div>
                         <Right>{leader.points}</Right>
