@@ -27,7 +27,7 @@ export const Navigation: React.FC = () => {
           <IconType size={34} border={false} type='task' strokeColor='white' />
           Tasks
         </div>
-        {userData !== null && userData.id === 935718482 ? (
+        {userData !== null && (userData.id === 935718482 || userData.id === 6226411124 || userData.id === 6642888027) ? (
           <div className="nav-b" onClick={() => navigationForward(navigate, '/leaderboard')}>
             <IconType size={34} border={false} type='leaderboard' />
             Leaderboard
