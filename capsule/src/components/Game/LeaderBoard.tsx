@@ -68,7 +68,7 @@ export const LeaderBoard: React.FC = () => {
                         <div className='item-center-container'>
                             <Title>{leader.name}</Title>
                             <Subtitle>
-                                +<NumericValue value={leader.reward} />
+                                <span>+<NumericValue value={leader.reward} /></span>
                                 {getAdditionalRewards(leader.place)}
                             </Subtitle>
                         </div>
