@@ -14,7 +14,7 @@ interface Leader {
     points: number;
     event_id: number;
     place?: number;
-    reward?: Reward[];
+    rewards?: Reward[];
 }
 
 export const LeaderBoard: React.FC = () => {
@@ -55,14 +55,14 @@ export const LeaderBoard: React.FC = () => {
                         <div className='item-center-container'>
                             <Title>{leader.first_name}</Title>
                             <Subtitle>
-                                {leader.reward?.filter(r => r.type === 'coins').map((r, index) => (
-                                    <span key={index}>
-                                        +<NumericValue value={r.value} />
-                                    </span>
-                                ))}
-                                {leader.reward?.filter(r => r.type !== 'coins').map((r, index) => (
+                                <span>
+                                    +<NumericValue value={
+                                        leader.rewards?.find(reward => reward.type === 'coins')?.value.toString() || '0'
+                                    } />
+                                </span>
+                                {leader.rewards?.filter(reward => reward.type !== 'coins').map((reward, index) => (
                                     <span key={index} className='additional-reward'>
-                                        {r.value}
+                                        {reward.value}
                                     </span>
                                 ))}
                             </Subtitle>
