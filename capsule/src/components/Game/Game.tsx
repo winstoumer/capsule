@@ -48,9 +48,9 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
         }
     }, []);
 
-    //const handleLink = (link: string) => {
-    //    navigate(link);
-    //};
+    const handleLink = (link: string) => {
+        navigate(link);
+    };
 
     const isWithinCircle = (x: number, y: number) => {
         const centerX = 140; // Адаптировано под размеры кнопки
@@ -155,7 +155,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
             // Обновление или вставка баллов
             await axios.post(`${apiUrl}/api/leaderboard/leaderboard-update`, { telegram_id: userData.id, points });
-            
+
             addNotification(`You got ${coins}!`, 'success');
         } catch (error) {
             console.error('Error:', error);
@@ -233,6 +233,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                     {!gameStarted && !showClaimButton && (
                         <div className='game-panel-container'>
                             <Button text="Play" custom={true} onClick={handleStartClick} />
+                            <Button text="Leaderboard" custom={false} onClick={() => handleLink("/leaderboard")} />
                         </div>
                     )}
                     {gameStarted && (
