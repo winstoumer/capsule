@@ -17,7 +17,7 @@ interface Leader {
 
 export const LeaderBoard: React.FC = () => {
     const [leaders, setLeaders] = useState<Leader[]>([]);
-    
+
     const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
@@ -54,14 +54,12 @@ export const LeaderBoard: React.FC = () => {
                         <div className='item-center-container'>
                             <Title>{leader.name}</Title>
                             <Subtitle>
-                                <span>+<NumericValue value={leader.points.toString()} /></span>
-                                <div className='reward-list'>
-                                    {leader.rewards.map((reward, index) => (
-                                        <span key={index} className='additional-reward'>
-                                            {reward.value}
-                                        </span>
-                                    ))}
-                                </div>
+                                <span>+<NumericValue value={leader.rewards[0].value.toString()} /></span>
+                                {leader.rewards.slice(1).map((reward, index) => (
+                                    <span key={index} className='additional-reward'>
+                                        {reward.value}
+                                    </span>
+                                ))}
                             </Subtitle>
                         </div>
                         <Right>{leader.points}</Right>
