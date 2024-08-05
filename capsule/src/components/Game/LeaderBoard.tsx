@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, Item, Icon, Title, Subtitle, Right } from '../List/List';
 import './leaderboard.scss';
-import NumericValue from 'components/Default/NumericValue';
+import NumericValue from '../Default/NumericValue';
 
 interface Leader {
     place: number;
