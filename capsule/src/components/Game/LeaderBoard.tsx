@@ -55,10 +55,12 @@ export const LeaderBoard: React.FC = () => {
                         <div className='item-center-container'>
                             <Title>{leader.first_name}</Title>
                             <Subtitle>
-                                <span>
-                                    +<NumericValue value={leader.points.toString()} />
-                                </span>
-                                {leader.reward?.map((r, index) => (
+                                {leader.reward?.filter(r => r.type === 'coins').map((r, index) => (
+                                    <span key={index}>
+                                        +<NumericValue value={r.value} />
+                                    </span>
+                                ))}
+                                {leader.reward?.filter(r => r.type !== 'coins').map((r, index) => (
                                     <span key={index} className='additional-reward'>
                                         {r.value}
                                     </span>
