@@ -37,7 +37,7 @@ export const LeaderBoard: React.FC = () => {
         };
 
         fetchLeaders();
-    }, [eventId]);
+    }, [apiUrl, eventId]);
 
     const getMedal = (place: number) => {
         if (place === 1) return <span className="medal gold">1</span>;
@@ -46,8 +46,7 @@ export const LeaderBoard: React.FC = () => {
         return <span>{place}</span>;
     };
 
-    // Функция для получения награды в формате строки
-    const formatRewards = (rewards: Reward[]) => {
+    const formatRewards = (rewards: Reward[] | undefined) => {
         if (!rewards) return '';
 
         const coinsReward = rewards.find(reward => reward.type === 'coins');
@@ -80,7 +79,7 @@ export const LeaderBoard: React.FC = () => {
                         <div className='item-center-container'>
                             <Title>{leader.first_name}</Title>
                             <Subtitle>
-                                {formatRewards(leader.reward || [])}
+                                {formatRewards(leader.reward)}
                             </Subtitle>
                         </div>
                         <Right>{leader.points}</Right>
