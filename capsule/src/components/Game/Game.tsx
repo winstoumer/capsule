@@ -6,6 +6,7 @@ import FallingObjectsContainer from './FallingObjectsContainer';
 import axios from 'axios';
 import { usePortal } from '../PortalContext/PortalContext';
 import PortalGuard from './PortalGuard';
+import { useNotifications } from '../Providers/NotificationContext';
 
 interface GameProps {
     duration: number; // Длительность игры в секундах
@@ -36,6 +37,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
     const navigate = useNavigate();
     const activeTouches = useRef<Set<number>>(new Set());
     const buttonRef = useRef<HTMLButtonElement>(null);
+
+    const { addNotification } = useNotifications();
 
     const apiUrl = import.meta.env.VITE_API_URL;
 
@@ -152,6 +155,8 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
             await axios.put(`${apiUrl}/api/balance/plus/${userData.id}`, { amount: coins });
             // Обновление или вставка баллов
             await axios.post(`${apiUrl}/api/leaderboard/leaderboard-update`, { telegram_id: userData.id, points });
+            
+            addNotification(`You got ${coins}!`, 'success');
         } catch (error) {
             console.error('Error:', error);
         }
