@@ -17,12 +17,14 @@ interface Leader {
 
 export const LeaderBoard: React.FC = () => {
     const [leaders, setLeaders] = useState<Leader[]>([]);
+    
+    const apiUrl = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
         // Fetch the current leaders from the API
         const fetchLeaders = async () => {
             try {
-                const response = await fetch('/api/leaderboard/current-leaders');
+                const response = await fetch(`${apiUrl}/api/leaderboard/current-leaders`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch leaders');
                 }
