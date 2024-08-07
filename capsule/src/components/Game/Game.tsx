@@ -263,7 +263,20 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
                                     >
                                         {/* Ваш SVG код здесь */}
-                                        <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+                                        <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute' }}>
+                                            <defs>
+                                                <filter id="hologram">
+                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+                                                    <feColorMatrix type="matrix" values="1 0 0 0 0
+                                              0 1 0 0 0
+                                              0 0 1 0 0
+                                              1 0 0 0 0" result="colorShift" />
+                                                    <feOffset in="colorShift" dx="5" dy="5" result="offsetBlur" />
+                                                    <feBlend in="SourceGraphic" in2="offsetBlur" mode="screen" />
+                                                </filter>
+                                            </defs>
+                                        </svg>
+                                        <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" style={{ filter: 'url(#hologram)' }}>
                                             <defs>
                                                 {/* Градиент для сияющего эффекта */}
                                                 <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
