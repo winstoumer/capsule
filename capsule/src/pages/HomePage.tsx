@@ -9,7 +9,21 @@ import SwipeableList from '../components/SwipeableList/SwipeableList';
 import NumericValue from '../components/Default/NumericValue';
 
 const SvgLogo = (
-  <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
+  <>
+  <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute' }}>
+    <defs>
+      <filter id="hologram">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+        <feColorMatrix type="matrix" values="1 0 0 0 0
+                                              0 1 0 0 0
+                                              0 0 1 0 0
+                                              0 0 0 20 -10" result="colorShift" />
+        <feOffset in="colorShift" dx="5" dy="5" result="offsetBlur" />
+        <feBlend in="SourceGraphic" in2="offsetBlur" mode="screen" />
+      </filter>
+    </defs>
+  </svg>
+  <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" style={{ filter: 'url(#hologram)' }}>
     <defs>
       <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
         <stop offset="0%" style={{ stopColor: '#CF00F8', stopOpacity: 1 }} />
@@ -32,6 +46,7 @@ const SvgLogo = (
     <text x="190" y="130" fill="#CF00F8" opacity="0.4" font-size="16" font-weight="600">2</text>
     <text x="160" y="70" fill="#CF00F8" font-size="36" font-weight="600" text-anchor="middle" dominant-baseline="middle">2</text>
   </svg>
+  </>
 );
 
 const SvgMatter = (
