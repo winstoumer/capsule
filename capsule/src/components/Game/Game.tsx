@@ -263,37 +263,7 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         style={{ width: '280px', height: '280px' }} // Установка размеров кнопки
                                     >
                                         {/* Ваш SVG код здесь */}
-                                        <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute' }}>
-                                            <defs>
-                                                <filter id="hologram">
-                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur">
-                                                        <animate attributeName="stdDeviation" values="3;10;3" dur="4s" repeatCount="indefinite" />
-                                                    </feGaussianBlur>
-                                                    <feColorMatrix
-                                                        type="matrix"
-                                                        values="1 0 0 0 0
-                  0 1 0 0 0
-                  0 0 1 0 0
-                  0 0 0 20 -10"
-                                                        result="colorShift"
-                                                    >
-                                                        <animate attributeName="values"
-                                                            values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10;
-                    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 20 -10;
-                    1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10"
-                                                            dur="4s"
-                                                            repeatCount="indefinite"
-                                                        />
-                                                    </feColorMatrix>
-                                                    <feOffset in="colorShift" dx="5" dy="5" result="offsetBlur">
-                                                        <animate attributeName="dx" values="5;-5;5" dur="4s" repeatCount="indefinite" />
-                                                        <animate attributeName="dy" values="5;-5;5" dur="4s" repeatCount="indefinite" />
-                                                    </feOffset>
-                                                    <feBlend in="SourceGraphic" in2="offsetBlur" mode="screen" />
-                                                </filter>
-                                            </defs>
-                                        </svg>
-                                        <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280" style={{ filter: 'url(#hologram)' }}>
+                                        <svg width="280" height="280" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 280">
                                             <defs>
                                                 {/* Градиент для сияющего эффекта */}
                                                 <radialGradient id="glowGradient" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
