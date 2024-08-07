@@ -266,12 +266,29 @@ const Game: React.FC<GameProps> = ({ duration, coinsPerClick, maxTouches, multip
                                         <svg width="0" height="0" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute' }}>
                                             <defs>
                                                 <filter id="hologram">
-                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
-                                                    <feColorMatrix type="matrix" values="1 0 0 0 0
-                                              0 1 0 0 0
-                                              0 0 1 0 0
-                                              1 0 0 0 0" result="colorShift" />
-                                                    <feOffset in="colorShift" dx="5" dy="5" result="offsetBlur" />
+                                                    <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur">
+                                                        <animate attributeName="stdDeviation" values="3;10;3" dur="4s" repeatCount="indefinite" />
+                                                    </feGaussianBlur>
+                                                    <feColorMatrix
+                                                        type="matrix"
+                                                        values="1 0 0 0 0
+                  0 1 0 0 0
+                  0 0 1 0 0
+                  0 0 0 20 -10"
+                                                        result="colorShift"
+                                                    >
+                                                        <animate attributeName="values"
+                                                            values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10;
+                    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 20 -10;
+                    1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10"
+                                                            dur="4s"
+                                                            repeatCount="indefinite"
+                                                        />
+                                                    </feColorMatrix>
+                                                    <feOffset in="colorShift" dx="5" dy="5" result="offsetBlur">
+                                                        <animate attributeName="dx" values="5;-5;5" dur="4s" repeatCount="indefinite" />
+                                                        <animate attributeName="dy" values="5;-5;5" dur="4s" repeatCount="indefinite" />
+                                                    </feOffset>
                                                     <feBlend in="SourceGraphic" in2="offsetBlur" mode="screen" />
                                                 </filter>
                                             </defs>
