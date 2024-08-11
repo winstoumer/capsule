@@ -28,7 +28,7 @@ const SvgLogo = (
               values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0;
                     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0;
                     1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
-              dur="4s"
+              dur="1s"
               repeatCount="indefinite"
             />
           </feColorMatrix>
