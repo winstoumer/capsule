@@ -21,13 +21,13 @@ const SvgLogo = (
             values="1 0 0 0 0
                   0 1 0 0 0
                   0 0 1 0 0
-                  0 0 0 20 -10"
+                  0 0 0 1 0"
             result="colorShift"
           >
             <animate attributeName="values"
-              values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10;
-                    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 20 -10;
-                    1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 20 -10"
+              values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0;
+                    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0;
+                    1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
               dur="4s"
               repeatCount="indefinite"
             />
