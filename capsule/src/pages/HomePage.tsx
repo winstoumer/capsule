@@ -18,23 +18,23 @@ const SvgLogo = (
           </feGaussianBlur>
           <feColorMatrix
             type="matrix"
-            values="1 0 0 0 0
-                  0 1 0 0 0
-                  0 0 1 0 0
+            values="0 0 0 0 0
+                  0 0 0 0 0
+                  0 0 0 0 0
                   0 0 0 1 0"
             result="colorShift"
           >
             <animate attributeName="values"
-              values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0;
+              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0;
                     0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0;
-                    1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 1 0"
+                    0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0"
               dur="1s"
               repeatCount="indefinite"
             />
           </feColorMatrix>
           <feOffset in="colorShift" dx="5" dy="5" result="offsetBlur">
-            <animate attributeName="dx" values="5;-5;5" dur="4s" repeatCount="indefinite" />
-            <animate attributeName="dy" values="5;-5;5" dur="4s" repeatCount="indefinite" />
+            <animate attributeName="dx" values="5;-5;5" dur="1s" repeatCount="indefinite" />
+            <animate attributeName="dy" values="5;-5;5" dur="1s" repeatCount="indefinite" />
           </feOffset>
           <feBlend in="SourceGraphic" in2="offsetBlur" mode="screen" />
         </filter>
